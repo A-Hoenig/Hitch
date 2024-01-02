@@ -1,5 +1,4 @@
 {% load static %}
-
 {% url 'rides' as rides_url %}
 
 
@@ -36,15 +35,15 @@
                 aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
-            
+
             <div class="collapse navbar-collapse" id="navbarText">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     <li class="nav-item">
-                        <a class="nav-link {% if request.path == home_url %}active" aria-current="page{% endif %}"
-                            href="{% url 'rides' %}">Home</a>
+                        <a class="nav-link {% if request.path == rides_url %} active" aria-current="page{% endif %}"
+                            href="{% url 'rides' %}">Rides</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link {% if request.path == about_url %}active" aria-current="page{% endif %}"
+                        <a class="nav-link {% if request.path == rides_url %} active" aria-current="page{% endif %}"
                             href="{% url 'rides' %}">About</a>
                     </li>
                 </ul>
@@ -54,7 +53,7 @@
             </div>
         </div>
     </nav>
-    
+
     <main class="flex-shrink-0 main-bg">
 
 
@@ -69,7 +68,7 @@
         <p class="m-0 text-center">
 
         </p>
-        <p class="m-0 text-center">Follow us: 
+        <p class="m-0 text-center">Follow us:
             <i class="fab fa-facebook-square ms-3"></i>
             <i class="fa-brands fa-square-x-twitter ms-3"></i>
             <i class="fab fa-instagram-square ms-3"></i>
@@ -82,8 +81,9 @@
     </script>
     <script src="https://kit.fontawesome.com/47b432aa42.js" crossorigin="anonymous"></script>
 
-    {% block extras %}
-    {% endblock %}
+    <span class="text-center">&#169; 2024 Alex Hoenig</span>
+
 </body>
+
 
 </html>
