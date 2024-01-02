@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-2_a(wp7o160p4$-7om0ihhek8zn&p)h2ql_-^k+97_9knt=+8q
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['8000-ahoenig-hitch-pl9oitcsar1.ws-eu107.gitpod.io',]
+ALLOWED_HOSTS = ['8000-ahoenig-hitch-pl9oitcsar1.ws-eu107.gitpod.io', 'hitch-bef4789c03e6.herokuapp.com',]
 
 
 # Application definition
