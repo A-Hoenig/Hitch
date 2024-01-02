@@ -1,18 +1,18 @@
 ---
-name: Must-Have User Story
-about: Must-Have Feature for the Project
+name: " User Story"
+about: Standard Userstory template
 title: ''
-labels: Must-Have
+labels: ''
 assignees: ''
 
 ---
 
-## Dependencies:
+## Epic
 
-* #
+*
 
 ## Userstory:
-| Role       | I can ... | So that ... |
+| As a... *(role)*     | I can ...*(capability)* | , so that ...*(received benefit)* |
 | :---- |:------ | :-------------- |
 | | | |
 
