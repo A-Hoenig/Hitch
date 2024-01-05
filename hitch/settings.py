@@ -93,6 +93,8 @@ DATABASES = {
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
 
+DATE_INPUT_FORMATS = ['%d.%m.%Y']
+
 CSRF_TRUSTED_ORIGINS = [
     "https://*.herokuapp.com",
     "https://8000-ahoenig-hitch-pl9oitcsar1.ws-eu107.gitpod.io"
@@ -113,11 +115,12 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+AUTH_USER_MODEL = 'rides.CustomUser'
 
 # Internationalization
 # https://docs.djangoproject.com/en/4.2/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'en-in'
 
 TIME_ZONE = 'UTC'
 

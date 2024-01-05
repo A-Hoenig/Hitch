@@ -1,9 +1,10 @@
 from django.db import models
 from django.db.models import Model
-from django.contrib.auth.models import User
+from django.contrib.auth.models import User, AbstractUser
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 from django.http import HttpResponse
+from hitch import settings
 
 
 # Constants for dropdowns
@@ -37,21 +38,35 @@ STOP_TYPE = (
     )
 
 # Create your models here.
-class Profile(models.Model):
-    """
-    Extends the django User model with additional info :model:`auth.User`
-    first_name, last_name, email, username inherited from auth.User
-    """
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+class CustomUser(AbstractUser):
     gender = models.IntegerField(choices=GENDER, default=3)
-    DOB = models.DateTimeField()
-    adr_street = models.CharField(max_length=100)
-    adr_city = models.CharField(max_length=50)
-    adr_zip = models.CharField(max_length=10)
-    adr_country = models.CharField(max_length=50)
-    phone = models.CharField(max_length=15)
-    DL_date = models.DateTimeField()
+    DOB = models.DateField(verbose_name="Birthday", default=None, blank=True, null=True)
+    adr_street = models.CharField(max_length=100, verbose_name="Street")
+    adr_city = models.CharField(max_length=50, verbose_name="City")
+    adr_zip = models.CharField(max_length=10, verbose_name="ZIP Code")
+    adr_country = models.CharField(max_length=50, verbose_name="Country")
+    phone = models.CharField(max_length=15, verbose_name="Phone Number")
+    DL_date = models.DateField(default=None, blank=True, null=True, verbose_name="Driver's License Date")
     contactable = models.IntegerField(choices=YES_NO, default=0)
+
+# class Profile(models.Model):
+#     """
+#     Extends the django User model with additional info :model:`auth.User`
+#     first_name, last_name, email, username inherited from auth.User
+#     """
+#     user = models.OneToOneField(User, on_delete=models.PROTECT,)
+#     gender = models.IntegerField(choices=GENDER, default=3)
+#     DOB = models.DateField('Date', null=True, blank=True)
+#     adr_street = models.CharField(max_length=100, verbose_name="Street")
+#     adr_city = models.CharField(max_length=50, verbose_name="City")
+#     adr_zip = models.CharField(max_length=10, verbose_name="ZIP Code")
+#     adr_country = models.CharField(max_length=50, verbose_name="Country")
+#     phone = models.CharField(max_length=15, verbose_name="Phone Number")
+#     DL_date = models.DateField(verbose_name="Driver's License Date")
+#     contactable = models.IntegerField(choices=YES_NO, default=0)
+
+#     def __str__(self):
+#         return self.user.username
 
 class Region(models.Model):
     """
@@ -69,7 +84,7 @@ class Location(models.Model):
     Stores previous locations related to :model:`rides.Region`,`auth.User`
     """
     region = models.ForeignKey(Region, on_delete=models.CASCADE)
-    input_by = models.ForeignKey(User, on_delete=models.CASCADE)
+    input_by = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     name = models.CharField(max_length=100)
     stop_type = models.IntegerField(choices=YES_NO, default=0)
     street = models.CharField(max_length=100)
