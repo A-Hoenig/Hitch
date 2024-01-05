@@ -37,12 +37,12 @@ STOP_TYPE = (
     )
 
 # Create your models here.
-class User_Profile(models.Model):
+class Profile(models.Model):
     """
     Extends the django User model with additional info :model:`auth.User`
     first_name, last_name, email, username inherited from auth.User
     """
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
     gender = models.IntegerField(choices=GENDER, default=3)
     DOB = models.DateTimeField()
     adr_street = models.CharField(max_length=100)
@@ -52,18 +52,6 @@ class User_Profile(models.Model):
     phone = models.CharField(max_length=15)
     DL_date = models.DateTimeField()
     contactable = models.IntegerField(choices=YES_NO, default=0)
-
-# add User_profile data if normal User is updated
-@receiver(post_save, sender=User)
-def create_user_profile(sender, instance, created, **kwargs):
-    if created:
-        User_Profile.objects.create(user=instance)
-
-
-@receiver(post_save, sender=User)
-def save_user_profile(sender, instance, **kwargs):
-    instance.user_profile.save()
-
 
 class Region(models.Model):
     """

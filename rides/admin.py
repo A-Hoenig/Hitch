@@ -1,10 +1,10 @@
 from django.contrib import admin
-from .models import User_Profile, Region, Location
+from .models import Profile, Region, Location
 
 
 # Register your models here.
-@admin.register(User_Profile)
-class User_data(admin.ModelAdmin):
+@admin.register(Profile)
+class Profile(admin.ModelAdmin):
     pass
 
 
