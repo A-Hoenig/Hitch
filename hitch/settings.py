@@ -28,7 +28,9 @@ SECRET_KEY = os.environ.get("SECRET_KEY")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['8000-ahoenig-hitch-pl9oitcsar1.ws-eu107.gitpod.io', 'hitch-bef4789c03e6.herokuapp.com',]
+ALLOWED_HOSTS = ['8000-ahoenig-hitch-pl9oitcsar1.ws-eu107.gitpod.io',
+    '.herokuapp.com',
+    ]
 
 
 # Application definition
@@ -90,6 +92,11 @@ DATABASES = {
 
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
+
+CSRF_TRUSTED_ORIGINS = [
+    "https://*.herokuapp.com",
+    "https://8000-ahoenig-hitch-pl9oitcsar1.ws-eu107.gitpod.io"
+]
 
 AUTH_PASSWORD_VALIDATORS = [
     {
