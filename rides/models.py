@@ -95,5 +95,23 @@ class Purpose(models.Model):
     def __str__(self):
         return format_html('{} | {}', self.purpose, format_html(self.purpose_icon))
 
+class Vehicle(models.Model):
+    """
+    Stores vehicle related to :model:`rides.Trip` and :model:`auth.User`
+    """
+    date_created = models.DateTimeField(auto_now_add=True)
+    make = models.CharField(max_length=50)
+    model = models.CharField(max_length=50)
+    type = models.IntegerField(choices=VEHICLE_TYPE, default=0)
+    year = models.CharField(max_length=4)
+    engine = models.IntegerField(choices=ENGINE, default=0)
+    smoking = models.IntegerField(choices=YES_NO, default=0)
+    max_pax = models.IntegerField(
+        default=1,
+     )
+    owner = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    operator = models.CharField(max_length=50, null=True, blank=True)
 
+    def __str__(self):
+        return f"{self.make} {self.model} ({self.get_type_display()}), owned by {self.owner}"
     

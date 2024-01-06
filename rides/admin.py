@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
-from .models import Region, Location, CustomUser, Purpose
+from .models import Region, Location, CustomUser, Purpose, Vehicle
 
 
 # Register your models here.
@@ -66,3 +66,5 @@ admin.site.register(Region)
 admin.site.register(Location)
 
 admin.site.register(Purpose)
+
+admin.site.register(Vehicle)
