@@ -2,6 +2,9 @@
 {% url 'rides' as rides_url %}
 {% url 'about' as about_url %}
 {% url 'hitches' as hitches_url %}
+{% url 'account_login' as login_url %}
+{% url 'account_signup' as signup_url %}
+{% url 'account_logout' as logout_url %}
 
 
 <!DOCTYPE html>
@@ -52,6 +55,21 @@
                         <a class="nav-link {% if request.path == about_url %} active" aria-current="page{% endif %}"
                             href="{% url 'about' %}">About</a>
                     </li>
+                    {% if user.is_authenticated %}
+                    <li class="nav-item">
+                        <a class="nav-link {% if request.path == logout_url %}active" aria-current="page{% endif %}"
+                            href="{% url 'account_logout' %}">Logout</a>
+                    </li>
+                    {% else %}
+                    <li class="nav-item">
+                        <a class="nav-link {% if request.path == signup_url %}active" aria-current="page{% endif %}"
+                            href="{% url 'account_signup' %}">Register</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {% if request.path == login_url %}active" aria-current="page{% endif %}"
+                            href="{% url 'account_login' %}">Login</a>
+                    </li>
+                    {% endif %}
                 </ul>
                 <span class="navbar-text text-muted">
                     the ride sharing community
@@ -86,7 +104,7 @@
         integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous">
     </script>
     <script src="https://kit.fontawesome.com/47b432aa42.js" crossorigin="anonymous"></script>
-    
+
     <span class="text-center">&#169; 2024 Alex Hoenig</span>
 
 </body>
