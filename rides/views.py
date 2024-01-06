@@ -5,6 +5,7 @@ from django.shortcuts import render, HttpResponse
 def rides(request):
     return render(request, 'rides/rides.html')
 
+
 def hitches(request):
     return render(request, 'rides/hitches.html')
 

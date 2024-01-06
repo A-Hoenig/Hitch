@@ -11,5 +11,5 @@ class RegionForm(forms.ModelForm):
         Specify the django model and order of the fields
         """
         model = Region
-        fields = ('region',)
+        fields = ('region')
 
