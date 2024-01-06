@@ -114,4 +114,19 @@ class Vehicle(models.Model):
 
     def __str__(self):
         return f"{self.make} {self.model} ({self.get_type_display()}), owned by {self.owner}"
+
+class Driver_rating(models.Model):
+    """
+    Stores driver ratings related to  :model:`rides.Trip` and :model:`auth.User`
+    """
+    date_created = models.DateTimeField(auto_now_add=True)
+    driver = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    star_rating = models.DecimalField(
+        max_digits=2, 
+        decimal_places=1,
+    )
+    comment = models.TextField(max_length=300, null=True, blank=True)
+
+    def __str__(self):
+        return f"Rating: {self.star_rating} | {self.comment}"
     
