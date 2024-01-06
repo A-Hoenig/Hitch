@@ -59,7 +59,7 @@ class Region(models.Model):
     related to  :model: ``
     """
     date_created = models.DateTimeField(auto_now_add=True)
-    region = models.CharField(max_length=100)
+    region = models.CharField(max_length=100, unique=True)
 
     def __str__(self):
         return self.region
@@ -89,7 +89,7 @@ class Purpose(models.Model):
     Stores trip purposes and corresponding font-awesome icon tag related to  :model:``
     """
     
-    purpose = models.CharField(max_length=50)
+    purpose = models.CharField(max_length=50, unique=True)
     purpose_icon = models.CharField(max_length=50)
     
 
@@ -142,9 +142,7 @@ class Trip(models.Model):
     trip_status = models.IntegerField(choices=TRIP_STATUS, default=0)
     driver = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     vehicle = models.ForeignKey(Vehicle, on_delete=models.CASCADE)
-    max_hitch = models.IntegerField(
-        default=0,
-     )
+    max_hitch = models.IntegerField(default=0,)
     depart = models.ForeignKey(Location, on_delete=models.CASCADE, related_name="depart")
     destination = models.ForeignKey(Location, on_delete=models.CASCADE)
     depart_time = models.TimeField()
@@ -173,3 +171,40 @@ class Trip(models.Model):
     def __str__(self):
         return f"{self.date} at {self.depart_time} | from {self.depart} to {self.destination}"
     
+
+class Request(models.Model):
+    """
+    Stores a trip request related to  
+    :model:`rides.Trip`,`rides.Region`,`auth.User`, `rides.purpose`, `rides.location`
+    """
+    date_created = models.DateTimeField(auto_now_add=True)
+    trip_id = models.ForeignKey(Trip, on_delete=models.CASCADE, null=True, blank=True)
+    hitcher = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    region = models.ForeignKey(Region, on_delete=models.CASCADE)
+    depart = models.ForeignKey(Location, on_delete=models.CASCADE, null=True, blank=True, related_name="request_depart")
+    destination = models.ForeignKey(Location, on_delete=models.CASCADE, null=True, blank=True)
+    depart_date = models.DateTimeField()
+    depart_time = models.DateTimeField(null=True, blank=True)
+    depart_window = models.DurationField(null=True, blank=True)
+    smoking = models.IntegerField(choices=YES_NO, default=0)
+    note = models.TextField(null=True, blank=True)
+    direction = models.IntegerField(choices=DIRECTION, default=0)
+    recurring = models.IntegerField(null=True, blank=True)
+    purpose = models.ForeignKey(Purpose, on_delete=models.CASCADE)
+    
+    class Meta:
+        ordering = ["-depart_date"]
+
+    def __str__(self):
+        return f"{self.date} at {self.depart_time} | from {self.depart} to {self.destination}"
+
+
+class Message(models.Model):
+    """
+    Stores in app messages between users related to  :model:`rides.Trip`,auth.User
+    """
+    date_created = models.DateTimeField(auto_now_add=True)
+    trip = models.ForeignKey(Trip, on_delete=models.CASCADE)
+    sender = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="sender")
+    receiver = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="receiver")
+    message = models.TextField()
