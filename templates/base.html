@@ -43,8 +43,12 @@
                             href="{% url 'rides' %}">Rides</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link {% if request.path == rides_url %} active" aria-current="page{% endif %}"
-                            href="{% url 'rides' %}">About</a>
+                        <a class="nav-link {% if request.path == hitches_url %} active" aria-current="page{% endif %}"
+                            href="{% url 'hitches' %}">Hitches</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {% if request.path == about_url %} active" aria-current="page{% endif %}"
+                            href="{% url 'about' %}">About</a>
                     </li>
                 </ul>
                 <span class="navbar-text text-muted">
