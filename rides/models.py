@@ -4,7 +4,9 @@ from django.contrib.auth.models import User, AbstractUser
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 from django.http import HttpResponse
+from django.utils.html import format_html
 from hitch import settings
+
 
 
 # Constants for dropdowns
@@ -81,4 +83,17 @@ class Location(models.Model):
     def __str__(self):
         return f'{self.city}, {self.street} | {self.get_stop_type_display()}'
 
+class Purpose(models.Model):
+    """
+    Stores trip purposes and corresponding font-awesome icon tag related to  :model:``
+    """
+    
+    purpose = models.CharField(max_length=50)
+    purpose_icon = models.CharField(max_length=50)
+    
 
+    def __str__(self):
+        return format_html('{} | {}', self.purpose, format_html(self.purpose_icon))
+
+
+    

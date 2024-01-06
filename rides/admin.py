@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
-from .models import Region, Location, CustomUser
+from .models import Region, Location, CustomUser, Purpose
 
 
 # Register your models here.
@@ -64,3 +64,5 @@ admin.site.register(CustomUser, CustomUserAdmin)
 admin.site.register(Region)
 
 admin.site.register(Location)
+
+admin.site.register(Purpose)
