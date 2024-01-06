@@ -82,7 +82,7 @@ class Location(models.Model):
     note = models.TextField(null=True, blank=True)
 
     def __str__(self):
-        return f'{self.city}, {self.street} | {self.get_stop_type_display()}'
+        return f'{self.city}, {self.street} ({self.get_stop_type_display()})'
 
 class Purpose(models.Model):
     """
@@ -94,7 +94,7 @@ class Purpose(models.Model):
     
 
     def __str__(self):
-        return format_html('{} | {}', self.purpose, format_html(self.purpose_icon))
+        return self.purpose
 
 class Vehicle(models.Model):
     """
@@ -133,7 +133,8 @@ class Driver_rating(models.Model):
 
 class Trip(models.Model):
     """
-    Stores a single trip related to :model:`auth.User`, `region`, `vehicle`, `purpose`
+    Stores a single trip related to 
+    :model:`auth.User`, `region`, `vehicle`, `purpose`, `location`
     """
     
     date_created = models.DateTimeField(auto_now_add=True)
@@ -152,7 +153,7 @@ class Trip(models.Model):
     note = models.CharField(max_length=150, null=True, blank=True)
     direction = models.IntegerField(choices=DIRECTION, default=0)
     return_time = models.TimeField(null=True, blank=True)
-    recurring = models.IntegerField(null=True, blank=True)
+    recurring = models.IntegerField(choices=YES_NO, default=0)
     mon = models.BooleanField(default=False)
     tue = models.BooleanField(default=False)
     wed = models.BooleanField(default=False)
@@ -169,7 +170,7 @@ class Trip(models.Model):
         ordering = ["-trip_date"]
 
     def __str__(self):
-        return f"{self.date} at {self.depart_time} | from {self.depart} to {self.destination}"
+        return f"{self.trip_date} at {self.depart_time} | from {self.depart} --to-- {self.destination}"
     
 
 class Request(models.Model):
@@ -208,3 +209,9 @@ class Message(models.Model):
     sender = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="sender")
     receiver = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="receiver")
     message = models.TextField()
+
+    class Meta:
+        ordering = ["-date_created"]
+
+    def __str__(self):
+        return f"{self.sender} -> {self.receiver} | {self.message}"
