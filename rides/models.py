@@ -14,6 +14,7 @@ TRIP_STATUS = ((0, "Confirmed"), (1, "Completed"), (2, "Cancelled"))
 GENDER = ((0, "Female"), (1, "Male"), (2, "Non Binary"), (3, "Prefer not to say"))
 DIRECTION = ((0, "One Way"), (1, "Return Trip"))
 YES_NO = ((1, "Yes"), (0, "No"))
+
 ENGINE = (
     (0, "Gasoline"), 
     (1, "Diesel"), 
@@ -128,5 +129,47 @@ class Driver_rating(models.Model):
     comment = models.TextField(max_length=300, null=True, blank=True)
 
     def __str__(self):
-        return f"Rating: {self.star_rating} | {self.comment}"
+        return f"Driver: {self.driver} | Rating: {self.star_rating} | {self.comment}"
+
+class Trip(models.Model):
+    """
+    Stores a single trip related to :model:`auth.User`, `region`, `vehicle`, `purpose`
+    """
+    
+    date_created = models.DateTimeField(auto_now_add=True)
+    region = models.ForeignKey(Region, on_delete=models.CASCADE)
+    trip_date = models.DateField()
+    trip_status = models.IntegerField(choices=TRIP_STATUS, default=0)
+    driver = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    vehicle = models.ForeignKey(Vehicle, on_delete=models.CASCADE)
+    max_hitch = models.IntegerField(
+        default=0,
+     )
+    depart = models.ForeignKey(Location, on_delete=models.CASCADE, related_name="depart")
+    destination = models.ForeignKey(Location, on_delete=models.CASCADE)
+    depart_time = models.TimeField()
+    expected_duration = models.DurationField(null=True, blank=True)
+    expected_arrival_time = models.TimeField(null=True, blank=True)
+    depart_window = models.DurationField(null=True, blank=True)
+    note = models.CharField(max_length=150, null=True, blank=True)
+    direction = models.IntegerField(choices=DIRECTION, default=0)
+    return_time = models.TimeField(null=True, blank=True)
+    recurring = models.IntegerField(null=True, blank=True)
+    mon = models.BooleanField(default=False)
+    tue = models.BooleanField(default=False)
+    wed = models.BooleanField(default=False)
+    thu = models.BooleanField(default=False)
+    fri = models.BooleanField(default=False)
+    sat = models.BooleanField(default=False)
+    sun = models.BooleanField(default=False)
+    purpose = models.ForeignKey(Purpose, on_delete=models.CASCADE)
+    suggested_tip = models.FloatField(null=True, blank=True)
+    pickup_radius = models.IntegerField(default=2,)
+    max_detour_dist = models.IntegerField(default=5,)
+
+    class Meta:
+        ordering = ["-trip_date"]
+
+    def __str__(self):
+        return f"{self.date} at {self.depart_time} | from {self.depart} to {self.destination}"
     
