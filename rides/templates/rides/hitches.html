@@ -8,7 +8,7 @@
 <div class="container-sm text-center">
     <div class="row gx-5">
         <div class="col">
-            
+
             <div class="accordion" id="accordionExample">
                 <div class="accordion-item">
                     <h2 class="accordion-header">
@@ -25,12 +25,17 @@
                                     <div class="col">
                                         15:00
                                     </div>
-
-                                    <!-- {% if user.is_authenticated %} -->
-                                    <button type="button" class="btn btn-info">Hitch Ride!</button>
-                                    Hello!
-                                    <!-- {% endif%} -->
-                                    
+                                    {% if user.is_authenticated %}
+                                    <div class="col">
+                                        <a class="btn btn-info" data-bs-toggle="collapse" href="{% url 'about' %}"
+                                            role="button">Offer Ride</a>
+                                    </div>
+                                    {% else%}
+                                    <div class="col">
+                                        <a class="btn btn-info" data-bs-toggle="collapse"
+                                            href="{% url 'account_login' %}" role=" button">Sign In</a>
+                                    </div>
+                                    {% endif%}
                                 </div>
                             </div>
                         </button>
@@ -87,6 +92,17 @@
                                     <div class="col">
                                         19:00
                                     </div>
+                                    {% if user.is_authenticated %}
+                                    <div class="col">
+                                        <a class="btn btn-info" data-bs-toggle="collapse" href="{% url 'about' %}"
+                                            role="button">Offer Ride</a>
+                                    </div>
+                                    {% else%}
+                                    <div class="col">
+                                        <a class="btn btn-info" data-bs-toggle="collapse"
+                                            href="{% url 'account_login' %}" role=" button">Sign In</a>
+                                    </div>
+                                    {% endif%}
                                 </div>
                             </div>
                         </button>
@@ -113,6 +129,17 @@
                                     <div class="col">
                                         15:00
                                     </div>
+                                    {% if user.is_authenticated %}
+                                    <div class="col">
+                                        <a class="btn btn-info" data-bs-toggle="collapse" href="{% url 'about' %}"
+                                            role="button">Offer Ride</a>
+                                    </div>
+                                    {% else%}
+                                    <div class="col">
+                                        <a class="btn btn-info" data-bs-toggle="collapse"
+                                            href="{% url 'account_login' %}" role=" button">Sign In</a>
+                                    </div>
+                                    {% endif%}
                                 </div>
                             </div>
                         </button>
