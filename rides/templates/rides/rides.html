@@ -28,7 +28,13 @@
                                     </div>
                                     {% if user.is_authenticated %}
                                     <div class="col">
-                                        <a class="btn btn-info" data-bs-toggle="collapse" href="{% url 'about' %}" role="button">Hitch Ride!</a>
+                                        <a class="btn btn-info" data-bs-toggle="collapse" href="{% url 'about' %}"
+                                            role="button">Hitch Ride!</a>
+                                    </div>
+                                    {% else%}
+                                    <div class="col">
+                                        <a class="btn btn-info" data-bs-toggle="collapse"
+                                            href="{% url 'account_login' %}" role=" button">Sign In</a>
                                     </div>
                                     {% endif%}
 
@@ -90,7 +96,14 @@
                                     </div>
                                     {% if user.is_authenticated %}
                                     <div class="col">
-                                        <a class="btn btn-info" data-bs-toggle="collapse" href="{% url 'about' %}" role="button">Hitch Ride!</a>
+                                        <a class="btn btn-info" data-bs-toggle="collapse" href="{% url 'about' %}"
+                                            role="button">Hitch Ride!</a>
+                                    </div>
+                                    {% else%}
+                                    <div class="col">
+                                        <a class="btn btn-info" data-bs-toggle="collapse"
+                                            href="{% url 'account_login' %}""
+                                            role=" button">Sign In</a>
                                     </div>
                                     {% endif%}
                                 </div>
@@ -121,7 +134,13 @@
                                     </div>
                                     {% if user.is_authenticated %}
                                     <div class="col">
-                                        <a class="btn btn-info" data-bs-toggle="collapse" href="{% url 'about' %}" role="button">Hitch Ride!</a>
+                                        <a class="btn btn-info" data-bs-toggle="collapse" href="{% url 'about' %}"
+                                            role="button">Hitch Ride!</a>
+                                    </div>
+                                    {% else%}
+                                    <div class="col">
+                                        <a class="btn btn-info" data-bs-toggle="collapse"
+                                            href="{% url 'account_login' %}" role=" button">Sign In</a>
                                     </div>
                                     {% endif%}
                                 </div>
