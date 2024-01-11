@@ -68,7 +68,7 @@
                     {% else %}
                     <li class="nav-item">
                         <a class="nav-link {% if request.path == signup_url %}active" aria-current="page{% endif %}"
-                            href="{% url 'account_signup' %}">Register</a>
+                            href="{% url 'account_signup' %}">Sign Up</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link {% if request.path == login_url %}active" aria-current="page{% endif %}"
@@ -109,8 +109,6 @@
         integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous">
     </script>
     <script src="https://kit.fontawesome.com/47b432aa42.js" crossorigin="anonymous"></script>
-
-    <link rel="stylesheet" href="{% static 'css/style.css' %}">
 
     <span class="text-center">&#169; 2024 Alex Hoenig</span>
     <script src="{% static 'js/script.js' %}"></script>
