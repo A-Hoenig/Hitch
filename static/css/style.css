@@ -1,0 +1,6 @@
+
+
+.nolink[itemprop="url"] {
+    pointer-events: none;
+    cursor: default;
+  }

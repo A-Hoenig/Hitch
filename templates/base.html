@@ -56,10 +56,15 @@
                             href="{% url 'about' %}">About</a>
                     </li>
                     {% if user.is_authenticated %}
+                    <li class="nav-item nolink"> 
+                        <a class="nav-link " aria-current="welcome back message"
+                            href="">welcome back, {{ username }} !</a>
+                    </li>
                     <li class="nav-item">
                         <a class="nav-link {% if request.path == logout_url %}active" aria-current="page{% endif %}"
                             href="{% url 'account_logout' %}">Logout</a>
                     </li>
+                    
                     {% else %}
                     <li class="nav-item">
                         <a class="nav-link {% if request.path == signup_url %}active" aria-current="page{% endif %}"
