@@ -18,3 +18,9 @@ def about(request):
     return render(request, 'rides/about.html', {
         "username": request.user
         })
+
+
+def profile(request):
+    return render(request, 'rides/user_profile.html', {
+        "username": request.user
+        })

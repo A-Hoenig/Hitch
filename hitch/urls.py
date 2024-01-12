@@ -24,4 +24,5 @@ urlpatterns = [
     path('', views.rides, name='rides'),
     path('about/', views.about, name='about'),
     path('hitches/', views.hitches, name='hitches'),
+    path('user_profile/', views.profile, name='user_profile'),
 ]
