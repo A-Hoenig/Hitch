@@ -24,3 +24,9 @@ def profile(request):
     return render(request, 'rides/user_profile.html', {
         "username": request.user
         })
+
+
+def vehicles(request):
+    return render(request, 'rides/vehicles.html', {
+        "username": request.user
+        })
