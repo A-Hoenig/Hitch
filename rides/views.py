@@ -1,32 +1,40 @@
 from django.shortcuts import render, HttpResponse
-
+from rides.models import CustomUser
+from rides.forms import UserForm
 
 # Create your views here.
 def rides(request):
-    return render(request, 'rides/rides.html', {
+    context = {
         "username": request.user
-        })
+    }
+    return render(request, 'rides/rides.html', context)
 
 
 def hitches(request):
-    return render(request, 'rides/hitches.html', {
+    context = {
         "username": request.user
-        })
+    }
+    return render(request, 'rides/hitches.html', context)
 
 
 def about(request):
-    return render(request, 'rides/about.html', {
+    context = {
         "username": request.user
-        })
+    }
+    return render(request, 'rides/about.html', context)
 
 
 def profile(request):
-    return render(request, 'rides/user_profile.html', {
-        "username": request.user
-        })
+    form = UserForm()
+    context = {
+        "username": request.user,
+        "form": form,
+    }
+    return render(request, 'rides/user_profile.html', context)
 
 
 def vehicles(request):
-    return render(request, 'rides/vehicles.html', {
+    context = {
         "username": request.user
-        })
+    }
+    return render(request, 'rides/vehicles.html', context)
