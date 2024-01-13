@@ -1,4 +1,4 @@
-from django.shortcuts import render, HttpResponse, get_object_or_404, reverse
+from django.shortcuts import render, HttpResponse, get_object_or_404, reverse, redirect
 from rides.models import CustomUser, Vehicle
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
@@ -49,8 +49,9 @@ def vehicles(request):
     if request.method == "POST":
         if form.is_valid:
             form = VehicleForm(request.POST)
+            form.instance.owner = request.user
             form.save()
-            return redirect('rides/vehicles.html')
+            return redirect('vehicles')
     else:
         form = VehicleForm()
         vehicles = Vehicle.objects.filter(owner=request.user)
