@@ -1,5 +1,7 @@
 from django.shortcuts import render, HttpResponse, get_object_or_404, reverse
-from rides.models import CustomUser, Vehicle, User
+from rides.models import CustomUser, Vehicle
+from django.contrib.auth.models import User
+from django.contrib.auth.decorators import login_required
 from rides.forms import UserForm, VehicleForm
 
 # Create your views here.
@@ -23,7 +25,7 @@ def about(request):
     }
     return render(request, 'rides/about.html', context)
 
-
+@login_required
 def profile(request):
     form = UserForm()
     if request.method == "POST":
@@ -40,7 +42,7 @@ def profile(request):
     }
     return render(request, 'rides/user_profile.html', context)
 
-
+@login_required
 def vehicles(request):
     form = VehicleForm()
     
