@@ -24,61 +24,39 @@
           <div class="card mb-4">
               <div class="card-header">Account Details for {{ username }}</div>
               <div class="card-body">
-                  <form class="form-horizontal" action="/" method="post" autocomplete="off">
+                  <form class="form-horizontal" action="{% url 'user_profile' %}" method="post" autocomplete="off">
 
                     {% csrf_token %}
                     
-                    <div class = "row">
-                      <div class="col-6">
-                        {{ form.first_name|as_crispy_field }}
-                      </div>
-                      <div class="col-6">
-                        {{ form.last_name|as_crispy_field }}
-                      </div>
+                    <div class = "row mb-2">
+                      <div class="col-6">{{ form.first_name|as_crispy_field }}</div>
+                      <div class="col-6">{{ form.last_name|as_crispy_field }}</div>
                     </div>
-                    <div class = "row">
-                      <div class="col-6">
-                        {{ form.email|as_crispy_field }}
-                      </div>
+                    <div class = "row mb-2">
+                      <div class="col-6">{{ form.email|as_crispy_field }}</div>
                     </div>
-                    <div class = "row">
-                      <div class="col-6">
-                        {{ form.DOB|as_crispy_field }}
-                      </div>
-                      <div class="col-6">
-                        {{ form.DL_date|as_crispy_field }}
-                      </div>
+                    <div class = "row mb-2">
+                      <div class="col-6">{{ form.DOB|as_crispy_field }}</div>
+                      <div class="col-6">{{ form.DL_date|as_crispy_field }}</div>
                     </div>
-                    <div class = "row">
-                      <div class="col-12">
-                        {{ form.adr_street|as_crispy_field }}
-                      </div>
+                    <div class = "row mb-2">
+                      <div class="col-12">{{ form.adr_street|as_crispy_field }}</div>
                     </div>
-                    <div class = "row">
-                      <div class="col-6">
-                        {{ form.adr_city|as_crispy_field }}
-                      </div>
-                      <div class="col-6">
-                        {{ form.adr_zip|as_crispy_field }}
-                      </div>
+                    <div class = "row mb-2">
+                      <div class="col-6">{{ form.adr_city|as_crispy_field }}</div>
+                      <div class="col-6">{{ form.adr_zip|as_crispy_field }}</div>
                     </div>
-                    <div class = "row">
-                      <div class="col-6">
-                        {{ form.adr_country|as_crispy_field }}
-                      </div>
+                    <div class = "row mb-2">
+                      <div class="col-6">{{ form.adr_country|as_crispy_field }}</div>
                     </div>
-                    <div class = "row">
-                      <div class="col-6">
-                        {{ form.phone|as_crispy_field }}
-                      </div>
-                      <div class="col-6">
-                        {{ form.contactable|as_crispy_field }}
-                      </div>
+                    <div class = "row mb-2">
+                      <div class="col-6">{{ form.phone|as_crispy_field }}</div>
+                      <div class="col-6">{{ form.contactable|as_crispy_field }}</div>
                     </div>
 
                       
                       <!-- Save changes button-->
-                      <button class="btn btn-primary mt-3" type="submit">Save changes</button>
+                      <button class="btn btn-primary mt-3" name="save" type="submit">Save changes</button>
 
                   </form>
               </div>

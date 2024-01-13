@@ -5,6 +5,7 @@ from django.db.models.signals import post_save
 from django.dispatch import receiver
 from django.http import HttpResponse
 from django.utils.html import format_html
+from django.core.validators import RegexValidator
 from hitch import settings
 
 
@@ -42,12 +43,13 @@ STOP_TYPE = (
 
 # Create your models here.
 class CustomUser(AbstractUser):
+  
     gender = models.IntegerField(choices=GENDER, default=3)
     DOB = models.DateField(verbose_name="Birthday", default=None, blank=True, null=True)
-    adr_street = models.CharField(max_length=100, verbose_name="Street")
-    adr_city = models.CharField(max_length=50, verbose_name="City")
-    adr_zip = models.CharField(max_length=10, verbose_name="ZIP Code")
-    adr_country = models.CharField(max_length=50, verbose_name="Country")
+    adr_street = models.CharField(max_length=100, verbose_name="Street", blank=True, null=True)
+    adr_city = models.CharField(max_length=50, verbose_name="City", blank=True, null=True)
+    adr_zip = models.CharField(max_length=10, verbose_name="ZIP Code", blank=True, null=True)
+    adr_country = models.CharField(max_length=50, verbose_name="Country", blank=True, null=True)
     phone = models.CharField(max_length=15, verbose_name="Phone Number")
     DL_date = models.DateField(default=None, blank=True, null=True, verbose_name="Driver's License Date")
     contactable = models.IntegerField(choices=YES_NO, default=0)
@@ -101,17 +103,17 @@ class Vehicle(models.Model):
     Stores vehicle related to :model:`rides.Trip` and :model:`auth.User`
     """
     date_created = models.DateTimeField(auto_now_add=True)
-    make = models.CharField(max_length=50)
-    model = models.CharField(max_length=50)
+    make = models.CharField(max_length=50, null=True, blank=True)
+    model = models.CharField(max_length=50, null=True, blank=True)
     type = models.IntegerField(choices=VEHICLE_TYPE, default=0)
-    year = models.CharField(max_length=4)
+    year = models.CharField(max_length=4, null=True, blank=True)
     engine = models.IntegerField(choices=ENGINE, default=0)
     smoking = models.IntegerField(choices=YES_NO, default=0)
     max_pax = models.IntegerField(
         default=1,
      )
     owner = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    operator = models.CharField(max_length=50, null=True, blank=True)
+    operator = models.CharField(verbose_name="Operated by", max_length=50, null=True, blank=True)
 
     def __str__(self):
         return f"{self.make} {self.model} ({self.get_type_display()}), owned by {self.owner}"
