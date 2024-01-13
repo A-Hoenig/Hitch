@@ -71,7 +71,7 @@ class Location(models.Model):
     Stores previous locations related to :model:`rides.Region`,`auth.User`
     """
     region = models.ForeignKey(Region, on_delete=models.CASCADE)
-    input_by = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    input_by = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_DEFAULT, default="no record")
     name = models.CharField(max_length=100)
     stop_type = models.IntegerField(choices=STOP_TYPE, default=0)
     street = models.CharField(max_length=100)
@@ -112,7 +112,7 @@ class Vehicle(models.Model):
     max_pax = models.IntegerField(
         default=1,
      )
-    owner = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    owner = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_DEFAULT, default="no record")
     operator = models.CharField(verbose_name="Operated by", max_length=50, null=True, blank=True)
 
     def __str__(self):
@@ -143,11 +143,11 @@ class Trip(models.Model):
     region = models.ForeignKey(Region, on_delete=models.CASCADE)
     trip_date = models.DateField()
     trip_status = models.IntegerField(choices=TRIP_STATUS, default=0)
-    driver = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    vehicle = models.ForeignKey(Vehicle, on_delete=models.CASCADE)
+    driver = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_DEFAULT, default="no driver info")
+    vehicle = models.ForeignKey(Vehicle, on_delete=models.SET_DEFAULT, default="no vehicle record")
     max_hitch = models.IntegerField(default=0,)
-    depart = models.ForeignKey(Location, on_delete=models.CASCADE, related_name="depart")
-    destination = models.ForeignKey(Location, on_delete=models.CASCADE)
+    depart = models.ForeignKey(Location, on_delete=models.SET_DEFAULT, default="no record", related_name="depart")
+    destination = models.ForeignKey(Location, on_delete=models.SET_DEFAULT, default="no record")
     depart_time = models.TimeField()
     expected_duration = models.DurationField(null=True, blank=True)
     expected_arrival_time = models.TimeField(null=True, blank=True)
@@ -163,7 +163,7 @@ class Trip(models.Model):
     fri = models.BooleanField(default=False)
     sat = models.BooleanField(default=False)
     sun = models.BooleanField(default=False)
-    purpose = models.ForeignKey(Purpose, on_delete=models.CASCADE)
+    purpose = models.ForeignKey(Purpose, on_delete=models.SET_DEFAULT, default="deleted")
     suggested_tip = models.FloatField(null=True, blank=True)
     pickup_radius = models.IntegerField(default=2,)
     max_detour_dist = models.IntegerField(default=5,)
@@ -181,11 +181,11 @@ class Request(models.Model):
     :model:`rides.Trip`,`rides.Region`,`auth.User`, `rides.purpose`, `rides.location`
     """
     date_created = models.DateTimeField(auto_now_add=True)
-    trip_id = models.ForeignKey(Trip, on_delete=models.CASCADE, null=True, blank=True)
-    hitcher = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    trip_id = models.ForeignKey(Trip, on_delete=models.SET_NULL, null=True, blank=True)
+    hitcher = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_DEFAULT, default="deleted")
     region = models.ForeignKey(Region, on_delete=models.CASCADE)
-    depart = models.ForeignKey(Location, on_delete=models.CASCADE, null=True, blank=True, related_name="request_depart")
-    destination = models.ForeignKey(Location, on_delete=models.CASCADE, null=True, blank=True)
+    depart = models.ForeignKey(Location, on_delete=models.SET_NULL, null=True, blank=True, related_name="request_depart")
+    destination = models.ForeignKey(Location, on_delete=models.SET_NULL, null=True, blank=True)
     depart_date = models.DateTimeField()
     depart_time = models.DateTimeField(null=True, blank=True)
     depart_window = models.DurationField(null=True, blank=True)
@@ -193,7 +193,7 @@ class Request(models.Model):
     note = models.TextField(null=True, blank=True)
     direction = models.IntegerField(choices=DIRECTION, default=0)
     recurring = models.IntegerField(null=True, blank=True)
-    purpose = models.ForeignKey(Purpose, on_delete=models.CASCADE)
+    purpose = models.ForeignKey(Purpose, on_delete=models.SET_DEFAULT, default="deleted")
     
     class Meta:
         ordering = ["-depart_date"]

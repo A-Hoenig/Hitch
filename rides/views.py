@@ -48,9 +48,10 @@ def vehicles(request):
     
     if request.method == "POST":
         if form.is_valid:
-            form = VehicleForm(request.POST)
-            form.instance.owner = request.user
-            form.save()
+            if 'save' in request.POST:
+                form = VehicleForm(request.POST)
+                form.instance.owner = request.user
+                form.save()
             return redirect('vehicles')
     else:
         form = VehicleForm()
