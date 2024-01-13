@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+
 {% load crispy_forms_tags %}
 {% load static %}
 
@@ -18,19 +19,19 @@
         <div class="col-xl-8">
             <!-- Vehicle Form Section-->
             <div class="card mb-4">
-                <div class="card-header">Vehicle List
-
+                <div class="card-header">
+                    Vehicle List
                 </div>
                 <div class="card-body">
-                    <form>
-
-
-
-                    </form>
+                    {% for v in vehicles %}
+                        <p>{{ v.make }} {{ v.owner }}</p>
+                    {% endfor %}
                 </div>
             </div>
 
-            {% include 'vehicle_details.html' %}
+            {% block vehicle %}
+            <!-- Car details where needed -->
+            {% endblock vehicle %}
 
         </div>
     </div>
