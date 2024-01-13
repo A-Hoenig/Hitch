@@ -9,12 +9,10 @@ class UserForm(forms.ModelForm):
     """
     Form class for user profile 
     """
-           
-
-    DOB = forms.DateField(widget=forms.TextInput(attrs={'type': 'date', 'style':'max-width: 12em'}),required=True, label="Birthday")
-    DL_date = forms.DateField(widget=forms.TextInput(attrs={'type': 'date', 'style':'max-width: 12em'}),required=True, label="Driver's License Date")
-    # email = forms.EmailField(max_length=64, widget=forms.TextInput(attrs={'style':'max-width: 12em'}), required=True)
-    # gender = forms.ChoiceField(choices = GENDER, widget=forms.ChoiceField(attrs={'style':'max-width: 12em'}))
+          
+    DOB = forms.DateField(widget=forms.TextInput(attrs={'type': 'date'}),required=True, label="Birthday")
+    DL_date = forms.DateField(widget=forms.TextInput(attrs={'type': 'date'}),required=True, label="Driver's License Date")
+    email = forms.EmailField(max_length=64, widget=forms.TextInput(attrs={}), required=True)
 
     class Meta:
         model = CustomUser
