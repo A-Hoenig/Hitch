@@ -52,7 +52,7 @@ def vehicles(request):
             form.save()
             return redirect('rides/vehicles.html')
     else:
-        form = UserForm()
+        form = VehicleForm()
         vehicles = Vehicle.objects.filter(owner=request.user)
     context = {
             "username": request.user,
