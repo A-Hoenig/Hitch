@@ -47,6 +47,8 @@ def profile(request):
 @login_required
 def vehicles(request):
     form = VehicleForm()
+    filter_value = request.GET.get('status')
+    
 
     if request.method == "POST":
         if form.is_valid:
@@ -57,9 +59,14 @@ def vehicles(request):
             return redirect('vehicles')
     else:
          # vehicles owned by the user
-        vehicles = Vehicle.objects.filter(owner=request.user)
-
-    context = {
+        if filter_value in ['True', 'False']:
+            filter_value = filter_value == 'True'
+            vehicles = Vehicle.objects.filter(owner=request.user, status=filter_value)
+        else:
+            # Empty value = 'All'=d
+            vehicles = Vehicle.objects.filter(owner=request.user)
+        
+        context = {
             "username": request.user,
             "form": form,
             "vehicles": vehicles,

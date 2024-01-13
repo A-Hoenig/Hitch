@@ -42,8 +42,8 @@ STOP_TYPE = (
     )
 
 VEHICLE_STATUS = (
-    (0, "Active"), 
-    (1, "Not Active"), 
+    (True, "Active"), 
+    (False, "Not Active"), 
     )
 
 # Create your models here.
@@ -119,7 +119,7 @@ class Vehicle(models.Model):
      )
     owner = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True)
     operator = models.CharField(verbose_name="Operated by", max_length=50, null=True, blank=True)
-    status = models.IntegerField(choices=VEHICLE_STATUS, default=0)
+    status = models.BooleanField(choices=VEHICLE_STATUS, default=True)
 
     def __str__(self):
         return f"{self.make} {self.model} ({self.get_type_display()}), owned by {self.owner}"

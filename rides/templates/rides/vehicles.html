@@ -73,6 +73,14 @@
             <div class="card mb-4">
                 <div class="card-header d-flex justify-content-between">
                     <h3>Vehicle List</h3>
+                    <div>
+                        <span>Vehicle Filters:</span>
+                        <div>
+                            <a class="btn btn-outline-success" href="?status=True">Active</a>
+                            <a class="btn btn-outline-secondary" href="?status=False">Inactive</a>
+                            <a class="btn btn-outline-primary" href="?status=">All</a>
+                        </div>
+                    </div>
                     <button type="button" class="btn btn-primary mb-3" data-bs-toggle="modal"
                         data-bs-target="#exampleModal" data-bs-whatever="Edit">Add Vehicle</button>
                 </div>
@@ -104,8 +112,8 @@
                                 <td class="d-none d-sm-table-cell">{{ v.get_status_display }}</td>
                                 <td>
                                     <button name="edit" type="button" class="btn btn-primary" data-bs-toggle="modal"
-                        data-bs-target="#exampleModal" data-bs-whatever="Edit">Edit</button>
-                                    
+                                        data-bs-target="#exampleModal" data-bs-whatever="Edit">Edit</button>
+
                                 </td>
                             </tr>
                             {% endfor %}
