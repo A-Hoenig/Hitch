@@ -1,7 +1,7 @@
 from django import forms
 from .models import CustomUser
 from crispy_forms.helper import FormHelper
-from crispy_forms.layout import Layout, Div, Submit, HTML, Button, Row, Field, ButtonHolder
+from crispy_forms.layout import Layout, Div, Submit, HTML, Button, Row, Field, ButtonHolder, Column, Fieldset
 from crispy_forms.bootstrap import AppendedText, PrependedText, FormActions
 
 
@@ -9,14 +9,17 @@ class UserForm(forms.ModelForm):
     """
     Form class for user profile 
     """
+           
 
-    DOB = forms.DateField(widget=forms.TextInput(attrs={'type': 'date'}),required=True, label="Birthday")
-    DL_date = forms.DateField(widget=forms.TextInput(attrs={'type': 'date'}),required=True, label="Driver's License Date")
+    DOB = forms.DateField(widget=forms.TextInput(attrs={'type': 'date', 'style':'max-width: 12em'}),required=True, label="Birthday")
+    DL_date = forms.DateField(widget=forms.TextInput(attrs={'type': 'date', 'style':'max-width: 12em'}),required=True, label="Driver's License Date")
+    # email = forms.EmailField(max_length=64, widget=forms.TextInput(attrs={'style':'max-width: 12em'}), required=True)
+    # gender = forms.ChoiceField(choices = GENDER, widget=forms.ChoiceField(attrs={'style':'max-width: 12em'}))
 
     class Meta:
         model = CustomUser
         
-        fields = (
+        fields = [
             'first_name',
             'last_name',
             'email',
@@ -29,9 +32,5 @@ class UserForm(forms.ModelForm):
             'adr_country',
             'phone',
             'contactable',
-            )
-
-        widgets = {
-            'first_name': forms.TextInput(attrs={'class': 'form-control'}),
-        }
-        
+            ]
+ 

@@ -9,12 +9,14 @@
 <h1 class="text-center">USER PROFILE</h1>
 
 <div class="container-xl px-4 mt-4">
+  
   <!-- Account page navigation-->
   <nav class="nav nav-borders">
       <a class="nav-link active ms-0" href="{% url 'user_profile' %}">Profile</a>
       <a class="nav-link" href="{% url 'vehicles' %}" >Vehicles</a>
   </nav>
   <hr class="mt-0 mb-4">
+  
   <div class="row">
       
       <div class="col-xl-8">
@@ -23,13 +25,20 @@
               <div class="card-header">Account Details for {{ username }}</div>
               <div class="card-body">
                   <form class="form-horizontal" action="/" method="post">
+
                     {% csrf_token %}
-                    <div class="form-group">
-                      {{ form | crispy }}
+                    <div class = "row">
+                      <div class="col-6">
+                        {{ form.first_name|as_crispy_field }}
+                      </div>
+                      <div class="col-6">
+                        {{ form.last_name|as_crispy_field }}
+                      </div>
                     </div>
                       
                       <!-- Save changes button-->
-                      <button class="btn btn-primary" type="button">Save changes</button>
+                      <button class="btn btn-primary" type="submit">Save changes</button>
+
                   </form>
               </div>
           </div>
