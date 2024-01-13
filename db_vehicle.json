@@ -1,0 +1,130 @@
+[
+{
+  "model": "rides.vehicle",
+  "pk": 1,
+  "fields": {
+    "date_created": "2024-01-06T09:50:43.546Z",
+    "make": "BMW",
+    "model": "M530i",
+    "type": 0,
+    "year": "2016",
+    "engine": 1,
+    "smoking": 1,
+    "max_pax": 3,
+    "owner": 1,
+    "operator": null
+  }
+},
+{
+  "model": "rides.vehicle",
+  "pk": 2,
+  "fields": {
+    "date_created": "2024-01-06T09:51:07.143Z",
+    "make": "Chrysler",
+    "model": "Grand Caravan",
+    "type": 3,
+    "year": "2000",
+    "engine": 0,
+    "smoking": 0,
+    "max_pax": 6,
+    "owner": 4,
+    "operator": null
+  }
+},
+{
+  "model": "rides.vehicle",
+  "pk": 3,
+  "fields": {
+    "date_created": "2024-01-06T09:51:32.848Z",
+    "make": "VW",
+    "model": "ID4",
+    "type": 1,
+    "year": "2022",
+    "engine": 3,
+    "smoking": 0,
+    "max_pax": 4,
+    "owner": 3,
+    "operator": null
+  }
+},
+{
+  "model": "rides.vehicle",
+  "pk": 4,
+  "fields": {
+    "date_created": "2024-01-06T09:51:59.377Z",
+    "make": "Seat",
+    "model": "Mii",
+    "type": 0,
+    "year": "2022",
+    "engine": 2,
+    "smoking": 0,
+    "max_pax": 1,
+    "owner": 2,
+    "operator": null
+  }
+},
+{
+  "model": "rides.vehicle",
+  "pk": 5,
+  "fields": {
+    "date_created": "2024-01-10T15:05:09.008Z",
+    "make": "VW",
+    "model": "id3",
+    "type": 0,
+    "year": "2021",
+    "engine": 3,
+    "smoking": 0,
+    "max_pax": 3,
+    "owner": 7,
+    "operator": null
+  }
+},
+{
+  "model": "rides.vehicle",
+  "pk": 6,
+  "fields": {
+    "date_created": "2024-01-13T14:37:17.807Z",
+    "make": "Porsche",
+    "model": "911",
+    "type": 2,
+    "year": "2023",
+    "engine": 3,
+    "smoking": 0,
+    "max_pax": 1,
+    "owner": 1,
+    "operator": null
+  }
+},
+{
+  "model": "rides.vehicle",
+  "pk": 16,
+  "fields": {
+    "date_created": "2024-01-13T15:58:39.049Z",
+    "make": "Hyundai",
+    "model": "SantaFe",
+    "type": 1,
+    "year": "1999",
+    "engine": 0,
+    "smoking": 1,
+    "max_pax": 5,
+    "owner": 1,
+    "operator": null
+  }
+},
+{
+  "model": "rides.vehicle",
+  "pk": 22,
+  "fields": {
+    "date_created": "2024-01-13T17:33:52.861Z",
+    "make": "shoud be deleted",
+    "model": "1",
+    "type": 0,
+    "year": null,
+    "engine": 0,
+    "smoking": 0,
+    "max_pax": 1,
+    "owner": 12,
+    "operator": null
+  }
+}
+]

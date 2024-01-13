@@ -36,6 +36,9 @@
                                 <div class="col-6">{{ form.max_pax|as_crispy_field }}</div>
                                 <div class="col-6">{{ form.smoking|as_crispy_field }}</div>
                             </div>
+                            <div class="row mb-2">
+                                <div class="col-6">{{ form.status|as_crispy_field }}</div>
+                            </div>
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                             <button type="submit" name="save" class="btn btn-primary">Save</button>
                             <button class="btn btn-danger" name="delete">delete</button>
@@ -84,6 +87,7 @@
                                 <th class="d-none d-sm-table-cell" scope="col">Type</th>
                                 <th scope="col">Engine</th>
                                 <th scope="col">Max Pax</th>
+                                <th class="d-none d-sm-table-cell" scope="col">Status</th>
                                 <th scope="col">Manage</th>
                             </tr>
                         </thead>
@@ -97,6 +101,7 @@
                                 <td class="d-none d-sm-table-cell">{{ v.get_type_display }}</td>
                                 <td>{{ v.get_engine_display }}</td>
                                 <td>{{ v.max_pax }}</td>
+                                <td class="d-none d-sm-table-cell">{{ v.get_status_display }}</td>
                                 <td>
                                     <button name="edit" type="button" class="btn btn-primary" data-bs-toggle="modal"
                         data-bs-target="#exampleModal" data-bs-whatever="Edit">Edit</button>
@@ -113,5 +118,6 @@
         </div>
     </div>
 </div>
+
 
 {% endblock %}

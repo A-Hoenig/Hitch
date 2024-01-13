@@ -1,0 +1,38 @@
+[
+{
+  "model": "rides.location",
+  "pk": 1,
+  "fields": {
+    "region": 1,
+    "input_by": 3,
+    "name": "Home",
+    "stop_type": 0,
+    "street": "Dorfstr 1a",
+    "city": "Schwabmuenchen",
+    "zipcode": "86830",
+    "country": "Germany",
+    "lat": null,
+    "lng": null,
+    "google_id": null,
+    "note": ""
+  }
+},
+{
+  "model": "rides.location",
+  "pk": 2,
+  "fields": {
+    "region": 1,
+    "input_by": 3,
+    "name": "V-Markt",
+    "stop_type": 0,
+    "street": "Germanenstr 2",
+    "city": "Langerringen",
+    "zipcode": "86853",
+    "country": "Germany",
+    "lat": null,
+    "lng": null,
+    "google_id": null,
+    "note": ""
+  }
+}
+]

@@ -54,5 +54,6 @@ class VehicleForm(forms.ModelForm):
             'engine',
             'smoking',
             'max_pax',
+            'status'
             ]
  

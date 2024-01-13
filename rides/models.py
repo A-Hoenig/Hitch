@@ -41,6 +41,11 @@ STOP_TYPE = (
     (4, "Gas Station")
     )
 
+VEHICLE_STATUS = (
+    (0, "Active"), 
+    (1, "Not Active"), 
+    )
+
 # Create your models here.
 class CustomUser(AbstractUser):
   
@@ -71,7 +76,7 @@ class Location(models.Model):
     Stores previous locations related to :model:`rides.Region`,`auth.User`
     """
     region = models.ForeignKey(Region, on_delete=models.CASCADE)
-    input_by = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_DEFAULT, default="no record")
+    input_by = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     name = models.CharField(max_length=100)
     stop_type = models.IntegerField(choices=STOP_TYPE, default=0)
     street = models.CharField(max_length=100)
@@ -112,8 +117,9 @@ class Vehicle(models.Model):
     max_pax = models.IntegerField(
         default=1,
      )
-    owner = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_DEFAULT, default="no record")
+    owner = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True)
     operator = models.CharField(verbose_name="Operated by", max_length=50, null=True, blank=True)
+    status = models.IntegerField(choices=VEHICLE_STATUS, default=0)
 
     def __str__(self):
         return f"{self.make} {self.model} ({self.get_type_display()}), owned by {self.owner}"
@@ -143,8 +149,8 @@ class Trip(models.Model):
     region = models.ForeignKey(Region, on_delete=models.CASCADE)
     trip_date = models.DateField()
     trip_status = models.IntegerField(choices=TRIP_STATUS, default=0)
-    driver = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_DEFAULT, default="no driver info")
-    vehicle = models.ForeignKey(Vehicle, on_delete=models.SET_DEFAULT, default="no vehicle record")
+    driver = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True)
+    vehicle = models.ForeignKey(Vehicle, on_delete=models.SET_NULL, null=True)
     max_hitch = models.IntegerField(default=0,)
     depart = models.ForeignKey(Location, on_delete=models.SET_DEFAULT, default="no record", related_name="depart")
     destination = models.ForeignKey(Location, on_delete=models.SET_DEFAULT, default="no record")
@@ -182,7 +188,7 @@ class Request(models.Model):
     """
     date_created = models.DateTimeField(auto_now_add=True)
     trip_id = models.ForeignKey(Trip, on_delete=models.SET_NULL, null=True, blank=True)
-    hitcher = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_DEFAULT, default="deleted")
+    hitcher = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     region = models.ForeignKey(Region, on_delete=models.CASCADE)
     depart = models.ForeignKey(Location, on_delete=models.SET_NULL, null=True, blank=True, related_name="request_depart")
     destination = models.ForeignKey(Location, on_delete=models.SET_NULL, null=True, blank=True)

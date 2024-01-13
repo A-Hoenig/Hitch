@@ -1,4 +1,5 @@
 from django.shortcuts import render, HttpResponse, get_object_or_404, reverse, redirect
+from django.views.generic import ListView
 from rides.models import CustomUser, Vehicle
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
@@ -42,10 +43,11 @@ def profile(request):
     }
     return render(request, 'rides/user_profile.html', context)
 
+
 @login_required
 def vehicles(request):
     form = VehicleForm()
-    
+
     if request.method == "POST":
         if form.is_valid:
             if 'save' in request.POST:
@@ -54,8 +56,9 @@ def vehicles(request):
                 form.save()
             return redirect('vehicles')
     else:
-        form = VehicleForm()
+         # vehicles owned by the user
         vehicles = Vehicle.objects.filter(owner=request.user)
+
     context = {
             "username": request.user,
             "form": form,
