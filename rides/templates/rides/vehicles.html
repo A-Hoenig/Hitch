@@ -126,8 +126,7 @@
                                         <form novalidate class="form-horizontal" action="{% url 'vehicles' %}" method="post"
                                             autocomplete="off">
                                             {% csrf_token %}
-
-                                            {{ form | crispy }}
+                                            {% crispy form %}
 
                                             <button type="submit" name="update" value="{{ v.id }}"
                                                 class="btn btn-primary">

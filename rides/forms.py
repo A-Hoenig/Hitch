@@ -1,6 +1,7 @@
 from django import forms
 from .models import CustomUser, Vehicle
 from crispy_forms.helper import FormHelper
+from crispy_forms.layout import Submit, Layout, Div
 from django.core.validators import RegexValidator
 
 
@@ -42,7 +43,31 @@ class VehicleForm(forms.ModelForm):
     """
     Form class for users vehicles 
     """
-   
+    helper = FormHelper()
+    helper.layout = Layout(
+        Div(
+                Div('make', css_class='col-md-6'),
+                Div('model', css_class='col-md-6'),
+                css_class='row'
+            ),
+            Div(
+                Div('type', css_class='col-md-6'),
+                Div('year', css_class='col-md-6'),
+                css_class='row'
+            ),
+            Div(
+                Div('engine', css_class='col-md-6'),
+                Div('max_pax', css_class='col-md-6'),
+                css_class='row'
+            ),
+            Div(
+                Div('smoking', css_class='col-md-6'),
+                Div('status', css_class='col-md-6'),
+                css_class='row'
+            ),
+            
+        )
+
     class Meta:
         model = Vehicle
         
