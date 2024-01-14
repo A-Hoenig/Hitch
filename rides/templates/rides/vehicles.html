@@ -98,10 +98,24 @@
                                         data-bs-target="#flush-collapse{{v.id}}" aria-expanded="false"
                                         aria-controls="flush-collapseOne">
                                         <div class="grid gap-3">
-                                            <span>{{v.make}}</span>
+                                            {% if v.type == 3 %}
+                                                <span><i class="fa-solid fa-van-shuttle"></i></span>
+                                            {% elif v.type == 4 %}
+                                                <span><i class="fa-solid fa-truck-pickup"></i></span>
+                                            {% elif v.type == 5 %}
+                                                <span><i class="fa-solid fa-bus"></i></span>
+                                            {% elif v.type == 6 %}
+                                                <span><i class="fa-solid fa-truck"></i></span>
+                                            {% else %}
+                                                <span><i class="fa-solid fa-car"></i></span>
+                                            {% endif %}
+                                            
+                                            <span class="ms-3">{{v.make}}</span>
                                             <span class="ms-3 me-3">|</span>
                                             <span>{{v.model}}</span>
-                                            <span>({{ v.get_engine_display }})</span>
+                                            {% if v.engine == 3 %}
+                                                <span class="ms-3"><i class="fa-solid fa-plug"></i></span>
+                                            {% endif %}
                                         </div>
                                     </button>
                                 </h2>
