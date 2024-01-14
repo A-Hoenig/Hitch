@@ -127,7 +127,7 @@
                                             autocomplete="off">
                                             {% csrf_token %}
 
-                                            {{ form.as_p}}
+                                            {{ form | crispy }}
 
                                             <button type="submit" name="update" value="{{ v.id }}"
                                                 class="btn btn-primary">
