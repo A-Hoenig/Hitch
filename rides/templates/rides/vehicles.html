@@ -39,24 +39,21 @@
                     </div>
 
 
-                </form>
+
 
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                 <button type="submit" name="save" class="btn btn-primary">Save</button>
             </div>
+            </form>
         </div>
     </div>
 </div>
 <!-- END MODAL-->
 
 
-
-
 <h1 class="text-center">YOUR VEHICLES</h1>
-
-
 
 <div class="container-xl px-4 mt-4">
     <!-- Account page navigation-->
@@ -75,17 +72,17 @@
         <a class="btn btn-outline-success" href="?status=True">Active</a>
         <a class="btn btn-outline-secondary" href="?status=False">Inactive</a>
         <a class="btn btn-outline-primary" href="?status=">All</a>
-
-
     </Div>
+
     <div class="row">
         <div class="col-xl-12">
-            <!-- Vehicle Form Section-->
+            <!-- HEADER -->
             <div class="card mb-4">
                 <div class="card-header d-flex align-items-center justify-content-between">
                     <h3>Vehicle List</h3>
                 </div>
-
+                
+                <!-- build list of users vehicles -->
                 <div class="card-body">
                     <form method="post">
                         {% csrf_token %}
@@ -98,27 +95,31 @@
                                         data-bs-target="#flush-collapse{{v.id}}" aria-expanded="false"
                                         aria-controls="flush-collapseOne">
                                         <div class="grid gap-3">
-                                            {% if v.type == 3 %}
-                                                <span><i class="fa-solid fa-van-shuttle"></i></span>
+                                            {% if v.type == 3%}
+                                            <span class="icon"><i class="fa-solid fa-van-shuttle"></i></span>
                                             {% elif v.type == 4 %}
-                                                <span><i class="fa-solid fa-truck-pickup"></i></span>
+                                            <span class="icon"><i class="fa-solid fa-truck-pickup"></i></span>
                                             {% elif v.type == 5 %}
-                                                <span><i class="fa-solid fa-bus"></i></span>
+                                            <span class="icon"><i class="fa-solid fa-bus"></i></span>
                                             {% elif v.type == 6 %}
-                                                <span><i class="fa-solid fa-truck"></i></span>
+                                            <span class="icon"><i class="fa-solid fa-truck"></i></span>
                                             {% else %}
-                                                <span><i class="fa-solid fa-car"></i></span>
+                                            <span class="icon"><i class="fa-solid fa-car"></i></span>
                                             {% endif %}
-                                            
-                                            <span class="ms-3">{{v.make}}</span>
+
+                                            <span class="ms-3" id="model">{{v.make}}</span>
                                             <span class="ms-3 me-3">|</span>
                                             <span>{{v.model}}</span>
+                                            {% if v.engine == 2 %}
+                                                <span class="ms-3"><i class="fa-solid fa-plug"></i></span>
+                                            {% endif %}
                                             {% if v.engine == 3 %}
                                                 <span class="ms-3"><i class="fa-solid fa-plug"></i></span>
                                             {% endif %}
                                         </div>
                                     </button>
                                 </h2>
+                                <!-- drop down details form-->
                                 <div id="flush-collapse{{v.id}}" class="accordion-collapse collapse"
                                     data-bs-parent="#accordionFlushExample">
                                     <div class="accordion-body">
@@ -147,8 +148,10 @@
                                                 <div class="col-6">{{ form.status|as_crispy_field }}</div>
                                             </div>
 
-                                            <button type="submit" name="save" value="{{ v.id }}" class="btn btn-primary">Update</button>
-                                            <button type="button" class="btn btn-danger" name="delete" value="{{ v.id }}">delete</button>
+                                            <button type="submit" name="save" value="{{ v.id }}"
+                                                class="btn btn-primary">Update</button>
+                                            <button type="button" class="btn btn-danger" name="delete"
+                                                value="{{ v.id }}">delete</button>
                                         </form>
 
                                     </div>
