@@ -10,45 +10,41 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h1 class="fs-5" id="exampleModalLabel">Add / Edit Vehicle</h1>
+                <h1 class="fs-5" id="exampleModalLabel">Add new Vehicle</h1>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <div class="card mb-4">
-                    <div class="card-header">Vehicle Details</div>
-                    <div class="card-body">
-                        <form class="form-horizontal" action="{% url 'vehicles' %}" method="post" autocomplete="off">
-                            {% csrf_token %}
 
-                            <div class="row mb-2">
-                                <div class="col-6">{{ form.make|as_crispy_field }}</div>
-                                <div class="col-6">{{ form.model|as_crispy_field }}</div>
-                            </div>
-                            <div class="row mb-2">
-                                <div class="col-6">{{ form.type|as_crispy_field }}</div>
-                                <div class="col-6">{{ form.year|as_crispy_field }}</div>
-                            </div>
-                            <div class="row mb-2">
-                                <div class="col-6">{{ form.engine|as_crispy_field }}</div>
+                <form class="form-horizontal" action="{% url 'vehicles' %}" method="post" autocomplete="off">
+                    {% csrf_token %}
 
-                            </div>
-                            <div class="row mb-2">
-                                <div class="col-6">{{ form.max_pax|as_crispy_field }}</div>
-                                <div class="col-6">{{ form.smoking|as_crispy_field }}</div>
-                            </div>
-                            <div class="row mb-2">
-                                <div class="col-6">{{ form.status|as_crispy_field }}</div>
-                            </div>
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                            <button type="submit" name="save" class="btn btn-primary">Save</button>
-                            <button class="btn btn-danger" name="delete">delete</button>
-
-                        </form>
+                    <div class="row mb-2">
+                        <div class="col-6">{{ form.make|as_crispy_field }}</div>
+                        <div class="col-6">{{ form.model|as_crispy_field }}</div>
                     </div>
-                </div>
+                    <div class="row mb-2">
+                        <div class="col-6">{{ form.type|as_crispy_field }}</div>
+                        <div class="col-6">{{ form.year|as_crispy_field }}</div>
+                    </div>
+                    <div class="row mb-2">
+                        <div class="col-6">{{ form.engine|as_crispy_field }}</div>
+
+                    </div>
+                    <div class="row mb-2">
+                        <div class="col-6">{{ form.max_pax|as_crispy_field }}</div>
+                        <div class="col-6">{{ form.smoking|as_crispy_field }}</div>
+                    </div>
+                    <div class="row mb-2">
+                        <div class="col-6">{{ form.status|as_crispy_field }}</div>
+                    </div>
+
+
+                </form>
+
             </div>
             <div class="modal-footer">
-
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="submit" name="save" class="btn btn-primary">Save</button>
             </div>
         </div>
     </div>
@@ -60,66 +56,94 @@
 
 <h1 class="text-center">YOUR VEHICLES</h1>
 
+
+
 <div class="container-xl px-4 mt-4">
     <!-- Account page navigation-->
     <nav class="nav nav-borders">
         <a class="nav-link active ms-0" href="{% url 'user_profile' %}">Profile</a>
         <a class="nav-link" href="" target="__blank">Vehicles</a>
+
     </nav>
     <hr class="mt-0 mb-4">
+    <Div class="mb-3">
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal"
+            data-bs-whatever="Edit">
+            Add Vehicle
+        </button>
+        <span><strong>FILTER:</strong></span>
+        <a class="btn btn-outline-success" href="?status=True">Active</a>
+        <a class="btn btn-outline-secondary" href="?status=False">Inactive</a>
+        <a class="btn btn-outline-primary" href="?status=">All</a>
+
+
+    </Div>
     <div class="row">
         <div class="col-xl-12">
             <!-- Vehicle Form Section-->
             <div class="card mb-4">
-                <div class="card-header d-flex justify-content-between">
+                <div class="card-header d-flex align-items-center justify-content-between">
                     <h3>Vehicle List</h3>
-                    <div>
-                        <span>Vehicle Filters:</span>
-                        <div>
-                            <a class="btn btn-outline-success" href="?status=True">Active</a>
-                            <a class="btn btn-outline-secondary" href="?status=False">Inactive</a>
-                            <a class="btn btn-outline-primary" href="?status=">All</a>
-                        </div>
-                    </div>
-                    <button type="button" class="btn btn-primary mb-3" data-bs-toggle="modal"
-                        data-bs-target="#exampleModal" data-bs-whatever="Edit">Add Vehicle</button>
                 </div>
+
                 <div class="card-body">
-                    <table class="table">
-                        <thead>
-                            <tr>
+                    <form method="post">
+                        {% csrf_token %}
 
-                                <th class="d-none d-sm-table-cell" scope="col">Year</th>
-                                <th scope="col">Make</th>
-                                <th scope="col">Model</th>
-                                <th class="d-none d-sm-table-cell" scope="col">Type</th>
-                                <th scope="col">Engine</th>
-                                <th scope="col">Max Pax</th>
-                                <th class="d-none d-sm-table-cell" scope="col">Status</th>
-                                <th scope="col">Manage</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {% for v in vehicles %}
-                            <tr>
+                        {% for v in vehicles %}
+                        <div class="accordion" id="accordionFlushExample">
+                            <div class="accordion-item">
+                                <h2 class="accordion-header">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                        data-bs-target="#flush-collapse{{v.id}}" aria-expanded="false"
+                                        aria-controls="flush-collapseOne">
+                                        <div class="grid gap-3">
+                                            <span>{{v.make}}</span>
+                                            <span class="ms-3 me-3">|</span>
+                                            <span>{{v.model}}</span>
+                                            <span>({{ v.get_engine_display }})</span>
+                                        </div>
+                                    </button>
+                                </h2>
+                                <div id="flush-collapse{{v.id}}" class="accordion-collapse collapse"
+                                    data-bs-parent="#accordionFlushExample">
+                                    <div class="accordion-body">
 
-                                <td class="d-none d-sm-table-cell">{{ v.year }}</td>
-                                <td>{{ v.make }}</td>
-                                <td>{{ v.model }}</td>
-                                <td class="d-none d-sm-table-cell">{{ v.get_type_display }}</td>
-                                <td>{{ v.get_engine_display }}</td>
-                                <td>{{ v.max_pax }}</td>
-                                <td class="d-none d-sm-table-cell">{{ v.get_status_display }}</td>
-                                <td>
-                                    <button name="edit" type="button" class="btn btn-primary" data-bs-toggle="modal"
-                                        data-bs-target="#exampleModal" data-bs-whatever="Edit">Edit</button>
+                                        <form class="form-horizontal" action="{% url 'vehicles' %}" method="post"
+                                            autocomplete="off">
+                                            {% csrf_token %}
 
-                                </td>
-                            </tr>
-                            {% endfor %}
-                        </tbody>
-                    </table>
+                                            <div class="row mb-2">
+                                                <div class="col-6">{{ form.make|as_crispy_field }}</div>
+                                                <div class="col-6">{{ form.model|as_crispy_field }}</div>
+                                            </div>
+                                            <div class="row mb-2">
+                                                <div class="col-6">{{ form.type|as_crispy_field }}</div>
+                                                <div class="col-6">{{ form.year|as_crispy_field }}</div>
+                                            </div>
+                                            <div class="row mb-2">
+                                                <div class="col-6">{{ form.engine|as_crispy_field }}</div>
 
+                                            </div>
+                                            <div class="row mb-2">
+                                                <div class="col-6">{{ form.max_pax|as_crispy_field }}</div>
+                                                <div class="col-6">{{ form.smoking|as_crispy_field }}</div>
+                                            </div>
+                                            <div class="row mb-2">
+                                                <div class="col-6">{{ form.status|as_crispy_field }}</div>
+                                            </div>
+
+                                            <button type="submit" name="save" value="{{ v.id }}" class="btn btn-primary">Update</button>
+                                            <button type="button" class="btn btn-danger" name="delete" value="{{ v.id }}">delete</button>
+                                        </form>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+
+                    </form>
                 </div>
             </div>
 

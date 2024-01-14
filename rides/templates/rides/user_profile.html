@@ -25,7 +25,6 @@
               <div class="card-header">Account Details for {{ username }}</div>
               <div class="card-body">
                   <form class="form-horizontal" action="{% url 'user_profile' %}" method="post" autocomplete="off">
-
                     {% csrf_token %}
                     
                     <div class = "row mb-2">

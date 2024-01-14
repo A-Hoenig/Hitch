@@ -56,9 +56,13 @@ def vehicles(request):
                 form = VehicleForm(request.POST)
                 form.instance.owner = request.user
                 form.save()
+            elif 'edit' in request.POST:
+                edit_button_id = request.GET.get('edit')
+                print(f'ID: {edit_button_id}')
             return redirect('vehicles')
     else:
-         # vehicles owned by the user
+        print(filter_value)
+        # vehicles owned by the user
         if filter_value in ['True', 'False']:
             filter_value = filter_value == 'True'
             vehicles = Vehicle.objects.filter(owner=request.user, status=filter_value)

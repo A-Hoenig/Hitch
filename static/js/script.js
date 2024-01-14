@@ -31,3 +31,4 @@ if (exampleModal) {
     modalBodyInput.value = recipient
   })
 }
+
