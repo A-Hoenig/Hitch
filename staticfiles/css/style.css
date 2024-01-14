@@ -1,0 +1,17 @@
+
+.black-carousel-caption{
+    color: #111;
+}
+ .add-shadow {
+    filter: drop-shadow(white 0.1rem 0.1rem 10px);
+ }
+
+ #model {
+    display: inline-block;
+    width: 80px;
+ }
+
+ .icon {
+    display: inline-block;
+    width: 20px;
+ }
