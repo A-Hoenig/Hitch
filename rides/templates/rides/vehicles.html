@@ -49,8 +49,10 @@
 </div>
 <!-- END MODAL-->
 
-<h1 class="text-center">YOUR VEHICLES</h1>
-
+<!-- <h1 class="text-center">YOUR VEHICLES</h1> -->
+<div class="alert alert-dark text-center" role="alert">
+    <h1>YOUR VEHICLES</h1>
+</div>
 <div class="container-xl px-4 mt-4">
     <!-- Account page navigation-->
     <nav class="nav nav-borders">
@@ -127,40 +129,40 @@
 
                                             <table class="table">
                                                 <thead>
-                                                  <tr>
-                                                    <th scope="col">DETAILS</th>
-                                                    <th scope="col"></th>
-                                                  </tr>
+                                                    <tr>
+                                                        <th scope="col">DETAILS</th>
+                                                        <th scope="col"></th>
+                                                    </tr>
                                                 </thead>
                                                 <tbody>
-                                                  <tr>
-                                                    <th scope="row">Type:</th>
-                                                    <td>{{ v.get_type_display }}</td>
-                                                  </tr>
-                                                  <tr>
-                                                    <th scope="row">Year:</th>
-                                                    <td>{{ v.year }}</td>
-                                                  </tr>
-                                                  <tr>
-                                                    <th scope="row">Drivetrain:</th>
-                                                    <td>{{ v.get_engine_display }}</td>
-                                                  </tr>
-                                                  <tr>
-                                                    <th scope="row">Passengers:</th>
-                                                    <td>{{ v.max_pax }}</td>
-                                                  </tr>
-                                                  <tr>
-                                                    <th scope="row">Smoking:</th>
-                                                    <td>{{ form.smoking }}</td>
-                                                  </tr>
-                                                  <tr>
-                                                    <th scope="row">Status:</th>
-                                                    <td>{{ form.status }}</td>
-                                                  </tr>
+                                                    <tr>
+                                                        <th scope="row">Type:</th>
+                                                        <td>{{ v.get_type_display }}</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th scope="row">Year:</th>
+                                                        <td>{{ v.year }}</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th scope="row">Drivetrain:</th>
+                                                        <td>{{ v.get_engine_display }}</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th scope="row">Passengers:</th>
+                                                        <td>{{ v.max_pax }}</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th scope="row">Smoking:</th>
+                                                        <td>{{ form.smoking }}</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th scope="row">Status:</th>
+                                                        <td>{{ form.status }}</td>
+                                                    </tr>
 
                                                 </tbody>
-                                              </table>
-                                            
+                                            </table>
+
                                             <button type="submit" name="update" value="{{ v.id }}"
                                                 class="btn btn-primary">Update</button>
 
@@ -184,7 +186,8 @@
 
         </div>
         <div class="col-md-4">
-            <img src="https://res.cloudinary.com/dd9slw6f0/image/upload/v1705245016/pexels-taras-makarenko-593172_gvjyox.jpg" class="img-fluid rounded" alt="Your Image">
+            <img src="https://res.cloudinary.com/dd9slw6f0/image/upload/v1705245016/pexels-taras-makarenko-593172_gvjyox.jpg"
+                class="img-fluid rounded" alt="Your Image">
 
         </div>
     </div>
