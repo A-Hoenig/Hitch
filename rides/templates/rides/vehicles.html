@@ -58,6 +58,7 @@
         <a class="nav-link" href="" target="__blank">Vehicles</a>
 
     </nav>
+
     <hr class="mt-0 mb-4">
     <Div class="mb-3">
         <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal"
@@ -71,7 +72,7 @@
     </Div>
 
     <div class="row">
-        <div class="col-xl-12">
+        <div class="col-md-8">
             <!-- HEADER -->
             <div class="card mb-4">
                 <div class="card-header d-flex align-items-center justify-content-between">
@@ -124,29 +125,42 @@
                                             autocomplete="off">
                                             {% csrf_token %}
 
-                                            
-                                            <div class="row mb-2">
-                                                <div class="col-6">
-                                                    <span class="text-primary" id="type">TYPE:</span> {{ v.get_type_display }}
-                                                </div>
-                                            </div>
-                                            <div class="row mb-2">
-                                                <div class="col-6">
-                                                    <span class="text-primary" >YEAR:</span> {{ v.year }}</div>
-                                            </div>
-                                            <div class="row mb-2">
-                                                <div class="col-6">
-                                                    <span class="text-primary" >DRIVETRAIN:</span> {{ v.get_engine_display }}</div>
-                                            </div>
-                                            <div class="row mb-2">
-                                                <div class="col-6">
-                                                    <span class="text-primary" >PASSENGERS:</span> {{ v.max_pax }}</div>
-                                            </div>
-                                            <div class="row mb-2 text-primary">
-                                                <div class="col-6">{{ form.smoking|as_crispy_field }}</div>
-                                                <div class="col-6">{{ form.status|as_crispy_field }}</div>
-                                            </div>
+                                            <table class="table">
+                                                <thead>
+                                                  <tr>
+                                                    <th scope="col">DETAILS</th>
+                                                    <th scope="col"></th>
+                                                  </tr>
+                                                </thead>
+                                                <tbody>
+                                                  <tr>
+                                                    <th scope="row">Type:</th>
+                                                    <td>{{ v.get_type_display }}</td>
+                                                  </tr>
+                                                  <tr>
+                                                    <th scope="row">Year:</th>
+                                                    <td>{{ v.year }}</td>
+                                                  </tr>
+                                                  <tr>
+                                                    <th scope="row">Drivetrain:</th>
+                                                    <td>{{ v.get_engine_display }}</td>
+                                                  </tr>
+                                                  <tr>
+                                                    <th scope="row">Passengers:</th>
+                                                    <td>{{ v.max_pax }}</td>
+                                                  </tr>
+                                                  <tr>
+                                                    <th scope="row">Smoking:</th>
+                                                    <td>{{ form.smoking }}</td>
+                                                  </tr>
+                                                  <tr>
+                                                    <th scope="row">Status:</th>
+                                                    <td>{{ form.status }}</td>
+                                                  </tr>
 
+                                                </tbody>
+                                              </table>
+                                            
                                             <button type="submit" name="update" value="{{ v.id }}"
                                                 class="btn btn-primary">Update</button>
 
@@ -167,6 +181,10 @@
                     </form>
                 </div>
             </div>
+
+        </div>
+        <div class="col-md-4">
+            <img src="https://res.cloudinary.com/dd9slw6f0/image/upload/v1705245016/pexels-taras-makarenko-593172_gvjyox.jpg" class="img-fluid rounded" alt="Your Image">
 
         </div>
     </div>
