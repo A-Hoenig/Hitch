@@ -86,7 +86,7 @@
                     <form method="post">
                         {% csrf_token %}
 
-                        {% for v, form in vehicles %}
+                        {% for v in vehicles %}
                         <div class="accordion" id="accordionFlushExample">
                             <div class="accordion-item">
                                 <h2 class="accordion-header">
@@ -127,7 +127,52 @@
                                             autocomplete="off">
                                             {% csrf_token %}
 
-                                            {{ form.as_p}}
+                                            <table class="table">
+                                                <thead>
+                                                    <tr>
+                                                        <th scope="col">DETAILS</th>
+                                                        <th scope="col"></th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr>
+                                                        <th scope="row">Type:</th>
+                                                        <td>{{ v.get_type_display }} {{form.type}}</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th scope="row">Year:</th>
+                                                        <td>{{ v.year }}</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th scope="row">Drivetrain:</th>
+                                                        <td>{{ v.get_engine_display }}</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th scope="row">Passengers:</th>
+                                                        <td>{{ v.max_pax }}</td>
+                                                    </tr>
+                                                    
+                                                    <tr>
+                                                        <th scope="row">Smoking:</th>
+                                                        <td>
+                                                            <select name="smoking" class="form-select">
+                                                                <option value="True" {% if v.smoking == True %} selected {% endif %}>Yes</option>
+                                                                <option value="False" {% if v.smoking == False %} selected {% endif %}>No</option>
+                                                            </select>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th scope="row">Status:</th>
+                                                        <td>
+                                                            <select name="status" class="form-select">
+                                                                <option value="True" {% if v.status == True %} selected {% endif %}>Active</option>
+                                                                <option value="False" {% if v.status == False %} selected {% endif %}>Not Active</option>
+                                                            </select>
+                                                        </td>
+                                                    </tr>
+
+                                                </tbody>
+                                            </table>
 
                                             <button type="submit" name="update" value="{{ v.id }}"
                                                 class="btn btn-primary">

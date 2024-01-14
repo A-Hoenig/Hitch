@@ -14,7 +14,7 @@ from hitch import settings
 TRIP_STATUS = ((0, "Confirmed"), (1, "Completed"), (2, "Cancelled"))
 GENDER = ((0, "Female"), (1, "Male"), (2, "Non Binary"), (3, "Prefer not to say"))
 DIRECTION = ((0, "One Way"), (1, "Return Trip"))
-YES_NO = ((1, "Yes"), (0, "No"))
+YES_NO = ((True, "Yes"), (False, "No"))
 
 ENGINE = (
     (0, "Gasoline"), 
@@ -113,7 +113,7 @@ class Vehicle(models.Model):
     type = models.IntegerField(choices=VEHICLE_TYPE, default=0)
     year = models.CharField(max_length=4, null=True, blank=True)
     engine = models.IntegerField(choices=ENGINE, default=0)
-    smoking = models.IntegerField(choices=YES_NO, default=0)
+    smoking = models.BooleanField(choices=YES_NO, default=False)
     max_pax = models.IntegerField(
         default=1,
      )

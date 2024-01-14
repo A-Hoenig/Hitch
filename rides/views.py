@@ -50,19 +50,42 @@ def vehicles(request):
     filter_value = request.GET.get('status')
     
     if request.method == "POST":
-        if form.is_valid:
-            if 'save' in request.POST:
-                form = VehicleForm(request.POST)
-                form.instance.owner = request.user
+        
+        if 'save' in request.POST:
+            form = VehicleForm(request.POST)
+            form.instance.owner = request.user
+            if form.is_valid():
                 form.save()
-            elif 'delete' in request.POST:
-                pk = request.POST.get('delete')
-                print(f'pk: {pk}')
-                vehicle = Vehicle.objects.get(id=pk)
-                vehicle.delete()
+        elif 'delete' in request.POST:
+            pk = request.POST.get('delete')
+            vehicle = Vehicle.objects.get(id=pk)
+            vehicle.delete()
+        elif 'update' in request.POST:
+            print('....starting update')
+            pk = request.POST.get('update')
+            vehicle = Vehicle.objects.get(id=pk)
+            post_data = request.POST.copy()
 
-            return redirect('vehicles')
+            if 'type' in post_data:
+                # Exclude non-editable fields from cleaned_data during validation
+                form = VehicleForm(post_data, instance=vehicle)
+                form.fields['type'].required = False
+                form.fields['engine'].required = False
+                form.fields['max_pax'].required = False
+            else:
+                # For new entries, use the form without excluding fields
+                form = VehicleForm(request.POST, instance=vehicle)
+            
+            print(form.is_valid())
+            print(form.errors)
+            
+            if form.is_valid():
+                print('form saving...')
+                form.save()
+
+        return redirect('vehicles')
     else:
+        form = VehicleForm()
         # vehicles owned by the user
         if filter_value in ['True', 'False']:
             filter_value = filter_value == 'True'
@@ -70,11 +93,15 @@ def vehicles(request):
         else:
             # Empty value = 'All'
             vehicles = Vehicle.objects.filter(owner=request.user)
-        
+            
+        # Create a list of forms for each vehicle instance
+        forms = [VehicleForm(instance=vehicle) for vehicle in vehicles]
+
         context = {
             "username": request.user,
             "form": form,
-            "vehicles": vehicles,
+            "vehicles": zip(vehicles, forms),
         }
 
     return render(request, 'rides/vehicles.html', context)
+

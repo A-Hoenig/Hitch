@@ -46,6 +46,7 @@ class VehicleForm(forms.ModelForm):
     class Meta:
         model = Vehicle
         
+        
         fields = [
             'make',
             'model',
@@ -56,4 +57,14 @@ class VehicleForm(forms.ModelForm):
             'max_pax',
             'status'
             ]
- 
+
+    def __init__(self, *args, **kwargs):
+        super(VehicleForm, self).__init__(*args, **kwargs)
+        instance = kwargs.get('instance')
+        if instance:
+            # Set initial values for vehicle fields
+            self.fields['smoking'].initial = instance.smoking
+            self.fields['status'].initial = instance.status
+
+    
+            
