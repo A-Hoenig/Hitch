@@ -49,25 +49,26 @@ def vehicles(request):
     form = VehicleForm()
     filter_value = request.GET.get('status')
     
-
     if request.method == "POST":
         if form.is_valid:
             if 'save' in request.POST:
                 form = VehicleForm(request.POST)
                 form.instance.owner = request.user
                 form.save()
-            elif 'edit' in request.POST:
-                edit_button_id = request.GET.get('edit')
-                print(f'ID: {edit_button_id}')
+            elif 'delete' in request.POST:
+                pk = request.POST.get('delete')
+                print(f'pk: {pk}')
+                vehicle = Vehicle.objects.get(id=pk)
+                vehicle.delete()
+
             return redirect('vehicles')
     else:
-        print(filter_value)
         # vehicles owned by the user
         if filter_value in ['True', 'False']:
             filter_value = filter_value == 'True'
             vehicles = Vehicle.objects.filter(owner=request.user, status=filter_value)
         else:
-            # Empty value = 'All'=d
+            # Empty value = 'All'
             vehicles = Vehicle.objects.filter(owner=request.user)
         
         context = {
