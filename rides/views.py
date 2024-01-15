@@ -9,14 +9,19 @@ from datetime import date
 
 # -------------------------------------------------------
 def rides(request):
+    
     form = TripForm()
-    trips = Trip.objects.all()
+    trips =Trip.objects.all()
+        
+    # Create a list of forms for each trip instance
+    forms = [TripForm(instance=trip) for trip in trips]
 
     context = {
         "username": request.user,
         "form": form,
-        "trips": trips,
+        "trips": zip(trips, forms),
     }
+
     return render(request, 'rides/rides.html', context)
 
 
@@ -106,7 +111,7 @@ def vehicles(request):
             messages.success(request, 'Vehicle deleted sucessfully!')
         elif 'update' in request.POST:
             pk = request.POST.get('update')
-            print(f'....starting update for {pk}')
+            # print(f'....starting update for {pk}')
             vehicle = Vehicle.objects.get(id=pk)
             post_data = request.POST.copy()
             form = VehicleForm(request.POST, instance=vehicle)

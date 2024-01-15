@@ -136,7 +136,7 @@ class TripForm(forms.ModelForm):
     helper = FormHelper()
     helper.layout = Layout(
         Div(
-                Div('region', css_class='col-md-6'),
+                Div('driver', css_class='col-md-6'),
                 Div('trip_date', css_class='col-md-6'),
                 css_class='row'
             ),
