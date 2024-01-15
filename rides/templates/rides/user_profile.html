@@ -35,7 +35,7 @@
             
             {% csrf_token %}
             {% crispy form %}
-
+            <a href="{% url 'password_change' %}">Change Password</a>
           </form>
         </div>
       </div>
