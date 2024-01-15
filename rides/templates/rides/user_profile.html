@@ -7,8 +7,10 @@
 {% block content %}
 
 <div class="alert alert-dark" role="alert">
-  <h1>USER PROFILE</h1>
+  <h1>USER PROFILE <span class="h3">{{ username }} ({{ age }})</span></h1> 
 </div>
+
+
 
 <div class="container-xl px-4 mt-4">
   
@@ -24,40 +26,12 @@
       <div class="col-xl-8">
           <!-- Account details card-->
           <div class="card mb-4">
-              <div class="card-header">Account Details for {{ username }}</div>
+              <div class="card-header">Account Details</div>
               <div class="card-body">
-                  <form class="form-horizontal" action="{% url 'user_profile' %}" method="post" autocomplete="off">
+                  <form class="form-horizontal" action="{% url 'user_profile' %}" method="POST" autocomplete="off">
                     {% csrf_token %}
                     
-                    <div class = "row mb-2">
-                      <div class="col-6">{{ form.first_name|as_crispy_field }}</div>
-                      <div class="col-6">{{ form.last_name|as_crispy_field }}</div>
-                    </div>
-                    <div class = "row mb-2">
-                      <div class="col-6">{{ form.email|as_crispy_field }}</div>
-                    </div>
-                    <div class = "row mb-2">
-                      <div class="col-6">{{ form.DOB|as_crispy_field }}</div>
-                      <div class="col-6">{{ form.DL_date|as_crispy_field }}</div>
-                    </div>
-                    <div class = "row mb-2">
-                      <div class="col-12">{{ form.adr_street|as_crispy_field }}</div>
-                    </div>
-                    <div class = "row mb-2">
-                      <div class="col-6">{{ form.adr_city|as_crispy_field }}</div>
-                      <div class="col-6">{{ form.adr_zip|as_crispy_field }}</div>
-                    </div>
-                    <div class = "row mb-2">
-                      <div class="col-6">{{ form.adr_country|as_crispy_field }}</div>
-                    </div>
-                    <div class = "row mb-2">
-                      <div class="col-6">{{ form.phone|as_crispy_field }}</div>
-                      <div class="col-6">{{ form.contactable|as_crispy_field }}</div>
-                    </div>
-
-                      
-                      <!-- Save changes button-->
-                      <button class="btn btn-primary mt-3" name="save" type="submit">Save changes</button>
+                    {% crispy form %}
 
                   </form>
               </div>

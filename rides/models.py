@@ -57,7 +57,7 @@ class CustomUser(AbstractUser):
     adr_country = models.CharField(max_length=50, verbose_name="Country", blank=True, null=True)
     phone = models.CharField(max_length=15, verbose_name="Phone Number")
     DL_date = models.DateField(default=None, blank=True, null=True, verbose_name="Driver's License Date")
-    contactable = models.IntegerField(choices=YES_NO, default=0)
+    contactable = models.BooleanField(choices=YES_NO, default=0)
 
 
 class Region(models.Model):

@@ -1,9 +1,11 @@
 from django.shortcuts import render, HttpResponse, get_object_or_404, reverse, redirect
 from django.views.generic import ListView
 from rides.models import CustomUser, Vehicle
+from django.contrib import messages
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from rides.forms import UserForm, VehicleForm
+from datetime import date
 
 # Create your views here.
 def rides(request):
@@ -28,18 +30,29 @@ def about(request):
 
 @login_required
 def profile(request):
-    form = UserForm()
+    
+    # Check if the user has a Date of Birth set
+    if request.user.DOB:
+        today = date.today()
+        born = request.user.DOB
+        age = today.year - born.year - ((today.month, today.day) < (born.month, born.day))
+    else:
+        age = None
+
     if request.method == "POST":
-        if form.is_valid:
-            form = UserForm(request.POST)
+        form = UserForm(request.POST, instance=request.user)
+
+        if form.is_valid():
             form.save()
+            messages.success(request, 'Data updated sucessfully!')
             return redirect('user_profile')
     else:
-        form = UserForm()
+        form = UserForm(instance=request.user)
 
     context = {
             "username": request.user,
             "form": form,
+            "age": age,
     }
     return render(request, 'rides/user_profile.html', context)
 

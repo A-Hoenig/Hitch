@@ -5,6 +5,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // Add a click event listener to each anchor tag
     accordionLinks.forEach(function(link) {
       link.addEventListener('click', function(event) {
+        console.log('function ran')
         // Prevent the default action of the link - no accordion
         event.preventDefault();
         // Open the link's URL in the current tab

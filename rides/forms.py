@@ -15,7 +15,44 @@ class UserForm(forms.ModelForm):
     """
     Form class for user profile 
     """
-   
+    helper = FormHelper()
+    helper.add_input(Submit('submit', 'Update Data', css_class='btn btn-primary mt-3'))
+    helper.form_method = 'POST'
+    
+    helper.layout = Layout(
+        Div(
+                Div('first_name', css_class='col-md-6'),
+                Div('last_name', css_class='col-md-6'),
+                css_class='row'
+            ),
+            Div(
+                Div('email', css_class='col-md-6'),
+                Div('gender', css_class='col-md-6'),
+                css_class='row'
+            ),
+            Div(
+                Div('DOB', css_class='col-md-6'),
+                Div('DL_date', css_class='col-md-6'),
+                css_class='row'
+            ),
+            Div(
+                Div('adr_street', css_class='col-md-12'),
+                css_class='row'
+            ),
+            Div(
+                Div('adr_zip', css_class='col-md-4'),
+                Div('adr_city', css_class='col-md-4'),
+                Div('adr_country', css_class='col-md-4'),
+                css_class='row'
+            ),
+            Div(
+                Div('phone', css_class='col-md-6'),
+                Div('contactable', css_class='col-md-6'),
+                css_class='row'
+            ),
+            
+        )
+
     last_name = forms.CharField(label='Last Name', min_length=3, max_length= 40, validators=[AlphanumericValidator])   
     DOB = forms.DateField(widget=forms.TextInput(attrs={'type': 'date'}),required=True, label="Birthday")
     DL_date = forms.DateField(widget=forms.TextInput(attrs={'type': 'date'}),required=True, label="Driver's License Date")
