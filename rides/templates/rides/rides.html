@@ -60,21 +60,34 @@
                                 <div class="grid gap-3">
                                     <!-- add vehicle thumbnail icon based on type-->
                                     {% if t.vehicle.type == 3%}
-                                    <span class="icon"><i class="fa-solid fa-van-shuttle"></i></span>
+                                        <span class="icon"><i class="fa-solid fa-van-shuttle"></i></span>
                                     {% elif t.vehicle.type == 4 %}
-                                    <span class="icon"><i class="fa-solid fa-truck-pickup"></i></span>
+                                        <span class="icon"><i class="fa-solid fa-truck-pickup"></i></span>
                                     {% elif t.vehicle.type == 5 %}
-                                    <span class="icon"><i class="fa-solid fa-bus"></i></span>
+                                        <span class="icon"><i class="fa-solid fa-bus"></i></span>
                                     {% elif t.vehicle.type == 6 %}
-                                    <span class="icon"><i class="fa-solid fa-truck"></i></span>
+                                        <span class="icon"><i class="fa-solid fa-truck"></i></span>
                                     {% else %}
-                                    <span class="icon"><i class="fa-solid fa-car"></i></span>
+                                        <span class="icon"><i class="fa-solid fa-car"></i></span>
                                     {% endif %}
 
                                     <span class="ms-3" id="depart">{{t.depart.city}}</span>
-                                    <span class="ms-3 me-3">></span>
+
+                                    <!-- select symbol for recurring and direction of trip-->
+                                    {% if t.recurring == False and t.direction == 0 %}
+                                        <span><i class="fa-solid fa-angle-right"></i></span>
+                                    {% elif t.recurring == True and t.direction == 0 %}
+                                        <span><i class="fa-solid fa-angles-right"></i></span>
+                                    {% elif t.recurring == False and t.direction == 1 %}
+                                        <span><i class="fa-solid fa-angle-left"></i><i class="fa-solid fa-angle-right"></i></span>
+                                    {% elif t.recurring == True and t.direction == 1 %}
+                                        <span><i class="fa-solid fa-angles-left"></i><i class="fa-solid fa-angles-right"></i></span>
+                                    {% endif %}
+                                    
                                     <span>{{t.destination.city}}</span>
 
+                                    <span>{{t.recurring}} {{t.direction}}</span>
+                                    
                                     <!-- add electic plug icon based for electric and hybrid-->
                                     {% if t.vehicle.engine == 2 %}
                                     <span class="ms-3"><i class="fa-solid fa-plug"></i></span>
