@@ -1,5 +1,5 @@
 from django import forms
-from .models import CustomUser, Vehicle
+from .models import CustomUser, Vehicle, Trip
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Submit, Layout, Div
 from django.core.validators import RegexValidator
@@ -129,4 +129,26 @@ class VehicleForm(forms.ModelForm):
             self.fields['status'].initial = instance.status
 
     
+class TripForm(forms.ModelForm):
+    """
+    Form class for offered rides 
+    """
+    helper = FormHelper()
+    helper.layout = Layout(
+        Div(
+                Div('region', css_class='col-md-6'),
+                Div('trip_date', css_class='col-md-6'),
+                css_class='row'
+            ),
+            
+        )
+
+    class Meta:
+        model = Trip
+        
+        fields ='__all__'
+
+    def __init__(self, *args, **kwargs):
+        super(TripForm, self).__init__(*args, **kwargs)
+        instance = kwargs.get('instance')
    

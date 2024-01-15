@@ -1,20 +1,27 @@
 from django.shortcuts import render, HttpResponse, get_object_or_404, reverse, redirect
 from django.views.generic import ListView
-from rides.models import CustomUser, Vehicle
+from rides.models import CustomUser, Vehicle, Trip
 from django.contrib import messages
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
-from rides.forms import UserForm, VehicleForm
+from rides.forms import UserForm, VehicleForm, TripForm
 from datetime import date
 
-# Create your views here.
+# -------------------------------------------------------
 def rides(request):
+    form = TripForm()
+    trips = Trip.objects.all()
+
     context = {
-        "username": request.user
+        "username": request.user,
+        "form": form,
+        "trips": trips,
     }
     return render(request, 'rides/rides.html', context)
 
 
+
+# -------------------------------------------------------
 def hitches(request):
     context = {
         "username": request.user
@@ -22,12 +29,16 @@ def hitches(request):
     return render(request, 'rides/hitches.html', context)
 
 
+
+# -------------------------------------------------------
 def about(request):
     context = {
         "username": request.user
     }
     return render(request, 'rides/about.html', context)
 
+
+# -------------------------------------------------------
 @login_required
 def profile(request):
     
@@ -56,6 +67,8 @@ def profile(request):
     }
     return render(request, 'rides/user_profile.html', context)
 
+
+# -------------------------------------------------------
 @login_required
 def trips(request):
     
@@ -65,6 +78,8 @@ def trips(request):
     return render(request, 'rides/user_trips.html', context)
 
 
+
+# -------------------------------------------------------
 @login_required
 def vehicles(request):
     form = VehicleForm()

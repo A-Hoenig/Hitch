@@ -163,7 +163,7 @@ class Trip(models.Model):
     note = models.CharField(max_length=150, null=True, blank=True)
     direction = models.IntegerField(choices=DIRECTION, default=0)
     return_time = models.TimeField(null=True, blank=True)
-    recurring = models.IntegerField(choices=YES_NO, default=0)
+    recurring = models.BooleanField(choices=YES_NO, default=0)
     mon = models.BooleanField(default=False)
     tue = models.BooleanField(default=False)
     wed = models.BooleanField(default=False)
