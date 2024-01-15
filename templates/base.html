@@ -56,6 +56,12 @@
                     <a class="nav-link {% if request.path == hitches_url %} active" aria-current="page{% endif %}"
                         href="{% url 'hitches' %}">Hitches</a>
                 </li>
+                {% if user.is_authenticated %}
+                <li class="nav-item">
+                    <a class="nav-link {% if request.path == user_trips_url %} active" aria-current="page{% endif %}"
+                        href="{% url 'user_trips' %}">Your Trips</a>
+                </li>
+                {% endif %}
             </ul>
             <ul class="nav navbar-nav ml-auto w-100 justify-content-end">
                 {% if user.is_authenticated %}

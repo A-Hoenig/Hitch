@@ -105,3 +105,11 @@ def vehicles(request):
 
     return render(request, 'rides/vehicles.html', context)
 
+@login_required
+def trips(request):
+    
+    context = {
+        "username": request.user
+    }
+    return render(request, 'rides/user_trips.html', context)
+

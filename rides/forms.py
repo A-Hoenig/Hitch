@@ -65,7 +65,6 @@ class VehicleForm(forms.ModelForm):
                 Div('status', css_class='col-md-6'),
                 css_class='row'
             ),
-            
         )
 
     class Meta:
