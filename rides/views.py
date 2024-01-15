@@ -3,9 +3,8 @@ from django.views.generic import ListView
 from rides.models import CustomUser, Vehicle
 from django.contrib import messages
 from django.contrib.auth.models import User
-from django.contrib.auth.views import PasswordChangeView
 from django.contrib.auth.decorators import login_required
-from rides.forms import UserForm, VehicleForm, PictureForm
+from rides.forms import UserForm, VehicleForm
 from datetime import date
 
 # Create your views here.

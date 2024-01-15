@@ -101,8 +101,9 @@
                                 <h2 class="accordion-header">
                                     <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
                                         data-bs-target="#flush-collapse{{v.id}}" aria-expanded="false"
-                                        aria-controls="flush-collapseOne">
+                                        aria-controls="flush-collapse{{v.id}}">
                                         <div class="grid gap-3">
+                                            <!-- add vehicle thumbnail icon based on type-->
                                             {% if v.type == 3%}
                                             <span class="icon"><i class="fa-solid fa-van-shuttle"></i></span>
                                             {% elif v.type == 4 %}
@@ -118,6 +119,8 @@
                                             <span class="ms-3" id="model">{{v.make}}</span>
                                             <span class="ms-3 me-3">|</span>
                                             <span>{{v.model}}</span>
+
+                                            <!-- add electic plug icon based for electric and hybrid-->
                                             {% if v.engine == 2 %}
                                             <span class="ms-3"><i class="fa-solid fa-plug"></i></span>
                                             {% endif %}

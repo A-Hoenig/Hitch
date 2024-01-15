@@ -52,11 +52,11 @@ class UserForm(forms.ModelForm):
             ),
                          
         )
-
+    
     last_name = forms.CharField(label='Last Name', min_length=3, max_length= 40, validators=[AlphanumericValidator])   
     DOB = forms.DateField(widget=forms.TextInput(attrs={'type': 'date'}),required=True, label="Birthday")
     DL_date = forms.DateField(widget=forms.TextInput(attrs={'type': 'date'}),required=True, label="Driver's License Date")
-    email = forms.EmailField(max_length=64, widget=forms.TextInput(attrs={}), required=True)
+    email = forms.EmailField(max_length=64, widget=forms.TextInput(attrs={'readonly':'readonly'}), required=True)
 
     class Meta:
         model = CustomUser
@@ -75,12 +75,6 @@ class UserForm(forms.ModelForm):
             'phone',
             'contactable',
             ]
-
-
-class PictureForm(forms.ModelForm):
-    class Meta:
-        model = CustomUser
-        fields = ['user_image']     
 
 
 class VehicleForm(forms.ModelForm):
