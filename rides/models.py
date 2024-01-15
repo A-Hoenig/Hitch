@@ -7,6 +7,7 @@ from django.http import HttpResponse
 from django.utils.html import format_html
 from django.core.validators import RegexValidator
 from hitch import settings
+from cloudinary.models import CloudinaryField
 
 
 
@@ -58,6 +59,7 @@ class CustomUser(AbstractUser):
     phone = models.CharField(max_length=15, verbose_name="Phone Number")
     DL_date = models.DateField(default=None, blank=True, null=True, verbose_name="Driver's License Date")
     contactable = models.BooleanField(choices=YES_NO, default=0)
+    user_image = CloudinaryField('image', default='placeholder')
 
 
 class Region(models.Model):

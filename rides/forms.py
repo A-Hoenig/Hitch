@@ -50,7 +50,7 @@ class UserForm(forms.ModelForm):
                 Div('contactable', css_class='col-md-6'),
                 css_class='row'
             ),
-            
+                         
         )
 
     last_name = forms.CharField(label='Last Name', min_length=3, max_length= 40, validators=[AlphanumericValidator])   
@@ -75,6 +75,13 @@ class UserForm(forms.ModelForm):
             'phone',
             'contactable',
             ]
+
+
+class PictureForm(forms.ModelForm):
+    class Meta:
+        model = CustomUser
+        fields = ['user_image']     
+
 
 class VehicleForm(forms.ModelForm):
     """
@@ -128,4 +135,4 @@ class VehicleForm(forms.ModelForm):
             self.fields['status'].initial = instance.status
 
     
-            
+   

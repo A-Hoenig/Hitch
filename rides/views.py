@@ -4,7 +4,7 @@ from rides.models import CustomUser, Vehicle
 from django.contrib import messages
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
-from rides.forms import UserForm, VehicleForm
+from rides.forms import UserForm, VehicleForm, PictureForm
 from datetime import date
 
 # Create your views here.
@@ -78,7 +78,6 @@ def vehicles(request):
         age = None
 
     if request.method == "POST":
-        
         if 'save' in request.POST:
             form = VehicleForm(request.POST)
             form.instance.owner = request.user
@@ -95,25 +94,14 @@ def vehicles(request):
             print(f'....starting update for {pk}')
             vehicle = Vehicle.objects.get(id=pk)
             post_data = request.POST.copy()
+            form = VehicleForm(request.POST, instance=vehicle)
 
-            if 'type' in post_data:
-                # Exclude non-editable fields from cleaned_data during validation
-                form = VehicleForm(post_data, instance=vehicle)
-                form.fields['type'].required = False
-                form.fields['engine'].required = False
-                form.fields['max_pax'].required = False
-            else:
-                # For new entries, use the form without excluding fields
-                form = VehicleForm(request.POST, instance=vehicle)
-            
-            
-            
             if form.is_valid():
-                
                 form.save()
                 messages.success(request, 'Vehicle updated sucessfully!')
 
         return redirect('vehicles')
+
     else:
         form = VehicleForm()
         # vehicles owned by the user
@@ -135,6 +123,4 @@ def vehicles(request):
         }
 
     return render(request, 'rides/vehicles.html', context)
-
-
 
