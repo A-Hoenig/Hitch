@@ -94,10 +94,13 @@
                 <div class="card-body mx-0 px-0">
 
                     <div class="accordion" id="VehicleAccordionList">
-
+                        
+                        <!-- loop through each vehile in the db-->
                         {% for v, form in vehicles %}
                         <form method="post">
                             {% csrf_token %}
+
+                            <!-- accordion header row starts here-->
                             <div class="accordion-item">
                                 <h2 class="accordion-header">
                                     <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
@@ -143,17 +146,17 @@
 
                                             <button type="submit" name="update" value="{{ v.id }}"
                                                 id="submitBtn-{{ v.id }}" class="btn btn-primary">
-                                                Update {{ v.id }}
+                                                Update
                                             </button>
 
                                             <button type="button" class="btn btn-danger" id="update-{{ v.id }}"
                                                 onclick="revealDelete('{{ v.id }}')">
-                                                Delete {{ v.id }}
+                                                Delete
                                             </button>
 
                                             <button type="submit" class="btn btn-danger d-none"
                                                 id="deleteBtn-{{ v.id }}" name="delete" value="{{ v.id }}">
-                                                Confirm Delete {{ v.id }}
+                                                Confirm Delete
                                             </button>
 
                                         </form>
