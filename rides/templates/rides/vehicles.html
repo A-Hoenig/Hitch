@@ -54,11 +54,11 @@
     <div class="row">
         <div class="col-12 bg-light">
             <div class="p-3">
-              USER PROFILE <span class="text-primary">{{ username }} ({{ age }})</span>
+                USER PROFILE <span class="text-primary">{{ username }} ({{ age }})</span>
             </div>
         </div>
     </div>
-  </div>
+</div>
 
 <div class="container-xl px-4 mt-4">
     <!-- Account page navigation-->
@@ -75,7 +75,7 @@
             <a class="btn btn-outline-success" href="?status=True">Active</a>
             <a class="btn btn-outline-secondary" href="?status=False">Inactive</a>
             <a class="btn btn-outline-primary" href="?status=">All</a>
-            <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#exampleModal"
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal"
                 data-bs-whatever="Edit">
                 Add Vehicle
             </button>
@@ -92,11 +92,12 @@
 
                 <!-- build list of users vehicles -->
                 <div class="card-body mx-0 px-0">
-                    <form method="post">
-                        {% csrf_token %}
+
+                    <div class="accordion" id="VehicleAccordionList">
 
                         {% for v, form in vehicles %}
-                        <div class="accordion" id="accordionFlushExample">
+                        <form method="post">
+                            {% csrf_token %}
                             <div class="accordion-item">
                                 <h2 class="accordion-header">
                                     <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
@@ -132,7 +133,7 @@
                                 </h2>
                                 <!-- drop down details form-->
                                 <div id="flush-collapse{{v.id}}" class="accordion-collapse collapse"
-                                    data-bs-parent="#accordionFlushExample">
+                                    data-bs-parent="#VehicleAccordionList">
                                     <div class="accordion-body">
 
                                         <form novalidate class="form-horizontal" action="{% url 'vehicles' %}"
@@ -141,11 +142,11 @@
                                             {% crispy form %}
 
                                             <button type="submit" name="update" value="{{ v.id }}"
-                                                class="btn btn-primary">
+                                                id="submitBtn-{{ v.id }}" class="btn btn-primary">
                                                 Update {{ v.id }}
                                             </button>
 
-                                            <button type="button" class="btn btn-danger" id="updateBtn-{{ v.id }}"
+                                            <button type="button" class="btn btn-danger" id="update-{{ v.id }}"
                                                 onclick="revealDelete('{{ v.id }}')">
                                                 Delete {{ v.id }}
                                             </button>
@@ -160,12 +161,13 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        {% endfor %}
 
-                    </form>
+                            {% endfor %}
+                        </form>
+                    </div>
                 </div>
             </div>
+
 
         </div>
         <div class="col-md-4">

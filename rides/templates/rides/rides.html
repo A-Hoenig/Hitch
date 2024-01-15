@@ -83,25 +83,14 @@
                                         <td>Otto</td>
                                         <td>@mdo</td>
                                     </tr>
-                                    <tr>
-                                        <th scope="row">2</th>
-                                        <td>Jacob</td>
-                                        <td>Thornton</td>
-                                        <td>@fat</td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row">3</th>
-                                        <td>Larry the Bird</td>
-                                        <td>@twitter</td>
-                                        <td>@mdo</td>
-                                    </tr>
+                                 
                                 </tbody>
                             </table>
                             {% if user.is_authenticated %}
                             <div class="col">
-                                <button type="button" class="btn btn-primary mb-3" data-bs-toggle="modal"
+                                <a type="button" class="btn btn-primary mb-3" data-bs-toggle="modal"
                                     data-bs-target="#exampleModal" data-bs-whatever="@gest">Request to Hitch a
-                                    Ride!</button>
+                                    Ride!</a>
                             </div>
                             {% else%}
                             <div class="col">

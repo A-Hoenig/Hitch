@@ -1,35 +1,26 @@
+// add specific event listener to submit buttons inside accordions
 document.addEventListener('DOMContentLoaded', function() {
-    // Get all the anchor tags inside the accordion
-    var accordionLinks = document.querySelectorAll('.accordion a');
-  
-    // Add a click event listener to each anchor tag
-    accordionLinks.forEach(function(link) {
-      link.addEventListener('click', function(event) {
-        console.log('function ran')
-        // Prevent the default action of the link - no accordion
-        event.preventDefault();
-        // Open the link's URL in the current tab
-        window.location.href = link.getAttribute('href');
-      });
+  // Get all the ids containing Btn tags inside the accordion
+  var accordionLinks = document.querySelectorAll('.accordion-body [id*="Btn"]');
+
+  // Add a click event listener to each button with ID containing 'Btn'
+  accordionLinks.forEach(function(link) {
+    link.removeEventListener('click', preventDefaultAction); // Remove the preventDefault event listener
+    link.addEventListener('click', function(event) {
     });
   });
 
-const exampleModal = document.getElementById('exampleModal')
-if (exampleModal) {
-  exampleModal.addEventListener('show.bs.modal', event => {
-    // Button that triggered the modal
-    const button = event.relatedTarget
-    // Extract info from data-bs-* attributes
-    const recipient = button.getAttribute('data-bs-whatever')
-    // If necessary, you could initiate an Ajax request here
-    // and then do the updating in a callback.
+  // function to prevent the default action
+  function preventDefaultAction(event) {
+    event.preventDefault();
+  }
+});
 
-    // Update the modal's content.
-    const modalTitle = exampleModal.querySelector('.modal-title')
-    const modalBodyInput = exampleModal.querySelector('.modal-body input')
-
-    modalTitle.textContent = `New message to ${recipient}`
-    modalBodyInput.value = recipient
-  })
-}
-
+document.addEventListener('DOMContentLoaded', function() {
+  var accordions = document.querySelectorAll('.accordion');
+  accordions.forEach(function(accordion) {
+      new bootstrap.Collapse(accordion, {
+          toggle: false // If you don't want to automatically close others when one is opened
+      });
+  });
+});
