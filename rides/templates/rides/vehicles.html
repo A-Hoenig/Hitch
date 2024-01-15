@@ -49,29 +49,36 @@
 </div>
 <!-- END MODAL-->
 
-<!-- <h1 class="text-center">YOUR VEHICLES</h1> -->
-<div class="alert alert-dark text-center d-flex justify-content-between" role="alert">
-    <h1>YOUR VEHICLES</h1>
-    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal"
-            data-bs-whatever="Edit">
-            Add Vehicle
-        </button>
-</div>
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12 bg-light">
+            <div class="p-3">
+              USER PROFILE <span class="text-primary">{{ username }} ({{ age }})</span>
+            </div>
+        </div>
+    </div>
+  </div>
+
 <div class="container-xl px-4 mt-4">
     <!-- Account page navigation-->
-    <nav class="nav nav-borders">
-        <a class="nav-link active ms-2" href="{% url 'user_profile' %}">Profile</a>
-        <a class="nav-link" href="" target="__blank">Vehicles</a>
+    <nav class="nav nav-borders nav-tabs mb-2">
+        <a class="nav-link ms-2" href="{% url 'user_profile' %}">Profile</a>
+        <a class="nav-link active " href="" target="__blank">Vehicles</a>
 
     </nav>
-    <hr class="mt-0 mb-4">
+    <!-- <hr class="mt-0 mb-4"> -->
     <Div class="mb-3">
-        
+
         <div>
             <span><strong>FILTER:</strong></span>
             <a class="btn btn-outline-success" href="?status=True">Active</a>
             <a class="btn btn-outline-secondary" href="?status=False">Inactive</a>
             <a class="btn btn-outline-primary" href="?status=">All</a>
+            <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#exampleModal"
+                data-bs-whatever="Edit">
+                Add Vehicle
+            </button>
         </div>
     </Div>
 

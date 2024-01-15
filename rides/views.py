@@ -69,7 +69,14 @@ def trips(request):
 def vehicles(request):
     form = VehicleForm()
     filter_value = request.GET.get('status')
-    
+    # Check if the user has a Date of Birth set
+    if request.user.DOB:
+        today = date.today()
+        born = request.user.DOB
+        age = today.year - born.year - ((today.month, today.day) < (born.month, born.day))
+    else:
+        age = None
+
     if request.method == "POST":
         
         if 'save' in request.POST:
@@ -77,10 +84,12 @@ def vehicles(request):
             form.instance.owner = request.user
             if form.is_valid():
                 form.save()
+                messages.success(request, 'Vehicle added sucessfully!')
         elif 'delete' in request.POST:
             pk = request.POST.get('delete')
             vehicle = Vehicle.objects.get(id=pk)
             vehicle.delete()
+            messages.success(request, 'Vehicle deleted sucessfully!')
         elif 'update' in request.POST:
             pk = request.POST.get('update')
             print(f'....starting update for {pk}')
@@ -97,12 +106,12 @@ def vehicles(request):
                 # For new entries, use the form without excluding fields
                 form = VehicleForm(request.POST, instance=vehicle)
             
-            print(form.is_valid())
-            print(form.errors)
+            
             
             if form.is_valid():
-                print('form saving...')
+                
                 form.save()
+                messages.success(request, 'Vehicle updated sucessfully!')
 
         return redirect('vehicles')
     else:
@@ -122,6 +131,7 @@ def vehicles(request):
             "username": request.user,
             "form": form,
             "vehicles": zip(vehicles, forms),
+            "age": age,
         }
 
     return render(request, 'rides/vehicles.html', context)
