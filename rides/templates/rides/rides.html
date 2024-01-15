@@ -46,7 +46,7 @@
 
             <div class="accordion" id="RidesAccordionList">
 
-                <!-- loop through each vehile in the db-->
+                <!-- loop through each vehicle in the db-->
                 {% for t, form in trips %}
                 <form method="post">
                     {% csrf_token %}
@@ -71,15 +71,15 @@
                                     <span class="icon"><i class="fa-solid fa-car"></i></span>
                                     {% endif %}
 
-                                    <span class="ms-3" id="depart">{{t.depart}}</span>
+                                    <span class="ms-3" id="depart">{{t.depart.city}}</span>
                                     <span class="ms-3 me-3">></span>
-                                    <span>{{t.destination}}</span>
+                                    <span>{{t.destination.city}}</span>
 
                                     <!-- add electic plug icon based for electric and hybrid-->
-                                    {% if t.engine == 2 %}
+                                    {% if t.vehicle.engine == 2 %}
                                     <span class="ms-3"><i class="fa-solid fa-plug"></i></span>
                                     {% endif %}
-                                    {% if t.engine == 3 %}
+                                    {% if t.vehicle.engine == 3 %}
                                     <span class="ms-3"><i class="fa-solid fa-plug"></i></span>
                                     {% endif %}
                                 </div>
