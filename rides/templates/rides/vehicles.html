@@ -84,7 +84,7 @@
                 </div>
 
                 <!-- build list of users vehicles -->
-                <div class="card-body">
+                <div class="card-body mx-0 px-0">
                     <form method="post">
                         {% csrf_token %}
 
@@ -132,7 +132,7 @@
 
                                             <button type="submit" name="update" value="{{ v.id }}"
                                                 class="btn btn-primary">
-                                                Update
+                                                Update {{ v.id }}
                                             </button>
 
                                             <button type="button" class="btn btn-danger" id="updateBtn-{{ v.id }}"
@@ -142,7 +142,7 @@
 
                                             <button type="submit" class="btn btn-danger d-none"
                                                 id="deleteBtn-{{ v.id }}" name="delete" value="{{ v.id }}">
-                                                Confirm Delete
+                                                Confirm Delete {{ v.id }}
                                             </button>
 
                                         </form>

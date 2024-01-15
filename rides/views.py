@@ -43,6 +43,14 @@ def profile(request):
     }
     return render(request, 'rides/user_profile.html', context)
 
+@login_required
+def trips(request):
+    
+    context = {
+        "username": request.user
+    }
+    return render(request, 'rides/user_trips.html', context)
+
 
 @login_required
 def vehicles(request):
@@ -61,8 +69,8 @@ def vehicles(request):
             vehicle = Vehicle.objects.get(id=pk)
             vehicle.delete()
         elif 'update' in request.POST:
-            print('....starting update')
             pk = request.POST.get('update')
+            print(f'....starting update for {pk}')
             vehicle = Vehicle.objects.get(id=pk)
             post_data = request.POST.copy()
 
@@ -89,10 +97,10 @@ def vehicles(request):
         # vehicles owned by the user
         if filter_value in ['True', 'False']:
             filter_value = filter_value == 'True'
-            vehicles = Vehicle.objects.filter(owner=request.user, status=filter_value)
+            vehicles = Vehicle.objects.filter(owner=request.user, status=filter_value).order_by('make')
         else:
             # Empty value = 'All'
-            vehicles = Vehicle.objects.filter(owner=request.user)
+            vehicles = Vehicle.objects.filter(owner=request.user).order_by('make')
             
         # Create a list of forms for each vehicle instance
         forms = [VehicleForm(instance=vehicle) for vehicle in vehicles]
@@ -105,11 +113,5 @@ def vehicles(request):
 
     return render(request, 'rides/vehicles.html', context)
 
-@login_required
-def trips(request):
-    
-    context = {
-        "username": request.user
-    }
-    return render(request, 'rides/user_trips.html', context)
+
 
