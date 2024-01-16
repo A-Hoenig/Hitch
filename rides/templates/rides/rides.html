@@ -58,118 +58,113 @@
                                 data-bs-target="#flush-collapse{{t.id}}" aria-expanded="false"
                                 aria-controls="flush-collapse{{t.id}}">
 
-                                
 
-                                <div class="container">
-                                    <div class="row mb-1">
-                                      <!-- Depart -->
-                                      <div class=" col-3 bg-light fs-4">{{t.depart.city}}</div>
-                                      <!-- Trip Arrows -->
-                                      <div class=" col-1 text-center fs-4">
-                                            {% if t.recurring == False and t.direction == 0 %}
-                                                <span><i class="fa-solid fa-angle-right"></i></span>
-                                            {% elif t.recurring == True and t.direction == 0 %}
-                                                <span><i class="fa-solid fa-angles-right"></i></span>
-                                            {% elif t.recurring == False and t.direction == 1 %}
-                                                <span><i class="fa-solid fa-angle-left"></i><i class="fa-solid fa-angle-right"></i></span>
-                                            {% elif t.recurring == True and t.direction == 1 %}
-                                                <span><i class="fa-solid fa-angles-left"></i><i class="fa-solid fa-angles-right"></i></span>
-                                            {% endif %}
-                                      </div>
-                                      <!-- Destination -->
-                                      <div class=" col-3 bg-light fs-4">{{t.destination.city}}</div>
-                                      <!-- Depart Date -->
-                                      <div class=" col-1">TODAY</div>
-                                      <!-- Depart Time -->
-                                      <div class=" col-1">10:00 <span class="text-secondary">(±10)</span></div>
-                                      <!-- Vehicle Type Symbol -->
-                                      <div class=" col-1 text-center fs-4">
-                                            {% if t.vehicle.type == 3%}
-                                                <span class="icon"><i class="fa-solid fa-van-shuttle"></i></span>
-                                            {% elif t.vehicle.type == 4 %}
-                                                <span class="icon"><i class="fa-solid fa-truck-pickup"></i></span>
-                                            {% elif t.vehicle.type == 5 %}
-                                                <span class="icon"><i class="fa-solid fa-bus"></i></span>
-                                            {% elif t.vehicle.type == 6 %}
-                                                <span class="icon"><i class="fa-solid fa-truck"></i></span>
-                                            {% else %}
-                                                <span class="icon"><i class="fa-solid fa-car"></i></span>
-                                            {% endif %}
-                                      </div>
-                                      <!-- Smoking or No Smoking -->
-                                      <div class=" col-1 text-center fs-4 text-danger">
-                                        {% if t.vehicle.smoking == True %}
-                                            <i class="fa-solid fa-ban-smoking"></i> 
-                                        {% endif %}
-                                      </div>
-                                      <!-- Purpose of Trip -->
-                                      <div class=" col-1 text-center fs-4">
-                                        {{ t.purpose.purpose_icon|safe }}
-                                      </div>
-                                    </div>
-                                    
-                                    
-                                    <div class="row mb-1">
-                                      <div class=" col-7 text-center"></div>
-                                      <!-- <div class=" col-1 text-center">TUE</div>
-                                      <div class=" col-1 text-center">WED</div>
-                                      <div class=" col-1 text-center">THU</div>
-                                      <div class=" col-1 text-center">FRI</div>
-                                      <div class=" col-1 text-center">SAT</div>
-                                      <div class=" col-1 text-center">SUN</div> -->
-                                      <div class=" col-1 retrun"></div>
-                                      <div class=" col-1 time2">12:00</div>
-                                      <!-- <div class=" col-1 CAR">CAR</div> -->
-                                      <!-- <div class=" col-1 SMOKE">SMOKE</div>
-                                      <div class=" col-1 TYPE">TYPE</div> -->
-                                    </div>
+
+                                <div class="container px-1">
                                     <div class="row">
-                                      <div class=" col-12 message">
-                                        <i class="fa-regular fa-message"></i>
-                                        MESSAGE
+                                        <!-- Depart -->
+                                        <div class=" col-3 fs-4">{{t.depart.city}}</div>
+                                        <!-- Trip Arrows -->
+                                        <div class=" col-1 text-center fs-4">
+                                            {% if t.recurring == False and t.direction == 0 %}
+                                            <i class="fa-solid fa-angle-right"></i>
+                                            {% elif t.recurring == True and t.direction == 0 %}
+                                            <i class="fa-solid fa-angles-right"></i>
+                                            {% elif t.recurring == False and t.direction == 1 %}
+                                            <i class="fa-solid fa-angle-left"></i><i
+                                                class="fa-solid fa-angle-right"></i>
+                                            {% elif t.recurring == True and t.direction == 1 %}
+                                            <i class="fa-solid fa-angles-left"></i><i
+                                                class="fa-solid fa-angles-right"></i>
+                                            {% endif %}
+                                        </div>
+                                        <!-- Destination -->
+                                        <div class=" col-3 fs-4">{{t.destination.city}}</div>
+                                        <!-- Depart Date -->
+                                        <div class=" col-1">TODAY</div>
+                                        <!-- Depart Time -->
+                                        <div class=" col-1">10:00 <span class="text-secondary">(±10)</span></div>
+                                        <!-- Vehicle Type Symbol -->
+                                        <div class=" col-1 text-center fs-4 px-1">
+                                            {% if t.vehicle.type == 3%}
+                                            <span class="icon"><i class="fa-solid fa-van-shuttle"></i></span>
+                                            {% elif t.vehicle.type == 4 %}
+                                            <span class="icon"><i class="fa-solid fa-truck-pickup"></i></span>
+                                            {% elif t.vehicle.type == 5 %}
+                                            <span class="icon"><i class="fa-solid fa-bus"></i></span>
+                                            {% elif t.vehicle.type == 6 %}
+                                            <span class="icon"><i class="fa-solid fa-truck"></i></span>
+                                            {% else %}
+                                            <span class="icon"><i class="fa-solid fa-car"></i></span>
+                                            {% endif %}
+                                        </div>
+                                        <!-- Smoking or No Smoking -->
+                                        <div class=" col-1 text-center fs-4 text-danger px-1">
+                                            {% if t.vehicle.smoking == True %}
+                                            <i class="fa-solid fa-ban-smoking"></i>
+                                            {% endif %}
+                                        </div>
+                                        <!-- Purpose of Trip -->
+                                        <div class=" col-1 text-center fs-4 px-1">
+                                            {{ t.purpose.purpose_icon|safe }}
+                                        </div>
                                     </div>
+                                    <div class="row mb-1">
+                                        <div class=" col-7 text-center"></div>
+                                        
+                                        <div class=" col-1 retrun"></div>
+                                        <div class=" col-1 time2">12:00</div>
+                                       
                                     </div>
-                                  </div>
-                                  
+                                    {% if t.note %}
+                                    <div class="row">
+                                        <div class=" col-12 message">
+                                            <i class="fa-regular fa-message"></i>
+                                            {{ t.note }}
+                                        </div>
+                                    </div>
+                                    {% endif %}
                                 </div>
-                            </button>
-                        </h2>
-                        <!-- drop down details form-->
-                        <div id="flush-collapse{{t.id}}" class="accordion-collapse collapse"
-                            data-bs-parent="#RidesAccordionList">
-                            <div class="accordion-body">
 
-                                <form novalidate class="form-horizontal" action="{% url 'vehicles' %}" method="post"
-                                    autocomplete="off">
-                                    {% csrf_token %}
-                                    {{ t.region }}
+                    </div>
+                    </button>
+                    </h2>
+                    <!-- drop down details form-->
+                    <div id="flush-collapse{{t.id}}" class="accordion-collapse collapse"
+                        data-bs-parent="#RidesAccordionList">
+                        <div class="accordion-body">
 
-                                    {% if user.is_authenticated %}
-                                    <div class="col">
-                                        <button type="button" class="btn btn-primary mb-3" data-bs-toggle="modal"
-                                            data-bs-target="#exampleModal" data-bs-whatever="@gest">Request to Hitch a
-                                            Ride!</button>
-                                    </div>
-                                    {% else%}
-                                    <div class="col">
-                                        <a class="btn btn-primary mb-3" data-bs-toggle="collapse"
-                                            href="{% url 'account_login' %}" role=" button">Sign In to request a
-                                            ride</a>
-                                    </div>
-                                    {% endif%}
+                            <form novalidate class="form-horizontal" action="{% url 'vehicles' %}" method="post"
+                                autocomplete="off">
+                                {% csrf_token %}
+                                {{ t.region }}
 
-                                </form>
+                                {% if user.is_authenticated %}
+                                <div class="col">
+                                    <button type="button" class="btn btn-primary mb-3" data-bs-toggle="modal"
+                                        data-bs-target="#exampleModal" data-bs-whatever="@gest">Request to Hitch a
+                                        Ride!</button>
+                                </div>
+                                {% else%}
+                                <div class="col">
+                                    <a class="btn btn-primary mb-3" data-bs-toggle="collapse"
+                                        href="{% url 'account_login' %}" role=" button">Sign In to request a
+                                        ride</a>
+                                </div>
+                                {% endif%}
 
-                            </div>
+                            </form>
+
                         </div>
                     </div>
-
-                    {% endfor %}
-                </form>
             </div>
 
+            {% endfor %}
+            </form>
         </div>
+
     </div>
+</div>
 </div>
 
 
