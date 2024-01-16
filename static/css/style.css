@@ -24,3 +24,51 @@
  #deleteBtn {
    display: none !important;
  }
+
+ .container {  display: grid;
+   grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+   grid-template-rows: 1fr 1fr 1fr;
+   gap: 0px 0px;
+   grid-auto-flow: row;
+   grid-template-areas:
+     "FROM FROM FROM ARROW TO TO TO DATE TIME CAR SMOKE TYPE"
+     "mon tue wed thu fri sat sun retrun time2 CAR SMOKE TYPE"
+     "message message message message message message message message message message message message";
+ }
+ 
+ .FROM { grid-area: FROM; }
+ 
+ .ARROW { grid-area: ARROW; }
+ 
+ .TO { grid-area: TO; }
+ 
+ .DATE { grid-area: DATE; }
+ 
+ .TIME { grid-area: TIME; }
+ 
+ .CAR { grid-area: CAR; }
+ 
+ .SMOKE { grid-area: SMOKE; }
+ 
+ .TYPE { grid-area: TYPE; }
+ 
+ .mon { grid-area: mon; }
+ 
+ .tue { grid-area: tue; }
+ 
+ .wed { grid-area: wed; }
+ 
+ .thu { grid-area: thu; }
+ 
+ .fri { grid-area: fri; }
+ 
+ .sat { grid-area: sat; }
+ 
+ .sun { grid-area: sun; }
+ 
+ .retrun { grid-area: retrun; }
+ 
+ .time2 { grid-area: time2; }
+ 
+ .message { grid-area: message; }
+ 
