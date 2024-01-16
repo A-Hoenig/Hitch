@@ -60,11 +60,12 @@
 
                                 <!--------------------- TOP ROW ---------------------->
                                 <div class="container px-1">
-                                    <div class="row">
+                                    <div class="row d-flex justify-content-start">
                                         <!-- Depart -->
-                                        <div class=" col-3 fs-4">{{t.depart.city}}</div>
+                                        <div class="col-md-auto fs-4">{{t.depart.city}}</div>
+
                                         <!-- Trip Arrows -->
-                                        <div class=" col-1 text-center fs-4">
+                                        <div class="col-md-auto fs-4">
                                             {% if t.recurring == False and t.direction == 0 %}
                                             <i class="fa-solid fa-angle-right"></i>
                                             {% elif t.recurring == True and t.direction == 0 %}
@@ -77,49 +78,54 @@
                                                 class="fa-solid fa-angles-right"></i>
                                             {% endif %}
                                         </div>
+
                                         <!-- Destination -->
-                                        <div class=" col-3 fs-4">{{t.destination.city}}</div>
+                                        <div class="col-md-auto fs-4">{{t.destination.city}}</div>
+
+
                                         <!-- Depart Date -->
-                                        <div class=" col-1">TODAY</div>
-                                        <!-- Depart Time -->
-                                        <div class=" col-1">10:00 <span class="text-secondary">(±10)</span></div>
-                                        <div class=" col-1"></div>
-                                        <!-- Vehicle Type Symbol -->
-                                        <div class=" col-1 text-center fs-4 px-1">
-                                            {% if t.vehicle.type == 3%}
-                                            <span class="icon"><i class="fa-solid fa-van-shuttle"></i></span>
-                                            {% elif t.vehicle.type == 4 %}
-                                            <span class="icon"><i class="fa-solid fa-truck-pickup"></i></span>
-                                            {% elif t.vehicle.type == 5 %}
-                                            <span class="icon"><i class="fa-solid fa-bus"></i></span>
-                                            {% elif t.vehicle.type == 6 %}
-                                            <span class="icon"><i class="fa-solid fa-truck"></i></span>
-                                            {% else %}
-                                            <span class="icon"><i class="fa-solid fa-car"></i></span>
-                                            {% endif %}
+                                        <div class="col-md-auto my-1">
+                                            <span>
+                                                <div>
+                                                    {{ t.trip_date }} {{ t.depart_time }} <span class="text-secondary">(±{{t.depart_window}})</span>
+                                                </div>
+                                                {% if t.direction == 1 %}
+                                                <div>
+                                                    RETURN {{ t.return_time }}
+                                                </div>
+                                                {% endif %}
+                                            </span>
                                         </div>
 
-                                        <div class="col-2 ">
-
+                                        <!-- Trip Symbols -->
+                                        <div class="col-md-auto fs-4 px-1">
+                                            <span class="mx-1">
+                                                {% if t.vehicle.type == 3%}
+                                                <span class="icon"><i class="fa-solid fa-van-shuttle"></i></span>
+                                                {% elif t.vehicle.type == 4 %}
+                                                <span class="icon"><i class="fa-solid fa-truck-pickup"></i></span>
+                                                {% elif t.vehicle.type == 5 %}
+                                                <span class="icon"><i class="fa-solid fa-bus"></i></span>
+                                                {% elif t.vehicle.type == 6 %}
+                                                <span class="icon"><i class="fa-solid fa-truck"></i></span>
+                                                {% else %}
+                                                <span class="icon"><i class="fa-solid fa-car"></i></span>
+                                                {% endif %}
+                                            </span>
+                                            <span class="mx-1">
+                                                {{ t.purpose.purpose_icon|safe }}
+                                            </span>
+                                            <span class="mx-1">
+                                                <!-- Smoking or No Smoking -->
+                                                {% if t.vehicle.smoking == True %}
+                                                <i class="fa-solid fa-ban-smoking text-danger fs-4"></i>
+                                                {% endif %}
+                                            </span>
                                         </div>
-                                        
-                                    </div>
-
-                                    <!--------------------- MIDDLE ROW ---------------------->
-                                    <div class="row mb-1">
-                                        <div class=" col-7 text-center"></div>
-                                        <div class=" col-1 "></div>
-                                        <div class=" col-1 ">12:00</div>
-                                        <div class=" col-1 "></div>
-                                        <div class=" col-1 fs-4 text-center">{{ t.purpose.purpose_icon|safe }}</div>
-
                                     </div>
                                     <!--------------------- BOTTOM ROW ---------------------->
-                                    <div class="row">
-                                        <!-- Smoking or No Smoking -->
-                                        {% if t.vehicle.smoking == True %}
-                                        <i class="fa-solid fa-ban-smoking text-danger"></i>
-                                        {% endif %}
+                                    <div class="row  d-flex justify-content-start">
+
                                         <!-- Display any notes from driver -->
                                         {% if t.note %}
                                         <div class=" col-12 message">

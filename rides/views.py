@@ -11,7 +11,7 @@ from datetime import date
 def rides(request):
     
     form = TripForm()
-    trips =Trip.objects.all()
+    trips =Trip.objects.all().order_by("trip_date")
         
     # Create a list of forms for each trip instance
     forms = [TripForm(instance=trip) for trip in trips]
