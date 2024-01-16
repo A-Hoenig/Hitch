@@ -1,26 +1,35 @@
 from django.shortcuts import render, HttpResponse, get_object_or_404, reverse, redirect
 from django.utils import timezone
 from django.views.generic import ListView
-from rides.models import CustomUser, Vehicle, Trip
+from rides.models import CustomUser, Vehicle, Trip, Region
 from django.contrib import messages
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
-from rides.forms import UserForm, VehicleForm, TripForm, RegionForm
+from rides.forms import UserForm, VehicleForm, TripForm, RegionFilter
 from datetime import date
 
 # -------------------------------------------------------
 def rides(request):
     
     form = TripForm()
-    trips =Trip.objects.filter(trip_date__gte=timezone.now().date()).order_by("trip_date")
-        
+    region_selector_form = RegionFilter(request.GET)
+    region_selected = None
+
+    if region_selector_form.is_valid():
+        region_selected = region_selector_form.cleaned_data['region']
+    else:
+        region_selected = 1
+
+    trips =Trip.objects.filter(region=region_selected).filter(trip_date__gte=timezone.now().date()).order_by("trip_date")
+
     # Create a list of forms for each trip instance
     forms = [TripForm(instance=trip) for trip in trips]
-
+    
     context = {
         "username": request.user,
         "form": form,
         "trips": zip(trips, forms),
+        
     }
 
     return render(request, 'rides/rides.html', context)

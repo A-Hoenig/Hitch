@@ -4,13 +4,18 @@
 {% url 'about' as about_url %}
 
 
+
 {% block content %}
 <div class="container-fluid">
     <div class="row">
         <div class="col-12 bg-light">
-            <div class="p-3">
-                UPCOMING RIDES <span>{{ form.region|as_crispy_field }}</span>
-            </div>
+            <form>
+                <div>
+                    UPCOMING RIDES <span>
+                        <div>{{ form.region|as_crispy_field }}</div>
+                    </span>
+                </div>
+            </form>
         </div>
     </div>
 </div>
@@ -89,7 +94,12 @@
                                         <div class="col-md-auto my-1">
                                             <span>
                                                 <div>
-                                                    {{ t.trip_date }} {{ t.depart_time }} <span class="text-secondary">(±{{t.depart_window}})</span>
+                                                    {{ t.trip_date }} {{ t.depart_time }}
+                                                    {% if t.depart_window != None %}
+                                                    <span class="text-secondary">
+                                                        (±{{t.depart_window}})
+                                                    </span>
+                                                    {% endif %}
                                                 </div>
                                                 {% if t.direction == 1 %}
                                                 <div>
@@ -121,6 +131,8 @@
                                                 <!-- Smoking or No Smoking -->
                                                 {% if t.vehicle.smoking == True %}
                                                 <i class="fa-solid fa-ban-smoking text-danger fs-4"></i>
+                                                {% else %}
+                                                <i class="fa-solid fa-smoking"></i>
                                                 {% endif %}
                                             </span>
                                         </div>
