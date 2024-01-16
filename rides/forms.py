@@ -158,12 +158,3 @@ class TripForm(forms.ModelForm):
         self.fields['depart_window'].widget = forms.TimeInput(format='%H:%M')
    
 
-
-class RegionFilter(forms.ModelForm):
-    
-    region = forms.ModelChoiceField(queryset=Region.objects.values_list('region', flat=True).distinct())
-    
-    class Meta:
-        model = Region
-        
-        fields = ['region',]
