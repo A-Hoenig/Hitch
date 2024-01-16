@@ -20,7 +20,19 @@ document.addEventListener('DOMContentLoaded', function() {
   var accordions = document.querySelectorAll('.accordion');
   accordions.forEach(function(accordion) {
       new bootstrap.Collapse(accordion, {
-          toggle: false // If you don't want to automatically close others when one is opened
+          toggle: false
       });
   });
+});
+
+document.addEventListener('DOMContentLoaded', function () {
+  var form = document.getElementById('filterForm');
+  var regionDropdown = form.querySelector('#id_selected_region');  
+
+  if (regionDropdown) {
+      regionDropdown.addEventListener('change', function () {
+          // When the input field value changes, submit the form
+          form.submit();
+      });
+  }
 });
