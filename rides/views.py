@@ -1,4 +1,5 @@
 from django.shortcuts import render, HttpResponse, get_object_or_404, reverse, redirect
+from django.utils import timezone
 from django.views.generic import ListView
 from rides.models import CustomUser, Vehicle, Trip
 from django.contrib import messages
@@ -11,7 +12,7 @@ from datetime import date
 def rides(request):
     
     form = TripForm()
-    trips =Trip.objects.all().order_by("trip_date")
+    trips =Trip.objects.filter(trip_date__gte=timezone.now().date()).order_by("trip_date")
         
     # Create a list of forms for each trip instance
     forms = [TripForm(instance=trip) for trip in trips]
