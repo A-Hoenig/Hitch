@@ -158,3 +158,12 @@ class TripForm(forms.ModelForm):
         self.fields['depart_window'].widget = forms.TimeInput(format='%H:%M')
    
 
+class RegionFilterForm(forms.Form):
+    selected_region = forms.ModelChoiceField(queryset=Region.objects.all(), empty_label=None, initial=Region.objects.first())
+
+    def __init__(self, *args, **kwargs):
+        super(RegionFilterForm, self).__init__(*args, **kwargs)
+        self.fields['selected_region'].queryset = Region.objects.all()
+        self.fields['selected_region'].empty_label = None
+        self.fields['selected_region'].initial = Region.objects.first()
+        self.fields['selected_region'].widget.attrs.update(style='max-width: 12em')

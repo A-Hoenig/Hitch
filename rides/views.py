@@ -5,15 +5,20 @@ from rides.models import CustomUser, Vehicle, Trip, Region
 from django.contrib import messages
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
-from rides.forms import UserForm, VehicleForm, TripForm
+from rides.forms import UserForm, VehicleForm, TripForm, RegionFilterForm
 from datetime import date
 
 # -------------------------------------------------------
 def rides(request):
     form = TripForm()
-
+    region_filter_form = RegionFilterForm(request.GET or None)
+        
     # Filter trips by selected region and trip_date
     trips = Trip.objects.filter(trip_date__gte=timezone.now().date()).order_by("trip_date")
+
+    if region_filter_form.is_valid():
+        selected_region = region_filter_form.cleaned_data['selected_region']
+        trips = trips.filter(region=selected_region)
 
     # Create a list of forms for each trip instance
     forms = [TripForm(instance=trip) for trip in trips]
@@ -22,6 +27,7 @@ def rides(request):
         "username": request.user,
         "form": form,
         "trips": zip(trips, forms),
+        "region_filter_form": region_filter_form,
     }
 
     return render(request, 'rides/rides.html', context)
