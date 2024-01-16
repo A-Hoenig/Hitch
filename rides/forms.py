@@ -163,6 +163,7 @@ class RegionFilterForm(forms.Form):
 
     def __init__(self, *args, **kwargs):
         super(RegionFilterForm, self).__init__(*args, **kwargs)
+        self.fields['selected_region'].label = ''
         self.fields['selected_region'].queryset = Region.objects.all()
         self.fields['selected_region'].empty_label = None
         self.fields['selected_region'].initial = Region.objects.first()

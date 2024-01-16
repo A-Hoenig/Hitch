@@ -9,8 +9,9 @@
 <div class="container-fluid">
     <div class="row">
         <div class="col-12 bg-light">
-            <div class="p-3 d-flex justify-content-between align-items-center mt-auto">
-                <form method="get" action="{% url 'rides' %}" class="d-flex" id="filterForm">
+            <div class="px-3 py-0 d-sm-flex justify-content-between align-items-center mt-auto">
+                AVAILABLE RIDES IN SELECTED REGION: 
+                <form method="get" action="{% url 'rides' %}" class="d-flex mt-3" id="filterForm">
                     {% csrf_token %}
                     {{ region_filter_form|crispy }}
                 </form>
