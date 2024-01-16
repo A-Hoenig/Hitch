@@ -155,7 +155,7 @@
 
 
                     <!-- drop down details form-->
-                    <div id="flush-collapse{{t.id}}" class="accordion-collapse collapse show border bg-light"
+                    <div id="flush-collapse{{t.id}}" class="accordion-collapse collapse border bg-light"
                         data-bs-parent="#RidesAccordionList">
                         <div class="accordion-body">
                             <div class="container-sm">
@@ -164,6 +164,7 @@
                                         <span>DRIVER {{ t.driver }}</span>
 
                                         {% if average_rating == 1 %}
+                                        <div name="stars"></div>
                                         <span class="">
                                             <i class="fa-solid fa-star"></i>
                                             <i class="fa-regular fa-star"></i>
@@ -172,7 +173,7 @@
                                             <i class="fa-regular fa-star"></i>
                                         </span>
                                         {% elif average_rating == 2 %}
-                                        <div>
+                                        <span class="">
                                             <i class="fa-solid fa-star"></i>
                                             <i class="fa-solid fa-star"></i>
                                             <i class="fa-regular fa-star"></i>
@@ -256,7 +257,8 @@
                                     {% if user.is_authenticated %}
                                     <div class="col">
                                         <button type="button" class="btn btn-primary mb-3" data-bs-toggle="modal"
-                                            data-bs-target="#exampleModal" data-bs-whatever="@gest">Request to Hitch a
+                                            data-bs-target="#exampleModal" data-bs-whatever="@gest">Request to Hitch
+                                            a
                                             Ride!</button>
                                     </div>
                                     {% else%}
