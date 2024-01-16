@@ -159,13 +159,13 @@
                         data-bs-parent="#RidesAccordionList">
                         <div class="accordion-body">
                             <div class="container-sm">
-                                <div class="row">
+                                <div class="row d-flex justify-content-start">
                                     <div class="col-md-auto">
                                         <span>DRIVER {{ t.driver }}</span>
 
                                         {% if average_rating == 1 %}
                                         <div name="stars"></div>
-                                        <span class="">
+                                        <span class="text-warning">
                                             <i class="fa-solid fa-star"></i>
                                             <i class="fa-regular fa-star"></i>
                                             <i class="fa-regular fa-star"></i>
@@ -207,7 +207,10 @@
                                         {% endif %}
                                     </div>
                                 </div>
-                                <div class="row">
+                                <div class="row d-flex justify-content-start">
+                                    {{ t.vehicle.make }} {{ t.vehicle.model }}
+                                </div>
+                                <div class="row d-flex justify-content-start">
                                     {% if t.recurring  %}
                                     <div class="col-md-auto">
                                         <span id="weekday_pills">
@@ -256,14 +259,14 @@
                                     {% csrf_token %}
                                     {% if user.is_authenticated %}
                                     <div class="col">
-                                        <button type="button" class="btn btn-primary mb-3" data-bs-toggle="modal"
+                                        <button type="button" class="btn btn-primary my-1" data-bs-toggle="modal"
                                             data-bs-target="#exampleModal" data-bs-whatever="@gest">Request to Hitch
                                             a
                                             Ride!</button>
                                     </div>
                                     {% else%}
                                     <div class="col">
-                                        <a class="btn btn-primary mb-3" data-bs-toggle="collapse"
+                                        <a class="btn btn-primary my-1" data-bs-toggle="collapse"
                                             href="{% url 'account_login' %}" role=" button">Sign In to request a
                                             ride</a>
                                     </div>
