@@ -158,13 +158,57 @@
                     <div id="flush-collapse{{t.id}}" class="accordion-collapse collapse show border bg-light"
                         data-bs-parent="#RidesAccordionList">
                         <div class="accordion-body">
-                            <div class="container">
+                            <div class="container-sm">
                                 <div class="row">
-                                    DRIVER {{ t.driver }} {{ t.driver.rating }}
+                                    <div class="col-md-auto">
+                                        <span>DRIVER {{ t.driver }}</span>
+
+                                        {% if average_rating == 1 %}
+                                        <span class="">
+                                            <i class="fa-solid fa-star"></i>
+                                            <i class="fa-regular fa-star"></i>
+                                            <i class="fa-regular fa-star"></i>
+                                            <i class="fa-regular fa-star"></i>
+                                            <i class="fa-regular fa-star"></i>
+                                        </span>
+                                        {% elif average_rating == 2 %}
+                                        <div>
+                                            <i class="fa-solid fa-star"></i>
+                                            <i class="fa-solid fa-star"></i>
+                                            <i class="fa-regular fa-star"></i>
+                                            <i class="fa-regular fa-star"></i>
+                                            <i class="fa-regular fa-star"></i>
+                                        </span>
+                                        {% elif average_rating == 3 %}
+                                        <span>
+                                            <i class="fa-solid fa-star"></i>
+                                            <i class="fa-solid fa-star"></i>
+                                            <i class="fa-solid fa-star"></i>
+                                            <i class="fa-regular fa-star"></i>
+                                            <i class="fa-regular fa-star"></i>
+                                        </span>
+                                        {% elif average_rating == 4 %}
+                                        <span>
+                                            <i class="fa-solid fa-star"></i>
+                                            <i class="fa-solid fa-star"></i>
+                                            <i class="fa-solid fa-star"></i>
+                                            <i class="fa-solid fa-star"></i>
+                                            <i class="fa-regular fa-star"></i>
+                                        </span>
+                                        {% elif average_rating == 5 %}
+                                        <span>
+                                            <i class="fa-solid fa-star"></i>
+                                            <i class="fa-solid fa-star"></i>
+                                            <i class="fa-solid fa-star"></i>
+                                            <i class="fa-solid fa-star"></i>
+                                            <i class="fa-solid fa-star"></i>
+                                        </span>
+                                        {% endif %}
+                                    </div>
                                 </div>
-                                <div class="row d-flex justify-content-start">
+                                <div class="row">
                                     {% if t.recurring  %}
-                                    <div class="">
+                                    <div class="col-md-auto">
                                         <span id="weekday_pills">
                                             {% if t.mon  %}
                                             <span CLASS="badge bg-success rounded-pill">MON</span>
