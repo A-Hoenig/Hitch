@@ -9,11 +9,13 @@
     <div class="row">
         <div class="col-12 bg-light">
             <div class="p-3">
-                UPCOMING RIDES
+                UPCOMING RIDES <span>{{ form.region|as_crispy_field }}</span>
             </div>
         </div>
     </div>
 </div>
+
+
 
 <!-- MODAL FOR HITCH REQUEST - HIDDEN BY DEFAULT-->
 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">

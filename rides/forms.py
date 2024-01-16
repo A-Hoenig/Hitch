@@ -134,8 +134,11 @@ class TripForm(forms.ModelForm):
     Form class for offered rides 
     """
     helper = FormHelper()
+    helper.form_method = 'POST'
+    
     helper.layout = Layout(
         Div(
+                Div('region', css_class='dropdown'),
                 Div('driver', css_class='col-md-6'),
                 Div('trip_date', css_class='col-md-6'),
                 css_class='row'
@@ -152,3 +155,21 @@ class TripForm(forms.ModelForm):
         super(TripForm, self).__init__(*args, **kwargs)
         instance = kwargs.get('instance')
    
+
+class RegionForm(forms.ModelForm):
+    """
+    Form class for region dropdown  
+    """
+    helper = FormHelper()
+    helper.form_method = 'POST'
+    helper.layout = Layout(
+        Div(
+                Div('region', css_class='dropdown'),
+                css_class='row'            
+        ),
+        )
+    
+    class Meta:
+        model = Trip
+        
+        fields = ['region']
