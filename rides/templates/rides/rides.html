@@ -54,12 +54,11 @@
                     <!-- accordion header row starts here-->
                     <div class="accordion-item">
                         <h2 class="accordion-header">
-                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                            <button class="accordion-button collapsed p-2" type="button" data-bs-toggle="collapse"
                                 data-bs-target="#flush-collapse{{t.id}}" aria-expanded="false"
                                 aria-controls="flush-collapse{{t.id}}">
 
-
-
+                                <!--------------------- TOP ROW ---------------------->
                                 <div class="container px-1">
                                     <div class="row">
                                         <!-- Depart -->
@@ -84,6 +83,7 @@
                                         <div class=" col-1">TODAY</div>
                                         <!-- Depart Time -->
                                         <div class=" col-1">10:00 <span class="text-secondary">(±10)</span></div>
+                                        <div class=" col-1"></div>
                                         <!-- Vehicle Type Symbol -->
                                         <div class=" col-1 text-center fs-4 px-1">
                                             {% if t.vehicle.type == 3%}
@@ -98,39 +98,44 @@
                                             <span class="icon"><i class="fa-solid fa-car"></i></span>
                                             {% endif %}
                                         </div>
-                                        <!-- Smoking or No Smoking -->
-                                        <div class=" col-1 text-center fs-4 text-danger px-1">
-                                            {% if t.vehicle.smoking == True %}
-                                            <i class="fa-solid fa-ban-smoking"></i>
-                                            {% endif %}
+
+                                        <div class="col-2 ">
+
                                         </div>
-                                        <!-- Purpose of Trip -->
-                                        <div class=" col-1 text-center fs-4 px-1">
-                                            {{ t.purpose.purpose_icon|safe }}
-                                        </div>
+                                        
                                     </div>
+
+                                    <!--------------------- MIDDLE ROW ---------------------->
                                     <div class="row mb-1">
                                         <div class=" col-7 text-center"></div>
-                                        
-                                        <div class=" col-1 retrun"></div>
-                                        <div class=" col-1 time2">12:00</div>
-                                       
+                                        <div class=" col-1 "></div>
+                                        <div class=" col-1 ">12:00</div>
+                                        <div class=" col-1 "></div>
+                                        <div class=" col-1 fs-4 text-center">{{ t.purpose.purpose_icon|safe }}</div>
+
                                     </div>
-                                    {% if t.note %}
+                                    <!--------------------- BOTTOM ROW ---------------------->
                                     <div class="row">
+                                        <!-- Smoking or No Smoking -->
+                                        {% if t.vehicle.smoking == True %}
+                                        <i class="fa-solid fa-ban-smoking text-danger"></i>
+                                        {% endif %}
+                                        <!-- Display any notes from driver -->
+                                        {% if t.note %}
                                         <div class=" col-12 message">
                                             <i class="fa-regular fa-message"></i>
                                             {{ t.note }}
                                         </div>
+                                        {% endif %}
                                     </div>
-                                    {% endif %}
+
                                 </div>
 
                     </div>
                     </button>
                     </h2>
                     <!-- drop down details form-->
-                    <div id="flush-collapse{{t.id}}" class="accordion-collapse collapse"
+                    <div id="flush-collapse{{t.id}}" class="accordion-collapse collapse border bg-light"
                         data-bs-parent="#RidesAccordionList">
                         <div class="accordion-body">
 
@@ -157,10 +162,11 @@
 
                         </div>
                     </div>
-            </div>
 
-            {% endfor %}
-            </form>
+
+                    {% endfor %}
+                </form>
+            </div>
         </div>
 
     </div>
