@@ -52,7 +52,7 @@
             <div class="accordion" id="RidesAccordionList">
 
                 <!-- loop through each vehicle in the db-->
-                {% for t, form in trips %}
+                {% for t, form, average_rating in trips %}
                 <form method="post">
                     {% csrf_token %}
 
@@ -152,71 +152,79 @@
                     </div>
                     </button>
                     </h2>
+
+
                     <!-- drop down details form-->
-                    <div id="flush-collapse{{t.id}}" class="accordion-collapse collapse border bg-light"
+                    <div id="flush-collapse{{t.id}}" class="accordion-collapse collapse show border bg-light"
                         data-bs-parent="#RidesAccordionList">
                         <div class="accordion-body">
-                            {% if t.recurring  %}
-                            <div class="" name="weekday-block">
-                                    <span>
-                                        {% if t.mon  %}
-                                        <span CLASS="badge bg-success rounded-pill">MON</span>
-                                        {% else %}
-                                        <span CLASS="badge bg-secondary rounded-pill">MON</span>
-                                        {% endif %}
-                                        {% if t.tue  %}
-                                        <span CLASS="badge bg-success rounded-pill">TUE</span>
-                                        {% else %}
-                                        <span CLASS="badge bg-secondary rounded-pill">TUE</span>
-                                        {% endif %}
-                                        {% if t.wed  %}
-                                        <span CLASS="badge bg-success rounded-pill">WED</span>
-                                        {% else %}
-                                        <span CLASS="badge bg-secondary rounded-pill">WED</span>
-                                        {% endif %}
-                                        {% if t.thu  %}
-                                        <span CLASS="badge bg-success rounded-pill">THU</span>
-                                        {% else %}
-                                        <span CLASS="badge bg-secondary rounded-pill">THU</span>
-                                        {% endif %}
-                                        {% if t.fri  %}
-                                        <span CLASS="badge bg-success rounded-pill">FRI</span>
-                                        {% else %}
-                                        <span CLASS="badge bg-secondary rounded-pill">FRI</span>
-                                        {% endif %}
-                                        {% if t.sat  %}
-                                        <span CLASS="badge bg-success rounded-pill">SAT</span>
-                                        {% else %}
-                                        <span CLASS="badge bg-secondary rounded-pill">SAT</span>
-                                        {% endif %}
-                                        {% if t.sun  %}
-                                        <span CLASS="badge bg-success rounded-pill">SUN</span>
-                                        {% else %}
-                                        <span CLASS="badge bg-secondary rounded-pill">SUN</span>
-                                        {% endif %}
-                                         
-                                    </span>
+                            <div class="container">
+                                <div class="row">
+                                    DRIVER {{ t.driver }} {{ t.driver.rating }}
+                                </div>
+                                <div class="row d-flex justify-content-start">
+                                    {% if t.recurring  %}
+                                    <div class="">
+                                        <span id="weekday_pills">
+                                            {% if t.mon  %}
+                                            <span CLASS="badge bg-success rounded-pill">MON</span>
+                                            {% else %}
+                                            <span CLASS="badge bg-secondary rounded-pill">MON</span>
+                                            {% endif %}
+                                            {% if t.tue  %}
+                                            <span CLASS="badge bg-success rounded-pill">TUE</span>
+                                            {% else %}
+                                            <span CLASS="badge bg-secondary rounded-pill">TUE</span>
+                                            {% endif %}
+                                            {% if t.wed  %}
+                                            <span CLASS="badge bg-success rounded-pill">WED</span>
+                                            {% else %}
+                                            <span CLASS="badge bg-secondary rounded-pill">WED</span>
+                                            {% endif %}
+                                            {% if t.thu  %}
+                                            <span CLASS="badge bg-success rounded-pill">THU</span>
+                                            {% else %}
+                                            <span CLASS="badge bg-secondary rounded-pill">THU</span>
+                                            {% endif %}
+                                            {% if t.fri  %}
+                                            <span CLASS="badge bg-success rounded-pill">FRI</span>
+                                            {% else %}
+                                            <span CLASS="badge bg-secondary rounded-pill">FRI</span>
+                                            {% endif %}
+                                            {% if t.sat  %}
+                                            <span CLASS="badge bg-success rounded-pill">SAT</span>
+                                            {% else %}
+                                            <span CLASS="badge bg-secondary rounded-pill">SAT</span>
+                                            {% endif %}
+                                            {% if t.sun  %}
+                                            <span CLASS="badge bg-success rounded-pill">SUN</span>
+                                            {% else %}
+                                            <span CLASS="badge bg-secondary rounded-pill">SUN</span>
+                                            {% endif %}
+
+                                        </span>
+                                    </div>
+                                    {% endif %}
+                                </div>
+                                <form novalidate class="form-horizontal" action="{% url 'vehicles' %}" method="post"
+                                    autocomplete="off">
+                                    {% csrf_token %}
+                                    {% if user.is_authenticated %}
+                                    <div class="col">
+                                        <button type="button" class="btn btn-primary mb-3" data-bs-toggle="modal"
+                                            data-bs-target="#exampleModal" data-bs-whatever="@gest">Request to Hitch a
+                                            Ride!</button>
+                                    </div>
+                                    {% else%}
+                                    <div class="col">
+                                        <a class="btn btn-primary mb-3" data-bs-toggle="collapse"
+                                            href="{% url 'account_login' %}" role=" button">Sign In to request a
+                                            ride</a>
+                                    </div>
+                                    {% endif%}
+                                </form>
+
                             </div>
-                            {% endif %}
-
-                            <form novalidate class="form-horizontal" action="{% url 'vehicles' %}" method="post"
-                                autocomplete="off">
-                                {% csrf_token %}
-                                {% if user.is_authenticated %}
-                                <div class="col">
-                                    <button type="button" class="btn btn-primary mb-3" data-bs-toggle="modal"
-                                        data-bs-target="#exampleModal" data-bs-whatever="@gest">Request to Hitch a
-                                        Ride!</button>
-                                </div>
-                                {% else%}
-                                <div class="col">
-                                    <a class="btn btn-primary mb-3" data-bs-toggle="collapse"
-                                        href="{% url 'account_login' %}" role=" button">Sign In to request a
-                                        ride</a>
-                                </div>
-                                {% endif%}
-                            </form>
-
                         </div>
                     </div>
 

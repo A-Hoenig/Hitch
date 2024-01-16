@@ -23,14 +23,27 @@ def rides(request):
     # Create a list of forms for each trip instance
     forms = [TripForm(instance=trip) for trip in trips]
 
+    # Calculate the average rating for the driver for each trip
+    average_ratings = []
+    for trip in trips:
+        driver = trip.driver
+        driver_ratings = driver.driver_rating_set.all()
+        total_ratings = sum(rating.star_rating for rating in driver_ratings)
+        num_ratings = len(driver_ratings)
+        average_rating = round(total_ratings / num_ratings) if num_ratings > 0 else 0
+        average_ratings.append(average_rating)
+        print(f'driver:{driver}: rating{average_rating}')
     context = {
         "username": request.user,
         "form": form,
-        "trips": zip(trips, forms),
+        "trips": zip(trips, forms, average_ratings),
         "region_filter_form": region_filter_form,
+        "average_ratings": average_ratings,
     }
 
     return render(request, 'rides/rides.html', context)
+
+
 
 # -------------------------------------------------------
 def hitches(request):
