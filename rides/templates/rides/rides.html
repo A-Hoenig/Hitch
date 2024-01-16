@@ -10,10 +10,10 @@
     <div class="row">
         <div class="col-12 bg-light">
             <div class="px-3 py-0 d-sm-flex justify-content-between align-items-center mt-auto">
-                AVAILABLE RIDES IN SELECTED REGION: 
+                UPCOMING RIDES IN SELECTED REGION:
                 <form method="get" action="{% url 'rides' %}" class="d-flex mt-3" id="filterForm">
                     {% csrf_token %}
-                    {{ region_filter_form|crispy }}
+                    <span class="mt-2 me-1">REGION:</span>{{ region_filter_form|crispy }}
                 </form>
             </div>
         </div>
@@ -156,12 +156,52 @@
                     <div id="flush-collapse{{t.id}}" class="accordion-collapse collapse border bg-light"
                         data-bs-parent="#RidesAccordionList">
                         <div class="accordion-body">
+                            {% if t.recurring  %}
+                            <div class="" name="weekday-block">
+                                    <span>
+                                        {% if t.mon  %}
+                                        <span CLASS="badge bg-success rounded-pill">MON</span>
+                                        {% else %}
+                                        <span CLASS="badge bg-secondary rounded-pill">MON</span>
+                                        {% endif %}
+                                        {% if t.tue  %}
+                                        <span CLASS="badge bg-success rounded-pill">TUE</span>
+                                        {% else %}
+                                        <span CLASS="badge bg-secondary rounded-pill">TUE</span>
+                                        {% endif %}
+                                        {% if t.wed  %}
+                                        <span CLASS="badge bg-success rounded-pill">WED</span>
+                                        {% else %}
+                                        <span CLASS="badge bg-secondary rounded-pill">WED</span>
+                                        {% endif %}
+                                        {% if t.thu  %}
+                                        <span CLASS="badge bg-success rounded-pill">THU</span>
+                                        {% else %}
+                                        <span CLASS="badge bg-secondary rounded-pill">THU</span>
+                                        {% endif %}
+                                        {% if t.fri  %}
+                                        <span CLASS="badge bg-success rounded-pill">FRI</span>
+                                        {% else %}
+                                        <span CLASS="badge bg-secondary rounded-pill">FRI</span>
+                                        {% endif %}
+                                        {% if t.sat  %}
+                                        <span CLASS="badge bg-success rounded-pill">SAT</span>
+                                        {% else %}
+                                        <span CLASS="badge bg-secondary rounded-pill">SAT</span>
+                                        {% endif %}
+                                        {% if t.sun  %}
+                                        <span CLASS="badge bg-success rounded-pill">SUN</span>
+                                        {% else %}
+                                        <span CLASS="badge bg-secondary rounded-pill">SUN</span>
+                                        {% endif %}
+                                         
+                                    </span>
+                            </div>
+                            {% endif %}
 
                             <form novalidate class="form-horizontal" action="{% url 'vehicles' %}" method="post"
                                 autocomplete="off">
                                 {% csrf_token %}
-                                {{ t.region }}
-
                                 {% if user.is_authenticated %}
                                 <div class="col">
                                     <button type="button" class="btn btn-primary mb-3" data-bs-toggle="modal"
@@ -175,7 +215,6 @@
                                         ride</a>
                                 </div>
                                 {% endif%}
-
                             </form>
 
                         </div>
