@@ -119,8 +119,8 @@
                                         <div class="col-md-auto fs-4 px-1">
                                             <!-- add electic plug icon based for electric and hybrid-->
                                             <span data-bs-toggle="tooltip" data-bs-placement="left"
-                                            data-bs-custom-class="custom-tooltip"
-                                            data-bs-title="This Vehicle is environmentally friendly!!">
+                                                data-bs-custom-class="custom-tooltip"
+                                                data-bs-title="This Vehicle is environmentally friendly!!">
                                                 {% if t.vehicle.engine == 2 %}
                                                 <span class="mx-1 text-success"><i class="fa-solid fa-plug"></i></span>
                                                 {% endif %}
@@ -144,8 +144,8 @@
                                             </span>
                                             <!-- purpose icon - HTML stored in DB -->
                                             <span class="mx-1" data-bs-toggle="tooltip" data-bs-placement="left"
-                                            data-bs-custom-class="custom-tooltip"
-                                            data-bs-title="{{ t.purpose.purpose }}">
+                                                data-bs-custom-class="custom-tooltip"
+                                                data-bs-title="{{ t.purpose.purpose }}">
                                                 {{ t.purpose.purpose_icon|safe }}
                                             </span>
                                             <span class="mx-1">
@@ -228,7 +228,15 @@
                                             <!--drivers data  -->
                                             <div class="col-sm-3">
                                                 <div class="container text-secondary mx-0 px-0">
-                                                    <p class="text-primary text-start small mb-0">Driver:</p>
+                                                    <p class="text-primary text-start small mb-0">Driver: 
+                                                        <span>
+                                                            {% if t.driver.contactable %}
+                                                            Tel: {{ t.driver.phone }}
+                                                            {% else %}
+                                                            Tel: - not shared -
+                                                            {% endif %}
+                                                        </span>
+                                                    </p>
                                                     <p class="text-start small mb-0">{{ t.driver }}
                                                         <span name="rating">
                                                             {% if average_rating == 1 %}
