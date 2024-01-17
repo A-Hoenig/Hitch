@@ -71,19 +71,33 @@
                                         <div class="col-md-auto fs-4">{{t.depart.city}}</div>
 
                                         <!-- Trip Arrows -->
-                                        <div class="col-md-auto fs-4" data-bs-toggle="tooltip" data-bs-placement="left"
-                                            data-bs-custom-class="custom-tooltip"
-                                            data-bs-title="Single arrow = Single trip. Double Arrow = Multiple Trip. Left Arrow = Return Trip">
+                                        <div class="col-md-auto fs-4">
 
                                             {% if t.recurring == False and t.direction == 0 %}
-                                            <i class="fa-solid fa-angle-right"></i>
+                                            <i class="fa-solid fa-angle-right" 
+                                            data-bs-toggle="tooltip" 
+                                            data-bs-placement="left"
+                                            data-bs-custom-class="custom-tooltip"
+                                            data-bs-title="Single one way trip"></i>
                                             {% elif t.recurring == True and t.direction == 0 %}
-                                            <i class="fa-solid fa-angles-right"></i>
+                                            <i class="fa-solid fa-angles-right"
+                                            data-bs-toggle="tooltip" 
+                                            data-bs-placement="left"
+                                            data-bs-custom-class="custom-tooltip"
+                                            data-bs-title="Multiple One Way Trips"></i>
                                             {% elif t.recurring == False and t.direction == 1 %}
-                                            <i class="fa-solid fa-angle-left"></i><i
+                                            <i class="fa-solid fa-angle-left"
+                                            data-bs-toggle="tooltip" 
+                                            data-bs-placement="left"
+                                            data-bs-custom-class="custom-tooltip"
+                                            data-bs-title="Single Return Trip"></i><i
                                                 class="fa-solid fa-angle-right"></i>
                                             {% elif t.recurring == True and t.direction == 1 %}
-                                            <i class="fa-solid fa-angles-left"></i><i
+                                            <i class="fa-solid fa-angles-left"
+                                            data-bs-toggle="tooltip" 
+                                            data-bs-placement="left"
+                                            data-bs-custom-class="custom-tooltip"
+                                            data-bs-title="Multiple Return Trips"></i><i
                                                 class="fa-solid fa-angles-right"></i>
                                             {% endif %}
                                         </div>
