@@ -1,11 +1,11 @@
 from django.shortcuts import render, HttpResponse, get_object_or_404, reverse, redirect
 from django.utils import timezone
 from django.views.generic import ListView
-from rides.models import CustomUser, Vehicle, Trip, Region
+from rides.models import CustomUser, Vehicle, Trip, Region, Request
 from django.contrib import messages
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
-from rides.forms import UserForm, VehicleForm, TripForm, RegionFilterForm
+from rides.forms import UserForm, VehicleForm, TripForm, RequestForm, RegionFilterForm
 from datetime import date
 
 # -------------------------------------------------------
@@ -61,9 +61,51 @@ def rides_view(request):
 
 # -------------------------------------------------------
 def hitches(request):
+    form = RequestForm()
+    region_filter_form = RegionFilterForm(request.GET or None)
+
+
+    # Filter trips by selected region and trip_date
+    trips = Trip.objects.all()
+
+    if region_filter_form.is_valid():
+        selected_region = region_filter_form.cleaned_data['selected_region']
+        trips = trips.filter(region=selected_region)
+
+    # Create a list of forms for each trip instance
+    forms = [TripForm(instance=trip) for trip in trips]
+
+    # Calculate the average rating for the driver for each trip
+    # also remember the avaialble hitch seats per trip
+    average_ratings = []
+    hitch_seats_list = []
+    # minimum value in case no trip in loop
+    hitch_seats = 1
+
+    for trip in trips:
+        driver = trip.driver
+        driver_ratings = driver.driver_rating_set.all()
+        total_ratings = sum(rating.star_rating for rating in driver_ratings)
+        num_ratings = len(driver_ratings)
+        average_rating = round(total_ratings / num_ratings) if num_ratings > 0 else 0
+        average_ratings.append(average_rating)
+
+        # get the driver allowed hitch seats from trip model
+        hitch_seats = trip.max_hitch
+        hitch_seats_list.append(hitch_seats)
+
+    # get any attached hitchers to this trip
+    
+
     context = {
-        "username": request.user
+        "username": request.user,
+        "form": form,
+        "trips": zip(trips, forms, average_ratings, hitch_seats_list),
+        "region_filter_form": region_filter_form,
+        "average_ratings": average_ratings,
+        "hitcher_slots": range(hitch_seats),
     }
+
     return render(request, 'rides/hitches.html', context)
 
 

@@ -1,5 +1,5 @@
 from django import forms
-from .models import CustomUser, Vehicle, Trip, Region
+from .models import CustomUser, Vehicle, Trip, Region, Request
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Submit, Layout, Div
 from django.core.validators import RegexValidator
@@ -156,6 +156,35 @@ class TripForm(forms.ModelForm):
         instance = kwargs.get('instance')
         self.fields['expected_duration'].widget = forms.TimeInput(format='%H:%M')
         self.fields['depart_window'].widget = forms.TimeInput(format='%H:%M')
+
+
+class RequestForm(forms.ModelForm):
+    """
+    Form class for ride requests (hitches)
+    """
+    helper = FormHelper()
+    helper.form_method = 'POST'
+    
+    helper.layout = Layout(
+        Div(
+                Div('region', css_class='dropdown'),
+                Div('hitcher', css_class='col-md-6'),
+                Div('depart_date', css_class='col-md-6'),
+                css_class='row'
+            ),
+            
+        )
+
+    class Meta:
+        model = Request
+        
+        fields ='__all__'
+
+    # def __init__(self, *args, **kwargs):
+    #     super(RequestForm, self).__init__(*args, **kwargs)
+    #     instance = kwargs.get('instance')
+    #     self.fields['expected_duration'].widget = forms.TimeInput(format='%H:%M')
+    #     self.fields['depart_window'].widget = forms.TimeInput(format='%H:%M')
    
 
 class RegionFilterForm(forms.Form):

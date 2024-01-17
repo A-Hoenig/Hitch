@@ -52,7 +52,7 @@
 
             <div class="accordion" id="RidesAccordionList">
 
-                <!-- loop through each vehicle in the db-->
+                <!-- loop through each trip in the db-->
                 {% for t, form, average_rating, hitch_seats_list in trips %}
                 <form method="post">
                     {% csrf_token %}
