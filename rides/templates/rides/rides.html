@@ -71,7 +71,10 @@
                                         <div class="col-md-auto fs-4">{{t.depart.city}}</div>
 
                                         <!-- Trip Arrows -->
-                                        <div class="col-md-auto fs-4">
+                                        <div class="col-md-auto fs-4" data-bs-toggle="tooltip" data-bs-placement="left"
+                                            data-bs-custom-class="custom-tooltip"
+                                            data-bs-title="Single arrow = Single trip. Double Arrow = Multiple Trip. Left Arrow = Return Trip">
+
                                             {% if t.recurring == False and t.direction == 0 %}
                                             <i class="fa-solid fa-angle-right"></i>
                                             {% elif t.recurring == True and t.direction == 0 %}
@@ -94,12 +97,16 @@
                                                 <div>
                                                     {{ t.trip_date|DM }} at {{ t.depart_time|HHMM }}
                                                     {% if t.depart_window != None %}
-                                                    <span class="text-secondary">
+                                                    <span class="text-secondary" data-bs-toggle="tooltip"
+                                                        data-bs-placement="left" data-bs-custom-class="custom-tooltip"
+                                                        data-bs-title="Shows departure time flexibility. Please be on time!">
                                                         (±{{ t.depart_window|HMM }})
                                                     </span>
                                                     {% endif %}
                                                     {% if t.direction == 1 %}
-                                                    <span>
+                                                    <span data-bs-toggle="tooltip" data-bs-placement="left"
+                                                        data-bs-custom-class="custom-tooltip"
+                                                        data-bs-title="Planned return time. Please check with driver.">
                                                         (<i class="fa-solid fa-circle-arrow-left"></i>
                                                         {{ t.return_time|HHMM }})
                                                     </span>
@@ -111,12 +118,16 @@
                                         <!-- Trip Symbols -->
                                         <div class="col-md-auto fs-4 px-1">
                                             <!-- add electic plug icon based for electric and hybrid-->
-                                            {% if t.vehicle.engine == 2 %}
-                                            <span class="mx-1 text-success"><i class="fa-solid fa-plug"></i></span>
-                                            {% endif %}
-                                            {% if t.vehicle.engine == 3 %}
-                                            <span class="mx-1 text-success"><i class="fa-solid fa-plug"></i></span>
-                                            {% endif %}
+                                            <span data-bs-toggle="tooltip" data-bs-placement="left"
+                                            data-bs-custom-class="custom-tooltip"
+                                            data-bs-title="This Vehicle is environmentally friendly!!">
+                                                {% if t.vehicle.engine == 2 %}
+                                                <span class="mx-1 text-success"><i class="fa-solid fa-plug"></i></span>
+                                                {% endif %}
+                                                {% if t.vehicle.engine == 3 %}
+                                                <span class="mx-1 text-success"><i class="fa-solid fa-plug"></i></span>
+                                                {% endif %}
+                                            </span>
                                             <!-- vehicle type icon -->
                                             <span class="mx-1">
                                                 {% if t.vehicle.type == 3%}
@@ -138,7 +149,10 @@
                                             <span class="mx-1">
                                                 <!-- Smoking or No Smoking -->
                                                 {% if t.vehicle.smoking == True %}
-                                                <i class="fa-solid fa-ban-smoking text-danger fs-4"></i>
+                                                <i class="fa-solid fa-ban-smoking text-danger fs-4"
+                                                    data-bs-toggle="tooltip" data-bs-placement="left"
+                                                    data-bs-custom-class="custom-tooltip"
+                                                    data-bs-title="This vehicle is non-smoking. Please be respectful."></i>
                                                 {% else %}
                                                 <i class="fa-solid fa-smoking"></i>
                                                 {% endif %}
@@ -151,7 +165,7 @@
 
                                         <!-- Display any notes from driver -->
                                         {% if t.note %}
-                                        <div class=" col-12 message">
+                                        <div class="col-12 message mt-2">
                                             <i class="fa-regular fa-message"></i>
                                             {{ t.note }}
                                         </div>
@@ -166,7 +180,7 @@
 
 
                     <!------------------------------------      drop down details form      ------------------------------------------>
-                    <div id="flush-collapse{{t.id}}" class="accordion-collapse collapse show border bg-light"
+                    <div id="flush-collapse{{t.id}}" class="accordion-collapse collapse border bg-light"
                         data-bs-parent="#RidesAccordionList">
 
                         <div class="accordion-body">
@@ -204,7 +218,8 @@
                                                     <p class="text-primary text-start small mb-0">Vehicle:</p>
                                                     <p class="text-start small mb-0">{{ t.vehicle.make }}</p>
                                                     <p class="text-start small mb-0">{{ t.vehicle.model }}</p>
-                                                    <p class="text-start small mb-0">{{ t.vehicle.get_engine_display }}</p>
+                                                    <p class="text-start small mb-0">{{ t.vehicle.get_engine_display }}
+                                                    </p>
                                                 </div>
                                             </div>
 
@@ -212,9 +227,99 @@
                                             <div class="col-sm-3">
                                                 <div class="container text-secondary mx-0 px-0">
                                                     <p class="text-primary text-start small mb-0">Driver:</p>
-                                                    <p class="text-start small mb-0">{{ t.driver }}</p>
-                                                    <p class="text-start small mb-0">{{ t.vehicle.model }}</p>
-                                                    <p class="text-start small mb-0">{{ t.vehicle.get_engine_display }}</p>
+                                                    <p class="text-start small mb-0">{{ t.driver }}
+                                                        <span name="rating">
+                                                            {% if average_rating == 1 %}
+                                                            <div name="stars"></div>
+                                                            <span class="text-warning">
+                                                                <i class="fa-solid fa-star"></i>
+                                                                <i class="fa-regular fa-star"></i>
+                                                                <i class="fa-regular fa-star"></i>
+                                                                <i class="fa-regular fa-star"></i>
+                                                                <i class="fa-regular fa-star"></i>
+                                                            </span>
+                                                            {% elif average_rating == 2 %}
+                                                            <span class="">
+                                                                <i class="fa-solid fa-star"></i>
+                                                                <i class="fa-solid fa-star"></i>
+                                                                <i class="fa-regular fa-star"></i>
+                                                                <i class="fa-regular fa-star"></i>
+                                                                <i class="fa-regular fa-star"></i>
+                                                            </span>
+                                                            {% elif average_rating == 3 %}
+                                                            <span>
+                                                                <i class="fa-solid fa-star"></i>
+                                                                <i class="fa-solid fa-star"></i>
+                                                                <i class="fa-solid fa-star"></i>
+                                                                <i class="fa-regular fa-star"></i>
+                                                                <i class="fa-regular fa-star"></i>
+                                                            </span>
+                                                            {% elif average_rating == 4 %}
+                                                            <span>
+                                                                <i class="fa-solid fa-star"></i>
+                                                                <i class="fa-solid fa-star"></i>
+                                                                <i class="fa-solid fa-star"></i>
+                                                                <i class="fa-solid fa-star"></i>
+                                                                <i class="fa-regular fa-star"></i>
+                                                            </span>
+                                                            {% elif average_rating == 5 %}
+                                                            <span>
+                                                                <i class="fa-solid fa-star"></i>
+                                                                <i class="fa-solid fa-star"></i>
+                                                                <i class="fa-solid fa-star"></i>
+                                                                <i class="fa-solid fa-star"></i>
+                                                                <i class="fa-solid fa-star"></i>
+                                                            </span>
+                                                            {% endif %}
+                                                        </span>
+                                                    </p>
+                                                    <p class="text-primary text-start small mb-0">Hitchers:</p>
+                                                    <p class="text-start small mb-0">{{ t.driver }}
+                                                        <span name="rating">
+                                                            {% if average_rating == 1 %}
+                                                            <div name="stars"></div>
+                                                            <span class="text-warning">
+                                                                <i class="fa-solid fa-star"></i>
+                                                                <i class="fa-regular fa-star"></i>
+                                                                <i class="fa-regular fa-star"></i>
+                                                                <i class="fa-regular fa-star"></i>
+                                                                <i class="fa-regular fa-star"></i>
+                                                            </span>
+                                                            {% elif average_rating == 2 %}
+                                                            <span class="">
+                                                                <i class="fa-solid fa-star"></i>
+                                                                <i class="fa-solid fa-star"></i>
+                                                                <i class="fa-regular fa-star"></i>
+                                                                <i class="fa-regular fa-star"></i>
+                                                                <i class="fa-regular fa-star"></i>
+                                                            </span>
+                                                            {% elif average_rating == 3 %}
+                                                            <span>
+                                                                <i class="fa-solid fa-star"></i>
+                                                                <i class="fa-solid fa-star"></i>
+                                                                <i class="fa-solid fa-star"></i>
+                                                                <i class="fa-regular fa-star"></i>
+                                                                <i class="fa-regular fa-star"></i>
+                                                            </span>
+                                                            {% elif average_rating == 4 %}
+                                                            <span>
+                                                                <i class="fa-solid fa-star"></i>
+                                                                <i class="fa-solid fa-star"></i>
+                                                                <i class="fa-solid fa-star"></i>
+                                                                <i class="fa-solid fa-star"></i>
+                                                                <i class="fa-regular fa-star"></i>
+                                                            </span>
+                                                            {% elif average_rating == 5 %}
+                                                            <span>
+                                                                <i class="fa-solid fa-star"></i>
+                                                                <i class="fa-solid fa-star"></i>
+                                                                <i class="fa-solid fa-star"></i>
+                                                                <i class="fa-solid fa-star"></i>
+                                                                <i class="fa-solid fa-star"></i>
+                                                            </span>
+                                                            {% endif %}
+                                                        </span>
+                                                    </p>
                                                 </div>
                                             </div>
 
@@ -226,56 +331,13 @@
 
                                 <!-----------      MIDDLE ROW        ---------->
                                 <div class="row">
-                                    <div class="col">
-                                        <span>DRIVER {{ t.driver }}</span>
+                                    <div class="col-sm-12">
 
-                                        {% if average_rating == 1 %}
-                                        <div name="stars"></div>
-                                        <span class="text-warning">
-                                            <i class="fa-solid fa-star"></i>
-                                            <i class="fa-regular fa-star"></i>
-                                            <i class="fa-regular fa-star"></i>
-                                            <i class="fa-regular fa-star"></i>
-                                            <i class="fa-regular fa-star"></i>
-                                        </span>
-                                        {% elif average_rating == 2 %}
-                                        <span class="">
-                                            <i class="fa-solid fa-star"></i>
-                                            <i class="fa-solid fa-star"></i>
-                                            <i class="fa-regular fa-star"></i>
-                                            <i class="fa-regular fa-star"></i>
-                                            <i class="fa-regular fa-star"></i>
-                                        </span>
-                                        {% elif average_rating == 3 %}
-                                        <span>
-                                            <i class="fa-solid fa-star"></i>
-                                            <i class="fa-solid fa-star"></i>
-                                            <i class="fa-solid fa-star"></i>
-                                            <i class="fa-regular fa-star"></i>
-                                            <i class="fa-regular fa-star"></i>
-                                        </span>
-                                        {% elif average_rating == 4 %}
-                                        <span>
-                                            <i class="fa-solid fa-star"></i>
-                                            <i class="fa-solid fa-star"></i>
-                                            <i class="fa-solid fa-star"></i>
-                                            <i class="fa-solid fa-star"></i>
-                                            <i class="fa-regular fa-star"></i>
-                                        </span>
-                                        {% elif average_rating == 5 %}
-                                        <span>
-                                            <i class="fa-solid fa-star"></i>
-                                            <i class="fa-solid fa-star"></i>
-                                            <i class="fa-solid fa-star"></i>
-                                            <i class="fa-solid fa-star"></i>
-                                            <i class="fa-solid fa-star"></i>
-                                        </span>
-                                        {% endif %}
                                     </div>
                                 </div>
                                 <!-- BOTTOM ROW -->
                                 <div class="row">
-                                    <div class="col">
+                                    <div class="col-sm-6 px-0">
                                         {% if t.recurring  %}
                                         <div class="d-flex justify-content-start">
                                             <span id="weekday_pills">
@@ -321,10 +383,6 @@
                                     </div>
                                 </div>
 
-                                <div class="row d-flex justify-content-start">
-                                    VEHICLE: {{ t.vehicle.make }} {{ t.vehicle.model }}
-                                </div>
-                               
                                 <form novalidate class="form-horizontal" action="{% url 'vehicles' %}" method="post"
                                     autocomplete="off">
                                     {% csrf_token %}

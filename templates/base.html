@@ -150,15 +150,18 @@
             }
             deleteBtn.offsetWidth; // Trigger DOM rebuild
         }
-    </script>
-
-    <script>
+    
         $(document).ready(function () {
             // Auto-dismiss alert after 5 seconds (5000 milliseconds)
             window.setTimeout(function () {
                 $(".alert").alert('close');
             }, 5000);
         });
+
+        // tool tips experiment
+        const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
+        const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
+        
     </script>
 </body>
 
