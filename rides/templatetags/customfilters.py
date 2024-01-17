@@ -37,5 +37,6 @@ def DM(value):
         return value.strftime('%d.%b')
 
 
-
-
+@register.filter(name='custom_range')
+def custom_range(value):
+    return range(value)
