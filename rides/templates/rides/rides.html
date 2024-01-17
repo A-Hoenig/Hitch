@@ -57,7 +57,7 @@
                 <form method="post">
                     {% csrf_token %}
 
-                    <!-- accordion header row starts here-->
+                    <!----------------------------- accordion header row starts here --------------------------->
                     <div class="accordion-item">
                         <h2 class="accordion-header">
                             <button class="accordion-button collapsed p-2" type="button" data-bs-toggle="collapse"
@@ -88,7 +88,6 @@
                                         <!-- Destination -->
                                         <div class="col-md-auto fs-4">{{t.destination.city}}</div>
 
-
                                         <!-- Depart Date -->
                                         <div class="col-md-auto my-1 text-secondary">
                                             <span>
@@ -101,7 +100,8 @@
                                                     {% endif %}
                                                     {% if t.direction == 1 %}
                                                     <span>
-                                                        (<i class="fa-solid fa-circle-arrow-left"></i> {{ t.return_time|HHMM }})
+                                                        (<i class="fa-solid fa-circle-arrow-left"></i>
+                                                        {{ t.return_time|HHMM }})
                                                     </span>
                                                     {% endif %}
                                                 </div>
@@ -145,6 +145,7 @@
                                             </span>
                                         </div>
                                     </div>
+
                                     <!--------------------- BOTTOM ROW ---------------------->
                                     <div class="row  d-flex justify-content-start text-secondary">
 
@@ -164,13 +165,68 @@
                     </h2>
 
 
-                    <!-- drop down details form-->
-                    <div id="flush-collapse{{t.id}}" class="accordion-collapse collapse border bg-light"
+                    <!------------------------------------      drop down details form      ------------------------------------------>
+                    <div id="flush-collapse{{t.id}}" class="accordion-collapse collapse show border bg-light"
                         data-bs-parent="#RidesAccordionList">
+
                         <div class="accordion-body">
-                            <div class="container-sm">
-                                <div class="row d-flex justify-content-start">
-                                    <div class="col-md-auto">
+                            <div class="container-sm mx-0 px-0">
+
+                                <!---------      TOP ROW     ----------->
+                                <div class="row">
+
+                                    <div class="container-sm mx-0 px-0">
+
+                                        <div class="row">
+                                            <!--depart address -->
+                                            <div class="col-sm-3">
+                                                <div class="container text-secondary mx-0 px-0">
+                                                    <p class="text-primary text-start small mb-0">From:</p>
+                                                    <p class="text-start small mb-0">{{ t.depart.street }}</p>
+                                                    <p class="text-start small mb-0">{{ t.depart.city }}</p>
+                                                    <p class="text-start small mb-0">{{ t.depart.zipcode }}</p>
+                                                </div>
+                                            </div>
+
+                                            <!--destination address -->
+                                            <div class="col-sm-3">
+                                                <div class="container text-secondary mx-0 px-0">
+                                                    <p class="text-primary text-start small mb-0">To:</p>
+                                                    <p class="text-start small mb-0">{{ t.destination.street }}</p>
+                                                    <p class="text-start small mb-0">{{ t.destination.city }}</p>
+                                                    <p class="text-start small mb-0">{{ t.destination.zipcode }}</p>
+                                                </div>
+                                            </div>
+
+                                            <!--vehicle data -->
+                                            <div class="col-sm-3">
+                                                <div class="container text-secondary mx-0 px-0">
+                                                    <p class="text-primary text-start small mb-0">Vehicle:</p>
+                                                    <p class="text-start small mb-0">{{ t.vehicle.make }}</p>
+                                                    <p class="text-start small mb-0">{{ t.vehicle.model }}</p>
+                                                    <p class="text-start small mb-0">{{ t.vehicle.get_engine_display }}</p>
+                                                </div>
+                                            </div>
+
+                                            <!--drivers data  -->
+                                            <div class="col-sm-3">
+                                                <div class="container text-secondary mx-0 px-0">
+                                                    <p class="text-primary text-start small mb-0">Driver:</p>
+                                                    <p class="text-start small mb-0">{{ t.driver }}</p>
+                                                    <p class="text-start small mb-0">{{ t.vehicle.model }}</p>
+                                                    <p class="text-start small mb-0">{{ t.vehicle.get_engine_display }}</p>
+                                                </div>
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+
+                                </div>
+
+                                <!-----------      MIDDLE ROW        ---------->
+                                <div class="row">
+                                    <div class="col">
                                         <span>DRIVER {{ t.driver }}</span>
 
                                         {% if average_rating == 1 %}
@@ -217,53 +273,58 @@
                                         {% endif %}
                                     </div>
                                 </div>
+                                <!-- BOTTOM ROW -->
+                                <div class="row">
+                                    <div class="col">
+                                        {% if t.recurring  %}
+                                        <div class="d-flex justify-content-start">
+                                            <span id="weekday_pills">
+                                                {% if t.mon  %}
+                                                <span CLASS="badge bg-success rounded-pill">MON</span>
+                                                {% else %}
+                                                <span CLASS="badge bg-secondary rounded-pill">MON</span>
+                                                {% endif %}
+                                                {% if t.tue  %}
+                                                <span CLASS="badge bg-success rounded-pill">TUE</span>
+                                                {% else %}
+                                                <span CLASS="badge bg-secondary rounded-pill">TUE</span>
+                                                {% endif %}
+                                                {% if t.wed  %}
+                                                <span CLASS="badge bg-success rounded-pill">WED</span>
+                                                {% else %}
+                                                <span CLASS="badge bg-secondary rounded-pill">WED</span>
+                                                {% endif %}
+                                                {% if t.thu  %}
+                                                <span CLASS="badge bg-success rounded-pill">THU</span>
+                                                {% else %}
+                                                <span CLASS="badge bg-secondary rounded-pill">THU</span>
+                                                {% endif %}
+                                                {% if t.fri  %}
+                                                <span CLASS="badge bg-success rounded-pill">FRI</span>
+                                                {% else %}
+                                                <span CLASS="badge bg-secondary rounded-pill">FRI</span>
+                                                {% endif %}
+                                                {% if t.sat  %}
+                                                <span CLASS="badge bg-success rounded-pill">SAT</span>
+                                                {% else %}
+                                                <span CLASS="badge bg-secondary rounded-pill">SAT</span>
+                                                {% endif %}
+                                                {% if t.sun  %}
+                                                <span CLASS="badge bg-success rounded-pill">SUN</span>
+                                                {% else %}
+                                                <span CLASS="badge bg-secondary rounded-pill">SUN</span>
+                                                {% endif %}
+
+                                            </span>
+                                        </div>
+                                        {% endif %}
+                                    </div>
+                                </div>
+
                                 <div class="row d-flex justify-content-start">
                                     VEHICLE: {{ t.vehicle.make }} {{ t.vehicle.model }}
                                 </div>
-                                <div class="row d-flex justify-content-start">
-                                    {% if t.recurring  %}
-                                    <div class="col-md-auto">
-                                        <span id="weekday_pills">
-                                            {% if t.mon  %}
-                                            <span CLASS="badge bg-success rounded-pill">MON</span>
-                                            {% else %}
-                                            <span CLASS="badge bg-secondary rounded-pill">MON</span>
-                                            {% endif %}
-                                            {% if t.tue  %}
-                                            <span CLASS="badge bg-success rounded-pill">TUE</span>
-                                            {% else %}
-                                            <span CLASS="badge bg-secondary rounded-pill">TUE</span>
-                                            {% endif %}
-                                            {% if t.wed  %}
-                                            <span CLASS="badge bg-success rounded-pill">WED</span>
-                                            {% else %}
-                                            <span CLASS="badge bg-secondary rounded-pill">WED</span>
-                                            {% endif %}
-                                            {% if t.thu  %}
-                                            <span CLASS="badge bg-success rounded-pill">THU</span>
-                                            {% else %}
-                                            <span CLASS="badge bg-secondary rounded-pill">THU</span>
-                                            {% endif %}
-                                            {% if t.fri  %}
-                                            <span CLASS="badge bg-success rounded-pill">FRI</span>
-                                            {% else %}
-                                            <span CLASS="badge bg-secondary rounded-pill">FRI</span>
-                                            {% endif %}
-                                            {% if t.sat  %}
-                                            <span CLASS="badge bg-success rounded-pill">SAT</span>
-                                            {% else %}
-                                            <span CLASS="badge bg-secondary rounded-pill">SAT</span>
-                                            {% endif %}
-                                            {% if t.sun  %}
-                                            <span CLASS="badge bg-success rounded-pill">SUN</span>
-                                            {% else %}
-                                            <span CLASS="badge bg-secondary rounded-pill">SUN</span>
-                                            {% endif %}
-
-                                        </span>
-                                    </div>
-                                    {% endif %}
-                                </div>
+                               
                                 <form novalidate class="form-horizontal" action="{% url 'vehicles' %}" method="post"
                                     autocomplete="off">
                                     {% csrf_token %}
