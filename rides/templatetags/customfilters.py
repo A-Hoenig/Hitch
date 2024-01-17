@@ -10,6 +10,10 @@ def HMM(td):
     minutes = (td.seconds % 3600) // 60
     return '{:01d}:{:02d}'.format(hours, minutes)
 
+@register.filter(expects_localtime=True)
+def HHMM(value):
+    return value.strftime('%H:%M')
+
 @register.filter
 def DMY(value):
     today = datetime.now().date()
@@ -32,9 +36,6 @@ def DM(value):
     else:
         return value.strftime('%d.%b')
 
-@register.filter(expects_localtime=True)
-def HHMM(value):
-    return value.strftime('%H:%M')
 
 
 

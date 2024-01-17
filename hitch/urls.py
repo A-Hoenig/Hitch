@@ -22,8 +22,9 @@ from rides import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('', views.about, name='about'),
     path("accounts/", include("allauth.urls")),
-    path('', views.rides, name='rides'),
+    path('rides/', views.rides_view, name='rides_view'),
     path('about/', views.about, name='about'),
     path('hitches/', views.hitches, name='hitches'),
     path('user_profile/', views.profile, name='user_profile'),

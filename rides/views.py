@@ -9,7 +9,7 @@ from rides.forms import UserForm, VehicleForm, TripForm, RegionFilterForm
 from datetime import date
 
 # -------------------------------------------------------
-def rides(request):
+def rides_view(request):
     form = TripForm()
     region_filter_form = RegionFilterForm(request.GET or None)
 
@@ -33,8 +33,10 @@ def rides(request):
         num_ratings = len(driver_ratings)
         average_rating = round(total_ratings / num_ratings) if num_ratings > 0 else 0
         average_ratings.append(average_rating)
-        print(f'driver:{driver}: rating{average_rating}')
-        
+
+    # get any attached hitchers to this trip
+    
+
     context = {
         "username": request.user,
         "form": form,
