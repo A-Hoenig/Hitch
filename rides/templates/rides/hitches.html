@@ -134,12 +134,15 @@
                                     <div class="row  d-flex justify-content-start text-secondary">
 
                                         <!-- Display any notes from driver -->
-                                        {% if t.note %}
+                                        
                                         <div class="col-12 message mt-2">
-                                            <i class="fa-regular fa-message"></i>
+                                            Requested by: {{t.driver}} 
+                                            {% if t.note %}
+                                            <i class="fa-regular fa-message ms-4"></i>
                                             {{ t.note }}
+                                            {% endif %}
                                         </div>
-                                        {% endif %}
+                                        
                                     </div>
 
                                 </div>
