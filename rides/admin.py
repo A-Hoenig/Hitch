@@ -2,12 +2,6 @@ from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 from .models import Region, Location, CustomUser, Purpose, Vehicle, Driver_rating, Trip, Hitch_Request, Message
 
-
-# Register your models here.
-# @admin.register(Profile)
-# class Profile(admin.ModelAdmin):
-#     pass
-
 class CustomUserAdmin(UserAdmin):
     list_display = (
         'username', 'first_name', 'last_name',
