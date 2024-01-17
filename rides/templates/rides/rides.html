@@ -46,7 +46,7 @@
 </div>
 <!-- END OF MODAL FOR HITCH REQUEST -->
 
-<div class="container-sm text-center">
+<div class="container-sm mt-2">
     <div class="row gx-5">
         <div class="col">
 
@@ -292,7 +292,7 @@
                                                     <p class="text-primary text-start small mb-0">Hitchers:</p>
                                                     <!-- Display available hitch slots -->
                                                     {% if hitch_seats_list > 0 %}
-                                                        <ol>
+                                                        <ol class=" list-unstyled p-0">
                                                         {% for slot in hitch_seats_list|custom_range %}
                                                             <li class="text-primary text-start small mb-0">
                                                                 <span class="text-start small mb-0 text-secondary">

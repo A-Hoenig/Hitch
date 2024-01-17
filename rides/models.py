@@ -191,7 +191,7 @@ class Trip(models.Model):
             return ''  # expected_duration is None
     
 
-class Request(models.Model):
+class Hitch_Request(models.Model):
     """
     Stores a trip request related to  
     :model:`rides.Trip`,`rides.Region`,`auth.User`, `rides.purpose`, `rides.location`
@@ -215,7 +215,7 @@ class Request(models.Model):
         ordering = ["-depart_date"]
 
     def __str__(self):
-        return f"{self.date} at {self.depart_time} | from {self.depart} to {self.destination}"
+        return f"{self.depart_date} at {self.depart_time} | from {self.depart} to {self.destination}"
 
 
 class Message(models.Model):

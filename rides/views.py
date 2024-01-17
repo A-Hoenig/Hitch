@@ -1,11 +1,11 @@
 from django.shortcuts import render, HttpResponse, get_object_or_404, reverse, redirect
 from django.utils import timezone
 from django.views.generic import ListView
-from rides.models import CustomUser, Vehicle, Trip, Region, Request
+from rides.models import CustomUser, Vehicle, Trip, Region
 from django.contrib import messages
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
-from rides.forms import UserForm, VehicleForm, TripForm, RequestForm, RegionFilterForm
+from rides.forms import UserForm, VehicleForm, TripForm, RegionFilterForm
 from datetime import date
 
 # -------------------------------------------------------
@@ -61,12 +61,12 @@ def rides_view(request):
 
 # -------------------------------------------------------
 def hitches(request):
-    form = RequestForm()
+    form = TripForm()
     region_filter_form = RegionFilterForm(request.GET or None)
 
 
     # Filter trips by selected region and trip_date
-    trips = Trip.objects.all()
+    trips = Trip.objects.filter(trip_date__gte=timezone.now().date()).order_by("trip_date")
 
     if region_filter_form.is_valid():
         selected_region = region_filter_form.cleaned_data['selected_region']

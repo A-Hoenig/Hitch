@@ -1,5 +1,5 @@
 from django import forms
-from .models import CustomUser, Vehicle, Trip, Region, Request
+from .models import CustomUser, Vehicle, Trip, Region, Hitch_Request
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Submit, Layout, Div
 from django.core.validators import RegexValidator
@@ -158,7 +158,7 @@ class TripForm(forms.ModelForm):
         self.fields['depart_window'].widget = forms.TimeInput(format='%H:%M')
 
 
-class RequestForm(forms.ModelForm):
+class HitchRequestForm(forms.ModelForm):
     """
     Form class for ride requests (hitches)
     """
@@ -176,7 +176,7 @@ class RequestForm(forms.ModelForm):
         )
 
     class Meta:
-        model = Request
+        model = Hitch_Request
         
         fields ='__all__'
 

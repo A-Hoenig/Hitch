@@ -66,32 +66,15 @@
 
                                 <!--------------------- TOP ROW ---------------------->
                                 <div class="container px-1">
-                                    <div class="row d-flex justify-content-start">
+                                    <div class="row d-flex justify-content-between">
                                         <!-- Depart -->
                                         <div class="col-md-auto fs-4">{{t.depart.city}}</div>
 
                                         <!-- Trip Arrows -->
                                         <div class="col-md-auto fs-4">
-
-                                            {% if t.recurring == False and t.direction == 0 %}
                                             <i class="fa-solid fa-angle-right" data-bs-toggle="tooltip"
                                                 data-bs-placement="left" data-bs-custom-class="custom-tooltip"
                                                 data-bs-title="Single one way trip"></i>
-                                            {% elif t.recurring == True and t.direction == 0 %}
-                                            <i class="fa-solid fa-angles-right" data-bs-toggle="tooltip"
-                                                data-bs-placement="left" data-bs-custom-class="custom-tooltip"
-                                                data-bs-title="Multiple One Way Trips"></i>
-                                            {% elif t.recurring == False and t.direction == 1 %}
-                                            <i class="fa-solid fa-angle-left" data-bs-toggle="tooltip"
-                                                data-bs-placement="left" data-bs-custom-class="custom-tooltip"
-                                                data-bs-title="Single Return Trip"></i><i
-                                                class="fa-solid fa-angle-right"></i>
-                                            {% elif t.recurring == True and t.direction == 1 %}
-                                            <i class="fa-solid fa-angles-left" data-bs-toggle="tooltip"
-                                                data-bs-placement="left" data-bs-custom-class="custom-tooltip"
-                                                data-bs-title="Multiple Return Trips"></i><i
-                                                class="fa-solid fa-angles-right"></i>
-                                            {% endif %}
                                         </div>
 
                                         <!-- Destination -->
@@ -141,6 +124,9 @@
                                                 data-bs-title="Request smoking ok"></i>
                                                 {% endif %}
                                             </span>
+                                        </div>
+                                        <div  class="col-md-auto fs-4 px-1">
+
                                         </div>
                                     </div>
 
@@ -196,9 +182,6 @@
                                                 </div>
                                             </div>
 
-                                            
-
-                                            
                                         </div>
 
                                     </div>
@@ -214,48 +197,7 @@
                                 <!-- BOTTOM ROW -->
                                 <div class="row">
                                     <div class="col-sm-6 px-0">
-                                        {% if t.recurring  %}
-                                        <div class="d-flex justify-content-start">
-                                            <span id="weekday_pills">
-                                                {% if t.mon  %}
-                                                <span CLASS="badge bg-success rounded-pill">MON</span>
-                                                {% else %}
-                                                <span CLASS="badge bg-secondary rounded-pill">MON</span>
-                                                {% endif %}
-                                                {% if t.tue  %}
-                                                <span CLASS="badge bg-success rounded-pill">TUE</span>
-                                                {% else %}
-                                                <span CLASS="badge bg-secondary rounded-pill">TUE</span>
-                                                {% endif %}
-                                                {% if t.wed  %}
-                                                <span CLASS="badge bg-success rounded-pill">WED</span>
-                                                {% else %}
-                                                <span CLASS="badge bg-secondary rounded-pill">WED</span>
-                                                {% endif %}
-                                                {% if t.thu  %}
-                                                <span CLASS="badge bg-success rounded-pill">THU</span>
-                                                {% else %}
-                                                <span CLASS="badge bg-secondary rounded-pill">THU</span>
-                                                {% endif %}
-                                                {% if t.fri  %}
-                                                <span CLASS="badge bg-success rounded-pill">FRI</span>
-                                                {% else %}
-                                                <span CLASS="badge bg-secondary rounded-pill">FRI</span>
-                                                {% endif %}
-                                                {% if t.sat  %}
-                                                <span CLASS="badge bg-success rounded-pill">SAT</span>
-                                                {% else %}
-                                                <span CLASS="badge bg-secondary rounded-pill">SAT</span>
-                                                {% endif %}
-                                                {% if t.sun  %}
-                                                <span CLASS="badge bg-success rounded-pill">SUN</span>
-                                                {% else %}
-                                                <span CLASS="badge bg-secondary rounded-pill">SUN</span>
-                                                {% endif %}
-
-                                            </span>
-                                        </div>
-                                        {% endif %}
+                                        
                                     </div>
                                 </div>
 
@@ -265,9 +207,7 @@
                                     {% if user.is_authenticated %}
                                     <div class="col">
                                         <button type="button" class="btn btn-primary my-1" data-bs-toggle="modal"
-                                            data-bs-target="#exampleModal" data-bs-whatever="@gest">Request to Hitch
-                                            a
-                                            Ride!</button>
+                                            data-bs-target="#exampleModal" data-bs-whatever="@gest">Offer a Ride!</button>
                                     </div>
                                     {% else%}
                                     <div class="col">
