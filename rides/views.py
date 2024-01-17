@@ -12,7 +12,8 @@ from datetime import date
 def rides(request):
     form = TripForm()
     region_filter_form = RegionFilterForm(request.GET or None)
-        
+
+
     # Filter trips by selected region and trip_date
     trips = Trip.objects.filter(trip_date__gte=timezone.now().date()).order_by("trip_date")
 
@@ -33,6 +34,7 @@ def rides(request):
         average_rating = round(total_ratings / num_ratings) if num_ratings > 0 else 0
         average_ratings.append(average_rating)
         print(f'driver:{driver}: rating{average_rating}')
+        
     context = {
         "username": request.user,
         "form": form,

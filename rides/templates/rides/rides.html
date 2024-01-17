@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 {% load static %}
 {% load crispy_forms_tags %}
+<!-- {% load customfilters %} -->
 {% url 'about' as about_url %}
 
 
@@ -95,20 +96,28 @@
                                                     {{ t.trip_date }} {{ t.depart_time }}
                                                     {% if t.depart_window != None %}
                                                     <span class="text-secondary">
-                                                        (±{{t.depart_window}})
+                                                        (±{{ t.depart_window|format_duration }})
+                                                    </span>
+                                                    {% endif %}
+                                                    {% if t.direction == 1 %}
+                                                    <span>
+                                                        {{ t.return_time }}<i class="fa-solid fa-circle-arrow-left"></i>
                                                     </span>
                                                     {% endif %}
                                                 </div>
-                                                {% if t.direction == 1 %}
-                                                <div>
-                                                    RETURN {{ t.return_time }}
-                                                </div>
-                                                {% endif %}
                                             </span>
                                         </div>
 
                                         <!-- Trip Symbols -->
                                         <div class="col-md-auto fs-4 px-1">
+                                            <!-- add electic plug icon based for electric and hybrid-->
+                                            {% if t.vehicle.engine == 2 %}
+                                            <span class="mx-1 text-success"><i class="fa-solid fa-plug"></i></span>
+                                            {% endif %}
+                                            {% if t.vehicle.engine == 3 %}
+                                            <span class="mx-1 text-success"><i class="fa-solid fa-plug"></i></span>
+                                            {% endif %}
+                                            <!-- vehicle type icon -->
                                             <span class="mx-1">
                                                 {% if t.vehicle.type == 3%}
                                                 <span class="icon"><i class="fa-solid fa-van-shuttle"></i></span>
@@ -122,6 +131,7 @@
                                                 <span class="icon"><i class="fa-solid fa-car"></i></span>
                                                 {% endif %}
                                             </span>
+                                            <!-- purpose icon - HTML stored in DB -->
                                             <span class="mx-1">
                                                 {{ t.purpose.purpose_icon|safe }}
                                             </span>
@@ -208,7 +218,7 @@
                                     </div>
                                 </div>
                                 <div class="row d-flex justify-content-start">
-                                    {{ t.vehicle.make }} {{ t.vehicle.model }}
+                                    VEHICLE: {{ t.vehicle.make }} {{ t.vehicle.model }}
                                 </div>
                                 <div class="row d-flex justify-content-start">
                                     {% if t.recurring  %}

@@ -181,6 +181,14 @@ class Trip(models.Model):
 
     def __str__(self):
         return f"{self.trip_date} at {self.depart_time} | from {self.depart} --to-- {self.destination}"
+
+    def format_duration(self):
+        if self.depart_window:
+            hours = self.depart_window.seconds // 3600
+            minutes = (self.depart_window.seconds % 3600) // 60
+            return '{:01d}:{:02d}'.format(hours, minutes)
+        else:
+            return ''  # expected_duration is None
     
 
 class Request(models.Model):
