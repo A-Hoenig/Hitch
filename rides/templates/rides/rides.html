@@ -143,7 +143,9 @@
                                                 {% endif %}
                                             </span>
                                             <!-- purpose icon - HTML stored in DB -->
-                                            <span class="mx-1">
+                                            <span class="mx-1" data-bs-toggle="tooltip" data-bs-placement="left"
+                                            data-bs-custom-class="custom-tooltip"
+                                            data-bs-title="{{ t.purpose.purpose }}">
                                                 {{ t.purpose.purpose_icon|safe }}
                                             </span>
                                             <span class="mx-1">
