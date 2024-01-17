@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% load static %}
 {% load crispy_forms_tags %}
-<!-- {% load customfilters %} -->
+{% load customfilters %}
 {% url 'about' as about_url %}
 
 
@@ -93,15 +93,15 @@
                                         <div class="col-md-auto my-1">
                                             <span>
                                                 <div>
-                                                    {{ t.trip_date }} {{ t.depart_time }}
+                                                    {{ t.trip_date|DMY }} {{ t.depart_time|HHMM }}
                                                     {% if t.depart_window != None %}
                                                     <span class="text-secondary">
-                                                        (±{{ t.depart_window|format_duration }})
+                                                        (±{{ t.depart_window|HMM }})
                                                     </span>
                                                     {% endif %}
                                                     {% if t.direction == 1 %}
                                                     <span>
-                                                        {{ t.return_time }}<i class="fa-solid fa-circle-arrow-left"></i>
+                                                        (<i class="fa-solid fa-circle-arrow-left"></i> {{ t.return_time|HHMM }})
                                                     </span>
                                                     {% endif %}
                                                 </div>
