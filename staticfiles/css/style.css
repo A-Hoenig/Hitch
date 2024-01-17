@@ -15,3 +15,14 @@
     display: inline-block;
     width: 20px;
  }
+
+ #type {
+   display: inline-block;
+   width: 300px;
+}
+
+ #deleteBtn {
+   display: none !important;
+ }
+
+ 
