@@ -93,7 +93,7 @@
                                         <div class="col-md-auto my-1 text-secondary">
                                             <span>
                                                 <div>
-                                                    {{ t.trip_date|DMY }} {{ t.depart_time|HHMM }}
+                                                    {{ t.trip_date|DM }} at {{ t.depart_time|HHMM }}
                                                     {% if t.depart_window != None %}
                                                     <span class="text-secondary">
                                                         (±{{ t.depart_window|HMM }})
@@ -146,7 +146,7 @@
                                         </div>
                                     </div>
                                     <!--------------------- BOTTOM ROW ---------------------->
-                                    <div class="row  d-flex justify-content-start">
+                                    <div class="row  d-flex justify-content-start text-secondary">
 
                                         <!-- Display any notes from driver -->
                                         {% if t.note %}

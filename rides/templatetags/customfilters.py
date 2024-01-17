@@ -19,7 +19,18 @@ def DMY(value):
     elif value == tomorrow:
         return 'Tomorrow'
     else:
-        return value.strftime('%d.%m.%y')
+        return value.strftime('%d.%b.%y')
+
+@register.filter
+def DM(value):
+    today = datetime.now().date()
+    tomorrow = today + timedelta(days=1)
+    if value == today:
+        return 'Today'
+    elif value == tomorrow:
+        return 'Tomorrow'
+    else:
+        return value.strftime('%d.%b')
 
 @register.filter(expects_localtime=True)
 def HHMM(value):
