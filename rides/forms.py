@@ -135,7 +135,6 @@ class TripForm(forms.ModelForm):
     """
     helper = FormHelper()
     helper.form_method = 'POST'
-    
     helper.layout = Layout(
         Div(
                 Div('region', css_class='dropdown'),
@@ -179,13 +178,7 @@ class HitchRequestForm(forms.ModelForm):
         model = Hitch_Request
         
         fields ='__all__'
-
-    # def __init__(self, *args, **kwargs):
-    #     super(RequestForm, self).__init__(*args, **kwargs)
-    #     instance = kwargs.get('instance')
-    #     self.fields['expected_duration'].widget = forms.TimeInput(format='%H:%M')
-    #     self.fields['depart_window'].widget = forms.TimeInput(format='%H:%M')
-   
+  
 
 class RegionFilterForm(forms.Form):
     selected_region = forms.ModelChoiceField(queryset=Region.objects.all(), empty_label=None, initial=Region.objects.first())
@@ -198,7 +191,27 @@ class RegionFilterForm(forms.Form):
         self.fields['selected_region'].initial = Region.objects.first()
         self.fields['selected_region'].widget.attrs.update(style='max-width: 12em')
 
+
+
 class MessageForm(forms.Form):
-    
+    message = forms.CharField(max_length=400, required=False)
+
+    def __init__(self, *args, **kwargs):
+        super(MessageForm, self).__init__(*args, **kwargs)
+        
+        self.fields['message'].widget.attrs['autofocus'] = True
+
+        self.helper = FormHelper()
+        self.helper.form_method = 'POST'
+        self.helper.layout = Layout(
+            Div(
+                Div('message', css_class='col-md-12'),
+                css_class='row'
+            ),
+        )
+
     class Meta:
         model = Message
+        fields = ['message']
+  
+        

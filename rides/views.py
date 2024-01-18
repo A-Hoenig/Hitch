@@ -28,7 +28,7 @@ def rides_view(request):
     else:
         form = TripForm()
         region_filter_form = RegionFilterForm(request.GET or None)
-
+        message_form = MessageForm()
 
         # Filter trips by selected region and trip_date
         trips = Trip.objects.filter(trip_date__gte=timezone.now().date()).order_by("trip_date")
@@ -65,8 +65,9 @@ def rides_view(request):
         context = {
             "username": request.user,
             "form": form,
-            "trips": zip(trips, forms, average_ratings, hitch_seats_list),
             "region_filter_form": region_filter_form,
+            "message_form": message_form,
+            "trips": zip(trips, forms, average_ratings, hitch_seats_list),
             "average_ratings": average_ratings,
             "hitcher_slots": range(hitch_seats),
         }
