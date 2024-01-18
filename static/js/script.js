@@ -27,12 +27,18 @@ document.addEventListener('DOMContentLoaded', function() {
 
 document.addEventListener('DOMContentLoaded', function () {
   var form = document.getElementById('filterForm');
-  var regionDropdown = form.querySelector('#id_selected_region');  
+  
+  // check a  form is present first
+  if (form) {
+    var regionDropdown = form.querySelector('#id_selected_region');
 
-  if (regionDropdown) {
+    // Check for regionDropdown first
+    if (regionDropdown) {
       regionDropdown.addEventListener('change', function () {
-          // When the input field value changes, submit the form
-          form.submit();
+        
+        form.submit();
       });
+    }
   }
+  console.log('limey was here')
 });
