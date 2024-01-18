@@ -75,8 +75,9 @@ def rides_view(request):
             hitch_seats = trip.max_hitch
             hitch_seats_list.append(hitch_seats)
 
-        # get any attached hitchers to this trip
-        
+            # get any attached hitchers to this trip
+            approved_hitch_requests = Hitch_Request.objects.filter(trip=trip, pax_approved=True)
+            print(approved_hitch_requests)
 
         context = {
             "username": request.user,
