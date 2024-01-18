@@ -57,7 +57,7 @@
             <div class="accordion" id="RidesAccordionList">
 
                 <!-- loop through each trip in the db-->
-                {% for t, form, average_rating, hitch_seats_list, hitch_groups in trips %}
+                {% for t, form, average_rating, hitch_groups in trips %}
                 <form method="post">
                     {% csrf_token %}
 
@@ -323,31 +323,13 @@
                                                     </p>
                                                     <p class="text-primary text-start small mb-0">Hitchers:</p>
                                                     <!-- Display available hitch slots -->
-                                                    <ol class=" list-unstyled p-0">
-                                                        {% for dude in hitch_group %}
-                                                        <li>{{ dude }}</li>
-                                                        {% endfor %}
-                                                    </ol>
-
-
-
-
-
-                                                    {% if hitch_seats_list > 0 %}
-                                                    <ol class=" list-unstyled p-0">
-                                                        {% for slot in hitch_seats_list|custom_range %}
-                                                        <li class="text-primary text-start small mb-0">
-                                                            <span class="text-start small mb-0 text-secondary">
-                                                                {{ t.driver }}
-                                                            </span>
-
+                                                    <ol class="list-unstyled p-0">
+                                                        {% for hitcher in hitch_groups %}
+                                                        <li class="text-start small mb-0 text-secondary">
+                                                            {{ hitcher }}
                                                         </li>
                                                         {% endfor %}
                                                     </ol>
-                                                    {% else %}
-                                                    No available seats
-                                                    {% endif %}
-
                                                 </div>
                                             </div>
                                         </div>

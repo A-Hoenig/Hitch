@@ -88,7 +88,7 @@ def rides_view(request):
             "form": form,
             "region_filter_form": region_filter_form,
             "message_form": message_form,
-            "trips": zip(trips, forms, average_ratings, hitch_seats_list, hitch_groups),
+            "trips": zip(trips, forms, average_ratings, hitch_groups),
             "average_ratings": average_ratings,
             
         }
