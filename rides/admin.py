@@ -69,17 +69,17 @@ admin.site.register(Trip)
 
 
 class Hitch_RequestAdmin(admin.ModelAdmin):
-    list_display = ('display_trip', 'get_driver', 'hitcher', 'depart_date', 'depart_time')
+    list_display = ('pax_approved','display_trip', 'get_driver', 'hitcher', 'depart_date', 'depart_time')
 
     def display_trip(self, obj):
-        return obj.trip if obj.trip else "Not Approved Yet"
+        return obj.trip if obj.trip else "No drivers yet"
     display_trip.short_description = 'Trip'
     
     def get_driver(self, obj):
         if obj.trip:
             return obj.trip.driver.username
         else:
-            return "No Trip Associated Yet"
+            return "-----"
     get_driver.short_description = 'Driver'
 
 admin.site.register(Hitch_Request, Hitch_RequestAdmin)

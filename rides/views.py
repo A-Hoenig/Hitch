@@ -37,7 +37,7 @@ def rides_view(request):
         
         hitch_request.save()
 
-        messages.success(request, 'Request successfully submitted!')
+        messages.success(request, 'Request successfully submitted! The Driver will get back to you')
         
         return HttpResponseRedirect(request.path_info) 
 
