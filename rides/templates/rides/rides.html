@@ -219,7 +219,7 @@
 
 
                     <!------------------------------------      drop down details form      ------------------------------------------>
-                    <div id="flush-collapse{{t.id}}" class="accordion-collapse collapse border bg-light"
+                    <div id="flush-collapse{{t.id}}" class="accordion-collapse collapse show border bg-light"
                         data-bs-parent="#RidesAccordionList">
 
                         <div class="accordion-body p-1">
@@ -400,27 +400,29 @@
                                 <div class="">
                                     <form method="post" action="{% url 'account_login' %}?next={{ request.path }}">
                                         {% csrf_token %}
-
-                                        {% if user != t.driver %}
-                                            {% if user.username not in hitch_groups %}
+                                        {% if user.is_authenticated %}
+                                            {% if user != t.driver and user.username not in hitch_groups %}
                                             <div class="col">
-                                                <button name="ride_trip_id" value="{{t.id}}" type="button"
+                                                <button name="ride_trip_id" value="{{ t.id }}" type="button"
                                                     class="btn btn-primary mx-1 my-3" data-bs-toggle="modal"
                                                     data-bs-target="#RequestModal" data-bs-whatever=""
                                                     data-trip-id="{{ t.id }}">
                                                     Request to Hitch a Ride!
                                                 </button>
                                             </div>
+                                            {% elif  user.username in hitch_groups %}
+                                            <div class="btn btn-success disabled my-3">
+                                                <i class="fa-solid fa-thumbs-up"></i><span>You are approved to join this
+                                                    Ride!</span>
+                                            </div>
                                             {% else %}
                                             <div class="btn btn-success disabled my-3">
-                                                <i class="fa-solid fa-thumbs-up"></i><span>You are approved to join this Ride!</span>
-                                              </div>
+                                                <i class="fa-solid fa-thumbs-up"></i><span>This is your trip</span>
+                                            </div>
                                             {% endif %}
-                                        
                                         {% else %}
                                         <div class="col">
-                                            <!-- ensure after login return to originating page, not about page-->
-                                            <a name="ride_trip_id" value="{{t.id}}" class="btn btn-primary my-1 mx-1"
+                                            <a name="ride_trip_id" value="{{ t.id }}" class="btn btn-primary my-1 mx-1"
                                                 href="{% url 'account_login' %}?next={{ request.path }}"
                                                 role="button">Sign In to request a ride</a>
                                         </div>
