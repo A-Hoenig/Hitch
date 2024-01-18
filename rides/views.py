@@ -15,11 +15,13 @@ def rides_view(request):
         # log ride request and message
         message_content = request.POST.get('message')
         trip_id = request.POST.get('ride_trip_id')
-        hitcher = request.user
+        
         trip = Trip.objects.get(id=trip_id)
         driver = trip.driver
-
-       
+        hitcher = request.user
+        
+        message = Message(sender=hitcher, receiver=driver, message=message_content, trip_id=trip_id)
+        message.save()
 
         messages.success(request, 'Request successfully submitted!')
         
