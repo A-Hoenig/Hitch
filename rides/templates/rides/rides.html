@@ -35,7 +35,7 @@
                 <form method="post" action="{% url 'rides_view' %}">
                     {% csrf_token %}
                     <div class="mb-3">
-                        {% crispy message_form %}
+                        {{ message_form|crispy }}
                     </div>
                     
                     <div class="modal-footer">
@@ -485,8 +485,8 @@
 </div>
 </div>
 
-<script>
 
+<script>
     // pass trip id value from individual ride in loop to the request modal (outside loop)
 document.addEventListener('DOMContentLoaded', (event) => {
   $('#RequestModal').on('show.bs.modal', function (event) {
@@ -497,8 +497,6 @@ document.addEventListener('DOMContentLoaded', (event) => {
       modal.find('.modal-footer button[name="ride_trip_id"]').val(tripId)
   });
 });
-
-
 </script>
 
 
