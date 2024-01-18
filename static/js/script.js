@@ -40,5 +40,6 @@ document.addEventListener('DOMContentLoaded', function () {
       });
     }
   }
-  console.log('limey was here')
 });
+
+

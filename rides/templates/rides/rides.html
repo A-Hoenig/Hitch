@@ -30,16 +30,20 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form>
+
+                <form method="post" action="{% url 'rides_view' %}">
+                    {% csrf_token %}
                     <div class="mb-3">
                         <label for="message-text" class="col-form-label">Message:</label>
-                        <textarea class="form-control" id="message-text"></textarea>
+                        <textarea class="form-control" id="message-text" name="message"></textarea>
+                    </div>
+                    
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button name="ride_trip_id" value="" type="submit" class="btn btn-primary">Request Ride</button>
                     </div>
                 </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Request Ride</button>
+
             </div>
         </div>
     </div>
@@ -450,9 +454,10 @@
                                         {% if user.is_authenticated %}
                                             {% if user != t.driver %}
                                                 <div class="col">
-                                                    <button type="button" class="btn btn-primary mx-1 my-3"
+                                                    <button name="ride_trip_id" value="{{t.id}}" type="button" class="btn btn-primary mx-1 my-3"
                                                             data-bs-toggle="modal" data-bs-target="#exampleModal"
-                                                            data-bs-whatever="">
+                                                            data-bs-whatever=""
+                                                            data-trip-id="{{ t.id }}">
                                                         Request to Hitch a Ride!
                                                     </button>
                                                 </div>
@@ -460,7 +465,7 @@
                                         {% else %}
                                             <div class="col">
                                                 <!-- ensure after login return to originating page, not about page-->
-                                                <a class="btn btn-primary my-1 mx-1" href="{% url 'account_login' %}?next={{ request.path }}" role="button">Sign In to request a ride</a>
+                                                <a name="ride_trip_id" value="{{t.id}}" class="btn btn-primary my-1 mx-1" href="{% url 'account_login' %}?next={{ request.path }}" role="button">Sign In to request a ride</a>
                                             </div>
                                         {% endif %}
                                     </form>
@@ -479,7 +484,18 @@
     </div>
 </div>
 </div>
-
+<script>
+    // pass trip id value from individual ride in loop to the request modal (outside loop)
+document.addEventListener('DOMContentLoaded', (event) => {
+  $('#exampleModal').on('show.bs.modal', function (event) {
+      var button = $(event.relatedTarget)  
+      var tripId = button.data('trip-id') 
+      // Update the modal's content.
+      var modal = $(this)
+      modal.find('.modal-footer button[name="ride_trip_id"]').val(tripId)
+  });
+});
+</script>
 
 
 {% endblock %}
