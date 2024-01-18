@@ -60,6 +60,7 @@ def rides_view(request):
         # also remember the avaialble hitch seats per trip
         average_ratings = []
         hitch_seats_list = []
+        hitch_groups = []
         # minimum value in case no trip in loop
         hitch_seats = 1
 
@@ -78,17 +79,18 @@ def rides_view(request):
             # get any attached hitchers to this trip
             approved_hitch_requests = Hitch_Request.objects.filter(trip=trip, pax_approved=True)
             hitchers = [hr.hitcher.username for hr in approved_hitch_requests]
-            remaining_hitch_seats = hitch_seats -len(hitchers)
-            print(f'{remaining_hitch_seats} out of {hitch_seats} remaining')
+            remaining_hitch_seats = hitch_seats - len(hitchers)
+            hitch_group = hitchers + ['----' for _ in range(remaining_hitch_seats)]
+            hitch_groups.append(hitch_group)
 
         context = {
             "username": request.user,
             "form": form,
             "region_filter_form": region_filter_form,
             "message_form": message_form,
-            "trips": zip(trips, forms, average_ratings, hitch_seats_list),
+            "trips": zip(trips, forms, average_ratings, hitch_seats_list, hitch_groups),
             "average_ratings": average_ratings,
-            "hitcher_slots": range(hitch_seats),
+            
         }
 
         return render(request, 'rides/rides.html', context)

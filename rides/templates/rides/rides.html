@@ -37,7 +37,7 @@
                     <div class="mb-3">
                         {{ message_form|crispy }}
                     </div>
-                    
+
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                         <button name="ride_trip_id" value="" type="submit" class="btn btn-primary">Request Ride</button>
@@ -57,7 +57,7 @@
             <div class="accordion" id="RidesAccordionList">
 
                 <!-- loop through each trip in the db-->
-                {% for t, form, average_rating, hitch_seats_list in trips %}
+                {% for t, form, average_rating, hitch_seats_list, hitch_groups in trips %}
                 <form method="post">
                     {% csrf_token %}
 
@@ -323,6 +323,16 @@
                                                     </p>
                                                     <p class="text-primary text-start small mb-0">Hitchers:</p>
                                                     <!-- Display available hitch slots -->
+                                                    <ol class=" list-unstyled p-0">
+                                                        {% for dude in hitch_group %}
+                                                        <li>{{ dude }}</li>
+                                                        {% endfor %}
+                                                    </ol>
+
+
+
+
+
                                                     {% if hitch_seats_list > 0 %}
                                                     <ol class=" list-unstyled p-0">
                                                         {% for slot in hitch_seats_list|custom_range %}
@@ -330,50 +340,7 @@
                                                             <span class="text-start small mb-0 text-secondary">
                                                                 {{ t.driver }}
                                                             </span>
-                                                            <span class="text-secondary" name="rating">
-                                                                {% if average_rating == 1 %}
-                                                                <div name="stars"></div>
-                                                                <span class="text-warning">
-                                                                    <i class="fa-solid fa-star"></i>
-                                                                    <i class="fa-regular fa-star"></i>
-                                                                    <i class="fa-regular fa-star"></i>
-                                                                    <i class="fa-regular fa-star"></i>
-                                                                    <i class="fa-regular fa-star"></i>
-                                                                </span>
-                                                                {% elif average_rating == 2 %}
-                                                                <span class="">
-                                                                    <i class="fa-solid fa-star"></i>
-                                                                    <i class="fa-solid fa-star"></i>
-                                                                    <i class="fa-regular fa-star"></i>
-                                                                    <i class="fa-regular fa-star"></i>
-                                                                    <i class="fa-regular fa-star"></i>
-                                                                </span>
-                                                                {% elif average_rating == 3 %}
-                                                                <span>
-                                                                    <i class="fa-solid fa-star"></i>
-                                                                    <i class="fa-solid fa-star"></i>
-                                                                    <i class="fa-solid fa-star"></i>
-                                                                    <i class="fa-regular fa-star"></i>
-                                                                    <i class="fa-regular fa-star"></i>
-                                                                </span>
-                                                                {% elif average_rating == 4 %}
-                                                                <span>
-                                                                    <i class="fa-solid fa-star"></i>
-                                                                    <i class="fa-solid fa-star"></i>
-                                                                    <i class="fa-solid fa-star"></i>
-                                                                    <i class="fa-solid fa-star"></i>
-                                                                    <i class="fa-regular fa-star"></i>
-                                                                </span>
-                                                                {% elif average_rating == 5 %}
-                                                                <span>
-                                                                    <i class="fa-solid fa-star"></i>
-                                                                    <i class="fa-solid fa-star"></i>
-                                                                    <i class="fa-solid fa-star"></i>
-                                                                    <i class="fa-solid fa-star"></i>
-                                                                    <i class="fa-solid fa-star"></i>
-                                                                </span>
-                                                                {% endif %}
-                                                            </span>
+
                                                         </li>
                                                         {% endfor %}
                                                     </ol>
@@ -452,21 +419,23 @@
                                     <form method="post" action="{% url 'account_login' %}?next={{ request.path }}">
                                         {% csrf_token %}
                                         {% if user.is_authenticated %}
-                                            {% if user != t.driver %}
-                                                <div class="col">
-                                                    <button name="ride_trip_id" value="{{t.id}}" type="button" class="btn btn-primary mx-1 my-3"
-                                                            data-bs-toggle="modal" data-bs-target="#RequestModal"
-                                                            data-bs-whatever=""
-                                                            data-trip-id="{{ t.id }}">
-                                                        Request to Hitch a Ride!
-                                                    </button>
-                                                </div>
-                                            {% endif %}
+                                        {% if user != t.driver %}
+                                        <div class="col">
+                                            <button name="ride_trip_id" value="{{t.id}}" type="button"
+                                                class="btn btn-primary mx-1 my-3" data-bs-toggle="modal"
+                                                data-bs-target="#RequestModal" data-bs-whatever=""
+                                                data-trip-id="{{ t.id }}">
+                                                Request to Hitch a Ride!
+                                            </button>
+                                        </div>
+                                        {% endif %}
                                         {% else %}
-                                            <div class="col">
-                                                <!-- ensure after login return to originating page, not about page-->
-                                                <a name="ride_trip_id" value="{{t.id}}" class="btn btn-primary my-1 mx-1" href="{% url 'account_login' %}?next={{ request.path }}" role="button">Sign In to request a ride</a>
-                                            </div>
+                                        <div class="col">
+                                            <!-- ensure after login return to originating page, not about page-->
+                                            <a name="ride_trip_id" value="{{t.id}}" class="btn btn-primary my-1 mx-1"
+                                                href="{% url 'account_login' %}?next={{ request.path }}"
+                                                role="button">Sign In to request a ride</a>
+                                        </div>
                                         {% endif %}
                                     </form>
                                 </div>
@@ -488,15 +457,15 @@
 
 <script>
     // pass trip id value from individual ride in loop to the request modal (outside loop)
-document.addEventListener('DOMContentLoaded', (event) => {
-  $('#RequestModal').on('show.bs.modal', function (event) {
-      var button = $(event.relatedTarget)  
-      var tripId = button.data('trip-id') 
-      // Update the modal's content.
-      var modal = $(this)
-      modal.find('.modal-footer button[name="ride_trip_id"]').val(tripId)
-  });
-});
+    document.addEventListener('DOMContentLoaded', (event) => {
+        $('#RequestModal').on('show.bs.modal', function (event) {
+            var button = $(event.relatedTarget)
+            var tripId = button.data('trip-id')
+            // Update the modal's content.
+            var modal = $(this)
+            modal.find('.modal-footer button[name="ride_trip_id"]').val(tripId)
+        });
+    });
 </script>
 
 
