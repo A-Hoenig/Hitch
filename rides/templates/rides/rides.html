@@ -443,16 +443,17 @@
                                     </div>
                                 </div>
 
-                                <form novalidate class="form-horizontal" action="{% url 'vehicles' %}" method="post"
-                                    autocomplete="off">
-                                    {% csrf_token %}
+                                <div class="" >
+                                    
                                     {% if user.is_authenticated %}
-                                    <div class="col">
-                                        <button type="button" class="btn btn-primary mx-1 my-3" data-bs-toggle="modal"
-                                            data-bs-target="#exampleModal" data-bs-whatever="@gest">Request to Hitch
-                                            a
-                                            Ride!</button>
-                                    </div>
+                                        {% if user != t.driver %}
+                                        <div class="col">
+                                            <button type="button" class="btn btn-primary mx-1 my-3" data-bs-toggle="modal"
+                                                data-bs-target="#exampleModal" data-bs-whatever="@gest">Request to Hitch
+                                                a
+                                                Ride!</button>
+                                        </div>
+                                        {% endif %}
                                     {% else%}
                                     <div class="col">
                                         <a class="btn btn-primary my-1 mx-1" data-bs-toggle="collapse"
@@ -460,7 +461,8 @@
                                             ride</a>
                                     </div>
                                     {% endif%}
-                                </form>
+
+                                </div>
 
                             </div>
                         </div>
