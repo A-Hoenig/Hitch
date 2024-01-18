@@ -1,5 +1,5 @@
 from django import forms
-from .models import CustomUser, Vehicle, Trip, Region, Hitch_Request
+from .models import CustomUser, Vehicle, Trip, Region, Hitch_Request, Message
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Submit, Layout, Div
 from django.core.validators import RegexValidator
@@ -197,3 +197,8 @@ class RegionFilterForm(forms.Form):
         self.fields['selected_region'].empty_label = None
         self.fields['selected_region'].initial = Region.objects.first()
         self.fields['selected_region'].widget.attrs.update(style='max-width: 12em')
+
+class MessageForm(forms.Form):
+    
+    class Meta:
+        model = Message

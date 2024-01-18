@@ -1,11 +1,11 @@
 from django.shortcuts import render, HttpResponse, get_object_or_404, reverse, redirect, HttpResponseRedirect
 from django.utils import timezone
 from django.views.generic import ListView
-from rides.models import CustomUser, Vehicle, Trip, Region
+from rides.models import CustomUser, Vehicle, Trip, Region, Message
 from django.contrib import messages
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
-from rides.forms import UserForm, VehicleForm, TripForm, RegionFilterForm
+from rides.forms import UserForm, VehicleForm, TripForm, RegionFilterForm, MessageForm
 from datetime import date
 
 # -------------------------------------------------------
@@ -15,16 +15,12 @@ def rides_view(request):
         # log ride request and message
         message_content = request.POST.get('message')
         trip_id = request.POST.get('ride_trip_id')
-        print(trip_id)
         hitcher = request.user
         trip = Trip.objects.get(id=trip_id)
         driver = trip.driver
 
-        # test it all
-        print(message_content)
-        print(hitcher)
-        print(trip)
-        print(driver)
+       
+
         messages.success(request, 'Request successfully submitted!')
         
         return HttpResponseRedirect(request.path_info) 
