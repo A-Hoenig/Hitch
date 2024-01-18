@@ -251,7 +251,8 @@
                                             <div class="col-sm-3">
                                                 <div class="container text-secondary mx-0 px-0">
                                                     <p class="text-primary text-start small mb-0">Vehicle:</p>
-                                                    <p class="text-start small mb-0">{{ t.vehicle.make }} {{ t.vehicle.model }}</p>
+                                                    <p class="text-start small mb-0">{{ t.vehicle.make }}
+                                                        {{ t.vehicle.model }}</p>
                                                     <p class="text-start small mb-0">
                                                         {{ t.vehicle.get_engine_display }}
                                                     </p>
@@ -443,25 +444,26 @@
                                     </div>
                                 </div>
 
-                                <div class="" >
-                                    
-                                    {% if user.is_authenticated %}
-                                        {% if user != t.driver %}
-                                        <div class="col">
-                                            <button type="button" class="btn btn-primary mx-1 my-3" data-bs-toggle="modal"
-                                                data-bs-target="#exampleModal" data-bs-whatever="">
-                                                Request to Hitch a Ride!
-                                            </button>
-                                        </div>
+                                <div class="">
+                                    <form method="post" action="{% url 'account_login' %}?next={{ request.path }}">
+                                        {% csrf_token %}
+                                        {% if user.is_authenticated %}
+                                            {% if user != t.driver %}
+                                                <div class="col">
+                                                    <button type="button" class="btn btn-primary mx-1 my-3"
+                                                            data-bs-toggle="modal" data-bs-target="#exampleModal"
+                                                            data-bs-whatever="">
+                                                        Request to Hitch a Ride!
+                                                    </button>
+                                                </div>
+                                            {% endif %}
+                                        {% else %}
+                                            <div class="col">
+                                                <!-- ensure after login return to originating page, not about page-->
+                                                <a class="btn btn-primary my-1 mx-1" href="{% url 'account_login' %}?next={{ request.path }}" role="button">Sign In to request a ride</a>
+                                            </div>
                                         {% endif %}
-                                    {% else%}
-                                    <div class="col">
-                                        <a class="btn btn-primary my-1 mx-1" data-bs-toggle="collapse"
-                                            href="{% url 'account_login' %}" role=" button">Sign In to request a
-                                            ride</a>
-                                    </div>
-                                    {% endif%}
-
+                                    </form>
                                 </div>
 
                             </div>

@@ -22,8 +22,8 @@ from rides import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', views.about, name='about'),
     path("accounts/", include("allauth.urls")),
+    path('', views.about, name='about'),
     path('rides/', views.rides_view, name='rides_view'),
     path('about/', views.about, name='about'),
     path('hitches/', views.hitches, name='hitches'),
@@ -32,3 +32,4 @@ urlpatterns = [
     path('user_trips/', views.trips, name='user_trips'),
     path('change-password/', PasswordChangeView.as_view(), name='password_change'),
 ]
+
