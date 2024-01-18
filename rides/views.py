@@ -77,7 +77,9 @@ def rides_view(request):
 
             # get any attached hitchers to this trip
             approved_hitch_requests = Hitch_Request.objects.filter(trip=trip, pax_approved=True)
-            print(approved_hitch_requests)
+            hitchers = [hr.hitcher.username for hr in approved_hitch_requests]
+            remaining_hitch_seats = hitch_seats -len(hitchers)
+            print(f'{remaining_hitch_seats} out of {hitch_seats} remaining')
 
         context = {
             "username": request.user,
