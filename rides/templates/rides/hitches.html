@@ -204,22 +204,27 @@
                                     </div>
                                 </div>
 
-                                <form novalidate class="form-horizontal" action="{% url 'vehicles' %}" method="post"
-                                    autocomplete="off">
-                                    {% csrf_token %}
-                                    {% if user.is_authenticated %}
-                                    <div class="col">
-                                        <button type="button" class="btn btn-primary my-1" data-bs-toggle="modal"
-                                            data-bs-target="#exampleModal" data-bs-whatever="@gest">Offer a Ride!</button>
-                                    </div>
-                                    {% else%}
-                                    <div class="col">
-                                        <a class="btn btn-primary my-1" data-bs-toggle="collapse"
-                                            href="{% url 'account_login' %}" role=" button">Sign In to request a
-                                            ride</a>
-                                    </div>
-                                    {% endif%}
-                                </form>
+                                <div class="">
+                                    <form method="post" action="{% url 'account_login' %}?next={{ request.path }}">
+                                        {% csrf_token %}
+                                        {% if user.is_authenticated %}
+                                            {% if user != t.driver %}
+                                                <div class="col">
+                                                    <button type="button" class="btn btn-primary mx-1 my-3"
+                                                            data-bs-toggle="modal" data-bs-target="#exampleModal"
+                                                            data-bs-whatever="">
+                                                        Request to Hitch a Ride!
+                                                    </button>
+                                                </div>
+                                            {% endif %}
+                                        {% else %}
+                                            <div class="col">
+                                                <!-- ensure after login return to originating page, not about page-->
+                                                <a class="btn btn-primary my-1 mx-1" href="{% url 'account_login' %}?next={{ request.path }}" role="button">Sign In to offer a ride</a>
+                                            </div>
+                                        {% endif %}
+                                    </form>
+                                </div>
 
                             </div>
                         </div>
