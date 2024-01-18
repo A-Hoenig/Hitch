@@ -197,7 +197,7 @@ class Hitch_Request(models.Model):
     :model:`rides.Trip`,`rides.Region`,`auth.User`, `rides.purpose`, `rides.location`
     """
     date_created = models.DateTimeField(auto_now_add=True)
-    trip_id = models.ForeignKey(Trip, on_delete=models.SET_NULL, null=True, blank=True)
+    trip = models.ForeignKey(Trip, on_delete=models.SET_NULL, null=True, blank=True)
     hitcher = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     region = models.ForeignKey(Region, on_delete=models.CASCADE)
     depart = models.ForeignKey(Location, on_delete=models.SET_NULL, null=True, blank=True, related_name="request_depart")
@@ -209,7 +209,7 @@ class Hitch_Request(models.Model):
     note = models.TextField(null=True, blank=True)
     direction = models.IntegerField(choices=DIRECTION, default=0)
     recurring = models.IntegerField(null=True, blank=True)
-    purpose = models.ForeignKey(Purpose, on_delete=models.SET_DEFAULT, default="deleted")
+    purpose = models.ForeignKey(Purpose, on_delete=models.SET_DEFAULT, default=None, null=True)
     pax_approved = models.BooleanField(choices=YES_NO, default=False)
     trip_rating = models.IntegerField(null=True, blank=True)
     trip_comment = models.CharField(max_length=50, null=True, blank=True)

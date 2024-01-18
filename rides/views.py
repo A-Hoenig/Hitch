@@ -1,7 +1,7 @@
 from django.shortcuts import render, HttpResponse, get_object_or_404, reverse, redirect, HttpResponseRedirect
 from django.utils import timezone
 from django.views.generic import ListView
-from rides.models import CustomUser, Vehicle, Trip, Region, Message
+from rides.models import CustomUser, Vehicle, Trip, Region, Message, Hitch_Request
 from django.contrib import messages
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
@@ -19,9 +19,23 @@ def rides_view(request):
         trip = Trip.objects.get(id=trip_id)
         driver = trip.driver
         hitcher = request.user
-        
+
+        # create message insance and stor in message DB
         message = Message(sender=hitcher, receiver=driver, message=message_content, trip_id=trip_id)
         message.save()
+
+        #create request instance and link to trip
+        hitch_request = Hitch_Request(
+            trip=trip,
+            hitcher=hitcher,
+            region=trip.region,
+            depart=trip.depart,
+            destination=trip.destination,
+            depart_date=trip.trip_date,
+            depart_time=trip.depart_time,
+            )
+        
+        hitch_request.save()
 
         messages.success(request, 'Request successfully submitted!')
         
