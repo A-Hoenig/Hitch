@@ -210,6 +210,9 @@ class Hitch_Request(models.Model):
     direction = models.IntegerField(choices=DIRECTION, default=0)
     recurring = models.IntegerField(null=True, blank=True)
     purpose = models.ForeignKey(Purpose, on_delete=models.SET_DEFAULT, default="deleted")
+    pax_approved = models.BooleanField(choices=YES_NO, default=False)
+    trip_rating = models.IntegerField(null=True, blank=True)
+    trip_comment = models.CharField(max_length=50, null=True, blank=True)
     
     class Meta:
         ordering = ["-depart_date"]
