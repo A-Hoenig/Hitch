@@ -219,7 +219,7 @@
 
 
                     <!------------------------------------      drop down details form      ------------------------------------------>
-                    <div id="flush-collapse{{t.id}}" class="accordion-collapse collapse border bg-light"
+                    <div id="flush-collapse{{t.id}}" class="accordion-collapse collapse show border bg-light"
                         data-bs-parent="#RidesAccordionList">
 
                         <div class="accordion-body p-1">
@@ -400,8 +400,9 @@
                                 <div class="">
                                     <form method="post" action="{% url 'account_login' %}?next={{ request.path }}">
                                         {% csrf_token %}
-                                        {% if user.is_authenticated %}
+
                                         {% if user != t.driver %}
+                                        {% if user.username not in hitch_groups %}
                                         <div class="col">
                                             <button name="ride_trip_id" value="{{t.id}}" type="button"
                                                 class="btn btn-primary mx-1 my-3" data-bs-toggle="modal"
@@ -410,6 +411,7 @@
                                                 Request to Hitch a Ride!
                                             </button>
                                         </div>
+                                        {% endif %}
                                         {% endif %}
                                         {% else %}
                                         <div class="col">
