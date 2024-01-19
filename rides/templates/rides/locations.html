@@ -66,120 +66,33 @@
 <div class="container-xl px-4 mt-4">
     <!-- Account page navigation-->
     <nav class="nav nav-borders nav-tabs mb-2">
-    <a class="nav-link ms-0" href="{% url 'user_profile' %}">Profile</a>
-    <a class="nav-link" href="{% url 'vehicles' %}">Vehicles</a>
-    <a class="nav-link active" href="{% url 'locations' %}">Locations</a>
+        <a class="nav-link ms-0" href="{% url 'user_profile' %}">Profile</a>
+        <a class="nav-link" href="{% url 'vehicles' %}">Vehicles</a>
+        <a class="nav-link active" href="{% url 'locations' %}">Locations</a>
 
     </nav>
-    <!-- <hr class="mt-0 mb-4"> -->
-    <Div class="mb-3">
-
-        <div>
-            <span><strong>FILTER:</strong></span>
-            <a class="btn btn-outline-success" href="?status=True">Active</a>
-            <a class="btn btn-outline-secondary" href="?status=False">Inactive</a>
-            <a class="btn btn-outline-primary" href="?status=">All</a>
-            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal"
-                data-bs-whatever="Edit">
-                Add Vehicle
-            </button>
-        </div>
-    </Div>
-
+    
+     <!------------- TAB CONTNENT ---------------->
     <div class="row">
         <div class="col-md-8">
             <!-- HEADER -->
             <div class="card mb-4">
                 <div class="card-header d-flex align-items-center justify-content-between">
-                    <h3>List of Locations</h3>
+                    <h3>Your Locations</h3>
                 </div>
 
-                <!-- build list of users vehicles -->
+                <!-- main content under heaer here:  -->
                 <div class="card-body mx-0 px-0">
 
-                    <div class="accordion" id="VehicleAccordionList">
-                        
-                        <!-- loop through each vehile in the db-->
-                        {% for v, form in vehicles %}
-                        <form method="post">
-                            {% csrf_token %}
-
-                            <!-- accordion header row starts here-->
-                            <div class="accordion-item">
-                                <h2 class="accordion-header">
-                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                                        data-bs-target="#flush-collapse{{v.id}}" aria-expanded="false"
-                                        aria-controls="flush-collapse{{v.id}}">
-                                        <div class="grid gap-3">
-                                            <!-- add vehicle thumbnail icon based on type-->
-                                            {% if v.type == 3%}
-                                            <span class="icon"><i class="fa-solid fa-van-shuttle"></i></span>
-                                            {% elif v.type == 4 %}
-                                            <span class="icon"><i class="fa-solid fa-truck-pickup"></i></span>
-                                            {% elif v.type == 5 %}
-                                            <span class="icon"><i class="fa-solid fa-bus"></i></span>
-                                            {% elif v.type == 6 %}
-                                            <span class="icon"><i class="fa-solid fa-truck"></i></span>
-                                            {% else %}
-                                            <span class="icon"><i class="fa-solid fa-car"></i></span>
-                                            {% endif %}
-
-                                            <span class="ms-3" id="model">{{v.make}}</span>
-                                            <span class="ms-3 me-3">|</span>
-                                            <span>{{v.model}}</span>
-
-                                            <!-- add electic plug icon based for electric and hybrid-->
-                                            {% if v.engine == 2 %}
-                                            <span class="ms-3"><i class="fa-solid fa-plug"></i></span>
-                                            {% endif %}
-                                            {% if v.engine == 3 %}
-                                            <span class="ms-3"><i class="fa-solid fa-plug"></i></span>
-                                            {% endif %}
-                                        </div>
-                                    </button>
-                                </h2>
-                                <!-- drop down details form-->
-                                <div id="flush-collapse{{v.id}}" class="accordion-collapse collapse"
-                                    data-bs-parent="#VehicleAccordionList">
-                                    <div class="accordion-body">
-
-                                        <form novalidate class="form-horizontal" action="{% url 'vehicles' %}"
-                                            method="post" autocomplete="off">
-                                            {% csrf_token %}
-                                            {% crispy form %}
-
-                                            <button type="submit" name="update" value="{{ v.id }}"
-                                                id="submitBtn-{{ v.id }}" class="btn btn-primary">
-                                                Update
-                                            </button>
-
-                                            <button type="button" class="btn btn-danger" id="update-{{ v.id }}"
-                                                onclick="revealDelete('{{ v.id }}')">
-                                                Delete
-                                            </button>
-
-                                            <button type="submit" class="btn btn-danger d-none"
-                                                id="deleteBtn-{{ v.id }}" name="delete" value="{{ v.id }}">
-                                                Confirm Delete
-                                            </button>
-
-                                        </form>
-
-                                    </div>
-                                </div>
-                            </div>
-
-                            {% endfor %}
-                        </form>
-                    </div>
+                    
                 </div>
             </div>
 
 
         </div>
         <div class="col-md-4">
-            <img src="https://res.cloudinary.com/dd9slw6f0/image/upload/v1705245016/pexels-taras-makarenko-593172_gvjyox.jpg"
-                class="img-fluid rounded" alt="Your Image">
+            <img src="https://res.cloudinary.com/dd9slw6f0/image/upload/v1705659214/map-pins_lgwfk6.jpg"
+                class="img-fluid rounded" alt="A map with pins">
 
         </div>
     </div>
