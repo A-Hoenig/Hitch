@@ -180,15 +180,22 @@ def user_trips(request):
         sorted_list = sorted(combined_list, key=attrgetter('depart_date')) 
        
     detailed_sorted_list = []
+
+    def calculate_rating(rating):
+        print(rating)
+        if rating is None:
+            return 0  
+        return int(round(rating))
+
     for s in sorted_list:
         if isinstance(s, Trip):
             driver = s.driver
-            rating = round(s.driver.average_driver_rating)
+            rating = calculate_rating(s.driver.average_driver_rating)
             hitchers = [hr.hitcher for hr in s.hitch_requests.all()]
             hitchers_ratings_list = [(hr.hitcher, round(hr.hitcher.average_hitcher_rating)) for hr in s.hitch_requests.all()]
         elif isinstance(s, Hitch_Request):
             driver = s.trip.driver
-            rating = round(s.trip.driver.average_driver_rating)
+            rating = calculate_rating(s.trip.driver.average_driver_rating)
             hitchers_ratings_list = []
 
 
