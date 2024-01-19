@@ -116,13 +116,16 @@ def hitches(request):
     # minimum value in case no trip in loop
     hitch_seats = 1
 
+    def calculate_rating(rating):
+        if rating is None:
+            return 0  
+        return int(round(rating))
+
     for trip in trips:
         driver = trip.driver
-        driver_ratings = driver.driver_rating_set.all()
-        total_ratings = sum(rating.star_rating for rating in driver_ratings)
-        num_ratings = len(driver_ratings)
-        average_rating = round(total_ratings / num_ratings) if num_ratings > 0 else 0
-        average_ratings.append(average_rating)
+        driver_ratings = calculate_rating(trip.driver.average_driver_rating)
+        
+        average_ratings.append(driver_ratings)
 
         # get the driver allowed hitch seats from trip model
         hitch_seats = trip.max_hitch
@@ -182,7 +185,6 @@ def user_trips(request):
     detailed_sorted_list = []
 
     def calculate_rating(rating):
-        print(rating)
         if rating is None:
             return 0  
         return int(round(rating))
