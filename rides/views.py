@@ -87,8 +87,6 @@ def rides_view(request):
             "region_filter_form": region_filter_form,
             "message_form": message_form,
             "trips": zip(trips, forms, average_driver_ratings, hitch_groups),
-          
-            
         }
 
         return render(request, 'rides/rides.html', context)
@@ -185,24 +183,21 @@ def user_trips(request):
        
 
     # Calculate the average rating for the driver per found trip
-    average_ratings = []
+    average_driver_ratings = []
+    average_hitcher_ratings = []
     
     for trip in trips:
         driver = trip.driver
-        driver_ratings = driver.driver_rating_set.all()
+        average_driver_ratings.append(round(trip.driver.average_driver_rating))
+        average_hitcher_ratings.append(round(trip.driver.average_hitcher_rating))
         
-        total_ratings = sum(rating.star_rating for rating in driver_ratings)
-        num_ratings = len(driver_ratings)
-        average_rating = round(total_ratings / num_ratings) if num_ratings > 0 else 0
-        average_ratings.append(average_rating)
-        print(f'Driver: {driver} Rating: {average_rating}')
-
     context = {
         "username": request.user,
         "region_filter_form": region_filter_form,
         "trips": trips,
         "hitches": hitches,
-        "average_ratings": average_ratings,
+        "average_driver_ratings": average_driver_ratings,
+        "average_hitcher_ratings": average_hitcher_ratings,
         "sorted_list": sorted_list,
     }
     return render(request, 'rides/user_trips.html', context)
