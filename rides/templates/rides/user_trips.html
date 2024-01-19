@@ -24,18 +24,38 @@
 <div class="container-sm mt-2">
   <div class="row gx-5">
     <div class="col">
-      YOUR PENDING TRIPS
-      {% for t in trips %}
-      {% endfor %}
+      <p>YOUR PENDING TRIPS</p>
+      <ul>
+        {% for t in trips %}
+        <li>{{ t }}</li>
+        {% endfor %}
+      </ul>
     </div>
+    <hr>
   </div>
 
   <div class="row gx-5">
-    YOUR PENDING HITCHES
+    <p>YOUR PENDING HITCHES</p>
     <div class="col">
-      {% for h in hitches %}
-      {% endfor %}
+      <ul>
+        {% for h in hitches %}
+        <li>{{ h }}</li>
+        {% endfor %}
+      </ul>
     </div>
+    <hr>
+  </div>
+
+  <div class="row gx-5">
+    <p>TEST SORTED COMBINED LIST</p>
+    <div class="col">
+      <ul>
+        {% for s in sorted_list %}
+        <li>{{ s }}</li>
+        {% endfor %}
+      </ul>
+    </div>
+    <hr>
   </div>
 
 </div>

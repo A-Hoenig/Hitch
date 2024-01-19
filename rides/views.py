@@ -178,6 +178,8 @@ def user_trips(request):
             trips = trips.filter(region=selected_region)
             hitches = trips.filter(region=selected_region)
 
+        combined_list = list(chain(hitches, trips))
+        sorted_list = sorted(combined_list, key=attrgetter('depart_date')) 
        
 
     context = {
@@ -185,6 +187,7 @@ def user_trips(request):
         "region_filter_form": region_filter_form,
         "trips": trips,
         "hitches": hitches,
+        "sorted_list": sorted_list,
     }
     return render(request, 'rides/user_trips.html', context)
 
