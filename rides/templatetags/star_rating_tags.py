@@ -6,19 +6,11 @@ register = template.Library()
 
 @register.simple_tag
 def render_stars(rating):
-    # initial valid check
-    if rating in [None, '']:
-        return mark_safe('<span>Not rated yet</span>')
-
-    # Try converting rating to an integer
-    try:
+    
+    if str(rating).isdigit() and 0 <= int(rating) <= 5:
         rating = int(rating)
-    except (ValueError, TypeError):
-        return mark_safe('<span>Invalid rating</span>')
-
-    # Check if rating is in the correct range
-    if not 0 <= rating <= 5:
-        return mark_safe('<span>Invalid rating</span>')
+    else:
+        return mark_safe('<span>----</span>')
 
     if rating == 0:
         return mark_safe('<span>----</span>')

@@ -73,7 +73,7 @@
                   <div class="card-text">
                     Hitchers:
                     {% for hitcher, hitch_rating in hitchers_ratings_list %}
-                    <div>{{ hitcher }} - Rating: {% render_stars average_driver_ratings %}</div>
+                    <div>{{ hitcher }} {% render_stars hitch_rating %}</div>
                     {% empty %}
                     <div>None confirmed</div>
                     {% endfor %}

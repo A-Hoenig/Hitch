@@ -3,6 +3,7 @@
 {% load crispy_forms_tags %}
 {% crispy message_form %}
 {% load customfilters %}
+{% load star_rating_tags %}
 {% url 'about' as about_url %}
 
 
@@ -321,50 +322,7 @@
                                                         </span>
                                                     </p>
                                                     <p class="text-start small mb-0">{{ t.driver }}
-                                                        <span name="rating">
-                                                            {% if average_driver_ratings == 1 %}
-                                                            <div name="stars"></div>
-                                                            <span class="text-warning">
-                                                                <i class="fa-solid fa-star"></i>
-                                                                <i class="fa-regular fa-star"></i>
-                                                                <i class="fa-regular fa-star"></i>
-                                                                <i class="fa-regular fa-star"></i>
-                                                                <i class="fa-regular fa-star"></i>
-                                                            </span>
-                                                            {% elif average_driver_ratings == 2 %}
-                                                            <span class="">
-                                                                <i class="fa-solid fa-star"></i>
-                                                                <i class="fa-solid fa-star"></i>
-                                                                <i class="fa-regular fa-star"></i>
-                                                                <i class="fa-regular fa-star"></i>
-                                                                <i class="fa-regular fa-star"></i>
-                                                            </span>
-                                                            {% elif average_driver_ratings == 3 %}
-                                                            <span>
-                                                                <i class="fa-solid fa-star"></i>
-                                                                <i class="fa-solid fa-star"></i>
-                                                                <i class="fa-solid fa-star"></i>
-                                                                <i class="fa-regular fa-star"></i>
-                                                                <i class="fa-regular fa-star"></i>
-                                                            </span>
-                                                            {% elif average_driver_ratings == 4 %}
-                                                            <span>
-                                                                <i class="fa-solid fa-star"></i>
-                                                                <i class="fa-solid fa-star"></i>
-                                                                <i class="fa-solid fa-star"></i>
-                                                                <i class="fa-solid fa-star"></i>
-                                                                <i class="fa-regular fa-star"></i>
-                                                            </span>
-                                                            {% elif average_driver_ratings == 5 %}
-                                                            <span>
-                                                                <i class="fa-solid fa-star"></i>
-                                                                <i class="fa-solid fa-star"></i>
-                                                                <i class="fa-solid fa-star"></i>
-                                                                <i class="fa-solid fa-star"></i>
-                                                                <i class="fa-solid fa-star"></i>
-                                                            </span>
-                                                            {% endif %}
-                                                        </span>
+                                                        <span>{% render_stars average_driver_ratings %}</span>
                                                     </p>
                                                     <p class="text-primary text-start small mb-0">Hitchers:</p>
                                                     <!-- Display available hitch slots -->
