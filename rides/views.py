@@ -68,7 +68,7 @@ def rides_view(request):
 
         for trip in trips:
             driver = trip.driver
-            driver_ratings = driver.driver_rating_set.all()
+            driver_ratings = UserRating.objects.filter(user=trip.driver, rating_type='driver')
             total_ratings = sum(rating.star_rating for rating in driver_ratings)
             num_ratings = len(driver_ratings)
             average_rating = round(total_ratings / num_ratings) if num_ratings > 0 else 0
@@ -91,7 +91,7 @@ def rides_view(request):
             "region_filter_form": region_filter_form,
             "message_form": message_form,
             "trips": zip(trips, forms, average_ratings, hitch_groups),
-            "average_ratings": average_ratings,
+            # "average_ratings": average_ratings,
             
         }
 
@@ -180,18 +180,33 @@ def user_trips(request):
 
         combined_list = list(chain(hitches, trips))
 
-        # Add a is_ride attribute to each instance
+        # Add an is_ride attribute to each instance
         for instance in combined_list:
             instance.is_ride = isinstance(instance, Trip)
 
+
         sorted_list = sorted(combined_list, key=attrgetter('depart_date')) 
        
+
+    # Calculate the average rating for the driver per found trip
+    average_ratings = []
+    
+    for trip in trips:
+        driver = trip.driver
+        driver_ratings = driver.driver_rating_set.all()
+        
+        total_ratings = sum(rating.star_rating for rating in driver_ratings)
+        num_ratings = len(driver_ratings)
+        average_rating = round(total_ratings / num_ratings) if num_ratings > 0 else 0
+        average_ratings.append(average_rating)
+        print(f'Driver: {driver} Rating: {average_rating}')
 
     context = {
         "username": request.user,
         "region_filter_form": region_filter_form,
         "trips": trips,
         "hitches": hitches,
+        "average_ratings": average_ratings,
         "sorted_list": sorted_list,
     }
     return render(request, 'rides/user_trips.html', context)

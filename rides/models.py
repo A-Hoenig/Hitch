@@ -51,8 +51,10 @@ class CustomUser(AbstractUser):
     adr_country = models.CharField(max_length=50, verbose_name="Country", blank=True, null=True)
     phone = models.CharField(max_length=15, verbose_name="Phone Number")
     DL_date = models.DateField(default=None, blank=True, null=True, verbose_name="Driver's License Date")
-    contactable = models.BooleanField(choices=YES_NO, default=0)
+    contactable = models.BooleanField(choices=YES_NO, default=False)
     user_image = CloudinaryField('image', default='placeholder')
+    average_driver_rating = models.DecimalField(max_digits=3, decimal_places=1, default=0.0)
+    average_hitcher_rating = models.DecimalField(max_digits=3, decimal_places=1, default=0.0)
 
 
 class Region(models.Model):
@@ -96,7 +98,7 @@ class Location(models.Model):
     note = models.TextField(null=True, blank=True)
 
     def __str__(self):
-        return f'{self.stoptype.stop_icon} {self.city}'
+        return f'{self.city}'
 
 class Purpose(models.Model):
     """
@@ -132,12 +134,18 @@ class Vehicle(models.Model):
     def __str__(self):
         return f"{self.make} {self.model} ({self.get_type_display()}), owned by {self.owner}"
 
-class Driver_rating(models.Model):
+class User_rating(models.Model):
     """
     Stores driver ratings related to  :model:`rides.Trip` and :model:`auth.User`
     """
+    RATING_TYPE_CHOICES = (
+        ('driver', 'Driver'),
+        ('hitcher', 'Hitcher'),
+    )
+    
     date_created = models.DateTimeField(auto_now_add=True)
-    driver = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    rating_type = models.CharField(max_length=7, choices=RATING_TYPE_CHOICES)
     star_rating = models.DecimalField(
         max_digits=2, 
         decimal_places=1,
@@ -145,7 +153,7 @@ class Driver_rating(models.Model):
     comment = models.TextField(max_length=300, null=True, blank=True)
 
     def __str__(self):
-        return f"Driver: {self.driver} | Rating: {self.star_rating} | {self.comment}"
+        return f"{self.get_rating_type_display()}: {self.user} | Rating: {self.star_rating} | {self.comment}"
 
 class Trip(models.Model):
     """
@@ -188,13 +196,7 @@ class Trip(models.Model):
     def __str__(self):
         return f"{self.driver}: {self.depart_date} at {self.depart_time} | from {self.depart} --to-- {self.destination}"
 
-    def format_duration(self):
-        if self.depart_window:
-            hours = self.depart_window.seconds // 3600
-            minutes = (self.depart_window.seconds % 3600) // 60
-            return '{:01d}:{:02d}'.format(hours, minutes)
-        else:
-            return ''  # expected_duration is None
+
     
 
 class Hitch_Request(models.Model):
