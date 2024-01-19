@@ -205,7 +205,7 @@ class Hitch_Request(models.Model):
     :model:`rides.Trip`,`rides.Region`,`auth.User`, `rides.purpose`, `rides.location`
     """
     date_created = models.DateTimeField(auto_now_add=True)
-    trip = models.ForeignKey(Trip, on_delete=models.SET_NULL, null=True, blank=True)
+    trip = models.ForeignKey(Trip, on_delete=models.SET_NULL, null=True, blank=True, related_name="hitch_requests")
     hitcher = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     region = models.ForeignKey(Region, on_delete=models.CASCADE)
     depart = models.ForeignKey(Location, on_delete=models.SET_NULL, null=True, blank=True, related_name="request_depart")

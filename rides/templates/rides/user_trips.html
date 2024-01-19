@@ -27,8 +27,9 @@
     <div class="col-sm-12">
 
       <div class="row">
-        {% for s, average_driver_ratings, average_hitcher_ratings in sorted_list %}
-        <div class="col-sm-6"> <!-- change this to 12 for 1 column-->
+        {% for s, driver, rating, hitchers in detailed_sorted_list %}
+        <div class="col-sm-6">
+          <!-- change this to 12 for 1 column-->
 
           <div class="card my-2 bg-light">
             <div class="card-body">
@@ -54,8 +55,10 @@
                     <span class="badge bg-secondary">{{ s.depart_time|HHMM }}</span>
                   </div>
                   <div class="card-title h4">
-                    <span class="text-secondary">{{ s.depart.stoptype.stop_icon|safe}}</span><span class="ms-1">{{ s.depart.city }}</span> -
-                    <span>{{ s.destination.city}}</span> <span class="text-secondary">{{ s.destination.stoptype.stop_icon|safe}}</span>
+                    <span class="text-secondary">{{ s.depart.stoptype.stop_icon|safe}}</span><span
+                      class="ms-1">{{ s.depart.city }}</span> -
+                    <span>{{ s.destination.city}}</span> <span
+                      class="text-secondary">{{ s.destination.stoptype.stop_icon|safe}}</span>
                   </div>
                 </div>
               </div>
@@ -65,7 +68,15 @@
               <div class="row">
                 <div class="col-md-12">
                   <!------     mini card body     ------>
-                  <div class="card-text">Driver {{ s.driver }} {{ average_driver_ratings }}</div>
+                  <div class="card-text">Driver {{ driver }} {{ rating }}</div>
+                  <div class="card-text">
+                    Hitchers
+                   
+                    {% for hitcher in hitchers %}
+                    <div>Hitcher: {{ hitcher }}</div>
+                    {% endfor %}
+                   
+                  </div>
 
                   <!------      BUTTONS      ------>
                   <button type="button" class="btn btn-primary mt-2">

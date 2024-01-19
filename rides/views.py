@@ -166,7 +166,6 @@ def user_trips(request):
         trips = Trip.objects.filter(driver=user_id)
         hitches = Hitch_Request.objects.filter(hitcher=user_id)
         
-
         if region_filter_form.is_valid():
             selected_region = region_filter_form.cleaned_data['selected_region']
             trips = trips.filter(region=selected_region)
@@ -178,25 +177,37 @@ def user_trips(request):
         for instance in combined_list:
             instance.is_ride = isinstance(instance, Trip)
 
-
         sorted_list = sorted(combined_list, key=attrgetter('depart_date')) 
        
-    average_driver_ratings = []
-    average_hitcher_ratings = []
-    for instance in sorted_list:
-        if isinstance(instance, Trip):
-            average_driver_ratings.append(round(instance.driver.average_driver_rating))
-            average_hitcher_ratings.append(round(instance.driver.average_hitcher_rating))
-        elif isinstance(instance, Hitch_Request):  # Assuming similar attributes are available
-            average_driver_ratings.append(round(instance.trip.driver.average_driver_rating))
-            average_hitcher_ratings.append(round(instance.trip.driver.average_hitcher_rating))
-        
+    detailed_sorted_list = []
+    for s in sorted_list:
+        if isinstance(s, Trip):
+            driver = s.driver
+            rating = round(s.driver.average_driver_rating)
+            hitchers = [hr.hitcher for hr in s.hitch_requests.all()]
+
+
+            for s in sorted_list:
+                if isinstance(s, Trip):
+                    print(f"Trip ID: {s.id}")
+                    hitch_requests = s.hitch_requests.all()
+                    print(f"Hitch Requests: {hitch_requests}")
+                    hitchers = [hr.hitcher for hr in hitch_requests]
+                    print(f"Hitchers: {hitchers}")
+
+
+        elif isinstance(s, Hitch_Request):
+            driver = s.trip.driver
+            rating = round(s.trip.driver.average_driver_rating)
+            hitchers = []
+        detailed_sorted_list.append((s, driver, rating, hitchers))
+
     context = {
         "username": request.user,
         "region_filter_form": region_filter_form,
         "trips": trips,
         "hitches": hitches,
-        "sorted_list": zip(sorted_list, average_driver_ratings,average_hitcher_ratings)
+        "detailed_sorted_list": detailed_sorted_list
     }
     return render(request, 'rides/user_trips.html', context)
 
