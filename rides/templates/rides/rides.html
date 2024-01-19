@@ -61,7 +61,7 @@
 </div>
 <!-- END OF MODAL FOR HITCH REQUEST -->
 
-<!-- MODAL FOR OFFERT - HIDDEN BY DEFAULT-->
+<!-- MODAL FOR OFFER TRIP - HIDDEN BY DEFAULT-->
 <div class="modal fade" id="OfferModal" tabindex="-1" aria-labelledby="OfferModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -74,7 +74,7 @@
                 <form method="post" action="{% url 'rides_view' %}">
                     {% csrf_token %}
                     <div class="mb-3">
-                        {{ message_form|crispy }}
+                         OFFER RIDE FORM GOES HERE
                     </div>
 
                     <div class="modal-footer">

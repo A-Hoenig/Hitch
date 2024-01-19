@@ -11,11 +11,24 @@
     <div class="row">
         <div class="col-12 bg-light">
             <div class="px-3 py-0 d-sm-flex justify-content-between align-items-center mt-auto">
-                REQUESTED RIDES (HITCHES) IN SELECTED REGION:
+                
+                
+                <div>REQUESTED RIDES (HITCHES) IN SELECTED REGION:</div>
+
+                <div>
+                    <button name="ride_trip_id" value="{{ t.id }}" type="button" class="position-relative top-50 start-50 translate-middle badge rounded-pill bg-success fs-4"
+                        data-bs-toggle="modal" data-bs-target="#OfferModal" data-bs-whatever=""
+                        data-trip-id="{{ t.id }}">
+                        <i class="fa-solid fa-thumbs-up"></i> REQUEST TO HITCH
+                    </button>
+            </div>
+
                 <form method="get" action="{% url 'rides_view' %}" class="d-flex mt-3" id="filterForm">
                     {% csrf_token %}
                     <span class="mt-2 me-1">REGION:</span>{{ region_filter_form|crispy }}
                 </form>
+
+
             </div>
         </div>
     </div>
@@ -40,6 +53,34 @@
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                 <button type="button" class="btn btn-primary">Offer Ride</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- END OF MODAL FOR HITCH REQUEST -->
+
+<!-- MODAL FOR REQEusTING A HITCH - HIDDEN BY DEFAULT-->
+<div class="modal fade" id="OfferModal" tabindex="-1" aria-labelledby="OfferModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="OfferModalLabel">Where do you need to go?</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+
+                <form method="post" action="{% url 'rides_view' %}">
+                    {% csrf_token %}
+                    <div class="mb-3">
+                        REQUEST HITCH FORM GOES HERE
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button name="ride_trip_id" value="" type="submit" class="btn btn-primary">Offer Ride</button>
+                    </div>
+                </form>
+
             </div>
         </div>
     </div>
