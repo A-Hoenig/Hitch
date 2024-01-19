@@ -151,9 +151,28 @@ def hitches(request):
 # -------------------------------------------------------
 def about(request):
     context = {
-        "username": request.user
+        "username": request.user,
+
     }
     return render(request, 'rides/about.html', context)
+
+
+
+# -------------------------------------------------------
+@login_required
+def user_trips(request):
+    if request.method == "POST:":
+        pass
+    else:
+        region_filter_form = RegionFilterForm(request.GET or None)
+
+
+    context = {
+        "username": request.user,
+        "region_filter_form": region_filter_form,
+    }
+    return render(request, 'rides/user_trips.html', context)
+
 
 
 # -------------------------------------------------------
@@ -186,14 +205,7 @@ def profile(request):
     return render(request, 'rides/user_profile.html', context)
 
 
-# -------------------------------------------------------
-@login_required
-def trips(request):
-    
-    context = {
-        "username": request.user
-    }
-    return render(request, 'rides/user_trips.html', context)
+
 
 
 # -------------------------------------------------------
