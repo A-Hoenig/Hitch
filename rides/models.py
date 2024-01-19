@@ -53,8 +53,8 @@ class CustomUser(AbstractUser):
     DL_date = models.DateField(default=None, blank=True, null=True, verbose_name="Driver's License Date")
     contactable = models.BooleanField(choices=YES_NO, default=False)
     user_image = CloudinaryField('image', default='placeholder')
-    average_driver_rating = models.DecimalField(max_digits=3, decimal_places=1, default=0.0)
-    average_hitcher_rating = models.DecimalField(max_digits=3, decimal_places=1, default=0.0)
+    average_driver_rating = models.DecimalField(max_digits=3, decimal_places=1, default=0.0, blank=True, null=True)
+    average_hitcher_rating = models.DecimalField(max_digits=3, decimal_places=1, default=0.0, blank=True, null=True)
 
 
 class Region(models.Model):

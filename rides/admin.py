@@ -4,7 +4,7 @@ from .models import Region, Location, CustomUser, Purpose, Vehicle, User_rating,
 
 class CustomUserAdmin(UserAdmin):
     list_display = (
-        'username', 'first_name', 'last_name',
+        'username', 'average_driver_rating','average_hitcher_rating','first_name', 'last_name',
         'gender', 'DOB', 'DL_date'
         )
 
@@ -13,7 +13,7 @@ class CustomUserAdmin(UserAdmin):
             'fields': ('username', 'password', 'user_image')
         }),
         ('Personal info', {
-            'fields': ('first_name', 'last_name', 'email', 'gender')
+            'fields': ('first_name', 'last_name', 'email', 'gender','average_driver_rating','average_hitcher_rating')
         }),
         ('Hitch Driver Info', {
             'fields': ('DOB', 'DL_date', 'adr_street', 'adr_city', 'adr_zip', 'adr_country', 'phone', 'contactable')
@@ -35,7 +35,7 @@ class CustomUserAdmin(UserAdmin):
             'fields': ('username', 'password1', 'password2')
         }),        
         ('Personal info', {
-            'fields': ('first_name', 'last_name', 'email', 'gender')
+            'fields': ('first_name', 'last_name', 'email', 'gender','average_driver_rating','average_hitcher_rating')
         }),
         ('Hitch Driver Info', {
             'fields': ('DOB', 'DL_date', 'adr_street', 'adr_city', 'adr_zip', 'adr_country', 'phone', 'contactable')

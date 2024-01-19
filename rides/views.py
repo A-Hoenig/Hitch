@@ -60,7 +60,7 @@ def rides_view(request):
 
         # Calculate the average rating for the driver for each trip
         # also remember the avaialble hitch seats per trip
-        average_ratings = []
+        average_driver_ratings = []
         hitch_seats_list = []
         hitch_groups = []
         # minimum value in case no trip in loop
@@ -68,12 +68,8 @@ def rides_view(request):
 
         for trip in trips:
             driver = trip.driver
-            driver_ratings = UserRating.objects.filter(user=trip.driver, rating_type='driver')
-            total_ratings = sum(rating.star_rating for rating in driver_ratings)
-            num_ratings = len(driver_ratings)
-            average_rating = round(total_ratings / num_ratings) if num_ratings > 0 else 0
-            average_ratings.append(average_rating)
-
+            average_driver_ratings.append(round(trip.driver.average_driver_rating))
+            
             # get the driver allowed hitch seats from trip model
             hitch_seats = trip.max_hitch
             hitch_seats_list.append(hitch_seats)
@@ -90,8 +86,8 @@ def rides_view(request):
             "form": form,
             "region_filter_form": region_filter_form,
             "message_form": message_form,
-            "trips": zip(trips, forms, average_ratings, hitch_groups),
-            # "average_ratings": average_ratings,
+            "trips": zip(trips, forms, average_driver_ratings, hitch_groups),
+          
             
         }
 

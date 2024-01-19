@@ -96,7 +96,7 @@
             <div class="accordion" id="RidesAccordionList">
 
                 <!-- loop through each trip in the db-->
-                {% for t, form, average_rating, hitch_groups in trips %}
+                {% for t, form, average_driver_ratings, hitch_groups in trips %}
                 <form method="post">
                     {% csrf_token %}
 
@@ -322,7 +322,7 @@
                                                     </p>
                                                     <p class="text-start small mb-0">{{ t.driver }}
                                                         <span name="rating">
-                                                            {% if average_rating == 1 %}
+                                                            {% if average_driver_ratings == 1 %}
                                                             <div name="stars"></div>
                                                             <span class="text-warning">
                                                                 <i class="fa-solid fa-star"></i>
@@ -331,7 +331,7 @@
                                                                 <i class="fa-regular fa-star"></i>
                                                                 <i class="fa-regular fa-star"></i>
                                                             </span>
-                                                            {% elif average_rating == 2 %}
+                                                            {% elif average_driver_ratings == 2 %}
                                                             <span class="">
                                                                 <i class="fa-solid fa-star"></i>
                                                                 <i class="fa-solid fa-star"></i>
@@ -339,7 +339,7 @@
                                                                 <i class="fa-regular fa-star"></i>
                                                                 <i class="fa-regular fa-star"></i>
                                                             </span>
-                                                            {% elif average_rating == 3 %}
+                                                            {% elif average_driver_ratings == 3 %}
                                                             <span>
                                                                 <i class="fa-solid fa-star"></i>
                                                                 <i class="fa-solid fa-star"></i>
@@ -347,7 +347,7 @@
                                                                 <i class="fa-regular fa-star"></i>
                                                                 <i class="fa-regular fa-star"></i>
                                                             </span>
-                                                            {% elif average_rating == 4 %}
+                                                            {% elif average_driver_ratings == 4 %}
                                                             <span>
                                                                 <i class="fa-solid fa-star"></i>
                                                                 <i class="fa-solid fa-star"></i>
@@ -355,7 +355,7 @@
                                                                 <i class="fa-solid fa-star"></i>
                                                                 <i class="fa-regular fa-star"></i>
                                                             </span>
-                                                            {% elif average_rating == 5 %}
+                                                            {% elif average_driver_ratings == 5 %}
                                                             <span>
                                                                 <i class="fa-solid fa-star"></i>
                                                                 <i class="fa-solid fa-star"></i>
