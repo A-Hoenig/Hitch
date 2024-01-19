@@ -176,7 +176,7 @@ def user_trips(request):
         if region_filter_form.is_valid():
             selected_region = region_filter_form.cleaned_data['selected_region']
             trips = trips.filter(region=selected_region)
-            hitches = trips.filter(region=selected_region)
+            hitches = hitches.filter(region=selected_region)
 
         combined_list = list(chain(hitches, trips))
         sorted_list = sorted(combined_list, key=attrgetter('depart_date')) 
