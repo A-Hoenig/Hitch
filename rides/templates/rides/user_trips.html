@@ -29,18 +29,39 @@
 
 
 
-      
+
 
 
 
       <div class="row">
         {% for s in sorted_list %}
         <div class="col-sm-6">
-          <div class="card m-1  bg-light">
+          <div class="card my-2 bg-light">
             <div class="card-body">
-              <div class="card-title h4">Special title treatment</div>
-              <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-              <a href="#" class="btn btn-primary">Go somewhere</a>
+
+              {% if s.is_ride %}
+
+              <span class="position-absolute top-0 start-50 translate-middle badge rounded-pill bg-success">
+                <i class="fa-solid fa-car"></i> RIDE
+              </span>
+
+              {% else %}
+
+              <span class="position-absolute top-0 start-50 translate-middle badge rounded-pill bg-warning">
+                <i class="fa-solid fa-thumbs-up"></i> HITCH
+              </span>
+
+              {% endif %}
+
+              
+              <div class="card-title h4">
+                Special title treatment
+              </div>
+              <div class="card-text">With supporting text below as a natural lead-in to additional content.</div>
+              <button type="button" class="btn btn-primary position-relative">
+                Inbox
+
+              </button>
             </div>
           </div>
         </div>
@@ -49,7 +70,7 @@
 
 
 
-      
+
 
 
 
