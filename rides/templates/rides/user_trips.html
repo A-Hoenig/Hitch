@@ -9,18 +9,24 @@
 
 <div class="container-fluid">
   <div class="row">
-      <div class="col-12 bg-light">
-          <div class="px-3 py-0 d-sm-flex justify-content-between align-items-center mt-auto">
-              YOUR LIST OF TRIPS
-              <form method="get" action="{% url 'user_trips' %}" class="d-flex mt-3" id="filterForm">
-                  {% csrf_token %}
-                  <span class="mt-2 me-1">REGION:</span>{{ region_filter_form|crispy }}
-              </form>
-          </div>
+    <div class="col-12 bg-light">
+      <div class="px-3 py-0 d-sm-flex justify-content-between align-items-center mt-auto">
+        YOUR LIST OF TRIPS
+        <form method="get" action="{% url 'user_trips' %}" class="d-flex mt-3" id="filterForm">
+          {% csrf_token %}
+          <span class="mt-2 me-1">REGION:</span>{{ region_filter_form|crispy }}
+        </form>
       </div>
+    </div>
   </div>
 </div>
 
+<div class="container-sm mt-2">
+  <div class="row gx-5">
+    <div class="col">
+    </div>
+  </div>
+</div>
 
 
 

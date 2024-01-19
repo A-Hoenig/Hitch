@@ -165,11 +165,23 @@ def user_trips(request):
         pass
     else:
         region_filter_form = RegionFilterForm(request.GET or None)
+        user_id = request.user.id
+        
+        trips = Trip.objects.filter(driver=user_id)
+        hitches = Hitch_Request.objects.filter(hitcher=user_id)
+        
+        if region_filter_form.is_valid():
+            selected_region = region_filter_form.cleaned_data['selected_region']
+            trips = trips.filter(region=selected_region)
+            hitches = trips.filter(region=selected_region)
 
+       
 
     context = {
         "username": request.user,
         "region_filter_form": region_filter_form,
+        "trips": trips,
+        "hitches": hitches,
     }
     return render(request, 'rides/user_trips.html', context)
 
