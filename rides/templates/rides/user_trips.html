@@ -28,7 +28,8 @@
 
       <div class="row">
         {% for s in sorted_list %}
-        <div class="col-sm-6">
+        <div class="col-sm-6"> <!-- change this to 12 for 1 column-->
+
           <div class="card my-2 bg-light">
             <div class="card-body">
 
@@ -50,6 +51,9 @@
                 <div class="col-md-12">
                   <div class="card-title h4">
                     <span class="badge bg-secondary">{{ s.depart_date|DM }}</span>
+                    <span class="badge bg-secondary">{{ s.depart_time|HHMM }}</span>
+                  </div>
+                  <div class="card-title h4">
                     <span class="text-nowrap">{{ s.depart|safe }}</span> -
                     <span class="text-nowrap">{{ s.destination.city}} {{ s.destination.stoptype.stop_icon|safe}}</span>
                   </div>
@@ -59,13 +63,13 @@
 
 
               <div class="row">
-                <div class="col">
+                <div class="col-md-12">
                   <!------     mini card body     ------>
                   <div class="card-text">With supporting text below as a natural lead-in to additional content.</div>
 
                   <!------      BUTTONS      ------>
-                  <button type="button" class="btn btn-primary position-relative">
-                    Inbox
+                  <button type="button" class="btn btn-primary mt-2">
+                    Do Something
 
                   </button>
                 </div>
