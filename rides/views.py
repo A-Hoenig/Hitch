@@ -179,6 +179,11 @@ def user_trips(request):
             hitches = hitches.filter(region=selected_region)
 
         combined_list = list(chain(hitches, trips))
+
+        # Add a is_ride attribute to each instance
+        for instance in combined_list:
+            instance.is_ride = isinstance(instance, Trip)
+
         sorted_list = sorted(combined_list, key=attrgetter('depart_date')) 
        
 

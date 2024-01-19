@@ -180,7 +180,7 @@ class Trip(models.Model):
         ordering = ["-depart_date"]
 
     def __str__(self):
-        return f"{self.depart_date} at {self.depart_time} | from {self.depart} --to-- {self.destination}"
+        return f"{self.driver}: {self.depart_date} at {self.depart_time} | from {self.depart} --to-- {self.destination}"
 
     def format_duration(self):
         if self.depart_window:
