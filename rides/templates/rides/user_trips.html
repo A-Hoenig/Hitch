@@ -54,8 +54,8 @@
                     <span class="badge bg-secondary">{{ s.depart_time|HHMM }}</span>
                   </div>
                   <div class="card-title h4">
-                    <span class="text-nowrap">{{ s.depart|safe }}</span> -
-                    <span class="text-nowrap">{{ s.destination.city}} {{ s.destination.stoptype.stop_icon|safe}}</span>
+                    <span class="text-secondary">{{ s.depart.stoptype.stop_icon|safe}}</span><span class="ms-1">{{ s.depart.city }}</span> -
+                    <span>{{ s.destination.city}}</span> <span class="text-secondary">{{ s.destination.stoptype.stop_icon|safe}}</span>
                   </div>
                 </div>
               </div>

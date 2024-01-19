@@ -33,7 +33,7 @@ def rides_view(request):
             region=trip.region,
             depart=trip.depart,
             destination=trip.destination,
-            depart_date=trip.trip_date,
+            depart_date=trip.depart_date,
             depart_time=trip.depart_time,
             )
         
@@ -48,7 +48,7 @@ def rides_view(request):
         region_filter_form = RegionFilterForm(request.GET or None)
         message_form = MessageForm()
 
-        # Filter trips by selected region and trip_date
+        # Filter trips by selected region and departure_date
         trips = Trip.objects.filter(depart_date__gte=timezone.now().date()).order_by("depart_date")
 
         if region_filter_form.is_valid():
@@ -105,7 +105,7 @@ def hitches(request):
     region_filter_form = RegionFilterForm(request.GET or None)
 
 
-    # Filter trips by selected region and trip_date
+    # Filter trips by selected region and departure_date
     trips = Trip.objects.filter(depart_date__gte=timezone.now().date()).order_by("depart_date")
 
     if region_filter_form.is_valid():

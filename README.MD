@@ -2,7 +2,8 @@
 
 Find it on GitHub: <a href="https://github.com/A-Hoenig/Hitch">HITCH</a>
 
-<img src="./assets/images/screenshot-0.png" alt="Hitch" width="400"/>
+<img src="./static/images/hitch-logo-bg.png" alt="Hitch" width="400"/>
+<img src="./static/docs/responsive.png" alt="Hitch" width="650"/>
 
 ## CONTENTS
 
@@ -26,27 +27,75 @@ Find it on GitHub: <a href="https://github.com/A-Hoenig/Hitch">HITCH</a>
 ### Built With
 * [https://www.gitpod.io/](GitPod)
 
-![GitHub last commit](https://img.shields.io/github/last-commit/A-Hoenig/WordDash?color=red&style=for-the-badge)
-![GitHub contributors](https://img.shields.io/github/contributors/A-Hoenig/WordDash?color=orange&style=for-the-badge)
-![GitHub language count](https://img.shields.io/github/languages/count/A-Hoenig/WordDash?color=yellow&style=for-the-badge)
-![GitHub top language](https://img.shields.io/github/languages/top/A-Hoenig/WordDash?color=green&style=for-the-badge)
+![GitHub last commit](https://img.shields.io/github/last-commit/A-Hoenig/Hitch?color=red&style=for-the-badge)
+![GitHub contributors](https://img.shields.io/github/contributors/A-Hoenig/Hitch?color=orange&style=for-the-badge)
+![GitHub language count](https://img.shields.io/github/languages/count/A-Hoenig/Hitch?color=yellow&style=for-the-badge)
+![GitHub top language](https://img.shields.io/github/languages/top/A-Hoenig/Hitch?color=green&style=for-the-badge)
 
 
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
+* Hitch is a web based app that enables likeminded travellers to connect and offer each other rides.
+* The mindest is that when sharing available transportation, we reduce the nunber of vehicles on the road 
+* This is not just economical, but also helps reduce road congestion leading to fewer traffic jams
+* Less cars on the road of course also help out environment, especially in cities with large population densities
+* We can all do our part to help reduce carbon emissions and leave this world a little beter than when we found it
 
+The app connect drivers and 'Hitchers' in localised regions. 
+Regions can be set up by community that is interconnected and will help connect neigbors and fellow commuinty members that need a ride somewhere. While the could theoretically be used to connect and share long distance trips, the main benefit lies in sharing small but frequent trips such as regular shopping runs, Work commutes or sport events.
 
+When a driver offer to give rides, he can enter a trip as a single or recurring event. Also they can specify whether it is a one way trip, of if it will return at a later time.
 
+* Available Rides are listed in chronological order showing the next nearest ride happening in the selected region.
+* If someone want to hitch a ride, they can select teh interested ride, and request to join it - a message can also be passed.
+* Driver and Hitchers can communicate ia message inside teh app and do not need to share personal information such as address, telephone or email unless they offer to do so.
+* A rating system will be implemented to allow drivers andpassengers to gice feeback and keep everybody honest and curteous
+* The system is based on volunteers! no mandatory fee is implements, however a suggested tip will be calculated to help the driver with the operating costs of their vehicle.
 
 
 ## Data Models / Database Design
+The Database Model is shown below. For initial functionality, many options can be edited by the super user. In future som emodification will be neccessary to maintain the database when cascade delete events might permanently delete records of interest.
 
+For instance teh user model will cascade delete. Since multpile users can be linked to a single trip (Driver and Hitchers) if one of the users deletes their profile, the cascade will delete all trips they were associated with, also removing teh event from other, still valid users who might need access to previous events. For this reason, cascade delete was avoided where possible... When a usr account is deleted, all instances of that users database record wil have to be replaced with a generic palceholder to maintain the integrity of the all liked tables via foreignkeys.
 
+FO rthe initial 'proof of concept' this was not full implemented yet.
+
+<img src="./static/docs/hitch-erd.png" alt="HitchERD" width="1024"/>
 
 ## Design
 
+Bootstrap offer very modern and well designed web elements that were extensively used throughout this project.
+The main design choice was teh use of accordion style lists that allow a consolidated view vor quick review, and then allow a user to expand each line to see more details on any trip they might be interested in.
+in order to maximise information presented on a mobile first design philosophy, the site uses easy to recognize symbols to graphically convey facts about each trip these include:
+
+* The direction and frequency of the trip (one way, return, single or regular)
+* Vehicle Type
+* Location Type ie Reststop, Busstop, Address etc
+* Electric vehicle for envoronmentally conscious users
+* Smoking or non smoking
+* The purpose of the trip / main destination ie Shopping, Outting etc
+* Message details
+
+To speed up the user learning curve, most symbols have mouse over tool tips to exaplain their meaning
+
+This can be seen below:
+
+<img src="./static/docs/mouseover.gif" alt="MouseOver" width="800"/>
+
+### The Landing / About Page
+
+<img src="./static/docs/landing-page.png" alt="HitchERD" width="800"/>
+
 ### The Rides Page
+
+<img src="./static/docs/rides.png" alt="HitchERD" width="800"/>
+
+### The Hitch Request Page
+
+### The Your Trips Page
+
+### The User Admin Page
 
 
 
@@ -59,7 +108,9 @@ Find it on GitHub: <a href="https://github.com/A-Hoenig/Hitch">HITCH</a>
 
 #### Languages:
 
-PYTHON FOR MAIN APP. HTML, CSS for mock CLI in HEROKU.
+PYTHON / DJANGO FOR MAIN APP. HTML, CSS and JS together with Bootstrap framework.
+
+* [DrawSQL](https://drawsql.app/diagrams) - Used to generate the ERD (Entity Relationship Diagram)
 
 * [EDrawMax](https://www.edrawsoft.com/ad/edrawmax-diagram-tool.html?gad_source=1&gclid=CjwKCAiAjfyqBhAsEiwA-UdzJP7WWEuJcqaBE2Vag1b0U3ukJ_MwizjN76YlORg6EU2jBAXaFfTgxxoC2vAQAvD_BwE) - Used to create flowcharts.
 
