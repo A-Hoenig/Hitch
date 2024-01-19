@@ -98,7 +98,7 @@ class Location(models.Model):
     note = models.TextField(null=True, blank=True)
 
     def __str__(self):
-        return f'{self.city}'
+        return f'{self.name} | {self.city}'
 
 class Purpose(models.Model):
     """
