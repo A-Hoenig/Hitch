@@ -34,13 +34,6 @@ VEHICLE_TYPE = (
     (5, "Bus"),
     (6, "LKW")
     )
-STOP_TYPE = (
-    (0, "Address"), 
-    (1, "Bus Stop"), 
-    (2, "Intersection"), 
-    (3, "Parking Lot"),
-    (4, "Gas Station")
-    )
 
 VEHICLE_STATUS = (
     (True, "Active"), 
@@ -73,6 +66,18 @@ class Region(models.Model):
     def __str__(self):
         return self.region
 
+class Stop_Type(models.Model):
+    """
+    Stores the type of drop off point and a symbol to represent it`
+    """
+    
+    stop = models.CharField(max_length=50, unique=True)
+    stop_icon = models.CharField(max_length=50)
+    
+
+    def __str__(self):
+        return self.stop
+
 class Location(models.Model):
     """
     Stores previous locations related to :model:`rides.Region`,`auth.User`
@@ -80,7 +85,7 @@ class Location(models.Model):
     region = models.ForeignKey(Region, on_delete=models.CASCADE)
     input_by = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     name = models.CharField(max_length=100)
-    stop_type = models.IntegerField(choices=STOP_TYPE, default=0)
+    stoptype = models.ForeignKey(Stop_Type, on_delete=models.CASCADE, null=True, blank=True)
     street = models.CharField(max_length=100)
     city = models.CharField(max_length=50)
     zipcode = models.CharField(max_length=15)
@@ -91,11 +96,11 @@ class Location(models.Model):
     note = models.TextField(null=True, blank=True)
 
     def __str__(self):
-        return f'{self.city}({self.get_stop_type_display()})'
+        return f'{self.city}({self.stoptype})'
 
 class Purpose(models.Model):
     """
-    Stores trip purposes and corresponding font-awesome icon tag related to  :model:``
+    Stores trip purposes and corresponding font-awesome icon tag related to  :model: `trip`, `hitch_request`
     """
     
     purpose = models.CharField(max_length=50, unique=True)
@@ -104,6 +109,7 @@ class Purpose(models.Model):
 
     def __str__(self):
         return self.purpose
+
 
 class Vehicle(models.Model):
     """

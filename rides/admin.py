@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
-from .models import Region, Location, CustomUser, Purpose, Vehicle, Driver_rating, Trip, Hitch_Request, Message
+from .models import Region, Location, CustomUser, Purpose, Vehicle, Driver_rating, Trip, Hitch_Request, Message, Stop_Type
 
 class CustomUserAdmin(UserAdmin):
     list_display = (
@@ -58,6 +58,8 @@ admin.site.register(CustomUser, CustomUserAdmin)
 admin.site.register(Region)
 
 admin.site.register(Location)
+
+admin.site.register(Stop_Type)
 
 admin.site.register(Purpose)
 
