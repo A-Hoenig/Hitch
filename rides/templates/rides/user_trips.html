@@ -43,23 +43,36 @@
               </span>
               {% endif %}
 
+
+
               <!------   mini card title    ------>
-              <div class="row d-sm-flex mt-auto">
-                <div class="col-md-12 justify-content-between">
+              <div class="row">
+                <div class="col-md-12">
                   <div class="card-title h4">
-                    <span class="text-nowrap">{{ s.depart|safe }}</span> - <span class="text-nowrap">{{ s.destination|safe }}</span>
+                    <span class="badge bg-secondary">{{ s.depart_date|DM }}</span>
+                    <span class="text-nowrap">{{ s.depart|safe }}</span> -
+                    <span class="text-nowrap">{{ s.destination.city}} {{ s.destination.stoptype.stop_icon|safe}}</span>
                   </div>
                 </div>
               </div>
 
-              <!------     mini card body     ------>
-              <div class="card-text">With supporting text below as a natural lead-in to additional content.</div>
 
-              <!------      BUTTONS      ------>
-              <button type="button" class="btn btn-primary position-relative">
-                Inbox
 
-              </button>
+              <div class="row">
+                <div class="col">
+                  <!------     mini card body     ------>
+                  <div class="card-text">With supporting text below as a natural lead-in to additional content.</div>
+
+                  <!------      BUTTONS      ------>
+                  <button type="button" class="btn btn-primary position-relative">
+                    Inbox
+
+                  </button>
+                </div>
+              </div>
+
+
+
             </div>
           </div>
         </div>
