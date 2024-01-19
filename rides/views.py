@@ -181,24 +181,22 @@ def user_trips(request):
 
         sorted_list = sorted(combined_list, key=attrgetter('depart_date')) 
        
-
-    # Calculate the average rating for the driver per found trip
     average_driver_ratings = []
     average_hitcher_ratings = []
-    
-    for trip in trips:
-        driver = trip.driver
-        average_driver_ratings.append(round(trip.driver.average_driver_rating))
-        average_hitcher_ratings.append(round(trip.driver.average_hitcher_rating))
+    for instance in sorted_list:
+        if isinstance(instance, Trip):
+            average_driver_ratings.append(round(instance.driver.average_driver_rating))
+            average_hitcher_ratings.append(round(instance.driver.average_hitcher_rating))
+        elif isinstance(instance, Hitch_Request):  # Assuming similar attributes are available
+            average_driver_ratings.append(round(instance.trip.driver.average_driver_rating))
+            average_hitcher_ratings.append(round(instance.trip.driver.average_hitcher_rating))
         
     context = {
         "username": request.user,
         "region_filter_form": region_filter_form,
         "trips": trips,
         "hitches": hitches,
-        "average_driver_ratings": average_driver_ratings,
-        "average_hitcher_ratings": average_hitcher_ratings,
-        "sorted_list": sorted_list,
+        "sorted_list": zip(sorted_list, average_driver_ratings,average_hitcher_ratings)
     }
     return render(request, 'rides/user_trips.html', context)
 
