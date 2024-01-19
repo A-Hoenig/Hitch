@@ -200,7 +200,11 @@
                                                     {% endif %}
                                                 </span>
                                                 <!-- vehicle type icon -->
-                                                <span class="mx-1">
+                                                <span class="mx-1"
+                                                    data-bs-toggle="tooltip" 
+                                                    data-bs-placement="left"
+                                                    data-bs-custom-class="custom-tooltip"
+                                                    data-bs-title="{{t.vehicle.make}} {{t.vehicle.model}}">
                                                     {% if t.vehicle.type == 3%}
                                                     <span class="icon"><i class="fa-solid fa-van-shuttle"></i></span>
                                                     {% elif t.vehicle.type == 4 %}
