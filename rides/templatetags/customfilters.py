@@ -40,3 +40,5 @@ def DM(value):
 @register.filter(name='custom_range')
 def custom_range(value):
     return range(value)
+
+
