@@ -116,7 +116,7 @@
                                             <div class="row d-flex justify-content-sm-start align-items-center">
 
                                                 <!-- Depart -->
-                                                <div class="col-md-auto fs-5">{{t.depart.city}}</div>
+                                                <div class="col-md-auto fs-5"><span class="text-secondary">{{t.depart.stoptype.stop_icon|safe}}</span> {{t.depart.city}}</div>
 
                                                 <!-- Trip Arrows -->
                                                 <div class="col-md-auto fs-5">
@@ -143,7 +143,7 @@
                                                 </div>
 
                                                 <!-- Destination -->
-                                                <div class="col-sm-auto fs-5">{{t.destination.city}}</div>
+                                                <div class="col-sm-auto fs-5"><span class="text-secondary">{{t.destination.stoptype.stop_icon|safe}}</span> {{t.destination.city}}</div>
 
                                             </div>
 
@@ -233,7 +233,9 @@
                                                         data-bs-custom-class="custom-tooltip"
                                                         data-bs-title="This vehicle is non-smoking. Please be respectful."></i>
                                                     {% else %}
-                                                    <i class="fa-solid fa-smoking"></i>
+                                                    <i class="fa-solid fa-smoking"data-bs-toggle="tooltip" data-bs-placement="left"
+                                                    data-bs-custom-class="custom-tooltip"
+                                                    data-bs-title="This driver allows smoking."></i>
                                                     {% endif %}
                                                 </span>
 
