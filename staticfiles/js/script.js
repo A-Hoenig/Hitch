@@ -35,9 +35,11 @@ document.addEventListener('DOMContentLoaded', function () {
     // Check for regionDropdown first
     if (regionDropdown) {
       regionDropdown.addEventListener('change', function () {
-        // When field value changes, submit form
+        
         form.submit();
       });
     }
   }
 });
+
+
