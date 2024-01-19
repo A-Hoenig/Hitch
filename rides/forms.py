@@ -1,5 +1,5 @@
 from django import forms
-from .models import CustomUser, Vehicle, Trip, Region, Hitch_Request, Message
+from .models import CustomUser, Vehicle, Trip, Region, Hitch_Request, Message, Location
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Submit, Layout, Div
 from django.core.validators import RegexValidator
@@ -214,4 +214,55 @@ class MessageForm(forms.Form):
         model = Message
         fields = ['message']
   
+
+
+
+class LocationForm(forms.ModelForm):
+    """
+    Form class for users vehicles 
+    """
+    helper = FormHelper()
+    helper.layout = Layout(
+        Div(
+                Div('name', css_class='col-md-6'),
+                Div('stoptype', css_class='col-md-6'),
+                css_class='row'
+            ),
+            Div(
+                Div('street', css_class='col-md-12'),
+                css_class='row'
+            ),
+            Div(
+                Div('zipcode', css_class='col-md-6'),
+                Div('city', css_class='col-md-6'),
+                css_class='row'
+            ),
+            Div(
+                Div('country', css_class='col-md-6'),
+                Div('note', css_class='col-md-6'),
+                css_class='row'
+            ),
+        )
+
+    class Meta:
+        model = Location
         
+        
+        fields = [
+            'name',
+            'stoptype',
+            'street',
+            'zipcode',
+            'city',
+            'country',
+            'note',
+            ]
+
+    def __init__(self, *args, **kwargs):
+        super(LocationForm, self).__init__(*args, **kwargs)
+        instance = kwargs.get('instance')
+        if instance:
+            pass
+            # # Set initial values for location fields
+            # self.fields['name'].initial = instance.name
+            # self.fields['stoptype'].initial = instance.status    

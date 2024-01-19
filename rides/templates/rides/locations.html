@@ -23,23 +23,20 @@
                     {% csrf_token %}
 
                     <div class="row mb-2">
-                        <div class="col-6">{{ form.make|as_crispy_field }}</div>
-                        <div class="col-6">{{ form.model|as_crispy_field }}</div>
+                        <div class="col-6">{{ form.name|as_crispy_field }}</div>
+                        <div class="col-6">{{ form.stoptype|as_crispy_field }}</div>
                     </div>
                     <div class="row mb-2">
-                        <div class="col-6">{{ form.type|as_crispy_field }}</div>
-                        <div class="col-6">{{ form.year|as_crispy_field }}</div>
-                    </div>
-                    <div class="row mb-2">
-                        <div class="col-6">{{ form.engine|as_crispy_field }}</div>
+                        <div class="col-12">{{ form.street|as_crispy_field }}</div>
 
                     </div>
                     <div class="row mb-2">
-                        <div class="col-6">{{ form.max_pax|as_crispy_field }}</div>
-                        <div class="col-6">{{ form.smoking|as_crispy_field }}</div>
+                        <div class="col-6">{{ form.zipcode|as_crispy_field }}</div>
+                        <div class="col-6">{{ form.city|as_crispy_field }}</div>
                     </div>
                     <div class="row mb-2">
-                        <div class="col-6">{{ form.status|as_crispy_field }}</div>
+                        <div class="col-6">{{ form.country|as_crispy_field }}</div>
+                        <div class="col-6">{{ form.note|as_crispy_field }}</div>
                     </div>
 
             </div>
@@ -68,12 +65,12 @@
     <!-- Account page navigation-->
     <nav class="nav nav-borders nav-tabs mb-2">
         <a class="nav-link ms-0" href="{% url 'user_profile' %}">Profile</a>
-        <a class="nav-link" href="{% url 'locations' %}">Vehicles</a>
+        <a class="nav-link" href="{% url 'vehicles' %}">Vehicles</a>
         <a class="nav-link active" href="{% url 'locations' %}">Locations</a>
 
     </nav>
-    
-     <!------------- TAB CONTENT ---------------->
+
+    <!------------- TAB CONTENT ---------------->
     <div class="row">
         <div class="col-md-8">
             <!-- HEADER -->
@@ -88,12 +85,79 @@
 
 
 
-                    
+                    <div class="accordion" id="VehicleAccordionList">
+
+                        <!-- loop through each vehile in the db-->
+                        {% for l, form in locations %}
+                        <form method="post">
+                            {% csrf_token %}
+
+                            <!-- accordion header row starts here-->
+                            <div class="accordion-item">
+                                <h2 class="accordion-header">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                        data-bs-target="#flush-collapse{{l.id}}" aria-expanded="false"
+                                        aria-controls="flush-collapse{{l.id}}">
+                                        <div class="grid gap-3">
+                                            <!-- add  thumbnail icon based on type-->
+                                            
+                                            {{ l.stoptype.stop_icon|safe }}
+
+                                            <span class="ms-2" id="name">{{l.name}}</span>
+                                            <span class="ms-2 me-2">|</span>
+                                            <span>{{l.street}},</span>
+                                            <span>{{l.city}}</span>
+
+                                        </div>
+                                    </button>
+                                </h2>
+                                <!-- drop down details form-->
+                                <div id="flush-collapse{{l.id}}" class="accordion-collapse collapse"
+                                    data-bs-parent="#VehicleAccordionList">
+                                    <div class="accordion-body">
+
+                                        <form novalidate class="form-horizontal" action="{% url 'locations' %}"
+                                            method="post" autocomplete="off">
+                                            {% csrf_token %}
+                                            {% crispy form %}
+
+                                            <button type="submit" name="update" value="{{ l.id }}"
+                                                id="submitBtn-{{ l.id }}" class="btn btn-primary">
+                                                Update
+                                            </button>
+
+                                            <button type="button" class="btn btn-danger" id="update-{{ l.id }}"
+                                                onclick="revealDelete('{{ l.id }}')">
+                                                Delete
+                                            </button>
+
+                                            <button type="submit" class="btn btn-danger d-none"
+                                                id="deleteBtn-{{ l.id }}" name="delete" value="{{ l.id }}">
+                                                Confirm Delete
+                                            </button>
+
+                                        </form>
+
+                                    </div>
+                                </div>
+                            </div>
+
+                            {% endfor %}
+                        </form>
+                    </div>
+
+
+
+
                 </div>
             </div>
 
 
         </div>
+
+
+
+
         <div class="col-md-4">
             <img src="https://res.cloudinary.com/dd9slw6f0/image/upload/v1705659214/map-pins_lgwfk6.jpg"
                 class="img-fluid rounded" alt="A map with pins">

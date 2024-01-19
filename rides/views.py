@@ -1,11 +1,11 @@
 from django.shortcuts import render, HttpResponse, get_object_or_404, reverse, redirect, HttpResponseRedirect
 from django.utils import timezone
 from django.views.generic import ListView
-from rides.models import CustomUser, Vehicle, Trip, Region, Message, Hitch_Request
+from rides.models import CustomUser, Vehicle, Trip, Region, Message, Hitch_Request, Location
 from django.contrib import messages
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
-from rides.forms import UserForm, VehicleForm, TripForm, RegionFilterForm, MessageForm
+from rides.forms import UserForm, VehicleForm, TripForm, RegionFilterForm, MessageForm, LocationForm
 from datetime import date
 from itertools import chain
 from operator import attrgetter
@@ -248,7 +248,7 @@ def profile(request):
 # -------------------------------------------------------
 @login_required
 def locations(request):
-    form = VehicleForm()
+    form = LocationForm()
     filter_value = request.GET.get('status')
     # Check if the user has a Date of Birth set
     if request.user.DOB:
@@ -260,46 +260,46 @@ def locations(request):
 
     if request.method == "POST":
         if 'save' in request.POST:
-            form = VehicleForm(request.POST)
+            form = LocationForm(request.POST)
             form.instance.owner = request.user
             if form.is_valid():
                 form.save()
-                messages.success(request, 'Vehicle added successfully!')
+                messages.success(request, 'Location added successfully!')
         elif 'delete' in request.POST:
             pk = request.POST.get('delete')
-            vehicle = Vehicle.objects.get(id=pk)
-            vehicle.delete()
-            messages.success(request, 'Vehicle deleted sucessfully!')
+            location = Location.objects.get(id=pk)
+            location.delete()
+            messages.success(request, 'Location deleted sucessfully!')
         elif 'update' in request.POST:
             pk = request.POST.get('update')
             # print(f'....starting update for {pk}')
-            vehicle = Vehicle.objects.get(id=pk)
+            location = Location.objects.get(id=pk)
             post_data = request.POST.copy()
-            form = VehicleForm(request.POST, instance=vehicle)
+            form = LocationForm(request.POST, instance=location)
 
             if form.is_valid():
                 form.save()
-                messages.success(request, 'Vehicle updated sucessfully!')
+                messages.success(request, 'Locatioon updated sucessfully!')
 
-        return redirect('vehicles')
+        return redirect('locations')
 
     else:
-        form = VehicleForm()
-        # vehicles owned by the user
+        form = LocationForm()
+        # favorite user locations
         if filter_value in ['True', 'False']:
             filter_value = filter_value == 'True'
-            vehicles = Vehicle.objects.filter(owner=request.user, status=filter_value).order_by('make')
+            locations = Location.objects.filter(input_by=request.user, status=filter_value).order_by('name')
         else:
             # Empty value = 'All'
-            vehicles = Vehicle.objects.filter(owner=request.user).order_by('make')
+            locations = Location.objects.filter(input_by=request.user).order_by('name')
             
-        # Create a list of forms for each vehicle instance
-        forms = [VehicleForm(instance=vehicle) for vehicle in vehicles]
+        # Create a list of forms for each location instance
+        forms = [LocationForm(instance=location) for location in locations]
 
         context = {
             "username": request.user,
             "form": form,
-            "vehicles": zip(vehicles, forms),
+            "locations": zip(locations, forms),
             "age": age,
         }
 
