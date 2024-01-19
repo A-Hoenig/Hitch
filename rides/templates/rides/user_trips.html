@@ -22,52 +22,31 @@
 </div>
 
 <div class="container-sm mt-2">
-  <div class="row gx-5">
+  <div class="row">
     <div class="col">
-      <p>YOUR PENDING TRIPS</p>
-      <ul>
-        {% for t in trips %}
-        <li>{{ t.id }}: {{ t.depart_date }}</li>
-        {% endfor %}
-      </ul>
+
+
+      <div class="row">
+        
+        <p>TEST SORTED COMBINED LIST</p>
+        <div class="col">
+
+          <ul>
+            {% for s in sorted_list %}
+              {% if s.is_ride %}
+                <li>RIDE: {{ s.id }}: {{ s.depart_date }}</li>
+                {% else %}
+                <li>HITCH: {{ s.id }}: {{ s.depart_date }}</li>
+              {% endif %}
+            {% endfor %}
+          </ul>
+
+        </div>
+        
+      </div>
+
     </div>
-    <hr>
-  </div>
-
-  <div class="row gx-5">
-    <p>YOUR PENDING HITCHES</p>
-    <div class="col">
-      <ul>
-        {% for h in hitches %}
-        <li>{{ h.id }}: {{ h.depart_date }}</li>
-        {% endfor %}
-      </ul>
-    </div>
-    <hr>
-  </div>
-
-  <div class="row gx-5">
-    <p>TEST SORTED COMBINED LIST</p>
-    <div class="col">
-      <ul>
-        
-        {% for s in sorted_list %}
-        {% if s.is_ride %}
-        <li>RIDE: {{ s.id }}: {{ s.depart_date }}</li>
-        {% else %}
-        <li>HITCH: {{ s.id }}: {{ s.depart_date }}</li>
-        {% endif %}
-        
-        
-        {% endfor %}
-        
-      </ul>
-    </div>
-    <hr>
-  </div>
-
-</div>
 
 
 
-{% endblock %}
+    {% endblock %}
