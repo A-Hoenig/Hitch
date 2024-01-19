@@ -185,22 +185,14 @@ def user_trips(request):
             driver = s.driver
             rating = round(s.driver.average_driver_rating)
             hitchers = [hr.hitcher for hr in s.hitch_requests.all()]
-
-
-            for s in sorted_list:
-                if isinstance(s, Trip):
-                    print(f"Trip ID: {s.id}")
-                    hitch_requests = s.hitch_requests.all()
-                    print(f"Hitch Requests: {hitch_requests}")
-                    hitchers = [hr.hitcher for hr in hitch_requests]
-                    print(f"Hitchers: {hitchers}")
-
-
+            hitchers_ratings_list = [(hr.hitcher, round(hr.hitcher.average_hitcher_rating)) for hr in s.hitch_requests.all()]
         elif isinstance(s, Hitch_Request):
             driver = s.trip.driver
             rating = round(s.trip.driver.average_driver_rating)
-            hitchers = []
-        detailed_sorted_list.append((s, driver, rating, hitchers))
+            hitchers_ratings_list = []
+
+
+        detailed_sorted_list.append((s, driver, rating, hitchers_ratings_list))
 
     context = {
         "username": request.user,
