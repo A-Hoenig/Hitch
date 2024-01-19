@@ -269,7 +269,7 @@ def locations(request):
             pk = request.POST.get('delete')
             location = Location.objects.get(id=pk)
             location.delete()
-            messages.success(request, 'Location deleted sucessfully!')
+            messages.success(request, 'Location deleted successfully!')
         elif 'update' in request.POST:
             pk = request.POST.get('update')
             # print(f'....starting update for {pk}')
@@ -279,7 +279,7 @@ def locations(request):
 
             if form.is_valid():
                 form.save()
-                messages.success(request, 'Locatioon updated sucessfully!')
+                messages.success(request, 'Location updated successfully!')
 
         return redirect('locations')
 

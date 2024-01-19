@@ -9,7 +9,7 @@
 
 {% block content %}
 
-<!-- MODAL FOR ADDING A VEHICLE-->
+<!-- MODAL FOR ADDING A LOCAITON-->
 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -22,6 +22,10 @@
                 <form class="form-horizontal" action="{% url 'locations' %}" method="post" autocomplete="off">
                     {% csrf_token %}
 
+                    <div class="row mb-2">
+                        <div class="col-12">{{ form.region|as_crispy_field }}</div>
+                        
+                    </div>
                     <div class="row mb-2">
                         <div class="col-6">{{ form.name|as_crispy_field }}</div>
                         <div class="col-6">{{ form.stoptype|as_crispy_field }}</div>
@@ -38,6 +42,7 @@
                         <div class="col-6">{{ form.country|as_crispy_field }}</div>
                         <div class="col-6">{{ form.note|as_crispy_field }}</div>
                     </div>
+                    
 
             </div>
             <div class="modal-footer">
@@ -78,6 +83,21 @@
                 <div class="card-header d-flex align-items-center justify-content-between">
                     <h3>Your Locations</h3>
                 </div>
+
+                <Div class="mt-3">
+
+                    <div>
+                        <span><strong>FILTER:</strong></span>
+                        <a class="btn btn-outline-success" href="?status=True">Active</a>
+                        <a class="btn btn-outline-secondary" href="?status=False">Inactive</a>
+                        <a class="btn btn-outline-primary" href="?status=">All</a>
+                        <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                            data-bs-target="#exampleModal" data-bs-whatever="Edit">
+                            Add New Location
+                        </button>
+                    </div>
+                </Div>
+
 
                 <!-- main content under here:  -->
                 <div class="card-body mx-0 px-0">

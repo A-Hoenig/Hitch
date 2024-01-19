@@ -242,6 +242,10 @@ class LocationForm(forms.ModelForm):
                 Div('note', css_class='col-md-6'),
                 css_class='row'
             ),
+            Div(
+                Div('region', css_class='col-md-6'),
+                css_class='row'
+            ),
         )
 
     class Meta:
@@ -256,6 +260,7 @@ class LocationForm(forms.ModelForm):
             'city',
             'country',
             'note',
+            'region'
             ]
 
     def __init__(self, *args, **kwargs):
