@@ -149,7 +149,7 @@ class Trip(models.Model):
     
     date_created = models.DateTimeField(auto_now_add=True)
     region = models.ForeignKey(Region, on_delete=models.CASCADE)
-    trip_date = models.DateField()
+    depart_date = models.DateField()
     trip_status = models.IntegerField(choices=TRIP_STATUS, default=0)
     driver = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True)
     vehicle = models.ForeignKey(Vehicle, on_delete=models.SET_NULL, null=True)
@@ -177,10 +177,10 @@ class Trip(models.Model):
     max_detour_dist = models.IntegerField(default=5,)
 
     class Meta:
-        ordering = ["-trip_date"]
+        ordering = ["-depart_date"]
 
     def __str__(self):
-        return f"{self.trip_date} at {self.depart_time} | from {self.depart} --to-- {self.destination}"
+        return f"{self.depart_date} at {self.depart_time} | from {self.depart} --to-- {self.destination}"
 
     def format_duration(self):
         if self.depart_window:
@@ -193,7 +193,7 @@ class Trip(models.Model):
 
 class Hitch_Request(models.Model):
     """
-    Stores a trip request related to  
+    Stores a request related to  
     :model:`rides.Trip`,`rides.Region`,`auth.User`, `rides.purpose`, `rides.location`
     """
     date_created = models.DateTimeField(auto_now_add=True)

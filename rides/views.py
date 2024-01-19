@@ -7,6 +7,8 @@ from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from rides.forms import UserForm, VehicleForm, TripForm, RegionFilterForm, MessageForm
 from datetime import date
+from itertools import chain
+from operator import attrgetter
 
 # -------------------------------------------------------
 def rides_view(request):
@@ -47,7 +49,7 @@ def rides_view(request):
         message_form = MessageForm()
 
         # Filter trips by selected region and trip_date
-        trips = Trip.objects.filter(trip_date__gte=timezone.now().date()).order_by("trip_date")
+        trips = Trip.objects.filter(trip_date__gte=timezone.now().date()).order_by("depart_date")
 
         if region_filter_form.is_valid():
             selected_region = region_filter_form.cleaned_data['selected_region']
@@ -104,7 +106,7 @@ def hitches(request):
 
 
     # Filter trips by selected region and trip_date
-    trips = Trip.objects.filter(trip_date__gte=timezone.now().date()).order_by("trip_date")
+    trips = Trip.objects.filter(trip_date__gte=timezone.now().date()).order_by("depart_date")
 
     if region_filter_form.is_valid():
         selected_region = region_filter_form.cleaned_data['selected_region']
@@ -170,6 +172,7 @@ def user_trips(request):
         trips = Trip.objects.filter(driver=user_id)
         hitches = Hitch_Request.objects.filter(hitcher=user_id)
         
+
         if region_filter_form.is_valid():
             selected_region = region_filter_form.cleaned_data['selected_region']
             trips = trips.filter(region=selected_region)
