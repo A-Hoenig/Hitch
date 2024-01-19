@@ -96,7 +96,7 @@ class Location(models.Model):
     note = models.TextField(null=True, blank=True)
 
     def __str__(self):
-        return f'{self.city}({self.stoptype})'
+        return f'{self.stoptype.stop_icon} {self.city}'
 
 class Purpose(models.Model):
     """
