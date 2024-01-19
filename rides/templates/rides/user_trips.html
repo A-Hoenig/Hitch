@@ -27,7 +27,7 @@
     <div class="col-sm-12">
 
       <div class="row">
-        {% for s, driver, rating, hitchers in detailed_sorted_list %}
+        {% for s, driver, rating, hitchers_ratings_list in detailed_sorted_list %}
         <div class="col-sm-6">
           <!-- change this to 12 for 1 column-->
 
@@ -68,14 +68,15 @@
               <div class="row">
                 <div class="col-md-12">
                   <!------     mini card body     ------>
-                  <div class="card-text">Driver {{ driver }} {{ rating }}</div>
+                  <div class="card-text">Driver: {{ driver }} {{ rating }}</div>
                   <div class="card-text">
-                    Hitchers
-                   
-                    {% for hitcher in hitchers %}
-                    <div>Hitcher: {{ hitcher }}</div>
+                    Hitchers:
+                    {% for hitcher, hitch_rating in hitchers_ratings_list %}
+                    <div>{{ hitcher }} - Rating: {{ hitch_rating|default:"Not rated yet" }}</div>
+                    {% empty %}
+                    <div>None confirmed</div>
                     {% endfor %}
-                   
+
                   </div>
 
                   <!------      BUTTONS      ------>
