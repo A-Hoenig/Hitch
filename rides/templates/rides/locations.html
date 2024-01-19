@@ -1,6 +1,9 @@
 {% extends "base.html" %}
 {% load crispy_forms_tags %}
 {% load static %}
+{% url 'locations' as locations_url %}
+{% url 'user_profile' as user_profile_url %}
+{% url 'vehicles' as vehicles_url %}
 
 
 {% block content %}
@@ -10,7 +13,7 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h1 class="fs-5" id="exampleModalLabel">Add new Vehicle</h1>
+                <h1 class="fs-5" id="exampleModalLabel">Add new Location</h1>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
@@ -64,8 +67,8 @@
     <!-- Account page navigation-->
     <nav class="nav nav-borders nav-tabs mb-2">
     <a class="nav-link ms-0" href="{% url 'user_profile' %}">Profile</a>
-    <a class="nav-link active" href="{% url 'vehicles' %}">Vehicles</a>
-    <a class="nav-link" href="{% url 'locations' %}">Locations</a>
+    <a class="nav-link" href="{% url 'vehicles' %}">Vehicles</a>
+    <a class="nav-link active" href="{% url 'locations' %}">Locations</a>
 
     </nav>
     <!-- <hr class="mt-0 mb-4"> -->
@@ -88,7 +91,7 @@
             <!-- HEADER -->
             <div class="card mb-4">
                 <div class="card-header d-flex align-items-center justify-content-between">
-                    <h3>Vehicle List</h3>
+                    <h3>List of Locations</h3>
                 </div>
 
                 <!-- build list of users vehicles -->
