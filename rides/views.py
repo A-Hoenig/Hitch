@@ -84,12 +84,17 @@ def rides_view(request):
             hitch_group = hitchers + ['----' for _ in range(remaining_hitch_seats)]
             hitch_groups.append(hitch_group)
 
+        has_vehicles = Vehicle.objects.filter(owner=request.user).exists()
+        has_locations = Location.objects.filter(input_by=request.user).exists()
+
         context = {
             "username": request.user,
             "form": form,
             "region_filter_form": region_filter_form,
             "message_form": message_form,
             "trips": zip(trips, forms, average_driver_ratings, hitch_groups),
+            "has_vehicles": has_vehicles,
+            "has_locations": has_locations,
         }
 
         return render(request, 'rides/rides.html', context)

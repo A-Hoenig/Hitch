@@ -84,8 +84,10 @@
                         <div class="col-sm-2">{{ form.expected_duration|as_crispy_field }}</div>
                     </div>
                     <div class="row mb-2">
-                        <div class="col-sm-6">{{ form.depart|as_crispy_field }}</div>
-                        <div class="col-sm-6">{{ form.destination|as_crispy_field }}</div>
+
+                        <div class="col-sm-5">{{ form.depart|as_crispy_field }}</div>
+                        <div><a class="btn btn-primary col-sm-2" role="button" href="{% url 'locations' %}" >Add new Location</a></div>
+                        <div class="col-sm-5">{{ form.destination|as_crispy_field }}</div>
                         
                     </div>
                     <div class="row mb-2">
@@ -96,6 +98,7 @@
                     <div class="row mb-2">
                         <div class="col-md-6" id="recurring">{{ form.recurring|as_crispy_field }}</div>
                         <div class="col-md-6">{{ form.vehicle|as_crispy_field }}</div>
+                        <span><a class="btn btn-primary" role="button" >Add a vehicle first</a></span>
                     </div>
                     <div class="row mb-2 d-none" id="weekday-checkboxes">
                         <span class="col-md-1">{{ form.mon|as_crispy_field }}</span>
