@@ -190,10 +190,8 @@ class TripForm(forms.ModelForm):
             self.fields['vehicle'].queryset = Vehicle.objects.filter(owner=user).order_by('make')
             self.fields['depart'].queryset = Location.objects.filter(input_by=user).order_by('name')
             self.fields['destination'].queryset = Location.objects.filter(input_by=user).order_by('name')
-            # self.fields['driver'].initial = user
-            # self.fields['driver'].disabled = True
             self.fields['region'].initial = Region.objects.first()
-            
+            self.fields['region'].label = False
 
             
             
