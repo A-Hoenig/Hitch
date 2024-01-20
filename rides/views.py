@@ -48,18 +48,23 @@ def rides_view(request):
             form = TripForm(request.POST)
             form.instance.driver = request.user
             region_form = RegionFilterForm(request.GET)
-            print(region_form)
-            if region_form.is_valid():
-                selected_region = region_form.cleaned_data.get('region')
-                print(selected_region)
+            selected_region = Region.objects.first()
+
+
+            # if region_form.is_valid():
+            #     selected_region = region_form.cleaned_data.get('region')
+               
 
             if form.is_valid():
-                
-                new_trip = form.save()
+                new_trip = form.save(commit=False)
+                new_trip.driver = request.user
+                new_trip.region = selected_region
+                new_trip.save()
+
                 messages.success(request, 'New trip created successfully! Thanks for sharing!')
             else:
                 error_messages = form.errors.as_data()
-                print(error_messages)
+                print(form.errors)
                 messages.error(request, 'Sorry, something went wrong')
             
         return HttpResponseRedirect(request.path_info) 
@@ -81,7 +86,6 @@ def rides_view(request):
 
         # Filter trips by selected region and departure_date
         trips = Trip.objects.filter(depart_date__gte=timezone.now().date()).order_by("depart_date")
-
         region = Region.objects.first()
         
 
@@ -315,7 +319,7 @@ def locations(request):
             messages.success(request, 'Location deleted successfully!')
         elif 'update' in request.POST:
             pk = request.POST.get('update')
-            # print(f'....starting update for {pk}')
+            
             location = Location.objects.get(id=pk)
             post_data = request.POST.copy()
             form = LocationForm(request.POST, instance=location)
@@ -377,7 +381,7 @@ def vehicles(request):
             messages.success(request, 'Vehicle deleted sucessfully!')
         elif 'update' in request.POST:
             pk = request.POST.get('update')
-            # print(f'....starting update for {pk}')
+            
             vehicle = Vehicle.objects.get(id=pk)
             post_data = request.POST.copy()
             form = VehicleForm(request.POST, instance=vehicle)

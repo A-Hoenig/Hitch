@@ -162,9 +162,22 @@ class TripForm(forms.ModelForm):
     expected_duration = forms.CharField(widget=DurationInput(attrs={'placeholder': 'H:MM'}), required=False)
     return_time= forms.TimeField(widget=forms.DateInput(attrs={'type': 'time'} ), required=False)
 
+    def clean(self):
+        cleaned_data = super().clean()
+        # Exclude 'driver' from validation
+        cleaned_data.pop('driver', None)
+        return cleaned_data
+    
+    def clean_expected_duration(self):
+        duration = self.cleaned_data.get('expected_duration')
+        if duration == "":
+            return None
+        return duration
+    
     class Meta:
         model = Trip
         fields ='__all__'
+        exclude = ('driver',)
         
     def __init__(self, *args, **kwargs):
         user = kwargs.pop('user', None)
@@ -174,8 +187,8 @@ class TripForm(forms.ModelForm):
             self.fields['vehicle'].queryset = Vehicle.objects.filter(owner=user).order_by('make')
             self.fields['depart'].queryset = Location.objects.filter(input_by=user).order_by('name')
             self.fields['destination'].queryset = Location.objects.filter(input_by=user).order_by('name')
-            self.fields['driver'].initial = user
-            self.fields['driver'].disabled = True
+            # self.fields['driver'].initial = user
+            # self.fields['driver'].disabled = True
             self.fields['region'].initial = Region.objects.first()
             
 
