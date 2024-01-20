@@ -21,6 +21,7 @@ def rides_view(request):
         trip = Trip.objects.get(id=trip_id)
         driver = trip.driver
         hitcher = request.user
+        
 
         # create message insance and store in message DB
         message = Message(sender=hitcher, receiver=driver, message=message_content, trip_id=trip_id)
@@ -45,9 +46,10 @@ def rides_view(request):
         return HttpResponseRedirect(request.path_info) 
 
     else:
-        form = TripForm()
+        form = TripForm(user=request.user)
         region_filter_form = RegionFilterForm(request.GET or None)
         message_form = MessageForm()
+        
 
         # Filter trips by selected region and departure_date
         trips = Trip.objects.filter(depart_date__gte=timezone.now().date()).order_by("depart_date")
@@ -169,6 +171,7 @@ def user_trips(request):
         
         trips = Trip.objects.filter(driver=user_id)
         hitches = Hitch_Request.objects.filter(hitcher=user_id)
+        vehicles = Vehicle.objects.filter(owner=request.user)
         
         if region_filter_form.is_valid():
             selected_region = region_filter_form.cleaned_data['selected_region']
@@ -291,7 +294,7 @@ def locations(request):
         # favorite user locations
         if filter_value in ['True', 'False']:
             filter_value = filter_value == 'True'
-            locations = Location.objects.filter(input_by=request.user, status=filter_value).order_by('name')
+            locations = Location.objects.filter(input_by=request.user).order_by('name')
         else:
             # Empty value = 'All'
             locations = Location.objects.filter(input_by=request.user).order_by('name')

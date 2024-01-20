@@ -153,32 +153,37 @@ class TripForm(forms.ModelForm):
         (30, '30km'),
     ]
 
+    
     class DurationInput(forms.TextInput):
         input_type = 'text'    
 
     depart_window = forms.ChoiceField(choices=DEPART_WINDOW_CHOICES, required=False)
     pickup_radius = forms.ChoiceField(choices=PICKUP_RADIUS_CHOICES, required=False)
+
     depart_date= forms.DateField(widget=forms.DateInput(attrs={'type': 'date'} ))
     depart_time= forms.TimeField(widget=forms.TimeInput(attrs={'type': 'time'} ))
     expected_duration = forms.CharField(widget=DurationInput(attrs={'placeholder': 'H:MM'}), required=False)
     return_time= forms.TimeField(widget=forms.DateInput(attrs={'type': 'time'} ))
 
-
     class Meta:
         model = Trip
-        
         fields ='__all__'
 
     def __init__(self, *args, **kwargs):
+        user = kwargs.pop('user', None)
+        super(TripForm, self).__init__(*args, **kwargs)
         
+        if user is not None:
+            self.fields['vehicle'].queryset = Vehicle.objects.filter(owner=user).order_by('make')
+            self.fields['depart'].queryset = Location.objects.filter(input_by=user).order_by('name')
+            self.fields['destination'].queryset = Location.objects.filter(input_by=user).order_by('name')
+          
         default_values = {
             'depart_window': 300,
             'depart_time': (datetime.now() + timedelta(hours=1.5)).strftime('%H:%M'),
         }
         for key, value in default_values.items():
             kwargs.setdefault('initial', {}).setdefault(key, value)
-
-        super(TripForm, self).__init__(*args, **kwargs)
 
 
       
