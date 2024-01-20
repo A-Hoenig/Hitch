@@ -50,6 +50,8 @@ def rides_view(request):
             if form.is_valid():
                 new_trip = form.save()
                 messages.success(request, 'New trip created successfully! Thanks for sharing!')
+            else:
+                messages.error(request, 'Sorry, something went wrong')
             
         return HttpResponseRedirect(request.path_info) 
 
