@@ -177,10 +177,15 @@ class TripForm(forms.ModelForm):
             self.fields['vehicle'].queryset = Vehicle.objects.filter(owner=user).order_by('make')
             self.fields['depart'].queryset = Location.objects.filter(input_by=user).order_by('name')
             self.fields['destination'].queryset = Location.objects.filter(input_by=user).order_by('name')
+
+        
+        default_vehicle = Vehicle.objects.first()
+            
           
         default_values = {
             'depart_window': 300,
             'depart_time': (datetime.now() + timedelta(hours=1.5)).strftime('%H:%M'),
+            'vehicle': default_vehicle,
         }
         for key, value in default_values.items():
             kwargs.setdefault('initial', {}).setdefault(key, value)
