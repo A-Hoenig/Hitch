@@ -160,7 +160,7 @@ class TripForm(forms.ModelForm):
     depart_date= forms.DateField(widget=forms.DateInput(attrs={'type': 'date'} ))
     depart_time= forms.TimeField(widget=forms.TimeInput(attrs={'type': 'time'} ))
     expected_duration = forms.CharField(widget=DurationInput(attrs={'placeholder': 'H:MM'}), required=False)
-    return_time= forms.TimeField(widget=forms.DateInput(attrs={'type': 'time'} ))
+    return_time= forms.TimeField(widget=forms.DateInput(attrs={'type': 'time'} ), required=False)
 
     class Meta:
         model = Trip
@@ -174,6 +174,12 @@ class TripForm(forms.ModelForm):
             self.fields['vehicle'].queryset = Vehicle.objects.filter(owner=user).order_by('make')
             self.fields['depart'].queryset = Location.objects.filter(input_by=user).order_by('name')
             self.fields['destination'].queryset = Location.objects.filter(input_by=user).order_by('name')
+            self.fields['driver'].initial = user
+            self.fields['driver'].disabled = True
+            self.fields['region'].disabled = True
+
+            
+            
 
         
         default_vehicle = Vehicle.objects.first()
@@ -215,6 +221,10 @@ class HitchRequestForm(forms.ModelForm):
 
 class RegionFilterForm(forms.Form):
     selected_region = forms.ModelChoiceField(queryset=Region.objects.all(), empty_label=None, initial=Region.objects.first())
+
+    class Meta:
+        model = Region
+        fields = ['region']
 
     def __init__(self, *args, **kwargs):
         super(RegionFilterForm, self).__init__(*args, **kwargs)

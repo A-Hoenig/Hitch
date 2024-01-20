@@ -164,7 +164,7 @@ class Trip(models.Model):
     date_created = models.DateTimeField(auto_now_add=True)
     region = models.ForeignKey(Region, on_delete=models.CASCADE)
     depart_date = models.DateField()
-    trip_status = models.IntegerField(choices=TRIP_STATUS, default=0)
+    trip_status = models.IntegerField(choices=TRIP_STATUS, default=0, null=True, blank=True)
     driver = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True)
     vehicle = models.ForeignKey(Vehicle, on_delete=models.SET_NULL, null=True)
     max_hitch = models.IntegerField(default=1)

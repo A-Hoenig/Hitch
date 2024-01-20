@@ -47,11 +47,11 @@ def rides_view(request):
             # driver wants to create a new trip
             form = TripForm(request.POST)
             form.instance.driver = request.user
-            current_region = request.POST.get('selected_region')
-            region = Region.objects.get(region=current_region)
+            
+
             
             if form.is_valid():
-                form.instance.region = region
+                
                 new_trip = form.save()
                 messages.success(request, 'New trip created successfully! Thanks for sharing!')
             else:
