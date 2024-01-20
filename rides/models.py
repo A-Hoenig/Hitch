@@ -187,8 +187,8 @@ class Trip(models.Model):
     sun = models.BooleanField(default=False)
     purpose = models.ForeignKey(Purpose, on_delete=models.SET_DEFAULT, default="deleted")
     suggested_tip = models.FloatField(null=True, blank=True)
-    pickup_radius = models.IntegerField(default=2,)
-    max_detour_dist = models.IntegerField(default=5,)
+    pickup_radius = models.IntegerField(null=True, blank=True,default=2,)
+    max_detour_dist = models.IntegerField(null=True, blank=True,default=5)
 
     
     class Meta:
