@@ -165,7 +165,7 @@ class TripForm(forms.ModelForm):
     class Meta:
         model = Trip
         fields ='__all__'
-
+        
     def __init__(self, *args, **kwargs):
         user = kwargs.pop('user', None)
         super(TripForm, self).__init__(*args, **kwargs)
@@ -176,7 +176,8 @@ class TripForm(forms.ModelForm):
             self.fields['destination'].queryset = Location.objects.filter(input_by=user).order_by('name')
             self.fields['driver'].initial = user
             self.fields['driver'].disabled = True
-            self.fields['region'].disabled = True
+            self.fields['region'].initial = Region.objects.first()
+            
 
             
             

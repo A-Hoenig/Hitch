@@ -47,9 +47,12 @@ def rides_view(request):
             # driver wants to create a new trip
             form = TripForm(request.POST)
             form.instance.driver = request.user
-            
+            region_form = RegionFilterForm(request.GET)
+            print(region_form)
+            if region_form.is_valid():
+                selected_region = region_form.cleaned_data.get('region')
+                print(selected_region)
 
-            
             if form.is_valid():
                 
                 new_trip = form.save()
@@ -79,9 +82,8 @@ def rides_view(request):
         # Filter trips by selected region and departure_date
         trips = Trip.objects.filter(depart_date__gte=timezone.now().date()).order_by("depart_date")
 
-        if region_filter_form.is_valid():
-            selected_region = region_filter_form.cleaned_data['selected_region']
-            trips = trips.filter(region=selected_region)
+        region = Region.objects.first()
+        
 
         # Create a list of forms for each trip instance
         forms = [TripForm(instance=trip) for trip in trips]
@@ -116,6 +118,7 @@ def rides_view(request):
         context = {
             "username": request.user,
             "form": form,
+            'region': region,
             "region_filter_form": region_filter_form,
             "message_form": message_form,
             "trips": zip(trips, forms, average_driver_ratings, hitch_groups),
