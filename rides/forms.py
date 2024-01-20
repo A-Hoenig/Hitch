@@ -134,14 +134,24 @@ class TripForm(forms.ModelForm):
     Form class for offered rides 
     """
     DEPART_WINDOW_CHOICES = [
-        (0, '0'),
+        (0, 'On Time'),
         (300, '5min'), 
         (600, '10min'),
         (900, '15min'),
         (1800, '30min'),
     ]    
 
+    PICKUP_RADIUS_CHOICES = [
+        (0, '2km'),
+        (3, '3km'), 
+        (5, '5km'),
+        (10, '10km'),
+        (30, '30km'),
+    ]    
+
     depart_window = forms.ChoiceField(choices=DEPART_WINDOW_CHOICES, required=False)
+    pickup_radius = forms.ChoiceField(choices=PICKUP_RADIUS_CHOICES, required=False)
+
     # helper = FormHelper()
     # helper.form_method = 'POST'
     # helper.layout = Layout(

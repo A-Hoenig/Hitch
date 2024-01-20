@@ -77,23 +77,41 @@
                     {% csrf_token %}
 
                     <div class="row mb-2">
-                        <div class="col-6">{{ form.depart_window|as_crispy_field }}</div>
-                        <div class="col-6">{{ form.driver|as_crispy_field }}</div>
+                        <div class="col-sm-2">{{ form.depart_date|as_crispy_field }}</div>
+                        <div class="col-sm-2">{{ form.depart_time|as_crispy_field }}</div>
+                        <div class="col-sm-2">{{ form.depart_window|as_crispy_field }}</div>
+                        <div class="col-sm-2">{{ form.expected_duration|as_crispy_field }}</div>
                     </div>
                     <div class="row mb-2">
-                        <div class="col-6">{{ form.driver|as_crispy_field }}</div>
-                        <div class="col-6">{{ form.driver|as_crispy_field }}</div>
+                        <div class="col-sm-6">{{ form.depart|as_crispy_field }}</div>
+                        <div class="col-sm-6">{{ form.destination|as_crispy_field }}</div>
+                        
                     </div>
                     <div class="row mb-2">
-                        <div class="col-6">{{ form.driver|as_crispy_field }}</div>
-
+                        <div class="col-md-2">{{ form.direction|as_crispy_field }}</div>
+                        <div class="col-md-4">Expected Return</div>
+                        <div class="col-md-2">{{ form.return_time|as_crispy_field }}</div>
                     </div>
                     <div class="row mb-2">
-                        <div class="col-6">{{ form.driver|as_crispy_field }}</div>
-                        <div class="col-6">{{ form.driver|as_crispy_field }}</div>
+                        <div class="col-md-6">{{ form.recurring|as_crispy_field }}</div>
+                        <div class="col-md-6">{{ form.vehicle|as_crispy_field }}</div>
                     </div>
                     <div class="row mb-2">
-                        <div class="col-6">{{ form.driver|as_crispy_field }}</div>
+                        <span class="col-md-1">{{ form.mon|as_crispy_field }}</span>
+                        <span class="col-md-1">{{ form.tue|as_crispy_field }}</span>
+                        <span class="col-md-1">{{ form.wed|as_crispy_field }}</span>
+                        <span class="col-md-1">{{ form.thu|as_crispy_field }}</span>
+                        <span class="col-md-1">{{ form.fri|as_crispy_field }}</span>
+                        <span class="col-md-1">{{ form.sat|as_crispy_field }}</span>
+                        <span class="col-md-1">{{ form.sun|as_crispy_field }}</span>
+                    </div>
+                    <div class="row mb-2">
+                        <div class="col-md-4">{{ form.purpose|as_crispy_field }}</div>
+                        <div class="col-md-4">{{ form.pickup_radius|as_crispy_field }}</div>
+                        <div class="col-md-4">{{ form.max_hitch|as_crispy_field }}</div>
+                    </div>
+                    <div class="row mb-2">
+                        <div class="col-md-12">{{ form.note|as_crispy_field }}</div>
                     </div>
 
 
