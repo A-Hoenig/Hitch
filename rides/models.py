@@ -132,7 +132,7 @@ class Vehicle(models.Model):
     status = models.BooleanField(choices=VEHICLE_STATUS, default=True)
 
     def __str__(self):
-        return f"{self.make} {self.model} ({self.get_type_display()}), owned by {self.owner}"
+        return f"{self.make} {self.model} ({self.get_type_display()})"
 
 class User_rating(models.Model):
     """

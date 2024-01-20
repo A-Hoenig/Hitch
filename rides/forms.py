@@ -127,10 +127,7 @@ class VehicleForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super(VehicleForm, self).__init__(*args, **kwargs)
         instance = kwargs.get('instance')
-        if instance:
-            # Set initial values for vehicle fields
-            self.fields['smoking'].initial = instance.smoking
-            self.fields['status'].initial = instance.status
+     
 
     
 class TripForm(forms.ModelForm):
@@ -181,7 +178,6 @@ class TripForm(forms.ModelForm):
         
         default_vehicle = Vehicle.objects.first()
             
-          
         default_values = {
             'depart_window': 300,
             'depart_time': (datetime.now() + timedelta(hours=1.5)).strftime('%H:%M'),

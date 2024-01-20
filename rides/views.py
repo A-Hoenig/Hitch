@@ -46,10 +46,19 @@ def rides_view(request):
         return HttpResponseRedirect(request.path_info) 
 
     else:
-        form = TripForm(user=request.user)
+        user = request.user
+        form = TripForm(user=user)
         region_filter_form = RegionFilterForm(request.GET or None)
         message_form = MessageForm()
         
+        # Set Default for Vehicles:
+        vehicles = Vehicle.objects.filter(owner=user)
+        default_vehicle = None
+        if vehicles.exists():
+            default_vehicle = vehicles.first().id
+
+        #now build form
+        form = TripForm(user=user, initial={'vehicle': default_vehicle})
 
         # Filter trips by selected region and departure_date
         trips = Trip.objects.filter(depart_date__gte=timezone.now().date()).order_by("depart_date")
@@ -84,6 +93,7 @@ def rides_view(request):
             hitch_group = hitchers + ['----' for _ in range(remaining_hitch_seats)]
             hitch_groups.append(hitch_group)
 
+        #only allow vehicles and locations of the logged in user
         has_vehicles = Vehicle.objects.filter(owner=request.user).exists()
         has_locations = Location.objects.filter(input_by=request.user).exists()
 
@@ -95,6 +105,7 @@ def rides_view(request):
             "trips": zip(trips, forms, average_driver_ratings, hitch_groups),
             "has_vehicles": has_vehicles,
             "has_locations": has_locations,
+            "default_vehicle": default_vehicle,
         }
 
         return render(request, 'rides/rides.html', context)
@@ -272,7 +283,9 @@ def locations(request):
     if request.method == "POST":
         if 'save' in request.POST:
             form = LocationForm(request.POST)
+            
             form.instance.owner = request.user
+            
             if form.is_valid():
                 form.save()
                 messages.success(request, 'Location added successfully!')
