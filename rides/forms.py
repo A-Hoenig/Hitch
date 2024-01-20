@@ -3,6 +3,9 @@ from .models import CustomUser, Vehicle, Trip, Region, Hitch_Request, Message, L
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Submit, Layout, Div
 from django.core.validators import RegexValidator
+from django.utils import timezone
+from datetime import timedelta, datetime
+import re
 
 
 AlphanumericValidator = RegexValidator(r'^[0-9a-zA-Z ]*$', 'Only alphanumeric characters are allowed.')
@@ -10,6 +13,7 @@ AlphaValidator = RegexValidator(r'^[a-zA-Z ]*$', 'Only letters are allowed.')
 NumberValidator = RegexValidator(r'^[0-9 ]*$', 'Only numbers are allowed.')
 PhoneNumberValidator = RegexValidator(r'^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3,4}[-\s\.]?[0-9]{4,6}$', 'Not a valid phone number.')
 EmailValidator = RegexValidator(r'[^@ \t\r\n]+@[^@ \t\r\n]+\.[^@ \t\r\n]+','Not a valid email address.')
+TimeValidator = RegexValidator(r'[^(?:[01]?\d|2[0-3])(?::[0-5]\d){1,2}$]+','Not a valid time.')
 
 class UserForm(forms.ModelForm):
     """
@@ -147,29 +151,18 @@ class TripForm(forms.ModelForm):
         (5, '5km'),
         (10, '10km'),
         (30, '30km'),
-    ]    
+    ]
+
+    class DurationInput(forms.TextInput):
+        input_type = 'text'    
 
     depart_window = forms.ChoiceField(choices=DEPART_WINDOW_CHOICES, required=False)
     pickup_radius = forms.ChoiceField(choices=PICKUP_RADIUS_CHOICES, required=False)
-    depart_date= forms.DateField(widget=forms.TextInput(attrs={'type': 'date'} ))
-    depart_time= forms.DateField(widget=forms.TextInput(attrs={'type': 'time'} ))
-    return_time= forms.DateField(widget=forms.TextInput(attrs={'type': 'time'} ))
+    depart_date= forms.DateField(widget=forms.DateInput(attrs={'type': 'date'} ))
+    depart_time= forms.TimeField(widget=forms.TimeInput(attrs={'type': 'time'} ))
+    expected_duration = forms.CharField(widget=DurationInput(attrs={'placeholder': 'H:MM'}), required=False)
+    return_time= forms.TimeField(widget=forms.DateInput(attrs={'type': 'time'} ))
 
-
-
-    expected_duration= forms.DateField(widget=forms.TextInput(attrs={'type': 'duration'} ))
-
-    # helper = FormHelper()
-    # helper.form_method = 'POST'
-    # helper.layout = Layout(
-    #     Div(
-    #             Div('region', css_class='dropdown'),
-    #             Div('driver', css_class='col-md-6'),
-    #             Div('trip_date', css_class='col-md-6'),
-    #             css_class='row'
-    #         ),
-            
-    #     )
 
     class Meta:
         model = Trip
@@ -177,7 +170,17 @@ class TripForm(forms.ModelForm):
         fields ='__all__'
 
     def __init__(self, *args, **kwargs):
+        
+        default_values = {
+            'depart_window': 300,
+            'depart_time': (datetime.now() + timedelta(hours=1.5)).strftime('%H:%M'),
+        }
+        for key, value in default_values.items():
+            kwargs.setdefault('initial', {}).setdefault(key, value)
+
         super(TripForm, self).__init__(*args, **kwargs)
+
+
       
 
 
