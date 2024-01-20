@@ -64,7 +64,7 @@
 
 <!-- MODAL FOR OFFER TRIP - HIDDEN BY DEFAULT-->
 <div class="modal fade" id="OfferModal" tabindex="-1" aria-labelledby="OfferModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
+    <div class="modal-dialog  modal-xl">
         <div class="modal-content">
             <div class="modal-header">
                 <h1 class="modal-title fs-5" id="OfferModalLabel">Offer a ride...</h1>
@@ -72,17 +72,38 @@
             </div>
             <div class="modal-body">
 
-                <form method="post" action="{% url 'rides_view' %}">
+
+                <form class="form-horizontal" action="{% url 'rides_view' %}" method="post" autocomplete="off">
                     {% csrf_token %}
-                    <div class="mb-3">
-                         OFFER RIDE FORM GOES HERE
+
+                    <div class="row mb-2">
+                        <div class="col-6">{{ form.driver|as_crispy_field }}</div>
+                        <div class="col-6">{{ form.driver|as_crispy_field }}</div>
                     </div>
+                    <div class="row mb-2">
+                        <div class="col-6">{{ form.driver|as_crispy_field }}</div>
+                        <div class="col-6">{{ form.driver|as_crispy_field }}</div>
+                    </div>
+                    <div class="row mb-2">
+                        <div class="col-6">{{ form.driver|as_crispy_field }}</div>
+
+                    </div>
+                    <div class="row mb-2">
+                        <div class="col-6">{{ form.driver|as_crispy_field }}</div>
+                        <div class="col-6">{{ form.driver|as_crispy_field }}</div>
+                    </div>
+                    <div class="row mb-2">
+                        <div class="col-6">{{ form.driver|as_crispy_field }}</div>
+                    </div>
+
 
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <button name="ride_trip_id" value="" type="submit" class="btn btn-primary">Offer Ride</button>
+                        <button type="submit" name="save" class="btn btn-primary">Save</button>
                     </div>
                 </form>
+
+
 
             </div>
         </div>
