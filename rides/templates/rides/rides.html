@@ -295,7 +295,8 @@
 
                                                 <!-- Smoking or No Smoking -->
                                                 <span class="mx-1">
-                                                    {% if t.vehicle.smoking == True %}
+                                                    {% if t.vehicle.smoking == False %}
+                                                    
                                                     <i class="fa-solid fa-ban-smoking text-danger fs-4"
                                                         data-bs-toggle="tooltip" data-bs-placement="left"
                                                         data-bs-custom-class="custom-tooltip"
@@ -344,6 +345,7 @@
                                     <div class="container-sm mx-0 px-0">
 
                                         <div class="row">
+                                            
                                             <!--depart address -->
                                             <div class="col-sm-3">
                                                 <div class="container text-secondary mx-0 px-0">

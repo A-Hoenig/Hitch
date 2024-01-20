@@ -50,11 +50,9 @@ def rides_view(request):
             region_form = RegionFilterForm(request.GET)
             selected_region = Region.objects.first()
 
-
-            # if region_form.is_valid():
-            #     selected_region = region_form.cleaned_data.get('region')
+            if region_form.is_valid():
+                selected_region = region_form.cleaned_data.get('region')
                
-
             if form.is_valid():
                 new_trip = form.save(commit=False)
                 new_trip.driver = request.user
@@ -92,7 +90,7 @@ def rides_view(request):
         # Create a list of forms for each trip instance
         forms = [TripForm(instance=trip) for trip in trips]
 
-        # Calculate the average rating for the driver for each trip
+
         # also remember the avaialble hitch seats per trip
         average_driver_ratings = []
         hitch_seats_list = []

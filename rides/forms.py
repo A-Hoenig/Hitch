@@ -127,7 +127,10 @@ class VehicleForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super(VehicleForm, self).__init__(*args, **kwargs)
         instance = kwargs.get('instance')
-     
+        # Set initial values for vehicle fields
+        if instance is not None:
+            self.fields['smoking'].initial = instance.smoking
+            self.fields['status'].initial = instance.status
 
     
 class TripForm(forms.ModelForm):
