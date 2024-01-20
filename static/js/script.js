@@ -44,3 +44,26 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 
 
+// reveal confirm delete buttons
+function revealDelete(elementId) {
+    var deleteBtn = document.getElementById('deleteBtn-' + elementId);
+    if (deleteBtn.classList.contains('d-none')) {
+        deleteBtn.classList.remove('d-none');
+    } else {
+        deleteBtn.classList.add('d-none');
+    }
+    deleteBtn.offsetWidth; // Trigger DOM rebuild
+}
+
+// Auto-dismiss alert after 5 seconds (5000 milliseconds)
+$(document).ready(function () {
+    window.setTimeout(function () {
+        $(".alert").alert('close');
+    }, 5000);
+});
+
+// tool tips (popper))
+const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
+const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
+
+
