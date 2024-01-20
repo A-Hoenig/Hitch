@@ -195,7 +195,7 @@ class Trip(models.Model):
         ordering = ["-depart_date"]
 
     def __str__(self):
-        return f"{self.driver}: {self.depart_date} at {self.depart_time} | from {self.depart} --to-- {self.destination}"
+        return f"{self.depart} --to-- {self.destination}"
 
 
 
