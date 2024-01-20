@@ -221,6 +221,7 @@ class Hitch_Request(models.Model):
     pax_approved = models.BooleanField(choices=YES_NO, default=False)
     trip_rating = models.IntegerField(null=True, blank=True)
     trip_comment = models.CharField(max_length=50, null=True, blank=True)
+    is_public = models.BooleanField(default=False)
     
     class Meta:
         ordering = ["-depart_date"]
