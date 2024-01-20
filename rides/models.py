@@ -190,11 +190,13 @@ class Trip(models.Model):
     pickup_radius = models.IntegerField(default=2,)
     max_detour_dist = models.IntegerField(default=5,)
 
+    
     class Meta:
         ordering = ["-depart_date"]
 
     def __str__(self):
         return f"{self.driver}: {self.depart_date} at {self.depart_time} | from {self.depart} --to-- {self.destination}"
+
 
 
     

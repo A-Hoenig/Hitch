@@ -133,17 +133,26 @@ class TripForm(forms.ModelForm):
     """
     Form class for offered rides 
     """
-    helper = FormHelper()
-    helper.form_method = 'POST'
-    helper.layout = Layout(
-        Div(
-                Div('region', css_class='dropdown'),
-                Div('driver', css_class='col-md-6'),
-                Div('trip_date', css_class='col-md-6'),
-                css_class='row'
-            ),
+    DEPART_WINDOW_CHOICES = [
+        (0, '0'),
+        (300, '5min'), 
+        (600, '10min'),
+        (900, '15min'),
+        (1800, '30min'),
+    ]    
+
+    depart_window = forms.ChoiceField(choices=DEPART_WINDOW_CHOICES, required=False)
+    # helper = FormHelper()
+    # helper.form_method = 'POST'
+    # helper.layout = Layout(
+    #     Div(
+    #             Div('region', css_class='dropdown'),
+    #             Div('driver', css_class='col-md-6'),
+    #             Div('trip_date', css_class='col-md-6'),
+    #             css_class='row'
+    #         ),
             
-        )
+    #     )
 
     class Meta:
         model = Trip
@@ -152,9 +161,7 @@ class TripForm(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
         super(TripForm, self).__init__(*args, **kwargs)
-        instance = kwargs.get('instance')
-        self.fields['expected_duration'].widget = forms.TimeInput(format='%H:%M')
-        self.fields['depart_window'].widget = forms.TimeInput(format='%H:%M')
+      
 
 
 class HitchRequestForm(forms.ModelForm):
