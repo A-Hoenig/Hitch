@@ -22,7 +22,7 @@ def rides_view(request):
         driver = trip.driver
         hitcher = request.user
 
-        # create message insance and stor in message DB
+        # create message insance and store in message DB
         message = Message(sender=hitcher, receiver=driver, message=message_content, trip_id=trip_id)
         message.save()
 
@@ -35,6 +35,7 @@ def rides_view(request):
             destination=trip.destination,
             depart_date=trip.depart_date,
             depart_time=trip.depart_time,
+            is_public = False
             )
         
         hitch_request.save()
