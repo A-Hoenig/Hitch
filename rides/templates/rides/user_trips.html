@@ -8,10 +8,10 @@
 
 {% block content %}
 
-<div class="container-fluid">
+<div class="container-fluid sticky-top">
   <div class="row">
-    <div class="col-12 bg-light">
-      <div class="px-3 py-0 d-sm-flex justify-content-between align-items-center mt-auto">
+    <div class="col-12 bg-light gx-0 ">
+      <div class="px-3 py-0 d-sm-flex justify-content-between align-items-center mt-auto border-bottom shadow">
         YOUR LIST OF TRIPS
         <form method="get" action="{% url 'user_trips' %}" class="d-flex mt-3" id="filterForm">
           {% csrf_token %}
@@ -24,7 +24,7 @@
 
 <div class="container px-1">
 
-  <div class="row">
+  <div class="row mt-3">
     <div class="col-sm-12">
 
       <div class="row">
@@ -55,10 +55,10 @@
                     <span class="badge bg-secondary">{{ s.depart_time|HHMM }}</span>
                   </div>
                   <div class="card-title h4">
-                    <span class="text-secondary">{{ s.depart.stoptype.stop_icon|safe}}</span><span
+                    <span class="text-secondary">{{ s.depart.stoptype.stop_icon|safe }}</span><span
                       class="ms-1">{{ s.depart.city }}</span> -
                     <span>{{ s.destination.city}}</span> <span
-                      class="text-secondary">{{ s.destination.stoptype.stop_icon|safe}}</span>
+                      class="text-secondary">{{ s.destination.stoptype.stop_icon|safe }}</span>
                   </div>
                 </div>
               </div>

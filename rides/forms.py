@@ -215,8 +215,6 @@ class MessageForm(forms.Form):
         fields = ['message']
   
 
-
-
 class LocationForm(forms.ModelForm):
     """
     Form class for users vehicles 
@@ -266,8 +264,4 @@ class LocationForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super(LocationForm, self).__init__(*args, **kwargs)
         instance = kwargs.get('instance')
-        if instance:
-            pass
-            # # Set initial values for location fields
-            # self.fields['name'].initial = instance.name
-            # self.fields['stoptype'].initial = instance.status    
+ 
