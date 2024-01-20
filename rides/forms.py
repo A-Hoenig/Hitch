@@ -151,6 +151,13 @@ class TripForm(forms.ModelForm):
 
     depart_window = forms.ChoiceField(choices=DEPART_WINDOW_CHOICES, required=False)
     pickup_radius = forms.ChoiceField(choices=PICKUP_RADIUS_CHOICES, required=False)
+    depart_date= forms.DateField(widget=forms.TextInput(attrs={'type': 'date'} ))
+    depart_time= forms.DateField(widget=forms.TextInput(attrs={'type': 'time'} ))
+    return_time= forms.DateField(widget=forms.TextInput(attrs={'type': 'time'} ))
+
+
+
+    expected_duration= forms.DateField(widget=forms.TextInput(attrs={'type': 'duration'} ))
 
     # helper = FormHelper()
     # helper.form_method = 'POST'

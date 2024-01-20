@@ -76,6 +76,7 @@
                 <form class="form-horizontal" action="{% url 'rides_view' %}" method="post" autocomplete="off">
                     {% csrf_token %}
 
+
                     <div class="row mb-2">
                         <div class="col-sm-2">{{ form.depart_date|as_crispy_field }}</div>
                         <div class="col-sm-2">{{ form.depart_time|as_crispy_field }}</div>
@@ -499,6 +500,7 @@
         });
     });
 </script>
+
 
 
 {% endblock %}
