@@ -117,7 +117,7 @@
                       <div class="col-md-12">
                         <!------     mini card body     ------>
                         <div class="card-text">
-                          Driver: {{ driver }} {% render_stars rating %}
+                          Driver: {{ driver }}(PK{{ driver.id }}, {{driver.DOB}}) {% render_stars rating %}
                         </div>
                         <div class="card-text">
                           Hitchers:
@@ -133,7 +133,7 @@
                             <input type="hidden" name="hitcherNameID_{{ s.id }}" id="hitchID_{{ s.id }}"
                               value="{{ s.id }}_{{ hitcher.id }}">
 
-                            {{ hitcher }} {% render_stars hitch_rating %}
+                            {{ hitcher }}(PK{{hitcher.id}}) {% render_stars hitch_rating %}
 
                             <!--MESSAGE BUTTON-->
                             <button class="badge rounded-pill bg-success" name="message"

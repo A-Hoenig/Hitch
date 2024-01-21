@@ -268,7 +268,7 @@ def user_trips(request):
 
                 return redirect('user_trips') 
 
-        elif 'confirm':
+        elif 'confirm' in request.POST:
                 # confirm only for hitches
                 print('you are in confirm')
                 tripPk=request.POST.get('confirm').split('_')
@@ -281,23 +281,22 @@ def user_trips(request):
 
                 return redirect('user_trips') 
 
-        elif 'message':
+        elif 'message' in request.POST:
             # hitcher to driver
                 print('you are in message')
                 tripPk=request.POST.get('message').split('_')
-                print(tripPk)
-                # pks = request.POST.get(f'hitcherNameID_{tripPk}')
-                pk_ride = tripPk[0]
+                pk_trip = tripPk[0]
                 pk_hitcher = tripPk[1]
 
-                sender = Hitch_Request.objects.get(id=pk_ride).hitcher
-                receiver = Trip.objects.get(id=pk_ride).driver
+                trip = Trip.objects.get(pk=pk_trip)
+                hitch = Hitch_Request.objects.get(hitcher=pk_hitcher)
+                
+                print(f' send message for ride {pk_trip} from {hitch.hitcher} to {trip.driver}' )
 
-                print(f'send message from {sender} to {receiver}')
-
-                return redirect('user_trips') 
             
 
+                return redirect('user_trips') 
+        
 
     else:
         print('......PROCESSING GET .....')
