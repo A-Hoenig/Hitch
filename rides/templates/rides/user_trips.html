@@ -52,12 +52,6 @@
               <div class="row">
                 <div class="col-md-12">
 
-
-
-
-
-
-
                   <form method="POST" action="{% url 'user_trips' %}">
                     {% csrf_token %}
                     <div class="card-title h4 d-flex justify-content-between">
@@ -78,9 +72,7 @@
                           value="{{ s.id }}" 
                           id="editBtn-{{ s.id }}"
                           class="btn badge bg-secondary">
-
                             <i class="fa-solid fa-gear"></i>
-
                           </button>
 
                           <button 
@@ -89,22 +81,13 @@
                           value="{{ s.id }}" 
                           id="deleteBtn-{{ s.id }}"
                           class="btn badge bg-danger">
-
                             <i class="fa-regular fa-trash-can"></i>
-
                           </button>
                         </span>
                       </div>
 
                     </div>
                   </form>
-
-
-
-
-
-
-
 
                   <div class="card-title h4">
                     <div>
@@ -133,8 +116,6 @@
                         - {{ s.destination.name }}
                       </span>
                     </div>
-
-
                   </div>
                 </div>
               </div>
@@ -142,7 +123,7 @@
               <div class="row">
                 <div class="col-md-12">
                   <!------     mini card body     ------>
-                  <div class="card-text">Driver: {{ driver }} {{ rating }}</div>
+                  <div class="card-text">Driver: {{ driver }} {% render_stars rating %}</div>
                   <div class="card-text">
                     Hitchers:
                     {% for hitcher, hitch_rating in hitchers_ratings_list %}

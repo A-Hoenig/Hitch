@@ -233,6 +233,8 @@ class HitchRequestForm(forms.ModelForm):
         
         fields ='__all__'
   
+    
+
 
 class RegionFilterForm(forms.Form):
     selected_region = forms.ModelChoiceField(queryset=Region.objects.all(), empty_label=None, initial=Region.objects.first())
