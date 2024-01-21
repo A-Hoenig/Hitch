@@ -254,8 +254,10 @@ def user_trips(request):
                 return redirect('user_trips') 
 
         elif 'confirm':
+                # confirm only for hitches
                 pk = request.POST.get('confirm')
-                print(f'')
+                pk_hitcher = request.POST.get('confirm')
+                print(f'You want to confirm hitcher {pk_hitcher} on ride {pk}')
                 return redirect('user_trips') 
 
         elif'message':

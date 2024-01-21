@@ -121,26 +121,27 @@
                         </div>
                         <div class="card-text">
                           Hitchers:
+
                           {% for hitcher, hitch_rating in hitchers_ratings_list %}
-                          <div>
-                            <button class="badge rounded-pill bg-success"
-                            name="confirm"
-                            value="{{ s.id }}" id="confirmBtn-{{ s.id }}">
-                              Confirm
-                            </button>
-                            {{ hitcher }} {% render_stars hitch_rating %}
-                            <button class="badge rounded-pill bg-success"
-                            name="message"
-                            value="{{ s.id }}" id="messageBtn-{{ s.id }}">
-                              <i class="fa-regular fa-message"></i>
-                            </button>
-                          </div>
+                                <div>
+                                  <button class="badge rounded-pill bg-success"
+                                  name="confirm"
+                                  value="{{ hitcher.id }}" id="confirmBtn-{{ s.id }}">
+                                    Confirm
+                                  </button>
+                                  {{ hitcher }} {% render_stars hitch_rating %}
+                                  <button class="badge rounded-pill bg-success"
+                                  name="message"
+                                  value="{{ hitcher.id }}" id="messageBtn-{{ s.id }}">
+                                    <i class="fa-regular fa-message"></i>
+                                  </button>
+                                </div>
 
-                          {% empty %}
+                                {% empty %}
 
-                          <div>
-                            None confirmed
-                          </div>
+                                <div>
+                                  No hitchers yet
+                                </div>
 
                           {% endfor %}
 
