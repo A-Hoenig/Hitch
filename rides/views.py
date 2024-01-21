@@ -37,6 +37,8 @@ def rides_view(request):
                 destination=trip.destination,
                 depart_date=trip.depart_date,
                 depart_time=trip.depart_time,
+                purpose=trip.purpose,
+                smoking=trip.vehicle.smoking,
                 is_public = False
                 )
 
