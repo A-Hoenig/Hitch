@@ -240,7 +240,7 @@ class Message(models.Model):
     trip = models.ForeignKey(Trip, on_delete=models.CASCADE)
     sender = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="sender")
     receiver = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="receiver")
-    message = models.TextField()
+    message = models.CharField(max_length=500, null=True, blank=True)
 
     class Meta:
         ordering = ["-date_created"]

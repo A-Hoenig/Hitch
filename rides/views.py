@@ -93,7 +93,7 @@ def rides_view(request):
                 trips = trips.filter(region=selected_region)
 
 
-        print(f'GOT THE REGION {region}')
+        # print(f'GOT THE REGION {region}')
 
 
 
@@ -287,19 +287,17 @@ def user_trips(request):
                 tripPk=request.POST.get('message').split('_')
                 pk_trip = tripPk[0]
                 pk_hitcher = tripPk[1]
-
                 trip = Trip.objects.get(pk=pk_trip)
                 hitch = Hitch_Request.objects.get(hitcher=pk_hitcher)
                 
                 print(f' send message for ride {pk_trip} from {hitch.hitcher} to {trip.driver}' )
-
-            
 
                 return redirect('user_trips') 
         
 
     else:
         print('......PROCESSING GET .....')
+        message_form = MessageForm()
 
         def calculate_rating(rating):
             if rating is None:
@@ -323,6 +321,7 @@ def user_trips(request):
     context = {
         "username": request.user,
         "region_filter_form": region_filter_form,
+        "message_form": message_form,
         "trips": trips,
         "hitches": hitches,
         "detailed_sorted_list": detailed_sorted_list

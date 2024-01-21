@@ -532,7 +532,7 @@
     });
 
 
-    // how or hide weekday based on Recurring value in trip modal.
+    // show or hide weekday based on Recurring value in trip modal.
     document.addEventListener("DOMContentLoaded", function () {
         var dropdown = document.getElementById("id_recurring");
         var elementToToggle = document.getElementById("weekday-checkboxes");
@@ -541,7 +541,7 @@
             var selectedValue = dropdown.value;
             elementToToggle.classList.toggle("d-none", selectedValue === "False");
         }
-        // Set nitial state based on the current value of the dropdown
+        // Set initial state based on the current value of the dropdown
         updateVisibility();
 
         // now add event

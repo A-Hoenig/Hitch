@@ -254,13 +254,15 @@ class RegionFilterForm(forms.Form):
 
 
 class MessageForm(forms.Form):
-    message = forms.CharField(max_length=400, required=False)
+    message = forms.CharField(
+        widget=forms.Textarea(attrs={'rows': 4, 'cols': 50}),
+        max_length=400,
+        required=True,)
 
     def __init__(self, *args, **kwargs):
         super(MessageForm, self).__init__(*args, **kwargs)
         
-        self.fields['message'].widget.attrs['autofocus'] = True
-
+       
         self.helper = FormHelper()
         self.helper.form_method = 'POST'
         self.helper.layout = Layout(
