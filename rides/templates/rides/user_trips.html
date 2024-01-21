@@ -38,7 +38,7 @@
 
               <!------ PILL TRIP TYPE LABEL------>
               {% if s.is_ride %}
-              
+
               <span class="position-absolute top-0 start-50 translate-middle badge rounded-pill bg-success">
                 <i class="fa-solid fa-car"></i> RIDE {{s.id}}
               </span>
@@ -64,88 +64,92 @@
 
                       <div>
                         <span>
-                          <input type="hidden" name="tripTypeName_{{ s.id }}" id="tripTypeID_{{ s.id }}" value="{{ s.is_ride }}">
-                          
-                          <button 
-                          type="submit" 
-                          name="edit" 
-                          value="{{ s.id }}" 
-                          id="editBtn-{{ s.id }}"
-                          class="btn badge bg-secondary">
-                            <i class="fa-solid fa-gear"></i>
+                          <!-- hidden input field to store ride or hitch value (true = ride)-->
+                          <input type="hidden" name="tripTypeName_{{ s.id }}" id="tripTypeID_{{ s.id }}"
+                            value="{{ s.is_ride }}">
+
+                          <button type="submit" name="edit" value="{{ s.id }}" id="editBtn-{{ s.id }}"
+                            class="btn badge bg-secondary">
+                            <i class="fa-solid fa-pen-to-square"></i>
                           </button>
 
-                          <button 
-                          type="submit" 
-                          name="delete" 
-                          value="{{ s.id }}" 
-                          id="deleteBtn-{{ s.id }}"
-                          class="btn badge bg-danger">
+                          <button type="submit" name="delete" value="{{ s.id }}" id="deleteBtn-{{ s.id }}"
+                            class="btn badge bg-danger">
                             <i class="fa-regular fa-trash-can"></i>
                           </button>
                         </span>
                       </div>
 
                     </div>
+
+                    <!-- TRIP DETAILS-->
+                    <div class="card-title h4">
+                      <div>
+                        <span class="text-secondary">
+                          {{ s.depart.stoptype.stop_icon|safe }}
+                        </span>
+
+                        <span class="ms-1">
+                          {{ s.depart.city }}
+                        </span>
+
+                        <span class="text-secondary fs-6">
+                          - {{ s.depart.name }}
+                        </span>
+                      </div>
+                      <div>
+                        <span class="text-secondary">
+                          {{ s.destination.stoptype.stop_icon|safe }}
+                        </span>
+
+                        <span>
+                          {{ s.destination.city}}
+                        </span>
+
+                        <span class="text-secondary fs-6">
+                          - {{ s.destination.name }}
+                        </span>
+                      </div>
+                    </div>
+
+                    <!-- DRIVER HITCHER DETAILS-->
+                    <div class="row">
+                      <div class="col-md-12">
+                        <!------     mini card body     ------>
+                        <div class="card-text">
+                          Driver: {{ driver }} {% render_stars rating %}
+                        </div>
+                        <div class="card-text">
+                          Hitchers:
+                          {% for hitcher, hitch_rating in hitchers_ratings_list %}
+                          <div>
+                            <button class="badge rounded-pill bg-success"
+                            name="confirm"
+                            value="{{ s.id }}" id="confirmBtn-{{ s.id }}">
+                              Confirm
+                            </button>
+                            {{ hitcher }} {% render_stars hitch_rating %}
+                            <button class="badge rounded-pill bg-success"
+                            name="message"
+                            value="{{ s.id }}" id="messageBtn-{{ s.id }}">
+                              <i class="fa-regular fa-message"></i>
+                            </button>
+                          </div>
+
+                          {% empty %}
+
+                          <div>
+                            None confirmed
+                          </div>
+
+                          {% endfor %}
+
+                        </div>
+                      </div>
+                    </div>
                   </form>
-
-                  <div class="card-title h4">
-                    <div>
-                      <span class="text-secondary">
-                        {{ s.depart.stoptype.stop_icon|safe }}
-                      </span>
-
-                      <span class="ms-1">
-                        {{ s.depart.city }}
-                      </span>
-
-                      <span class="text-secondary fs-6">
-                        - {{ s.depart.name }}
-                      </span>
-                    </div>
-                    <div>
-                      <span class="text-secondary">
-                        {{ s.destination.stoptype.stop_icon|safe }}
-                      </span>
-
-                      <span>
-                        {{ s.destination.city}}
-                      </span>
-
-                      <span class="text-secondary fs-6">
-                        - {{ s.destination.name }}
-                      </span>
-                    </div>
-                  </div>
                 </div>
               </div>
-
-              <div class="row">
-                <div class="col-md-12">
-                  <!------     mini card body     ------>
-                  <div class="card-text">Driver: {{ driver }} {% render_stars rating %}</div>
-                  <div class="card-text">
-                    Hitchers:
-                    {% for hitcher, hitch_rating in hitchers_ratings_list %}
-                    <div>
-                      <button class="badge rounded-pill bg-success">
-                        Confirm
-                      </button>
-                      {{ hitcher }} {% render_stars hitch_rating %}
-                      <button class="badge rounded-pill bg-success">
-                        <i class="fa-regular fa-message"></i>
-                      </button>
-
-                    </div>
-                    {% empty %}
-                    <div>
-                      None confirmed
-                    </div>
-                    {% endfor %}
-                  </div>
-                </div>
-              </div>
-
             </div>
           </div>
         </div>

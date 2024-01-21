@@ -251,7 +251,18 @@ def user_trips(request):
                 hitch.delete()
                 messages.success(request, 'Your Hitch request was deleted sucessfully!')
 
-            return redirect('user_trips') 
+                return redirect('user_trips') 
+
+        elif 'confirm':
+                pk = request.POST.get('confirm')
+                print(f'')
+                return redirect('user_trips') 
+
+        elif'message':
+                pk = request.POST.get('message')
+                print(f'')
+                return redirect('user_trips') 
+            
 
 
     else:

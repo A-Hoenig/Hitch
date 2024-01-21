@@ -10,10 +10,10 @@ def render_stars(rating):
     if str(rating).isdigit() and 0 <= int(rating) <= 5:
         rating = int(rating)
     else:
-        return mark_safe('<span>----</span>')
+        return mark_safe('<span></span>')
 
     if rating == 0:
-        return mark_safe('<span>----</span>')
+        return mark_safe('<span></span>')
 
     star_html = ''
     for i in range(1, 6):
