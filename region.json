@@ -1,0 +1,26 @@
+[
+{
+  "model": "rides.region",
+  "pk": 1,
+  "fields": {
+    "date_created": "2024-01-15T21:17:59.213Z",
+    "region": "Augsburg County"
+  }
+},
+{
+  "model": "rides.region",
+  "pk": 2,
+  "fields": {
+    "date_created": "2024-01-16T13:13:33.234Z",
+    "region": "Landsberg County"
+  }
+},
+{
+  "model": "rides.region",
+  "pk": 3,
+  "fields": {
+    "date_created": "2024-01-16T19:58:18.616Z",
+    "region": "Langerringen Rural Area"
+  }
+}
+]

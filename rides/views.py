@@ -245,6 +245,8 @@ def user_trips(request):
                 trip = Trip.objects.get(id=pk)
                 trip.delete()
                 messages.success(request, 'Tour Trip was deleted sucessfully!')
+
+                return redirect('user_trips') 
             else:
                 #hitch
                 hitch = Hitch_Request.objects.get(id=pk)
@@ -255,16 +257,31 @@ def user_trips(request):
 
         elif 'confirm':
                 # confirm only for hitches
-                pks = request.POST.get('confirm').split('_')
-                pk_ride = pks[0]
-                pk_hitcher = pks[1]
+                print('you are in confirm')
+                tripPk=request.POST.get('confirm').split('_')
+                print(tripPk)
+                # pks = request.POST.get(f'hitcherNameID_{tripPk}')
+                pk_ride = tripPk[0]
+                pk_hitcher = tripPk[1]
                 
                 print(f'You want to confirm hitcher {pk_hitcher} on ride {pk_ride}')
+
                 return redirect('user_trips') 
 
-        elif'message':
-                pk = request.POST.get('message')
-                print(f'')
+        elif 'message':
+            # hitcher to driver
+                print('you are in message')
+                tripPk=request.POST.get('message').split('_')
+                print(tripPk)
+                # pks = request.POST.get(f'hitcherNameID_{tripPk}')
+                pk_ride = tripPk[0]
+                pk_hitcher = tripPk[1]
+
+                sender = Hitch_Request.objects.get(id=pk_ride).hitcher
+                receiver = Trip.objects.get(id=pk_ride).driver
+
+                print(f'send message from {sender} to {receiver}')
+
                 return redirect('user_trips') 
             
 
