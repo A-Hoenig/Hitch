@@ -213,36 +213,62 @@ def user_trips(request):
         hitches = hitches.filter(region=selected_region)
 
     combined_list = list(chain(hitches, trips))
+    
 
     # Add an is_ride attribute to each instance
     for instance in combined_list:
         instance.is_ride = isinstance(instance, Trip)
 
     sorted_list = sorted(combined_list, key=attrgetter('depart_date')) 
+
+
+
+    for instance in sorted_list:
+        # Check if the instance is a Trip
+        if isinstance(instance, Trip):
+            instance_type = 'Ride'
+        else:
+            instance_type = 'Hitch'# Print the details
+        print(f"ID: {instance.id}, Type: {instance_type}, Departs: {instance.depart.name}")
+
+
        
     detailed_sorted_list = []
     
     
     if request.method == "POST":
         print('......PROCESSING POST .....')
+        # get trip or hitch ID from button value
+        pk = request.POST.get('edit') or request.POST.get('delete')
+        instance = next((item for item in combined_list if item.id == int(pk)), None)
+        
+        if instance is not None:
+            if instance.is_ride:
+                type = 'ride'
+            else:
+                type = 'hitch'
+         
+        
         if 'edit' in request.POST:
-            pk = request.POST.get('edit')
-            print(f'you clicked an edit button for trip {pk}')
+            print(f'you want to edit {type}: {pk}')
             
             # form = TripForm(request.POST)
             # form.instance.owner = request.user
             # if form.is_valid():
             #     form.save()
             #     messages.success(request, 'Trip updated successfully!')
+
             return redirect('user_trips') 
+
         elif 'delete' in request.POST:
-            pk = request.POST.get('delete')
-            print(f'you want to delete trip {pk}')
-            # in here need to diffenreiate between trip and hitch... tbd...
+            print(f'you want to delete {type}: {pk}')
+
+            # in here need to differentiate between trip and hitch... tbd...
             # pk = request.POST.get('delete')
             # trip = Trip.objects.get(id=pk)
             # trip.delete()
             # messages.success(request, 'Trip deleted sucessfully!')
+
             return redirect('user_trips') 
 
 

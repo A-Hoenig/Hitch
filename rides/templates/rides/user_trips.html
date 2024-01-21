@@ -39,11 +39,11 @@
               <!------ PILL TRIP TYPE LABEL------>
               {% if s.is_ride %}
               <span class="position-absolute top-0 start-50 translate-middle badge rounded-pill bg-success">
-                <i class="fa-solid fa-car"></i> RIDE
+                <i class="fa-solid fa-car"></i> RIDE {{s.id}}
               </span>
               {% else %}
               <span class="position-absolute top-0 start-50 translate-middle badge rounded-pill bg-warning">
-                <i class="fa-solid fa-thumbs-up"></i> HITCH
+                <i class="fa-solid fa-thumbs-up"></i> HITCH {{s.id}}
               </span>
               {% endif %}
 
@@ -90,10 +90,34 @@
 
 
                   <div class="card-title h4">
-                    <span class="text-secondary">{{ s.depart.stoptype.stop_icon|safe }}</span><span
-                      class="ms-1">{{ s.depart.city }}</span> -
-                    <span>{{ s.destination.city}}</span> <span
-                      class="text-secondary">{{ s.destination.stoptype.stop_icon|safe }}</span>
+                    <div>
+                      <span class="text-secondary">
+                        {{ s.depart.stoptype.stop_icon|safe }}
+                      </span>
+
+                      <span class="ms-1">
+                        {{ s.depart.city }}
+                      </span>
+
+                      <span class="text-secondary fs-6">
+                        - {{ s.depart.name }}
+                      </span>
+                    </div>
+                    <div>
+                      <span class="text-secondary">
+                        {{ s.destination.stoptype.stop_icon|safe }}
+                      </span>
+
+                      <span>
+                        {{ s.destination.city}}
+                      </span>
+
+                      <span class="text-secondary fs-6">
+                        - {{ s.destination.name }}
+                      </span>
+                    </div>
+
+
                   </div>
                 </div>
               </div>
