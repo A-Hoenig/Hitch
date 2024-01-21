@@ -238,7 +238,7 @@ def user_trips(request):
 
         if 'edit' in request.POST:
             pk = request.POST.get('edit')
-            # get trip type from button data-trip-type attribute
+            # get trip type from button trip-type attribute
             trip_type = request.POST.get(f'tripTypeName_{pk}')
             print(f'you want to edit {trip_type}: {pk}')
          
@@ -253,18 +253,18 @@ def user_trips(request):
             if trip_type == 'True':
                 #true = ride
                 trip = Trip.objects.get(id=pk)
-                # trip.delete()
-                print(f'**********This would delete RIDE {pk}')
-                messages.success(request, 'Tour Trip was deleted sucessfully!')
+                trip.delete()
+                # print(f'**********This would delete RIDE {pk}')
+                messages.success(request, 'Your Trip was deleted successfully!')
 
                 return redirect('user_trips') 
 
             elif trip_type == 'False':
                 #hitch
                 hitch = Hitch_Request.objects.get(id=pk)
-                # hitch.delete()
-                print(f'***********This would delete HITCH {pk}')
-                messages.success(request, 'Your Hitch request was deleted sucessfully!')
+                hitch.delete()
+                # print(f'***********This would delete HITCH {pk}')
+                messages.success(request, 'Your Hitch request was deleted successfully!')
 
                 return redirect('user_trips') 
 
