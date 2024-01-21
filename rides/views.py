@@ -1,6 +1,7 @@
 from django.shortcuts import render, HttpResponse, get_object_or_404, reverse, redirect, HttpResponseRedirect
 from django.utils import timezone
 from django.views.generic import ListView
+# from django.contrib.auth.decorators import login_required
 from rides.models import CustomUser, Vehicle, Trip, Region, Message, Hitch_Request, Location
 from django.contrib import messages
 from django.contrib.auth.models import User
@@ -11,6 +12,7 @@ from itertools import chain
 from operator import attrgetter
 
 # -------------------------------------------------------
+@login_required
 def rides_view(request):
     
     if request.method == "POST":
@@ -144,6 +146,7 @@ def rides_view(request):
 
 
 # -------------------------------------------------------
+@login_required
 def hitches(request):
     form = TripForm()
     region_filter_form = RegionFilterForm(request.GET or None)

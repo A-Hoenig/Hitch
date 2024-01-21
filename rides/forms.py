@@ -153,7 +153,7 @@ class TripForm(forms.ModelForm):
         (30, '30km'),
     ]
 
-    
+
     class DurationInput(forms.TextInput):
         input_type = 'text'    
 
@@ -194,9 +194,6 @@ class TripForm(forms.ModelForm):
             self.fields['region'].label = False
 
             
-            
-
-        
         default_vehicle = Vehicle.objects.first()
             
         default_values = {
