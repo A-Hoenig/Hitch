@@ -64,7 +64,6 @@ def rides_view(request):
                 messages.success(request, 'New trip created successfully! Thanks for sharing!')
             else:
                 error_messages = form.errors.as_data()
-                print(form.errors)
                 messages.error(request, 'Sorry, something went wrong')
             
         return HttpResponseRedirect(request.path_info) 
@@ -250,18 +249,21 @@ def user_trips(request):
             pk = request.POST.get('delete')
             trip_type = request.POST.get(f'tripTypeName_{pk}')
             print(f'you want to delete {trip_type}: {pk}')
-
-            if trip_type:
+            
+            if trip_type == 'True':
                 #true = ride
                 trip = Trip.objects.get(id=pk)
-                trip.delete()
+                # trip.delete()
+                print(f'**********This would delete RIDE {pk}')
                 messages.success(request, 'Tour Trip was deleted sucessfully!')
 
                 return redirect('user_trips') 
-            else:
+
+            elif trip_type == 'False':
                 #hitch
                 hitch = Hitch_Request.objects.get(id=pk)
-                hitch.delete()
+                # hitch.delete()
+                print(f'***********This would delete HITCH {pk}')
                 messages.success(request, 'Your Hitch request was deleted sucessfully!')
 
                 return redirect('user_trips') 
