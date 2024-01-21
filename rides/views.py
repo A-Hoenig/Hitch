@@ -200,63 +200,73 @@ def about(request):
 # -------------------------------------------------------
 @login_required
 def user_trips(request):
-    if request.method == "POST:":
-        print('you hit a button on post')
+    region_filter_form = RegionFilterForm(request.GET or None)
+    user_id = request.user.id
+    
+    trips = Trip.objects.filter(driver=user_id)
+    hitches = Hitch_Request.objects.filter(hitcher=user_id)
+    vehicles = Vehicle.objects.filter(owner=request.user)
+    
+    if region_filter_form.is_valid():
+        selected_region = region_filter_form.cleaned_data['selected_region']
+        trips = trips.filter(region=selected_region)
+        hitches = hitches.filter(region=selected_region)
+
+    combined_list = list(chain(hitches, trips))
+
+    # Add an is_ride attribute to each instance
+    for instance in combined_list:
+        instance.is_ride = isinstance(instance, Trip)
+
+    sorted_list = sorted(combined_list, key=attrgetter('depart_date')) 
+       
+    detailed_sorted_list = []
+    
+    
+    if request.method == "POST":
+        print('......PROCESSING POST .....')
         if 'edit' in request.POST:
-            print(f'you clicked an edit button for trip {request.id}')
-            # form = VehicleForm(request.POST)
+            pk = request.POST.get('edit')
+            print(f'you clicked an edit button for trip {pk}')
+            
+            # form = TripForm(request.POST)
             # form.instance.owner = request.user
             # if form.is_valid():
             #     form.save()
-            #     messages.success(request, 'Vehicle added successfully!')
+            #     messages.success(request, 'Trip updated successfully!')
+            return redirect('user_trips') 
         elif 'delete' in request.POST:
-            print(f'you want to delete trip {request.id}')
+            pk = request.POST.get('delete')
+            print(f'you want to delete trip {pk}')
+            # in here need to diffenreiate between trip and hitch... tbd...
             # pk = request.POST.get('delete')
-            # vehicle = Vehicle.objects.get(id=pk)
-            # vehicle.delete()
-            # messages.success(request, 'Vehicle deleted sucessfully!')
+            # trip = Trip.objects.get(id=pk)
+            # trip.delete()
+            # messages.success(request, 'Trip deleted sucessfully!')
+            return redirect('user_trips') 
+
+
     else:
-        print('you got get')
-        region_filter_form = RegionFilterForm(request.GET or None)
-        user_id = request.user.id
-        
-        trips = Trip.objects.filter(driver=user_id)
-        hitches = Hitch_Request.objects.filter(hitcher=user_id)
-        vehicles = Vehicle.objects.filter(owner=request.user)
-        
-        if region_filter_form.is_valid():
-            selected_region = region_filter_form.cleaned_data['selected_region']
-            trips = trips.filter(region=selected_region)
-            hitches = hitches.filter(region=selected_region)
+        print('......PROCESSING GET .....')
 
-        combined_list = list(chain(hitches, trips))
+        def calculate_rating(rating):
+            if rating is None:
+                return 0  
+            return int(round(rating))
 
-        # Add an is_ride attribute to each instance
-        for instance in combined_list:
-            instance.is_ride = isinstance(instance, Trip)
-
-        sorted_list = sorted(combined_list, key=attrgetter('depart_date')) 
-       
-    detailed_sorted_list = []
-
-    def calculate_rating(rating):
-        if rating is None:
-            return 0  
-        return int(round(rating))
-
-    for s in sorted_list:
-        if isinstance(s, Trip):
-            driver = s.driver
-            rating = calculate_rating(s.driver.average_driver_rating)
-            hitchers = [hr.hitcher for hr in s.hitch_requests.all()]
-            hitchers_ratings_list = [(hr.hitcher, round(hr.hitcher.average_hitcher_rating)) for hr in s.hitch_requests.all()]
-        elif isinstance(s, Hitch_Request):
-            driver = s.trip.driver
-            rating = calculate_rating(s.trip.driver.average_driver_rating)
-            hitchers_ratings_list = []
+        for s in sorted_list:
+            if isinstance(s, Trip):
+                driver = s.driver
+                rating = calculate_rating(s.driver.average_driver_rating)
+                hitchers = [hr.hitcher for hr in s.hitch_requests.all()]
+                hitchers_ratings_list = [(hr.hitcher, round(hr.hitcher.average_hitcher_rating)) for hr in s.hitch_requests.all()]
+            elif isinstance(s, Hitch_Request):
+                driver = s.trip.driver
+                rating = calculate_rating(s.trip.driver.average_driver_rating)
+                hitchers_ratings_list = []
 
 
-        detailed_sorted_list.append((s, driver, rating, hitchers_ratings_list))
+            detailed_sorted_list.append((s, driver, rating, hitchers_ratings_list))
 
     context = {
         "username": request.user,
