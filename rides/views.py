@@ -201,8 +201,22 @@ def about(request):
 @login_required
 def user_trips(request):
     if request.method == "POST:":
-        pass
+        print('you hit a button on post')
+        if 'edit' in request.POST:
+            print(f'you clicked an edit button for trip {request.id}')
+            # form = VehicleForm(request.POST)
+            # form.instance.owner = request.user
+            # if form.is_valid():
+            #     form.save()
+            #     messages.success(request, 'Vehicle added successfully!')
+        elif 'delete' in request.POST:
+            print(f'you want to delete trip {request.id}')
+            # pk = request.POST.get('delete')
+            # vehicle = Vehicle.objects.get(id=pk)
+            # vehicle.delete()
+            # messages.success(request, 'Vehicle deleted sucessfully!')
     else:
+        print('you got get')
         region_filter_form = RegionFilterForm(request.GET or None)
         user_id = request.user.id
         

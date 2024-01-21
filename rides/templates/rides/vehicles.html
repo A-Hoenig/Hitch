@@ -19,6 +19,7 @@
                     {% csrf_token %}
 
                     <div class="row mb-2">
+                        
                         <div class="col-6">{{ form.make|as_crispy_field }}</div>
                         <div class="col-6">{{ form.model|as_crispy_field }}</div>
                     </div>

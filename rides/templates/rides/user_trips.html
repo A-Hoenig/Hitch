@@ -54,6 +54,9 @@
 
 
 
+
+
+
                   <form method="post" action="{% url 'account_login' %}?next={{ request.path }}">
                     {% csrf_token %}
                     <div class="card-title h4 d-flex justify-content-between">
@@ -64,17 +67,15 @@
 
                       <div>
                         <span>
-                          <a name="ride_trip_id" value="{{ t.id }}" class="btn badge bg-secondary"
-                            href="{% url 'account_login' %}?next={{ request.path }}" role="button">
+                          <button type="submit" name="edit" value="{{ s.id }}" id="editBtn-{{ s.id }}"
+                            class="btn badge bg-secondary">
                             <i class="fa-solid fa-gear"></i>
-                          </a>
-                        </span>
+                          </button>
 
-                        <span>
-                          <a name="ride_trip_id" value="{{ t.id }}" class="btn badge bg-danger"
-                            href="{% url 'account_login' %}?next={{ request.path }}" role="button">
+                          <button type="submit" name="delete" value="{{ s.id }}" id="deleteBtn-{{ s.id }}"
+                            class="btn badge bg-danger">
                             <i class="fa-regular fa-trash-can"></i>
-                          </a>
+                          </button>
                         </span>
                       </div>
 
