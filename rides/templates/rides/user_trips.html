@@ -29,7 +29,7 @@
 
       <div class="row">
         {% for s, driver, rating, hitchers_ratings_list in detailed_sorted_list %}
-                
+
         <div class="col-sm-6">
           <!-- change this to 12 for 1 column-->
 
@@ -50,10 +50,44 @@
               <!------   mini card title    ------>
               <div class="row">
                 <div class="col-md-12">
-                  <div class="card-title h4">
-                    <span class="badge bg-secondary">{{ s.depart_date|DM }}</span>
-                    <span class="badge bg-secondary">{{ s.depart_time|HHMM }}</span>
-                  </div>
+
+
+
+
+                  <form method="post" action="{% url 'account_login' %}?next={{ request.path }}">
+                    {% csrf_token %}
+                    <div class="card-title h4 d-flex justify-content-between">
+                      <div>
+                        <span class="badge bg-secondary">{{ s.depart_date|DM }}</span>
+                        <span class="badge bg-secondary">{{ s.depart_time|HHMM }}</span>
+                      </div>
+
+                      <div>
+                        <span>
+                          <a name="ride_trip_id" value="{{ t.id }}" class="btn badge bg-secondary"
+                            href="{% url 'account_login' %}?next={{ request.path }}" role="button">
+                            <i class="fa-solid fa-gear"></i>
+                          </a>
+                        </span>
+
+                        <span>
+                          <a name="ride_trip_id" value="{{ t.id }}" class="btn badge bg-danger"
+                            href="{% url 'account_login' %}?next={{ request.path }}" role="button">
+                            <i class="fa-regular fa-trash-can"></i>
+                          </a>
+                        </span>
+                      </div>
+
+                    </div>
+                  </form>
+
+
+
+
+
+
+
+
                   <div class="card-title h4">
                     <span class="text-secondary">{{ s.depart.stoptype.stop_icon|safe }}</span><span
                       class="ms-1">{{ s.depart.city }}</span> -
@@ -78,7 +112,7 @@
                       <button class="badge rounded-pill bg-success">
                         <i class="fa-regular fa-message"></i>
                       </button>
-                      
+
                     </div>
                     {% empty %}
                     <div>
