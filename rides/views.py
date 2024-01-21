@@ -220,37 +220,18 @@ def user_trips(request):
         instance.is_ride = isinstance(instance, Trip)
 
     sorted_list = sorted(combined_list, key=attrgetter('depart_date')) 
-
-
-
-    for instance in sorted_list:
-        # Check if the instance is a Trip
-        if isinstance(instance, Trip):
-            instance_type = 'Ride'
-        else:
-            instance_type = 'Hitch'# Print the details
-        print(f"ID: {instance.id}, Type: {instance_type}, Departs: {instance.depart.name}")
-
-
-       
     detailed_sorted_list = []
-    
     
     if request.method == "POST":
         print('......PROCESSING POST .....')
-        # get trip or hitch ID from button value
-        pk = request.POST.get('edit') or request.POST.get('delete')
-        instance = next((item for item in combined_list if item.id == int(pk)), None)
-        
-        if instance is not None:
-            if instance.is_ride:
-                type = 'ride'
-            else:
-                type = 'hitch'
-         
-        
+
+        # get trip type from button data-trip-type attribute
+        trip_type = request.POST.get('trip_type')
+        print(f'TripType:{trip_type}')
+
         if 'edit' in request.POST:
-            print(f'you want to edit {type}: {pk}')
+            pk = request.POST.get('edit')
+            print(f'you want to edit {trip_type}: {pk}')
             
             # form = TripForm(request.POST)
             # form.instance.owner = request.user
@@ -261,10 +242,10 @@ def user_trips(request):
             return redirect('user_trips') 
 
         elif 'delete' in request.POST:
-            print(f'you want to delete {type}: {pk}')
+            pk = request.POST.get('delete')
+            print(f'you want to delete {trip_type}: {pk}')
 
-            # in here need to differentiate between trip and hitch... tbd...
-            # pk = request.POST.get('delete')
+           
             # trip = Trip.objects.get(id=pk)
             # trip.delete()
             # messages.success(request, 'Trip deleted sucessfully!')

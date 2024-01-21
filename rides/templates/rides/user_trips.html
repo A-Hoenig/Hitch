@@ -38,6 +38,7 @@
 
               <!------ PILL TRIP TYPE LABEL------>
               {% if s.is_ride %}
+              
               <span class="position-absolute top-0 start-50 translate-middle badge rounded-pill bg-success">
                 <i class="fa-solid fa-car"></i> RIDE {{s.id}}
               </span>
@@ -67,13 +68,15 @@
 
                       <div>
                         <span>
-                          <button type="submit" name="edit" value="{{ s.id }}" id="editBtn-{{ s.id }}"
-                            class="btn badge bg-secondary">
+                          <input type="hidden" name="trip_type" id="tripTypeField" value="test">
+                          
+                          <button type="submit" onclick="setTripType('{{ s.is_ride }}')" name="edit" value="{{ s.id }}" id="editBtn-{{ s.id }}"
+                            data-trip-type="{{s.is_trip}}" class="btn badge bg-secondary">
                             <i class="fa-solid fa-gear"></i>
                           </button>
 
-                          <button type="submit" name="delete" value="{{ s.id }}" id="deleteBtn-{{ s.id }}"
-                            class="btn badge bg-danger">
+                          <button type="submit" onclick="setTripType('{{ s.is_ride }}')" name="delete" value="{{ s.id }}" id="deleteBtn-{{ s.id }}"
+                            data-trip-type="{{s.is_trip}}" class="btn badge bg-danger">
                             <i class="fa-regular fa-trash-can"></i>
                           </button>
                         </span>
@@ -159,5 +162,12 @@
   </div>
 </div>
 
+
+<script>
+  function setTripType(tripType) {
+    console.log('Setting trip type to:', tripType); // For debugging
+      document.getElementById('tripTypeField').value = tripType;
+  }
+  </script>
 
 {% endblock %}
