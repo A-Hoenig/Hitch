@@ -62,6 +62,8 @@
                     {% csrf_token %}
                     <div class="card-title h4 d-flex justify-content-between">
                       <div>
+                        {{ t.purpose.purpose_icon|safe }}
+                        <span class="badge bg-secondary">{{ s.purpose.purpose_icon|safe }}</span>
                         <span class="badge bg-secondary">{{ s.depart_date|DM }}</span>
                         <span class="badge bg-secondary">{{ s.depart_time|HHMM }}</span>
                       </div>
