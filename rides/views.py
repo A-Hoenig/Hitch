@@ -73,6 +73,7 @@ def rides_view(request):
         user = request.user
         form = TripForm(user=user)
         region_filter_form = RegionFilterForm(request.GET or None)
+        
         message_form = MessageForm()
         
         # Set Default for Vehicles:
@@ -86,8 +87,16 @@ def rides_view(request):
 
         # Filter trips by selected region and departure_date
         trips = Trip.objects.filter(depart_date__gte=timezone.now().date()).order_by("depart_date")
+
         region = Region.objects.first()
-        
+        if region_filter_form.is_valid():
+                selected_region = region_filter_form.cleaned_data['selected_region']
+                trips = trips.filter(region=selected_region)
+
+
+        print(f'GOT THE REGION {region}')
+
+
 
         # Create a list of forms for each trip instance
         forms = [TripForm(instance=trip) for trip in trips]
