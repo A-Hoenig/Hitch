@@ -224,13 +224,14 @@ def user_trips(request):
     
     if request.method == "POST":
         print('......PROCESSING POST .....')
+        
 
-        # get trip type from button data-trip-type attribute
-        trip_type = request.POST.get('trip_type')
-        print(f'TripType:{trip_type}')
+        
 
         if 'edit' in request.POST:
             pk = request.POST.get('edit')
+            # get trip type from button data-trip-type attribute
+            trip_type = request.POST.get(f'tripTypeName_{pk}')
             print(f'you want to edit {trip_type}: {pk}')
             
             # form = TripForm(request.POST)

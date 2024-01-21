@@ -68,16 +68,28 @@
 
                       <div>
                         <span>
-                          <input type="hidden" name="trip_type" id="tripTypeField" value="test">
+                          <input type="hidden" name="tripTypeName_{{ s.id }}" id="tripTypeID_{{ s.id }}" value="{{ s.is_ride }}">
                           
-                          <button type="submit" onclick="setTripType('{{ s.is_ride }}')" name="edit" value="{{ s.id }}" id="editBtn-{{ s.id }}"
-                            data-trip-type="{{s.is_trip}}" class="btn badge bg-secondary">
+                          <button 
+                          type="submit" 
+                          name="edit" 
+                          value="{{ s.id }}" 
+                          id="editBtn-{{ s.id }}"
+                          class="btn badge bg-secondary">
+
                             <i class="fa-solid fa-gear"></i>
+
                           </button>
 
-                          <button type="submit" onclick="setTripType('{{ s.is_ride }}')" name="delete" value="{{ s.id }}" id="deleteBtn-{{ s.id }}"
-                            data-trip-type="{{s.is_trip}}" class="btn badge bg-danger">
+                          <button 
+                          type="submit" 
+                          name="delete" 
+                          value="{{ s.id }}" 
+                          id="deleteBtn-{{ s.id }}"
+                          class="btn badge bg-danger">
+
                             <i class="fa-regular fa-trash-can"></i>
+
                           </button>
                         </span>
                       </div>
@@ -163,11 +175,6 @@
 </div>
 
 
-<script>
-  function setTripType(tripType) {
-    console.log('Setting trip type to:', tripType); // For debugging
-      document.getElementById('tripTypeField').value = tripType;
-  }
-  </script>
+
 
 {% endblock %}
