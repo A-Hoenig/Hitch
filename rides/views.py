@@ -44,7 +44,8 @@ def rides_view(request):
     for trip in trips:
         # get average driver rating from DB
         driver = trip.driver
-        average_driver_ratings.append(round(trip.driver.average_driver_rating))
+        # attach to trip
+        trip.average_driver_rating = round(trip.driver.average_driver_rating)
         # get the driver's allowed hitch seats from trip model
         hitch_seats = trip.max_hitch
         hitch_seats_list.append(hitch_seats)
@@ -59,13 +60,15 @@ def rides_view(request):
             else:
                 hitch_group.append(f'{i + 1}- .......')
         hitch_groups.append(hitch_group)
+        # attach to trip
+        trip.hitch_group = hitch_group
 
         # get pending hitchrequests - not approved - per trip
         all_hitch_requests = Hitch_Request.objects.filter(trip=trip)
         pending_hitchers = [ph.hitcher.username for ph in all_hitch_requests if ph.hitcher.username not in hitchers]
-        pending_hitch_groups.append (pending_hitchers)
-        print(pending_hitch_groups)
-
+        # attach to trip
+        trip.pending_hitchers = pending_hitchers
+        
     #SET UP UNIVERSAL CONTEXT
     context = {
             "username": request.user,
@@ -140,7 +143,7 @@ def rides_view(request):
         else:
             form = TripForm()
 
-        context['trips']= zip(trips, average_driver_ratings, hitch_groups, pending_hitch_groups)
+        context['trips']= trips
         context['form'] = form
       
         return render(request, 'rides/rides.html', context)

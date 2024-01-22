@@ -161,7 +161,7 @@
             <div class="accordion" id="RidesAccordionList">
 
                 <!-- loop through each trip in the db-->
-                {% for t, average_driver_ratings, hitch_groups, pending_hitch_groups in trips %}
+                {% for t in trips %}
                 <form method="post">
                     {% csrf_token %}
 
@@ -392,12 +392,12 @@
                                                         </span>
                                                     </p>
                                                     <p class="text-start small mb-0">{{ t.driver }}
-                                                        <span>{% render_stars average_driver_ratings %}</span>
+                                                        <span>{% render_stars t.average_driver_rating %}</span>
                                                     </p>
                                                     <p class="text-primary text-start small mb-0">Hitchers:</p>
                                                     <!-- Display available hitch slots -->
                                                     <ol class="list-unstyled p-0">
-                                                        {% for hitcher in hitch_groups %}
+                                                        {% for hitcher in t.hitch_group %}
                                                         <li class="text-start small mb-0 text-secondary">
                                                             {{ hitcher }}
                                                         </li>
@@ -473,46 +473,42 @@
                                 <div class="">
                                     <form method="post" action="{% url 'account_login' %}?next={{ request.path }}">
                                         {% csrf_token %}
+                                        <!-- Check if the user is authenticated -->
                                         {% if user.is_authenticated %}
-
-
-
-                                        {% if user.username != t.driver and user.username not in hitch_groups %}
-                                        <div class="col">
-                                            <button name="ride_trip_id" value="{{ t.id }}" type="button"
-                                                class="btn btn-primary mx-1 my-3" data-bs-toggle="modal"
-                                                data-bs-target="#RequestModal" data-bs-whatever=""
-                                                data-trip-id="{{ t.id }}"
-                                                data-trip-destination="{{ t.destination.city }}"">
-                                                                    Request to Hitch a Ride!
-                                                                </button>
-                                                            </div>
-                                        {% endif %}
-                                        {% if  user.username in hitch_groups %}
-                                                            <div class=" btn btn-success disabled my-3">
-                                                <i class="fa-solid fa-thumbs-up"></i><span>You are approved to join this
-                                                    Ride!</span>
-                                        </div>
-                                        {% endif %}
-                                        {% if user.username in pending_hitch_groups %}
-                                        <div class=" btn btn-success disabled my-3">
-                                            <i class="fa-solid fa-thumbs-up"></i><span>You already requested this
-                                                ride!</span>
-                                        </div>
-                                        {% endif %}
-                                        {% if user.username == t.driver %}
+                                        <!-- Check if the user is the driver of the trip -->
+                                        {% if user.username == t.driver.username %}
+                                        <!-- User is the driver -->
                                         <div class="btn btn-success disabled my-3">
                                             <i class="fa-solid fa-car"></i><span>This is your trip</span>
                                         </div>
-                                        {% endif %}
-
-                                        {% else %}
-                                        <!-- user not logged in - button for login  shown-->
-                                        <div class="col">
-                                            <a name="ride_trip_id" value="{{ t.id }}" class="btn btn-primary my-1 mx-1"
-                                                href="{% url 'account_login' %}?next={{ request.path }}"
-                                                role="button">Sign In to request a ride</a>
+                                        <!-- Check if the user is in the approved hitch group -->
+                                        {% elif user.username in t.hitch_group %}
+                                        <!-- User is approved to join -->
+                                        <div class="btn btn-success disabled my-3">
+                                            <i class="fa-solid fa-thumbs-up"></i><span>You are approved to join this
+                                                Ride!</span>
                                         </div>
+                                        <!-- Check if the user has a pending request -->
+                                        {% elif user.username in t.pending_hitchers %}
+                                        <!-- User has already requested -->
+                                        <div class="btn btn-success disabled my-3">
+                                            <i class="fa-solid fa-thumbs-up"></i><span>You already requested this
+                                                ride!</span>
+                                        </div>
+                                        {% else %}
+                                        <!-- User can request to hitch a ride -->
+                                        <button name="ride_trip_id" value="{{ t.id }}" type="button"
+                                            class="btn btn-primary mx-1 my-3" data-bs-toggle="modal"
+                                            data-bs-target="#RequestModal" data-bs-whatever="" data-trip-id="{{ t.id }}"
+                                            data-trip-destination="{{ t.destination.city }}">
+                                            <i class="fa-solid fa-thumbs-up"></i> Request to Hitch a Ride!
+                                        </button>
+                                        {% endif %}
+                                        {% else %}
+                                        <!-- User not logged in - show login button -->
+                                        <a class="btn btn-primary my-1 mx-1"
+                                            href="{% url 'account_login' %}?next={{ request.path }}" role="button">Sign
+                                            In to request a ride</a>
                                         {% endif %}
                                     </form>
                                 </div>
@@ -520,15 +516,6 @@
                             </div>
                         </div>
                     </div>
-                    Driver{{t.driver}}
-                     APRVD {{hitch_groups}}
-                     PEND {{pending_hitch_groups}}
-                     {{user.username}}
-                    {% if user.username in pending_hitch_groups %}
-                     requested already
-                    {% else %}
-                     did not request
-                    {% endif %}
                     {% endfor %}
                 </form>
             </div>
