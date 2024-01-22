@@ -41,7 +41,10 @@
 
 <!--DEBUG DELETE ME-->
 <div>
-{{region}}
+<p class="mb-0">Region: {{region}}</p>
+<p class="mb-0">Logged in: {{ user.is_authenticated }}</p>
+<p class="mb-0">Number of Trips: {{ trips.count }}</p>
+<p class="mb-0"></p>
 </div>
 
 
@@ -59,7 +62,7 @@
             <div class="accordion" id="RidesAccordionList">
 
                 <!-- loop through each trip in the db-->
-                {% for t in trips %}  <!--  , form, average_driver_ratings, hitch_groups   -->
+                {% for t, average_driver_ratings in trips %}  <!--  , form, hitch_groups   -->
                 <form method="post">
                     {% csrf_token %}
 

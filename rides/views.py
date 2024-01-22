@@ -36,24 +36,42 @@ def rides_view(request):
     # GENERATE A FORM FOR EACH TRIP
     forms = [TripForm(instance=trip) for trip in trips]
 
-    #  initialize lists
+    #  INITIALIZE LISTS
     average_driver_ratings = []
     hitch_seats_list = []
     hitch_groups=[]
     hitch_seats = 1  # at least one hitcher seat avail
 
+    # CREATE LIST OF HITCHERS FOR EACH TRIP AND ZIP TO TRIP LIST
+    # Loop through filtered trips
+    for trip in trips:
+        # get average driver rating from DB
+        driver = trip.driver
+        average_driver_ratings.append(round(trip.driver.average_driver_rating))
+        print(f'{driver} Rating: {trip.driver.average_driver_rating}')
+        # get the driver allowed hitch seats from trip model
+        hitch_seats = trip.max_hitch
+        print(f'trip {trip.id} seats allowed{hitch_seats}')
+        hitch_seats_list.append(hitch_seats)
+        print(hitch_seats_list)
+
+    #  ********************************************************************
+    #  ************************ HANDLE POST REQUESTS **********************
+    #  ********************************************************************
     if request.method == "POST":
-        # *********** HANDLE POST REQUESTS ***************
+        
         # users not authenticated
         
         if request.user.is_authenticated:
             
             return HttpResponseRedirect(request.path_info) 
 
-    
+    #  ********************************************************************
+    #  ************************ HANDLE GET REQUESTS ***********************
+    #  ********************************************************************
     else:
-        # ****** HANDLE GET REQUESTS **********
-        print(request.GET)  # Check the GET parameters
+        
+        # print(request.GET)  # Check the GET parameters
     
 
         if request.user.is_authenticated:
@@ -64,7 +82,8 @@ def rides_view(request):
         "username": request.user,
         'region': region,
         'region_filter_form': region_filter_form,
-        'trips': trips,
+        'trips': zip(trips, average_driver_ratings)
+        
     }
 
     return render(request, 'rides/rides.html', context)
