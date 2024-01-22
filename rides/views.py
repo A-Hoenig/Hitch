@@ -108,7 +108,7 @@ def rides_view(request):
             else:
                 # A DRIVER WANTS TO CREATE A NEW RIDE TO ADD TO THE LIST
                 print('*** USER WANTS TO OFFER/CREATE A NEW RIDE ***')
-                form = TripForm(request.POST)
+                form = TripForm(request.POST, user=request.user)
                 
                 
                 #add specific context
@@ -126,12 +126,21 @@ def rides_view(request):
         #  ********************************************************************
         print('*********************** GET REQUEST *******************')
         
-        form = TripForm()
-        #add specific context
+        if request.user.is_authenticated:
+            form = TripForm(user=request.user)
+            #add specific context
+            
+            
+            
+
+        else:
+            form = TripForm()
+
         context['trips']= zip(trips, average_driver_ratings, hitch_groups)
         context['form'] = form
-        
         print(f'current context : {context}')
+
+
         return render(request, 'rides/rides.html', context)
 
     
