@@ -10,7 +10,6 @@
 
 <!-- USER FEEDBACK BAR, ACTION BUTTON AND REGION SELECT-->
 <div class="container-fluid sticky-top">
-
     <div class="row">
         <div class="col-12 bg-light gx-0">
             <div class="px-3 py-0 d-sm-flex justify-content-between align-items-center mt-auto border-bottom shadow">
@@ -120,10 +119,11 @@
                             <div class="col-md" id="recurring">{{ form.recurring|as_crispy_field }}</div>
 
                             {% if not has_vehicles %}
-                            <div class="col-md btn btn-primary">You need to add a Vehicle <a
-                                    href="{% url 'vehicles' %}">Add
-                                    a
-                                    vehicle</a></div>
+                            <div class="col-md">
+                                <a name="ride_trip_id" value="{{ t.id }}" class="btn btn-primary"
+                                    href="{% url 'vehicles' %}" role="button">
+                                    ADD VEHICLE</a>
+                            </div>
                             {% else %}
                             <div class="col-md">{{ form.vehicle|as_crispy_field }}</div>
                             {% endif %}
@@ -541,6 +541,22 @@
             modal.find('.modal-footer button[name="ride_trip_id"]').val(tripId)
             modal.find('#RequestModalLabel').text("Request a ride to " + tripDestination);
         });
+    });
+
+    // show or hide weekday based on Recurring value in trip modal.
+    document.addEventListener("DOMContentLoaded", function () {
+        var dropdown = document.getElementById("id_recurring");
+        var elementToToggle = document.getElementById("weekday-checkboxes");
+
+        function updateVisibility() {
+            var selectedValue = dropdown.value;
+            elementToToggle.classList.toggle("d-none", selectedValue === "False");
+        }
+        // Set initial state based on the current value of the dropdown
+        updateVisibility();
+
+        // now add event
+        dropdown.addEventListener("change", updateVisibility);
     });
 </script>
 {% endblock %}
