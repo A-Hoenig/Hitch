@@ -15,11 +15,10 @@ from operator import attrgetter
 
 def rides_view(request):
     #  ********************************************************************
-    #  ************************ HANDLE GET REQUESTS ***********************
+    #  ************************ GENERAL SETUP  **** ***********************
     #  ********************************************************************
-    print('*********************** GET REQUEST *******************')
 
-    # initialize message form for HitchRequest 
+    # INITIALIZE MESSAGE FORM FOR HITCH REQUEST MODAL 
     message_form = MessageForm()
     
     # HANDLE REGION SETTING FOR ALL USERS
@@ -30,16 +29,14 @@ def rides_view(request):
         if selected_region:
             region = selected_region
 
-    # HANDLE GETTING TRIPS FROM DB FOR ALL USERS
-    # fetch all trips with depart date after today and sort by date
+    # GET ALL APPLICABLE TRIPS AND FILTER
     trips = Trip.objects.filter(depart_date__gte=timezone.now().date()).order_by("depart_date")
-    # filter the trips further by region
     trips = Trip.objects.filter(region=region)
 
     # GENERATE A FORM FOR EACH TRIP
     forms = [TripForm(instance=trip) for trip in trips]
 
-    #  INITIALIZE LISTS
+    # INITIALIZE LISTS
     average_driver_ratings = []
     hitch_seats_list = []
     hitch_groups=[]
@@ -63,6 +60,14 @@ def rides_view(request):
             else:
                 hitch_group.append(f'{i + 1}- .......')
         hitch_groups.append(hitch_group)
+
+    #SET UP UNIVERSAL CONTEXT
+    context = {
+            "username": request.user,
+            'region': region,
+            'region_filter_form': region_filter_form,
+            'message_form': message_form,
+        }
         
     #  ********************************************************************
     #  ************************ HANDLE POST REQUESTS **********************
@@ -78,31 +83,57 @@ def rides_view(request):
                 message = request.POST.get('message')
                 hitcher = request.user
                 driver = trip.driver
-                print(f'Create hitch_request for TripID {trip.id} for {hitcher} riding with {driver} with message: {message}')
-
-            else:
-                print('*** USER WANTS TO OFFER/CREATE A NEW RIDE ***')
                 
+                # create message instance and store in message Model
+                message = Message(sender=hitcher, receiver=driver, message=message, trip_id=trip_id)
+                # message.save()
 
+                # create hitchrequest linked to trip and store in Hitch_Request Model
+                print('building hitch request')
+                hitch_request = Hitch_Request(
+                    trip=trip,
+                    hitcher=hitcher,
+                    region=trip.region,
+                    depart=trip.depart,
+                    destination=trip.destination,
+                    depart_date=trip.depart_date,
+                    depart_time=trip.depart_time,
+                    purpose=trip.purpose,
+                    smoking=trip.vehicle.smoking,
+                    is_public = False
+                    )
+                # hitch_request.save()
+                messages.success(request, f'Hitch Request successfully submitted to {trip.driver}. The Driver will get back to you')
+                
+            else:
+                # A DRIVER WANT TO CREAT A NEW RIDE TO ADD TO THE LIST
+                print('*** USER WANTS TO OFFER/CREATE A NEW RIDE ***')
+                form = TripForm(request.POST)
+                form.instance.driver = request.user
 
-            
+                #add specific context
+                context['form'] = form 
+
+            print(f'current context : {context}')
             return HttpResponseRedirect(request.path_info) 
 
         else:
             # user's not authenticated
             pass
-    
-    
-    context = {
-        "username": request.user,
-        'region': region,
-        'region_filter_form': region_filter_form,
-        'trips': zip(trips, average_driver_ratings, hitch_groups),
-        'message_form': message_form,
-        
-    }
+    else:
+        #  ********************************************************************
+        #  ************************ HANDLE GET REQUESTS ***********************
+        #  ********************************************************************
+        print('*********************** GET REQUEST *******************')
 
-    return render(request, 'rides/rides.html', context)
+        #add specific context
+        context['trips']= zip(trips, average_driver_ratings, hitch_groups)
+
+        print(f'current context : {context}')
+        return render(request, 'rides/rides.html', context)
+
+    
+    
 
 
 
@@ -155,6 +186,7 @@ def hitches(request):
         "region_filter_form": region_filter_form,
         "average_ratings": average_ratings,
         "hitcher_slots": range(hitch_seats),
+        
     }
 
     return render(request, 'rides/hitches.html', context)
