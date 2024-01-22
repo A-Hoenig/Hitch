@@ -43,18 +43,15 @@ def rides_view(request):
     hitch_seats = 1  # at least one hitcher seat avail
 
     # CREATE LIST OF HITCHERS FOR EACH TRIP AND ZIP TO TRIP LIST
-    # Loop through filtered trips
     for trip in trips:
         # get average driver rating from DB
         driver = trip.driver
         average_driver_ratings.append(round(trip.driver.average_driver_rating))
-        
         # get the driver allowed hitch seats from trip model
         hitch_seats = trip.max_hitch
         hitch_seats_list.append(hitch_seats)
         # find any hitchers already approved by driver and create list per trip
         approved_hitch_requests = Hitch_Request.objects.filter(trip=trip, pax_approved=True)
-        
         hitchers = [hr.hitcher.username for hr in approved_hitch_requests]
         hitch_group = []
         for i in range(hitch_seats):
@@ -62,7 +59,6 @@ def rides_view(request):
                 hitch_group.append(f'{i + 1}-{hitchers[i]}')
             else:
                 hitch_group.append(f'{i + 1}- .......')
-        print(hitch_group)
         hitch_groups.append(hitch_group)
         
     #  ********************************************************************
