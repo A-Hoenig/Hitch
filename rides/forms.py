@@ -164,18 +164,6 @@ class TripForm(forms.ModelForm):
     expected_duration = forms.CharField(widget=DurationInput(attrs={'placeholder': 'H:MM'}), required=False)
     return_time= forms.TimeField(widget=forms.DateInput(attrs={'type': 'time'} ), required=False)
 
-    def clean(self):
-        cleaned_data = super().clean()
-        # Exclude 'driver' from validation
-        cleaned_data.pop('driver', None)
-        return cleaned_data
-    
-    def clean_expected_duration(self):
-        duration = self.cleaned_data.get('expected_duration')
-        if duration == "":
-            return None
-        return duration
-    
     class Meta:
         model = Trip
         fields ='__all__'
@@ -191,20 +179,6 @@ class TripForm(forms.ModelForm):
             self.fields['destination'].queryset = Location.objects.filter(input_by=user).order_by('name')
             self.fields['region'].initial = Region.objects.first()
             self.fields['region'].label = False
-
-            
-        default_vehicle = Vehicle.objects.first()
-            
-        default_values = {
-            'depart_window': 300,
-            'depart_time': (datetime.now() + timedelta(hours=1.5)).strftime('%H:%M'),
-            'vehicle': default_vehicle,
-        }
-        for key, value in default_values.items():
-            kwargs.setdefault('initial', {}).setdefault(key, value)
-
-
-      
 
 
 class HitchRequestForm(forms.ModelForm):

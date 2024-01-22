@@ -34,7 +34,7 @@ def rides_view(request):
     trips = Trip.objects.filter(region=region)
 
     # GENERATE A FORM FOR EACH TRIP
-    forms = [TripForm(instance=trip) for trip in trips]
+    # forms = [TripForm(instance=trip) for trip in trips]
 
     # INITIALIZE LISTS
     average_driver_ratings = []
@@ -106,11 +106,11 @@ def rides_view(request):
                 messages.success(request, f'Hitch Request successfully submitted to {trip.driver}. The Driver will get back to you')
                 
             else:
-                # A DRIVER WANT TO CREAT A NEW RIDE TO ADD TO THE LIST
+                # A DRIVER WANTS TO CREATE A NEW RIDE TO ADD TO THE LIST
                 print('*** USER WANTS TO OFFER/CREATE A NEW RIDE ***')
                 form = TripForm(request.POST)
-                form.instance.driver = request.user
-
+                
+                
                 #add specific context
                 context['form'] = form 
 
@@ -125,10 +125,12 @@ def rides_view(request):
         #  ************************ HANDLE GET REQUESTS ***********************
         #  ********************************************************************
         print('*********************** GET REQUEST *******************')
-
+        
+        form = TripForm()
         #add specific context
         context['trips']= zip(trips, average_driver_ratings, hitch_groups)
-
+        context['form'] = form
+        
         print(f'current context : {context}')
         return render(request, 'rides/rides.html', context)
 
