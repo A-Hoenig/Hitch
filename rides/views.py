@@ -1,7 +1,7 @@
 from django.shortcuts import render, HttpResponse, get_object_or_404, reverse, redirect, HttpResponseRedirect
 from django.utils import timezone
 from django.views.generic import ListView
-# from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required
 from rides.models import CustomUser, Vehicle, Trip, Region, Message, Hitch_Request, Location
 from django.contrib import messages
 from django.contrib.auth.models import User
