@@ -94,6 +94,7 @@ def rides_view(request):
         'region': region,
         'region_filter_form': region_filter_form,
         'trips': zip(trips, average_driver_ratings, hitch_groups),
+        'message_form': message_form,
         
     }
 
