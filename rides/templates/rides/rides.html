@@ -41,7 +41,7 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h1 class="modal-title fs-5" id="RequestModalLabel">Request a ride...</h1>
+                <h1 class="modal-title fs-5" id="RequestModalLabel">Request a ride to {{ t.destination }}</h1>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
@@ -69,7 +69,6 @@
 <!-- <div>
 <p class="mb-0">Region: {{region}}</p>
 <p class="mb-0">Logged in: {{ user.is_authenticated }}</p>
-<p class="mb-0">Number of Trips: {{ trips|length }}</p>
 <p class="mb-0"></p>
 </div> -->
 
@@ -406,7 +405,8 @@
                                             <button name="ride_trip_id" value="{{ t.id }}" type="button"
                                                 class="btn btn-primary mx-1 my-3" data-bs-toggle="modal"
                                                 data-bs-target="#RequestModal" data-bs-whatever=""
-                                                data-trip-id="{{ t.id }}">
+                                                data-trip-id="{{ t.id }}"
+                                                data-trip-destination="{{ t.destination.city }}"">
                                                 Request to Hitch a Ride!
                                             </button>
                                         </div>
@@ -452,9 +452,11 @@
         $('#RequestModal').on('show.bs.modal', function (event) {
             var button = $(event.relatedTarget)
             var tripId = button.data('trip-id')
+            var tripDestination = button.data('trip-destination');
             // Update the modal's content.
             var modal = $(this)
             modal.find('.modal-footer button[name="ride_trip_id"]').val(tripId)
+            modal.find('#RequestModalLabel').text("Request a ride to " + tripDestination);
         });
     });
 </script>
