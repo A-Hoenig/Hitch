@@ -129,21 +129,15 @@ def rides_view(request):
         if request.user.is_authenticated:
             form = TripForm(user=request.user)
 
-
         else:
             form = TripForm()
 
         context['trips']= zip(trips, average_driver_ratings, hitch_groups)
         context['form'] = form
-        # print(f'get context : {context}')
-
-
+      
         return render(request, 'rides/rides.html', context)
 
     
-    
-
-
 
 # -------------------------------------------------------
 @login_required

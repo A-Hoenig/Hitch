@@ -560,23 +560,25 @@
         dropdown.addEventListener("change", updateVisibility);
     });
 
-    document.addEventListener('DOMContentLoaded', function() {
-    var directionCheckbox = document.querySelector('#id_direction input[type="checkbox"]');
+
+// show or hide return time based on trip direction.
+document.addEventListener('DOMContentLoaded', function() {
+    var directionSelect = document.querySelector('#id_direction select');
     var returnTimeDiv = document.getElementById('id_return_time');
 
-    // Function to toggle the 'd-none' class
-    function toggleReturnTime() {
-        if (directionCheckbox.checked) {
+    function updateReturnTimeVisibility() {
+        if (directionSelect.value === 'True') {
             returnTimeDiv.classList.remove('d-none');
         } else {
             returnTimeDiv.classList.add('d-none');
         }
     }
-    // Initial check when the page loads
-    toggleReturnTime();
 
-    // Event listener for changes in the checkbox
-    directionCheckbox.addEventListener('change', toggleReturnTime);
+    // Initial check when the page loads
+    updateReturnTimeVisibility();
+
+    // Event listener for changes in the dropdown
+    directionSelect.addEventListener('change', updateReturnTimeVisibility);
 });
 
 
