@@ -48,12 +48,22 @@ def rides_view(request):
         # get average driver rating from DB
         driver = trip.driver
         average_driver_ratings.append(round(trip.driver.average_driver_rating))
-        print(f'{driver} Rating: {trip.driver.average_driver_rating}')
+        
         # get the driver allowed hitch seats from trip model
         hitch_seats = trip.max_hitch
-        print(f'trip {trip.id} seats allowed{hitch_seats}')
+        print(f'Max HitcherPLaces for trip:{trip.id} - {hitch_seats}')
         hitch_seats_list.append(hitch_seats)
-        print(hitch_seats_list)
+        # find any hitchers already approved by driver and create
+        approved_hitch_requests = Hitch_Request.objects.filter(trip=trip, pax_approved=True)
+        print(f'approved: {approved_hitch_requests}')
+        hitchers = [hr.hitcher.username for hr in approved_hitch_requests]
+        print(f'Approved Hitcher List: {hitchers}')
+        remaining_hitch_seats = hitch_seats - len(hitchers)
+        print(f'seats left: {remaining_hitch_seats}')
+        hitch_group = hitchers + [f'{h+1}' for h in range(remaining_hitch_seats)]
+        print(f'Final Group: {hitch_group}')
+        hitch_groups.append(hitch_group)
+        print(hitch_groups)
 
     #  ********************************************************************
     #  ************************ HANDLE POST REQUESTS **********************
@@ -82,7 +92,7 @@ def rides_view(request):
         "username": request.user,
         'region': region,
         'region_filter_form': region_filter_form,
-        'trips': zip(trips, average_driver_ratings)
+        'trips': zip(trips, average_driver_ratings),
         
     }
 
