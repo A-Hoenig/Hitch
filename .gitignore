@@ -9,3 +9,6 @@ node_modules/
 cloudinary_python.txt
 notepad.py
 notepad.html
+db_purp.json
+db_stops.json
+region.json
