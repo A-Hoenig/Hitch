@@ -19,7 +19,9 @@ from django.contrib.auth import views as auth_views
 from django.contrib.auth.views import PasswordChangeView
 from django.urls import path, include
 from rides import views
+from hitch import settings
 
+   
 urlpatterns = [
     path('admin/', admin.site.urls),
     path("accounts/", include("allauth.urls")),
@@ -34,3 +36,8 @@ urlpatterns = [
     path('change-password/', PasswordChangeView.as_view(), name='password_change'),
 ]
 
+if settings.DEBUG:
+    import debug_toolbar
+    urlpatterns += [
+        path('__debug__/', include(debug_toolbar.urls)),
+    ]

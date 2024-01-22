@@ -17,11 +17,19 @@ def rides_view(request):
     #START OVER AND INCORPORATE USER AND NON USER LOGIC
     
     region_filter_form = RegionFilterForm(request.GET or None)
+    #  default region to first one (override later)
     region = Region.objects.first()
-    message_form = MessageForm()
+    print(region)
+    # message_form = MessageForm()
     
+    # fetch all trips with depart date after today and sort by date
     trips = Trip.objects.filter(depart_date__gte=timezone.now().date()).order_by("depart_date")
+    
+    print('**************************** next *********************')
+    # generate a form for each trip
     forms = [TripForm(instance=trip) for trip in trips]
+
+    #  initialize lists
     average_driver_ratings = []
     hitch_seats_list = []
     hitch_groups=[]
@@ -34,11 +42,16 @@ def rides_view(request):
             
             return HttpResponseRedirect(request.path_info) 
 
-    #  END OF POST #######################################
+    
     else:
         # ****** HANDLE GET REQUESTS **********
-        # users not authenticated
-
+        print(request.GET)  # Check the GET parameters
+    if region_filter_form.is_valid():
+        selected_region = region_filter_form.cleaned_data.get('selected_region')
+        print(f'selected_region: {selected_region}')  # Check the selected_region value
+        if selected_region:
+            region = selected_region
+        print(f'current region: {region}')  # Check the updated region value
 
         if request.user.is_authenticated:
             pass

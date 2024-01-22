@@ -235,7 +235,8 @@ class HitchRequestForm(forms.ModelForm):
 
 class RegionFilterForm(forms.Form):
     selected_region = forms.ModelChoiceField(queryset=Region.objects.all(), empty_label=None, initial=Region.objects.first())
-
+    print(f'Form {selected_region}')
+    
     class Meta:
         model = Region
         fields = ['region']

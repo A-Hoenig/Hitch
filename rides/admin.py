@@ -54,8 +54,11 @@ class CustomUserAdmin(UserAdmin):
 
 admin.site.register(CustomUser, CustomUserAdmin)
 
+class RegionAdmin(admin.ModelAdmin):
+    list_display = ('id','region', 'date_created')
+    list_filter = ['region', 'date_created']
 
-admin.site.register(Region)
+admin.site.register(Region, RegionAdmin)
 
 admin.site.register(Location)
 
