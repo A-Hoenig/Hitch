@@ -35,7 +35,33 @@
 </div>
 
 <!-- modal RequestModal was here-->
+<!-- MODAL FOR HITCH REQUEST - HIDDEN BY DEFAULT-->
 
+<div class="modal fade" id="RequestModal" tabindex="-1" aria-labelledby="RequestModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="RequestModalLabel">Request a ride...</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+
+                <form method="post" action="{% url 'rides_view' %}">
+                    {% csrf_token %}
+                    <div class="mb-3">
+                        {{ message_form|crispy }}
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button name="ride_trip_id" value="" type="submit" class="btn btn-primary">Request Ride</button>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
+</div>
 <!-- modal OfferModal was here-->
 
 
@@ -419,10 +445,17 @@
 </div>
 
 
-
-
-
-
-
-<!-- SCRIPTS GO HERE-->
+<!-- PAGE SPECIFIC SCRIPTS GO HERE-->
+<script>
+// pass trip id value from individual ride in loop to the request modal (outside loop)
+    document.addEventListener('DOMContentLoaded', (event) => {
+        $('#RequestModal').on('show.bs.modal', function (event) {
+            var button = $(event.relatedTarget)
+            var tripId = button.data('trip-id')
+            // Update the modal's content.
+            var modal = $(this)
+            modal.find('.modal-footer button[name="ride_trip_id"]').val(tripId)
+        });
+    });
+</script>
 {% endblock %}

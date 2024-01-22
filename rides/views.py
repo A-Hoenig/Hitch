@@ -14,12 +14,15 @@ from operator import attrgetter
 # -------------------------------------------------------
 
 def rides_view(request):
-    #START OVER AND INCORPORATE USER AND NON USER LOGIC
-    
+    #  ********************************************************************
+    #  ************************ HANDLE GET REQUESTS ***********************
+    #  ********************************************************************
+    print('*********************** GET REQUEST *******************')
+
     # initialize message form for HitchRequest 
     message_form = MessageForm()
     
-    #  HANDLE REGION SETTING FOR ALL USERS
+    # HANDLE REGION SETTING FOR ALL USERS
     region_filter_form = RegionFilterForm(request.GET or None)
     region = Region.objects.first()
     if region_filter_form.is_valid():
@@ -65,25 +68,27 @@ def rides_view(request):
     #  ************************ HANDLE POST REQUESTS **********************
     #  ********************************************************************
     if request.method == "POST":
-        
+        print('*********************** POST REQUEST ******************')
         # users not authenticated
         
+
+
         if request.user.is_authenticated:
+            if 'ride_trip_id' in request.POST:
+                print('*** USER WANTS TO HITCH A RIDE ***')
+                trip_id = request.POST.get('ride_trip_id')
+                print(f'Trip_ID for request... {trip_id}')
+            else:
+                print('*** USER ANTS TO OFFER/CREATE A NEW RIDE ***')
+                
+
+
             
             return HttpResponseRedirect(request.path_info) 
 
-    #  ********************************************************************
-    #  ************************ HANDLE GET REQUESTS ***********************
-    #  ********************************************************************
-    else:
-        
-        # print(request.GET)  # Check the GET parameters
+   
     
-
-        if request.user.is_authenticated:
-            pass
-
-
+    
     context = {
         "username": request.user,
         'region': region,
