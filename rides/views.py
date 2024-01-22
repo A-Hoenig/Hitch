@@ -123,6 +123,7 @@ def rides_view(request):
                 
                 if form.is_valid():
                     new_trip = form.save(commit=False)
+                    new_trip.driver = request.user 
                     new_trip.save()
                     
                     messages.success(request, f'New trip to {new_trip.destination.city} created successfully! Thanks for sharing!')
