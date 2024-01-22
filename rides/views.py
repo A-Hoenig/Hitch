@@ -16,23 +16,31 @@ from operator import attrgetter
 def rides_view(request):
     #START OVER AND INCORPORATE USER AND NON USER LOGIC
     
-    region_filter_form = RegionFilterForm(request.GET or None)
-    #  default region to first one (override later)
-    region = Region.objects.first()
-    print(region)
-    # message_form = MessageForm()
+    # initialize message form for HitchRequest 
+    message_form = MessageForm()
     
+    #  HANDLE REGION SETTING FOR ALL USERS
+    region_filter_form = RegionFilterForm(request.GET or None)
+    region = Region.objects.first()
+    if region_filter_form.is_valid():
+        selected_region = region_filter_form.cleaned_data.get('selected_region')
+        if selected_region:
+            region = selected_region
+
+    # HANDLE GETTING TRIPS FROM DB FOR ALL USERS
     # fetch all trips with depart date after today and sort by date
     trips = Trip.objects.filter(depart_date__gte=timezone.now().date()).order_by("depart_date")
-    
-    print('**************************** next *********************')
-    # generate a form for each trip
+    # filter the trips further by region
+    trips = Trip.objects.filter(region=region)
+
+    # GENERATE A FORM FOR EACH TRIP
     forms = [TripForm(instance=trip) for trip in trips]
 
     #  initialize lists
     average_driver_ratings = []
     hitch_seats_list = []
     hitch_groups=[]
+    hitch_seats = 1  # at least one hitcher seat avail
 
     if request.method == "POST":
         # *********** HANDLE POST REQUESTS ***************
@@ -46,20 +54,17 @@ def rides_view(request):
     else:
         # ****** HANDLE GET REQUESTS **********
         print(request.GET)  # Check the GET parameters
-    if region_filter_form.is_valid():
-        selected_region = region_filter_form.cleaned_data.get('selected_region')
-        print(f'selected_region: {selected_region}')  # Check the selected_region value
-        if selected_region:
-            region = selected_region
-        print(f'current region: {region}')  # Check the updated region value
+    
 
         if request.user.is_authenticated:
             pass
 
 
     context = {
+        "username": request.user,
         'region': region,
         'region_filter_form': region_filter_form,
+        'trips': trips,
     }
 
     return render(request, 'rides/rides.html', context)
