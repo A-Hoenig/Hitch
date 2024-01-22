@@ -51,20 +51,20 @@ def rides_view(request):
         
         # get the driver allowed hitch seats from trip model
         hitch_seats = trip.max_hitch
-        print(f'Max HitcherPLaces for trip:{trip.id} - {hitch_seats}')
         hitch_seats_list.append(hitch_seats)
-        # find any hitchers already approved by driver and create
+        # find any hitchers already approved by driver and create list per trip
         approved_hitch_requests = Hitch_Request.objects.filter(trip=trip, pax_approved=True)
-        print(f'approved: {approved_hitch_requests}')
+        
         hitchers = [hr.hitcher.username for hr in approved_hitch_requests]
-        print(f'Approved Hitcher List: {hitchers}')
-        remaining_hitch_seats = hitch_seats - len(hitchers)
-        print(f'seats left: {remaining_hitch_seats}')
-        hitch_group = hitchers + [f'{h+1}' for h in range(remaining_hitch_seats)]
-        print(f'Final Group: {hitch_group}')
+        hitch_group = []
+        for i in range(hitch_seats):
+            if i < len(hitchers):
+                hitch_group.append(f'{i + 1}-{hitchers[i]}')
+            else:
+                hitch_group.append(f'{i + 1}- .......')
+        print(hitch_group)
         hitch_groups.append(hitch_group)
-        print(hitch_groups)
-
+        
     #  ********************************************************************
     #  ************************ HANDLE POST REQUESTS **********************
     #  ********************************************************************
@@ -92,7 +92,7 @@ def rides_view(request):
         "username": request.user,
         'region': region,
         'region_filter_form': region_filter_form,
-        'trips': zip(trips, average_driver_ratings),
+        'trips': zip(trips, average_driver_ratings, hitch_groups),
         
     }
 
