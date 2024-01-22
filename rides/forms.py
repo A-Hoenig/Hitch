@@ -170,11 +170,18 @@ class TripForm(forms.ModelForm):
     #     cleaned_data.pop('driver', None)
     #     return cleaned_data
     
-    # def clean_expected_duration(self):
-    #     duration = self.cleaned_data.get('expected_duration')
-    #     if duration == "":
-    #         return None
-    #     return duration
+    def clean_expected_duration(self):
+        duration_str = self.cleaned_data.get('expected_duration')
+        # Check if duration is empty
+        if not duration_str:
+            return None
+        # Validate and convert duration format (H:MM) to a timedelta object
+        match = re.match(r'^(\d+):([0-5]?[0-9])$', duration_str)
+        if match:
+            hours, minutes = map(int, match.groups())
+            return timedelta(hours=hours, minutes=minutes)
+        else:
+            raise ValidationError("Invalid duration format. Use 'H:MM'.")
 
     class Meta:
         model = Trip

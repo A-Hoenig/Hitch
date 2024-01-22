@@ -42,10 +42,15 @@ def rides_view(request):
 
     # CREATE LIST OF HITCHERS FOR EACH TRIP AND ZIP TO TRIP LIST
     for trip in trips:
+
         # get average driver rating from DB
         driver = trip.driver
         # attach to trip
-        trip.average_driver_rating = round(trip.driver.average_driver_rating)
+        if driver is not None:
+            trip.average_driver_rating = round(trip.driver.average_driver_rating)
+        else:
+            trip.average_driver_rating = 0
+
         # get the driver's allowed hitch seats from trip model
         hitch_seats = trip.max_hitch
         hitch_seats_list.append(hitch_seats)
@@ -118,7 +123,7 @@ def rides_view(request):
                 
                 if form.is_valid():
                     new_trip = form.save(commit=False)
-                    # new_trip.save()
+                    new_trip.save()
                     
                     messages.success(request, f'New trip to {new_trip.destination.city} created successfully! Thanks for sharing!')
                 
