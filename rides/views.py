@@ -69,24 +69,28 @@ def rides_view(request):
     #  ********************************************************************
     if request.method == "POST":
         print('*********************** POST REQUEST ******************')
-        # users not authenticated
-        
-
-
         if request.user.is_authenticated:
             if 'ride_trip_id' in request.POST:
                 print('*** USER WANTS TO HITCH A RIDE ***')
                 trip_id = request.POST.get('ride_trip_id')
                 print(f'Trip_ID for request... {trip_id}')
+                trip = Trip.objects.get(id=trip_id)
+                message = request.POST.get('message')
+                hitcher = request.user
+                driver = trip.driver
+                print(f'Create hitch_request for TripID {trip.id} for {hitcher} riding with {driver} with message: {message}')
+
             else:
-                print('*** USER ANTS TO OFFER/CREATE A NEW RIDE ***')
+                print('*** USER WANTS TO OFFER/CREATE A NEW RIDE ***')
                 
 
 
             
             return HttpResponseRedirect(request.path_info) 
 
-   
+        else:
+            # user's not authenticated
+            pass
     
     
     context = {
