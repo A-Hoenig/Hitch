@@ -14,7 +14,7 @@ from cloudinary.models import CloudinaryField
 # Constants for dropdowns
 TRIP_STATUS = ((0, "Confirmed"), (1, "Completed"), (2, "Cancelled"))
 GENDER = ((0, "Female"), (1, "Male"), (2, "Non Binary"), (3, "Prefer not to say"))
-DIRECTION = ((0, "One Way"), (1, "Return Trip"))
+DIRECTION = ((False, "One Way"), (True, "Return Trip"))
 YES_NO = ((True, "Yes"), (False, "No"))
 
 ENGINE = (
@@ -175,7 +175,7 @@ class Trip(models.Model):
     expected_arrival_time = models.TimeField(null=True, blank=True)
     depart_window = models.DurationField(null=True, blank=True)
     note = models.CharField(max_length=150, null=True, blank=True)
-    direction = models.IntegerField(choices=DIRECTION, default=0)
+    direction = models.BooleanField(choices=DIRECTION, default=False)
     return_time = models.TimeField(null=True, blank=True)
     recurring = models.BooleanField(choices=YES_NO, default=False)
     mon = models.BooleanField(default=False)

@@ -188,8 +188,6 @@ class TripForm(forms.ModelForm):
         if user is not None:
             default_depart_time = (datetime.now() + timedelta(hours=1.5)).strftime('%H:%M')
             default_depart_date = (datetime.now())
-            print(default_depart_time)
-            print('user is not none')
             self.fields['vehicle'].queryset = Vehicle.objects.filter(owner=user).order_by('make')
             self.fields['vehicle'].initial = Vehicle.objects.first()
             self.fields['depart'].queryset = Location.objects.filter(input_by=user).order_by('name')

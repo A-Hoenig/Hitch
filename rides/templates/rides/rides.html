@@ -113,8 +113,8 @@
 
 
                         <div class="row align-items-center">
-                            <div class="col-md" id="direction">{{ form.direction|as_crispy_field }}</div>
-                            <div class="col-md" id="return_time">{{ form.return_time|as_crispy_field }}</div>
+                            <div class="col-md-6" id="id_direction">{{ form.direction|as_crispy_field }}</div>
+                            <div class="col-md d-none" id="id_return_time">{{ form.return_time|as_crispy_field }}</div>
                         </div>
                         <div class="row align-items-center">
                             <div class="col-md" id="recurring">{{ form.recurring|as_crispy_field }}</div>
@@ -560,20 +560,7 @@
         dropdown.addEventListener("change", updateVisibility);
     });
 
-    // show or hide return time based on direction field.
-    document.addEventListener("DOMContentLoaded", function () {
-        var dropdown = document.getElementById("direction");
-        var elementToToggle = document.getElementById("return_time");
 
-        function updateVisibility() {
-            var selectedValue = dropdown.value;
-            elementToToggle.classList.toggle("d-none", selectedValue === "One Way");
-        }
-        // Set initial state based on the current value of the dropdown
-        updateVisibility();
 
-        // now add event
-        dropdown.addEventListener("change", updateVisibility);
-    });
 </script>
 {% endblock %}

@@ -104,12 +104,14 @@ def rides_view(request):
                 # A DRIVER WANTS TO CREATE A NEW RIDE TO ADD TO THE LIST
                 print('*** USER WANTS TO OFFER/CREATE A NEW RIDE ***')
                 form = TripForm(request.POST, user=request.user)
-                user=request.user
-                vehicles = Vehicle.objects.filter(owner=user)
-                print(f'vehicles - {trip.vehicle}')
-
                 
-                #add specific context
+                if form.is_valid():
+                    new_trip = form.save(commit=False)
+                    new_trip.save()
+                    
+                    messages.success(request, f'New trip to {new_trip.destination.city} created successfully! Thanks for sharing!')
+                
+                #add POST specific context
                 context['form'] = form 
 
             # print(f'post context : {context}')
