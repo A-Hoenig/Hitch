@@ -152,7 +152,7 @@ class TripForm(forms.ModelForm):
         (10, '10km'),
         (30, '30km'),
     ]
-
+   
 
     class DurationInput(forms.TextInput):
         input_type = 'text'    
@@ -175,7 +175,7 @@ class TripForm(forms.ModelForm):
     #     if duration == "":
     #         return None
     #     return duration
-    
+
     class Meta:
         model = Trip
         fields ='__all__'
@@ -183,31 +183,23 @@ class TripForm(forms.ModelForm):
         
     def __init__(self, *args, **kwargs):
         user = kwargs.pop('user', None)
-        print(f'the user is.....{user}')
         super(TripForm, self).__init__(*args, **kwargs)
         
         if user is not None:
+            default_depart_time = (datetime.now() + timedelta(hours=1.5)).strftime('%H:%M')
+            default_depart_date = (datetime.now())
+            print(default_depart_time)
+            print('user is not none')
             self.fields['vehicle'].queryset = Vehicle.objects.filter(owner=user).order_by('make')
+            self.fields['vehicle'].initial = Vehicle.objects.first()
             self.fields['depart'].queryset = Location.objects.filter(input_by=user).order_by('name')
             self.fields['destination'].queryset = Location.objects.filter(input_by=user).order_by('name')
             self.fields['region'].initial = Region.objects.first()
             self.fields['region'].label = False
-
-            
-        default_vehicle = Vehicle.objects.first()
-        print(default_vehicle)
-            
-        default_values = {
-            'depart_window': 300,
-            'depart_time': (datetime.now() + timedelta(hours=1.5)).strftime('%H:%M'),
-            'vehicle': default_vehicle,
-        }
-        for key, value in default_values.items():
-            kwargs.setdefault('initial', {}).setdefault(key, value)
-
-
-      
-
+            self.fields['depart_time'].initial = default_depart_time
+            self.fields['depart_date'].initial = default_depart_date
+            self.fields['depart_window'].initial = 300
+               
 
 class HitchRequestForm(forms.ModelForm):
     """

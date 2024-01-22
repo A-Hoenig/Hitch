@@ -33,9 +33,6 @@ def rides_view(request):
     trips = Trip.objects.filter(depart_date__gte=timezone.now().date()).order_by("depart_date")
     trips = Trip.objects.filter(region=region)
 
-    # GENERATE A FORM FOR EACH TRIP
-    # forms = [TripForm(instance=trip) for trip in trips]
-
     # INITIALIZE LISTS
     average_driver_ratings = []
     hitch_seats_list = []
@@ -76,9 +73,7 @@ def rides_view(request):
         print('*********************** POST REQUEST ******************')
         if request.user.is_authenticated:
             if 'ride_trip_id' in request.POST:
-                print('*** USER WANTS TO HITCH A RIDE ***')
                 trip_id = request.POST.get('ride_trip_id')
-                print(f'Trip_ID for request... {trip_id}')
                 trip = Trip.objects.get(id=trip_id)
                 message = request.POST.get('message')
                 hitcher = request.user
@@ -109,12 +104,15 @@ def rides_view(request):
                 # A DRIVER WANTS TO CREATE A NEW RIDE TO ADD TO THE LIST
                 print('*** USER WANTS TO OFFER/CREATE A NEW RIDE ***')
                 form = TripForm(request.POST, user=request.user)
-                
+                user=request.user
+                vehicles = Vehicle.objects.filter(owner=user)
+                print(f'vehicles - {trip.vehicle}')
+
                 
                 #add specific context
                 context['form'] = form 
 
-            print(f'current context : {context}')
+            # print(f'post context : {context}')
             return HttpResponseRedirect(request.path_info) 
 
         else:
@@ -128,17 +126,14 @@ def rides_view(request):
         
         if request.user.is_authenticated:
             form = TripForm(user=request.user)
-            #add specific context
-            
-            
-            
+
 
         else:
             form = TripForm()
 
         context['trips']= zip(trips, average_driver_ratings, hitch_groups)
         context['form'] = form
-        print(f'current context : {context}')
+        # print(f'get context : {context}')
 
 
         return render(request, 'rides/rides.html', context)

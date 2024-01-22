@@ -43,6 +43,8 @@
     </div>
 </div>
 
+<!-- {{ form }} -->
+
 <!-- MODAL FOR HITCH REQUEST - HIDDEN BY DEFAULT-->
 <div class="modal fade" id="RequestModal" tabindex="-1" aria-labelledby="RequestModalLabel" aria-hidden="true">
     <div class="modal-dialog">
@@ -111,22 +113,21 @@
 
 
                         <div class="row align-items-center">
-                            <div class="col-md">{{ form.direction|as_crispy_field }}</div>
-                            <div class="col-md text-end mt-md-3">Expected Return:</div>
-                            <div class="col-md">{{ form.return_time|as_crispy_field }}</div>
+                            <div class="col-md" id="direction">{{ form.direction|as_crispy_field }}</div>
+                            <div class="col-md" id="return_time">{{ form.return_time|as_crispy_field }}</div>
                         </div>
                         <div class="row align-items-center">
                             <div class="col-md" id="recurring">{{ form.recurring|as_crispy_field }}</div>
-
-                            {% if not has_vehicles %}
-                            <div class="col-md">
+                            <div class="col-md">{{ form.vehicle|as_crispy_field }}</div>
+                            <!-- {% if not has_vehicles %} -->
+                            <!-- <div class="col-md">
                                 <a name="ride_trip_id" value="{{ t.id }}" class="btn btn-primary"
                                     href="{% url 'vehicles' %}" role="button">
                                     ADD VEHICLE</a>
-                            </div>
-                            {% else %}
-                            <div class="col-md">{{ form.vehicle|as_crispy_field }}</div>
-                            {% endif %}
+                            </div> -->
+                            <!-- {% else %} -->
+                            
+                            <!-- {% endif %} -->
 
                         </div>
                         <div class="row align-items-center d-none" id="weekday-checkboxes">
@@ -551,6 +552,22 @@
         function updateVisibility() {
             var selectedValue = dropdown.value;
             elementToToggle.classList.toggle("d-none", selectedValue === "False");
+        }
+        // Set initial state based on the current value of the dropdown
+        updateVisibility();
+
+        // now add event
+        dropdown.addEventListener("change", updateVisibility);
+    });
+
+    // show or hide return time based on direction field.
+    document.addEventListener("DOMContentLoaded", function () {
+        var dropdown = document.getElementById("direction");
+        var elementToToggle = document.getElementById("return_time");
+
+        function updateVisibility() {
+            var selectedValue = dropdown.value;
+            elementToToggle.classList.toggle("d-none", selectedValue === "One Way");
         }
         // Set initial state based on the current value of the dropdown
         updateVisibility();
