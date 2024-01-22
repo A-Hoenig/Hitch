@@ -36,8 +36,3 @@ urlpatterns = [
     path('change-password/', PasswordChangeView.as_view(), name='password_change'),
 ]
 
-if settings.DEBUG:
-    import debug_toolbar
-    urlpatterns += [
-        path('__debug__/', include(debug_toolbar.urls)),
-    ]

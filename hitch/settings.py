@@ -30,8 +30,7 @@ SECRET_KEY = os.environ.get("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
-# DEBUG_TOOLBAR_CONFIG = {
-#     'SHOW_TOOLBAR_CALLBACK': lambda request: False,}
+
 
 ALLOWED_HOSTS = [
     '8000-ahoenig-hitch-pl9oitcsar1.ws-eu107.gitpod.io',
@@ -57,7 +56,7 @@ INSTALLED_APPS = [
     'crispy_forms',
     'crispy_bootstrap5',
     'rides',
-    # 'debug_toolbar',
+   
     
 ]
 
