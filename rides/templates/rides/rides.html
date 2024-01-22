@@ -34,126 +34,9 @@
     </div>
 </div>
 
-<!-- MODAL FOR HITCH REQUEST - HIDDEN BY DEFAULT-->
-<div class="modal fade" id="RequestModal" tabindex="-1" aria-labelledby="RequestModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h1 class="modal-title fs-5" id="RequestModalLabel">Request a ride...</h1>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
+<!-- modal RequestModal was here-->
 
-                <form method="post" action="{% url 'rides_view' %}">
-                    {% csrf_token %}
-                    <div class="mb-3">
-                        {{ message_form|crispy }}
-                    </div>
-
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <button name="ride_trip_id" value="" type="submit" class="btn btn-primary">Request Ride</button>
-                    </div>
-                </form>
-
-            </div>
-        </div>
-    </div>
-</div>
-<!-- END OF MODAL FOR HITCH REQUEST -->
-
-<!-- MODAL FOR OFFER TRIP - HIDDEN BY DEFAULT-->
-<div class="modal fade" id="OfferModal" tabindex="-1" aria-labelledby="OfferModalLabel" aria-hidden="true">
-    <div class="modal-dialog  modal-xl">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h1 class="modal-title fs-5" id="OfferModalLabel">Offer a ride...</h1>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-
-
-                <form class="form-horizontal" action="{% url 'rides_view' %}" method="post" autocomplete="off">
-                    {% csrf_token %}
-
-                    <div class="container">
-                        <div class="row align-items-center">
-                            <div class="col-md">{{ form.depart_date|as_crispy_field }}</div>
-                            <div class="col-md">{{ form.depart_time|as_crispy_field }}</div>
-                            <div class="col-md">{{ form.depart_window|as_crispy_field }}</div>
-                            <div class="col-md">{{ form.expected_duration|as_crispy_field }}</div>
-                        </div>
-
-                        <div class="row align-items-center">
-                            <!-- Left  -->
-                            <div class="col-md">
-                                {{ form.depart|as_crispy_field }}
-                            </div>
-                            <!-- Center  -->
-                            <div class="col-md-auto mt-md-3">
-                                <a href="{% url 'locations' %}" class="btn btn-primary"
-                                    style="width: 100px; height: 36px;">
-                                    New Location</a>
-                            </div>
-                            <!-- Right  -->
-                            <div class="col-md">
-                                {{ form.destination|as_crispy_field }}
-                            </div>
-                        </div>
-
-
-                        <div class="row align-items-center">
-                            <div class="col-md">{{ form.direction|as_crispy_field }}</div>
-                            <div class="col-md text-end mt-md-3">Expected Return:</div>
-                            <div class="col-md">{{ form.return_time|as_crispy_field }}</div>
-                        </div>
-                        <div class="row align-items-center">
-                            <div class="col-md" id="recurring">{{ form.recurring|as_crispy_field }}</div>
-
-                            {% if not has_vehicles %}
-                            <div class="col-md btn btn-primary">No vehicles found. <a href="{% url 'vehicles' %}">Add
-                                    a
-                                    vehicle</a></div>
-                            {% else %}
-                            <div class="col-md">{{ form.vehicle|as_crispy_field }}</div>
-                            {% endif %}
-
-                        </div>
-                        <div class="row align-items-center d-none" id="weekday-checkboxes">
-                            <span class="col-md">{{ form.mon|as_crispy_field }}</span>
-                            <span class="col-md">{{ form.tue|as_crispy_field }}</span>
-                            <span class="col-md">{{ form.wed|as_crispy_field }}</span>
-                            <span class="col-md">{{ form.thu|as_crispy_field }}</span>
-                            <span class="col-md">{{ form.fri|as_crispy_field }}</span>
-                            <span class="col-md">{{ form.sat|as_crispy_field }}</span>
-                            <span class="col-md">{{ form.sun|as_crispy_field }}</span>
-                        </div>
-                        <div class="row align-items-center">
-                            <div class="col-md">{{ form.purpose|as_crispy_field }}</div>
-                            <div class="col-md">{{ form.pickup_radius|as_crispy_field }}</div>
-                            <div class="col-md">{{ form.max_hitch|as_crispy_field }}</div>
-                        </div>
-                        <div class="row align-items-center">
-                            <div class="col-md-12">{{ form.note|as_crispy_field }}</div>
-                        </div>
-                    </div>
-                    
-                    <div class="container">
-                        <div class="modal-footer align-middle">
-                            <span class="mt-4">{{ form.region|as_crispy_field }}</span>
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                            <button type="submit" name="save" class="btn btn-primary">Save</button>
-                        </div>
-                    </div>
-                </form>
-
-
-
-            </div>
-        </div>
-    </div>
-</div>
-<!-- END OF MODAL FOR HITCH REQUEST -->
+<!-- modal OfferModal was here-->
 
 <div class="container-sm mt-2">
     <div class="row gx-5">
@@ -519,38 +402,10 @@
 </div>
 
 
-<script>
-    // pass trip id value from individual ride in loop to the request modal (outside loop)
-    document.addEventListener('DOMContentLoaded', (event) => {
-        $('#RequestModal').on('show.bs.modal', function (event) {
-            var button = $(event.relatedTarget)
-            var tripId = button.data('trip-id')
-            // Update the modal's content.
-            var modal = $(this)
-            modal.find('.modal-footer button[name="ride_trip_id"]').val(tripId)
-        });
-    });
-
-
-    // show or hide weekday based on Recurring value in trip modal.
-    document.addEventListener("DOMContentLoaded", function () {
-        var dropdown = document.getElementById("id_recurring");
-        var elementToToggle = document.getElementById("weekday-checkboxes");
-
-        function updateVisibility() {
-            var selectedValue = dropdown.value;
-            elementToToggle.classList.toggle("d-none", selectedValue === "False");
-        }
-        // Set initial state based on the current value of the dropdown
-        updateVisibility();
-
-        // now add event
-        dropdown.addEventListener("change", updateVisibility);
-    });
-</script>
 
 
 
 
 
+<!-- SCRIPTS GO HERE-->
 {% endblock %}
