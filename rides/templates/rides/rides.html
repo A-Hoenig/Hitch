@@ -111,7 +111,6 @@
                             </div>
                         </div>
 
-
                         <div class="row align-items-center">
                             <div class="col-md-6" id="id_direction">{{ form.direction|as_crispy_field }}</div>
                             <div class="col-md d-none" id="id_return_time">{{ form.return_time|as_crispy_field }}</div>
@@ -119,16 +118,6 @@
                         <div class="row align-items-center">
                             <div class="col-md" id="recurring">{{ form.recurring|as_crispy_field }}</div>
                             <div class="col-md">{{ form.vehicle|as_crispy_field }}</div>
-                            <!-- {% if not has_vehicles %} -->
-                            <!-- <div class="col-md">
-                                <a name="ride_trip_id" value="{{ t.id }}" class="btn btn-primary"
-                                    href="{% url 'vehicles' %}" role="button">
-                                    ADD VEHICLE</a>
-                            </div> -->
-                            <!-- {% else %} -->
-                            
-                            <!-- {% endif %} -->
-
                         </div>
                         <div class="row align-items-center d-none" id="weekday-checkboxes">
                             <span class="col-md">{{ form.mon|as_crispy_field }}</span>
@@ -172,7 +161,7 @@
             <div class="accordion" id="RidesAccordionList">
 
                 <!-- loop through each trip in the db-->
-                {% for t, average_driver_ratings, hitch_groups in trips %}
+                {% for t, average_driver_ratings, hitch_groups, pending_hitch_groups in trips %}
                 <form method="post">
                     {% csrf_token %}
 
@@ -485,27 +474,40 @@
                                     <form method="post" action="{% url 'account_login' %}?next={{ request.path }}">
                                         {% csrf_token %}
                                         {% if user.is_authenticated %}
-                                        {% if user != t.driver and user.username not in hitch_groups %}
+
+
+
+                                        {% if user.username != t.driver and user.username not in hitch_groups %}
                                         <div class="col">
                                             <button name="ride_trip_id" value="{{ t.id }}" type="button"
                                                 class="btn btn-primary mx-1 my-3" data-bs-toggle="modal"
                                                 data-bs-target="#RequestModal" data-bs-whatever=""
                                                 data-trip-id="{{ t.id }}"
                                                 data-trip-destination="{{ t.destination.city }}"">
-                                                Request to Hitch a Ride!
-                                            </button>
-                                        </div>
-                                        {% elif  user.username in hitch_groups %}
-                                        <div class=" btn btn-success disabled my-3">
+                                                                    Request to Hitch a Ride!
+                                                                </button>
+                                                            </div>
+                                        {% endif %}
+                                        {% if  user.username in hitch_groups %}
+                                                            <div class=" btn btn-success disabled my-3">
                                                 <i class="fa-solid fa-thumbs-up"></i><span>You are approved to join this
                                                     Ride!</span>
                                         </div>
-                                        {% else %}
+                                        {% endif %}
+                                        {% if user.username in pending_hitch_groups %}
+                                        <div class=" btn btn-success disabled my-3">
+                                            <i class="fa-solid fa-thumbs-up"></i><span>You already requested this
+                                                ride!</span>
+                                        </div>
+                                        {% endif %}
+                                        {% if user.username == t.driver %}
                                         <div class="btn btn-success disabled my-3">
                                             <i class="fa-solid fa-car"></i><span>This is your trip</span>
                                         </div>
                                         {% endif %}
+
                                         {% else %}
+                                        <!-- user not logged in - button for login  shown-->
                                         <div class="col">
                                             <a name="ride_trip_id" value="{{ t.id }}" class="btn btn-primary my-1 mx-1"
                                                 href="{% url 'account_login' %}?next={{ request.path }}"
@@ -518,8 +520,15 @@
                             </div>
                         </div>
                     </div>
-
-
+                    Driver{{t.driver}}
+                     APRVD {{hitch_groups}}
+                     PEND {{pending_hitch_groups}}
+                     {{user.username}}
+                    {% if user.username in pending_hitch_groups %}
+                     requested already
+                    {% else %}
+                     did not request
+                    {% endif %}
                     {% endfor %}
                 </form>
             </div>
@@ -561,27 +570,24 @@
     });
 
 
-// show or hide return time based on trip direction.
-document.addEventListener('DOMContentLoaded', function() {
-    var directionSelect = document.querySelector('#id_direction select');
-    var returnTimeDiv = document.getElementById('id_return_time');
+    // show or hide return time based on trip direction.
+    document.addEventListener('DOMContentLoaded', function () {
+        var directionSelect = document.querySelector('#id_direction select');
+        var returnTimeDiv = document.getElementById('id_return_time');
 
-    function updateReturnTimeVisibility() {
-        if (directionSelect.value === 'True') {
-            returnTimeDiv.classList.remove('d-none');
-        } else {
-            returnTimeDiv.classList.add('d-none');
+        function updateReturnTimeVisibility() {
+            if (directionSelect.value === 'True') {
+                returnTimeDiv.classList.remove('d-none');
+            } else {
+                returnTimeDiv.classList.add('d-none');
+            }
         }
-    }
 
-    // Initial check when the page loads
-    updateReturnTimeVisibility();
+        // Initial check when the page loads
+        updateReturnTimeVisibility();
 
-    // Event listener for changes in the dropdown
-    directionSelect.addEventListener('change', updateReturnTimeVisibility);
-});
-
-
-
+        // Event listener for changes in the dropdown
+        directionSelect.addEventListener('change', updateReturnTimeVisibility);
+    });
 </script>
 {% endblock %}

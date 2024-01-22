@@ -15,7 +15,7 @@ from operator import attrgetter
 
 def rides_view(request):
     #  ********************************************************************
-    #  ************************ GENERAL SETUP  **** ***********************
+    #  ************************ GENERAL SETUP  ****************************
     #  ********************************************************************
 
     # INITIALIZE MESSAGE FORM FOR HITCH REQUEST MODAL 
@@ -37,6 +37,7 @@ def rides_view(request):
     average_driver_ratings = []
     hitch_seats_list = []
     hitch_groups=[]
+    pending_hitch_groups = []  # list of hitch request per ride
     hitch_seats = 1  # at least one hitcher seat avail
 
     # CREATE LIST OF HITCHERS FOR EACH TRIP AND ZIP TO TRIP LIST
@@ -44,10 +45,11 @@ def rides_view(request):
         # get average driver rating from DB
         driver = trip.driver
         average_driver_ratings.append(round(trip.driver.average_driver_rating))
-        # get the driver allowed hitch seats from trip model
+        # get the driver's allowed hitch seats from trip model
         hitch_seats = trip.max_hitch
         hitch_seats_list.append(hitch_seats)
-        # find any hitchers already approved by driver and create list per trip
+        
+        # find any hitchers already approved by driver and create list - per trip
         approved_hitch_requests = Hitch_Request.objects.filter(trip=trip, pax_approved=True)
         hitchers = [hr.hitcher.username for hr in approved_hitch_requests]
         hitch_group = []
@@ -57,6 +59,12 @@ def rides_view(request):
             else:
                 hitch_group.append(f'{i + 1}- .......')
         hitch_groups.append(hitch_group)
+
+        # get pending hitchrequests - not approved - per trip
+        all_hitch_requests = Hitch_Request.objects.filter(trip=trip)
+        pending_hitchers = [ph.hitcher.username for ph in all_hitch_requests if ph.hitcher.username not in hitchers]
+        pending_hitch_groups.append (pending_hitchers)
+        print(pending_hitch_groups)
 
     #SET UP UNIVERSAL CONTEXT
     context = {
@@ -81,7 +89,7 @@ def rides_view(request):
                 
                 # create message instance and store in message Model
                 message = Message(sender=hitcher, receiver=driver, message=message, trip_id=trip_id)
-                # message.save()
+                message.save()
 
                 # create hitchrequest linked to trip and store in Hitch_Request Model
                 print('building hitch request')
@@ -97,7 +105,7 @@ def rides_view(request):
                     smoking=trip.vehicle.smoking,
                     is_public = False
                     )
-                # hitch_request.save()
+                hitch_request.save()
                 messages.success(request, f'Hitch Request successfully submitted to {trip.driver}. The Driver will get back to you')
                 
             else:
@@ -132,7 +140,7 @@ def rides_view(request):
         else:
             form = TripForm()
 
-        context['trips']= zip(trips, average_driver_ratings, hitch_groups)
+        context['trips']= zip(trips, average_driver_ratings, hitch_groups, pending_hitch_groups)
         context['form'] = form
       
         return render(request, 'rides/rides.html', context)
@@ -210,36 +218,34 @@ def about(request):
 def user_trips(request):
     region_filter_form = RegionFilterForm(request.GET or None)
     user_id = request.user.id
-    
+
     trips = Trip.objects.filter(driver=user_id)
     hitches = Hitch_Request.objects.filter(hitcher=user_id)
     vehicles = Vehicle.objects.filter(owner=request.user)
-    
+
     if region_filter_form.is_valid():
         selected_region = region_filter_form.cleaned_data['selected_region']
         trips = trips.filter(region=selected_region)
         hitches = hitches.filter(region=selected_region)
 
     combined_list = list(chain(hitches, trips))
-    
+
 
     # Add an is_ride attribute to each instance
     for instance in combined_list:
         instance.is_ride = isinstance(instance, Trip)
 
-    sorted_list = sorted(combined_list, key=attrgetter('depart_date')) 
+    sorted_list = sorted(combined_list, key=attrgetter('depart_date'))
     detailed_sorted_list = []
-    
+
     if request.method == "POST":
         print('......PROCESSING POST .....')
-        
 
         if 'edit' in request.POST:
             pk = request.POST.get('edit')
             # get trip type from button trip-type attribute
             trip_type = request.POST.get(f'tripTypeName_{pk}')
             print(f'you want to edit {trip_type}: {pk}')
-         
 
             return redirect('user_trips') 
 
@@ -274,10 +280,10 @@ def user_trips(request):
                 # pks = request.POST.get(f'hitcherNameID_{tripPk}')
                 pk_ride = tripPk[0]
                 pk_hitcher = tripPk[1]
-                
+
                 print(f'You want to confirm hitcher {pk_hitcher} on ride {pk_ride}')
 
-                return redirect('user_trips') 
+                return redirect('user_trips')
 
         elif 'message' in request.POST:
             # hitcher to driver
@@ -292,7 +298,6 @@ def user_trips(request):
 
                 return redirect('user_trips') 
         
-
     else:
         print('......PROCESSING GET .....')
         message_form = MessageForm()
