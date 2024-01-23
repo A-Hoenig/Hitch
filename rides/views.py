@@ -5,6 +5,11 @@ from django.contrib.auth.decorators import login_required
 from rides.models import CustomUser, Vehicle, Trip, Region, Message, Hitch_Request, Location
 from django.contrib import messages
 from django.contrib.auth.models import User
+
+from django.contrib.auth.forms import UserCreationForm
+from django.views.generic.edit import CreateView
+from django.urls import reverse_lazy
+
 from django.contrib.auth.decorators import login_required
 from rides.forms import UserForm, VehicleForm, TripForm, RegionFilterForm, MessageForm, LocationForm
 from datetime import date
@@ -225,20 +230,20 @@ def about(request):
 # -------------------------------------------------------
 @login_required
 def user_trips(request):
-    region_filter_form = RegionFilterForm(request.GET or None)
+    
     user_id = request.user.id
-
+    
     trips = Trip.objects.filter(driver=user_id)
     hitches = Hitch_Request.objects.filter(hitcher=user_id)
     vehicles = Vehicle.objects.filter(owner=request.user)
-
+    
+    region_filter_form = RegionFilterForm(request.GET or None)
     if region_filter_form.is_valid():
         selected_region = region_filter_form.cleaned_data['selected_region']
         trips = trips.filter(region=selected_region)
         hitches = hitches.filter(region=selected_region)
 
     combined_list = list(chain(hitches, trips))
-
 
     # Add an is_ride attribute to each instance
     for instance in combined_list:
@@ -498,4 +503,3 @@ def vehicles(request):
         }
 
     return render(request, 'rides/vehicles.html', context)
-
