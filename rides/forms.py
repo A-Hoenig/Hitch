@@ -161,8 +161,9 @@ class TripForm(forms.ModelForm):
     pickup_radius = forms.ChoiceField(choices=PICKUP_RADIUS_CHOICES, required=False)
     depart_date= forms.DateField(widget=forms.DateInput(attrs={'type': 'date'} ))
     depart_time= forms.TimeField(widget=forms.TimeInput(attrs={'type': 'time'} ))
-    expected_duration = forms.CharField(widget=DurationInput(attrs={'placeholder': 'H:MM'}), required=False)
     return_time= forms.TimeField(widget=forms.TimeInput(attrs={'type': 'time'} ), required=False)
+    expected_duration = forms.CharField(widget=DurationInput(attrs={'placeholder': 'H:MM'}), required=False)
+    
 
     # def clean(self):
     #     cleaned_data = super().clean()
@@ -194,17 +195,18 @@ class TripForm(forms.ModelForm):
         super(TripForm, self).__init__(*args, **kwargs)
         
         if user is not None:
-            # default_depart_time = (datetime.now() + timedelta(hours=1.5)).strftime('%H:%M')
-            # default_depart_date = (datetime.now())
-            
+            default_depart_time = (datetime.now() + timedelta(hours=1.5)).strftime('%H:%M')
+            default_depart_date = (datetime.now())
+            default_return_time = (datetime.now() + timedelta(hours=2)).strftime('%H:%M')
             self.fields['vehicle'].queryset = Vehicle.objects.filter(owner=user).order_by('make')
             self.fields['vehicle'].initial = Vehicle.objects.first()
             self.fields['depart'].queryset = Location.objects.filter(input_by=user).order_by('name')
             self.fields['destination'].queryset = Location.objects.filter(input_by=user).order_by('name')
             self.fields['region'].initial = Region.objects.first()
             self.fields['region'].label = False
-            # self.fields['depart_time'].initial = default_depart_time
-            # self.fields['depart_date'].initial = default_depart_date
+            self.fields['depart_time'].initial = default_depart_time
+            self.fields['depart_date'].initial = default_depart_date
+            self.fields['return_time'].initial = default_return_time
             self.fields['depart_window'].initial = 300
 
     # ensure return time is added when trip is no one way

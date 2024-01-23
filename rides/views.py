@@ -40,7 +40,6 @@ def rides_view(request):
     region=region).order_by("depart_date")
 
     # INITIALIZE LISTS
-    # average_driver_ratings = []
     hitch_seats_list = []
     hitch_groups=[]
     pending_hitch_groups = []  # list of hitch request per ride
@@ -92,17 +91,17 @@ def rides_view(request):
     #  ************************ HANDLE POST REQUESTS **********************
     #  ********************************************************************
     # setup form default values if needed
-    initial_data = {
-        'default_depart_time': (datetime.now() + timedelta(hours=1.5)).strftime('%H:%M'),
-        'default_depart_date': (datetime.now()),
-        'return_time': (datetime.now() + timedelta(hours=0.5)).strftime('%H:%M')
-    }
+    # initial_data = {
+    #     'default_depart_time': (datetime.now() + timedelta(hours=1.5)).strftime('%H:%M'),
+    #     'default_depart_date': (datetime.now()),
+    #     'return_time': (datetime.now() + timedelta(hours=0.5)).strftime('%H:%M')
+    # }
     
     if request.method == "POST":
         print('*********************** POST REQUEST ******************')
         if 'ride_trip_id' in request.POST:
             trip_id = request.POST.get('ride_trip_id')
-            trip = Trip.objects.get_object_or_404(id=trip_id)
+            trip = objects.get_object_or_404(Trip, trip_id)
             message = request.POST.get('message')
             hitcher = request.user
             driver = trip.driver
@@ -138,15 +137,15 @@ def rides_view(request):
                 new_trip.driver = request.user 
                 # new_trip.save()
                 messages.success(request, f'New trip to {new_trip.destination.city} created successfully! Thanks for sharing!')
-                return render(request, 'rides.html', context)
+                return render(request, 'rides/rides.html', context)
             else:
                 # form = TripForm(initial=initial_data, user=request.user)
                 #add POST specific context
                 context['form'] = form 
-                return render(request, 'rides.html', context)
+                return render(request, 'rides/rides.html', context)
 
         # print(f'post context : {context}')
-        return render(request, 'rides.html', context)
+        # return render(request, 'rides.html', context)
 
     
     else:
@@ -155,10 +154,7 @@ def rides_view(request):
         #  ********************************************************************
         print('*********************** GET REQUEST *******************')
         
-        
         form = TripForm(user=request.user)
-
-      
         context['trips']= trips
         context['form'] = form
         
@@ -284,7 +280,7 @@ def user_trips(request):
             
             if trip_type == 'True':
                 #true = ride
-                trip = Trip.objects.get_object_or_404(id=pk)
+                trip = objects.get_object_or_404(Trip, id=pk)
                 # trip.delete()
                 print(f'**********This would delete RIDE {pk}')
                 messages.success(request, 'Your Trip was deleted successfully!')
@@ -323,7 +319,7 @@ def user_trips(request):
                 tripPk=request.POST.get('message').split('_')
                 pk_trip = tripPk[0]
                 pk_hitcher = tripPk[1]
-                trip = Trip.objects.get_object_or_404(pk=pk_trip)
+                trip = get_object_or_404(Trip, pk=pk_trip)
                 hitch = Hitch_Request.objects.get(hitcher=pk_hitcher)
                 
                 print(f' send message for ride {pk_trip} from {hitch.hitcher} to {trip.driver}' )
