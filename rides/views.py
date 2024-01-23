@@ -327,7 +327,12 @@ def user_trips(request):
                 trip = Trip.objects.get(id=pk_trip)
                 hitch = Hitch_Request.objects.get(trip=pk_trip, hitcher=pk_hitcher)
                 
-                print(f' send message for ride {trip.id} from hitcher {hitch.hitcher} (hitch_request-{hitch.id}) to driver-{trip.driver}' )
+                message_form = MessageForm(request.POST)
+                if message_form.is_valid():
+                    message_content = message_form.cleaned_data['message']
+                    message = Message(trip=trip, sender=trip.driver, receiver=hitch.hitcher, message=message_content)
+                    message.save()
+                    messages.success(request, 'Your message was sent!')
 
                 return redirect('user_trips') 
         
