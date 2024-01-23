@@ -58,12 +58,12 @@ function revealDelete(elementId) {
 // reveal confirm  buttons
 function revealConfirm(elementId) {
   var deleteBtn = document.getElementById('confirmBtn-' + elementId);
-  if (deleteBtn.classList.contains('d-none')) {
-      deleteBtn.classList.remove('d-none');
-  } else {
-      deleteBtn.classList.add('d-none');
-  }
-  deleteBtn.offsetWidth; // Trigger DOM rebuild
+
+  // Toggle the 'd-none' class
+  deleteBtn.classList.toggle('d-none');
+
+  // Trigger DOM rebuild if needed
+  deleteBtn.offsetWidth;
 }
 
 // Auto-dismiss alert after 5 seconds (5000 milliseconds)

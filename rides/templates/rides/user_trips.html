@@ -30,8 +30,9 @@
 <!-- END OF REGION SELECT MODAL-->
 
 <!-- RIDE EDIT MODAL -->
-
 <!-- END OF RIDE EDIT MODAL-->
+
+
 <div class="container px-1">
 
   <div class="row mt-3">
@@ -78,10 +79,11 @@
                           <input type="hidden" name="tripTypeName_{{ s.id }}" id="tripTypeID_{{ s.id }}"
                             value="{{ s.is_ride }}">
 
-                          <button type="submit" name="edit" value="{{ s.id }}" id="editBtn-{{ s.id }}"
+                          <!-- EDIT TBD ENABLE HERE -->
+                          <!-- <button type="submit" name="edit" value="{{ s.id }}" id="editBtn-{{ s.id }}"
                             class="btn badge bg-secondary">
                             <i class="fa-solid fa-pen-to-square"></i>
-                          </button>
+                          </button> -->
 
                           <button type="submit" name="delete" value="{{ s.id }}" id="deleteBtn-{{ s.id }}"
                             class="btn badge bg-danger">
@@ -92,7 +94,7 @@
 
                     </div>
 
-                    <!-- TRIP DETAILS-->
+                    <!-- *********************************    TRIP DETAILS ********************************-->
                     <div class="card-title h4">
                       <div>
                         <span class="text-secondary">
@@ -135,19 +137,17 @@
                           {% for hitcher, hitch_rating in hitchers_ratings_list %}
                           <div>
                             <!-- reveal confirm button-->
-                            <button type="button" class="badge rounded-pill bg-success" id="confirm-{{ s.id }}"
-                              onclick="revealConfirm('{{ s.id }}')">
+                            <button type="button" class="badge rounded-pill bg-success" id="confirm-{{ s.id }}_{{ hitcher.id }}"
+                              onclick="revealConfirm('{{ s.id }}_{{ hitcher.id }}')">
                               CONFIRM
                             </button>
 
                             <!-- CONFIRM BUTTON-->
                             <button class="badge rounded-pill bg-danger d-none" name="confirm"
-                              value="{{ s.id }}_{{ hitcher.id }}" id="confirmBtn-{{ s.id }}">
+                              value="{{ s.id }}_{{ hitcher.id }}" id="confirmBtn-{{ s.id }}_{{ hitcher.id }}">
                               SURE?
                             </button>
 
-                            <!-- <input type="hidden" name="hitcherNameID_{{ s.id }}" id="hitchID_{{ s.id }}"
-                              value="{{ s.id }}_{{ hitcher.id }}"> -->
 
                             {{ hitcher }} {% render_stars hitch_rating %}
 
