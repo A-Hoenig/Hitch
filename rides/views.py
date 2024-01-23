@@ -308,22 +308,27 @@ def user_trips(request):
                 # confirm only for hitches
                 print('you are in confirm')
                 tripPk=request.POST.get('confirm').split('_')
-                print(f'Trip PK: {tripPk}')
-                pks = request.POST.get(f'hitcherNameID_{tripPk}')
-                pk_ride = tripPk[0]
+                # pks = request.POST.get(f'hitcherNameID_{tripPk}')
+                pk_trip = tripPk[0]
                 pk_hitcher = tripPk[1]
-                print(f'You want to confirm hitcher {pk_hitcher} on ride {pk_ride}')
+                trip = Trip.objects.get(id=pk_trip)
+                hitch = Hitch_Request.objects.get(trip=pk_trip, hitcher=pk_hitcher)
+
+                print(f'You want to link hitch{hitch.id} to trip{trip.id}')
+                
+                hitch.pax_approved = True
+                hitch.save()
+                print('done!!!!')
 
                 return redirect('user_trips')
 
         elif 'message' in request.POST:
             # hitcher to driver
                 print('you are in message')
+                # get trip PK and hitcherPK from Form Button
                 tripPk=request.POST.get('message_trip_id').split('_')
                 pk_trip = tripPk[0]
-                print(f'Trip Primary Key is {pk_trip}')
                 pk_hitcher = tripPk[1]
-                print(f'Hitcher Primary Key is {pk_hitcher}')
                 trip = Trip.objects.get(id=pk_trip)
                 hitch = Hitch_Request.objects.get(trip=pk_trip, hitcher=pk_hitcher)
                 
