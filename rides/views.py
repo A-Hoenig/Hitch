@@ -103,7 +103,7 @@ def rides_view(request):
             driver = trip.driver
             
             # create message instance and store in message Model
-            message = Message(sender=hitcher, receiver=driver, message=message, trip=trip_id)
+            message = Message(sender=hitcher, receiver=driver, message=message, trip_id=trip_id)
             message.save()
 
             # create hitchrequest linked to trip and store in Hitch_Request Model
@@ -131,7 +131,7 @@ def rides_view(request):
             if form.is_valid():
                 new_trip = form.save(commit=False)
                 new_trip.driver = request.user 
-                new_trip.save()
+                # new_trip.save()
                 messages.success(request, f'New trip to {new_trip.destination.city} created successfully! Thanks for sharing!')
                 return HttpResponseRedirect(request.path_info)
             else:
@@ -202,6 +202,7 @@ def hitches(request):
 
     # get any attached hitchers to this trip
     
+
     context = {
         "username": request.user,
         "form": form,
@@ -276,33 +277,32 @@ def user_trips(request):
         elif 'delete' in request.POST:
             print('you are in delete')
             pk = request.POST.get('delete')
+            print(pk)
             trip_type = request.POST.get(f'tripTypeName_{pk}')
             print(f'you want to delete {trip_type}: {pk}')
             
             if trip_type == 'True':
                 #true = ride
                 trip = Trip.objects.get(id=pk)
-                trip.delete()
-                print(f'**********This deleted RIDE {pk}')
-                messages.success(request, 'Your Trip was deleted successfully!')
+                # trip.delete()
+                print(f'**********This would delete RIDE {pk}')
+                messages.success(request, 'Sorry not implemented yet for trips')
 
                 return redirect('user_trips') 
 
             elif trip_type == 'False':
                 #hitch
-
-            # this needs work .. deleteing a hitch should either remove trip id or delete teh hitch request.
-            # if the requests was public ie reuested first then teh corresponding trip should also be 
-            # deleted
-
                 hitch = Hitch_Request.objects.get(id=pk)
-                # hitch.delete()
                 print(f'***********This would delete HITCH {pk}')
                 messages.success(request, 'Your Hitch request was deleted successfully!')
+                
                 # send notification to Driver
-                message_text = "Your trip was cancelled by the Driver"
-                message = Message(sender=user_id, receiver=receiver, message=message_text)
-                print(message)
+                
+                # **** NEED TO GET TRIP OBJECT FOR MESSAGE_SENDER
+                message_text = "This hitcher cancelled his request"
+                # message = Message(sender=user_id, receiver=hitch.hitcher, message=message_text)
+                
+                hitch.delete()
                 # message.save()
 
                 return redirect('user_trips') 
@@ -311,16 +311,18 @@ def user_trips(request):
                 # confirm only for hitches
                 print('you are in confirm')
                 tripPk=request.POST.get('confirm').split('_')
+                # pks = request.POST.get(f'hitcherNameID_{tripPk}')
                 pk_trip = tripPk[0]
                 pk_hitcher = tripPk[1]
                 trip = Trip.objects.get(id=pk_trip)
                 hitch = Hitch_Request.objects.get(trip=pk_trip, hitcher=pk_hitcher)
 
+                print(f'You want to link hitch{hitch.id} to trip{trip.id}')
+                
                 hitch.pax_approved = True
                 hitch.save()
                 message_content = f'Hello {hitch.hitcher.first_name}! {trip.driver} just approved your HitchRequest!'
                 message = Message(trip=trip, sender=trip.driver, receiver=hitch.hitcher, message=message_content)
-                # print(message)
                 message.save()
                 messages.success(request, f'You approved {hitch.hitcher}. An automated message was sent to let {hitch.hitcher} know.')
 
@@ -513,7 +515,7 @@ def vehicles(request):
                 form.save()
                 messages.success(request, 'Vehicle updated sucessfully!')
 
-        return redirect('vehicles')
+        return redirect('vehicles', context)
 
     else:
         form = VehicleForm()
