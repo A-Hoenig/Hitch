@@ -10,36 +10,7 @@
 
 
 
-<!-- MESSAGE MODAL -->
-<div class="modal fade" id="messageModal" tabindex="-1" aria-labelledby="messageModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h1 class="modal-title fs-5" id="messageModalLabel"></h1>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
 
-        <form method="post" action="{% url 'user_trips' %}">
-          {% csrf_token %}
-          <div class="mb-3">
-            {{ message_form|crispy }}
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-
-            <button name="message_trip_id" value="" type="submit" class="btn btn-primary">
-              SEND
-            </button>
-          </div>
-          <input type="hidden" id="pkRide" name="pk_ride" value="">
-          <input type="hidden" id="pkHitcher" name="pk_hitcher" value="">
-        </form>
-      </div>
-    </div>
-  </div>
-</div>
-<!-- END OF MESSAGE MODAL -->
 
 <!-- FOR FOR REGION SELECTION-->
 <div class="container-fluid sticky-top">
@@ -103,7 +74,7 @@
 
                       <div>
                         <span>
-                          <!-- hidden input field to store ride or hitch value (true = ride)-->
+                          <!-- hidden input field to store ride or hitch BOOL (true = ride)-->
                           <input type="hidden" name="tripTypeName_{{ s.id }}" id="tripTypeID_{{ s.id }}"
                             value="{{ s.is_ride }}">
 
@@ -163,28 +134,29 @@
 
                           {% for hitcher, hitch_rating in hitchers_ratings_list %}
                           <div>
-                            
+                            <!-- reveal confirm button-->
                             <button type="button" class="badge rounded-pill bg-success" id="confirm-{{ s.id }}"
                               onclick="revealConfirm('{{ s.id }}')">
                               CONFIRM
                             </button>
-                            
+
                             <!-- CONFIRM BUTTON-->
-                            <button class="badge rounded-pill btn-danger d-none" name="confirm"
+                            <button class="badge rounded-pill bg-danger d-none" name="confirm"
                               value="{{ s.id }}_{{ hitcher.id }}" id="confirmBtn-{{ s.id }}">
                               SURE?
                             </button>
 
-                            <input type="hidden" name="hitcherNameID_{{ s.id }}" id="hitchID_{{ s.id }}"
-                              value="{{ s.id }}_{{ hitcher.id }}">
+                            <!-- <input type="hidden" name="hitcherNameID_{{ s.id }}" id="hitchID_{{ s.id }}"
+                              value="{{ s.id }}_{{ hitcher.id }}"> -->
 
                             {{ hitcher }} {% render_stars hitch_rating %}
 
                             <!--MESSAGE BUTTON-->
                             <!-- Button trigger modal -->
-                            <button type="button" class="badge rounded-pill bg-success open-messageModal"
-                              data-bs-toggle="modal" data-bs-target="#messageModal" value=""
-                              id="messageBtn-{{ hitcher.id }}" data-hitcher="{{ hitcher }}" data-trip_id="{{ s.id }}">
+                            <button type="button" name="message_to" class="badge rounded-pill bg-success open-messageModal" data-bs-toggle="modal"
+                              data-bs-target="#messageModal" value="{{ s.id }}_{{ hitcher.id }}" id="messageBtn-{{ hitcher.id }}"
+                              data-hitcher_id="{{ hitcher.id }}" data-trip_id="{{ s.id }}" data-hitcher="{{ hitcher }}">
+                              {{ hitcher }}
                               <i class="fa-regular fa-message"></i>
                             </button>
 
@@ -197,6 +169,7 @@
                           </div>
 
                           {% endfor %}
+
 
                         </div>
                       </div>
@@ -221,6 +194,39 @@
 </div>
 
 
+<!-- Message Modal -->
+<div class="modal fade" id="messageModal" tabindex="-1" aria-labelledby="messageModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="messageModalLabel"></h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+
+        <form method="post" action="{% url 'user_trips' %}">
+          {% csrf_token %}
+          <div class="mb-3">
+            {{ message_form|crispy }}
+          </div>
+          <div class="modal-footer">
+            <input type="hidden" name="message_trip_id" value="">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+
+            <button type="submit" class="btn btn-primary">
+              SEND
+            </button>
+
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- END OF MESSAGE MODAL -->
+
+
+
 
 
 
@@ -233,6 +239,17 @@
       $('#messageModalLabel').text('SEND MESSAGE TO ' + hitcherName);
     });
   });
+
+
+  $(document).ready(function() {
+        $('.open-messageModal').click(function() {
+            var tripId = $(this).data('trip_id');
+            var hitcherId = $(this).data('hitcher_id');
+            $('#messageModal').find('input[name="message_trip_id"]').val(tripId + '_' + hitcherId);
+        });
+    });
 </script>
+
+
 
 {% endblock %}

@@ -235,9 +235,8 @@ def about(request):
 @login_required
 def user_trips(request):
     # no user authentication check as page only when logged in
-        
     user_id = request.user.id
-    
+
     trips = Trip.objects.filter(driver=user_id)
     hitches = Hitch_Request.objects.filter(hitcher=user_id)
     vehicles = Vehicle.objects.filter(owner=request.user)
@@ -263,6 +262,7 @@ def user_trips(request):
         if 'edit' in request.POST:
             print('you are in edit')
             pk = request.POST.get('edit')
+            print(pk)
             # get trip type from button trip-type attribute
             trip_type = request.POST.get(f'tripTypeName_{pk}')
             
@@ -277,12 +277,13 @@ def user_trips(request):
         elif 'delete' in request.POST:
             print('you are in delete')
             pk = request.POST.get('delete')
+            print(pk)
             trip_type = request.POST.get(f'tripTypeName_{pk}')
             print(f'you want to delete {trip_type}: {pk}')
             
             if trip_type == 'True':
                 #true = ride
-                trip = objects.get_object_or_404(Trip, id=pk)
+                trip = Trip.objects.get(id=pk)
                 # trip.delete()
                 print(f'**********This would delete RIDE {pk}')
                 messages.success(request, 'Your Trip was deleted successfully!')
@@ -296,9 +297,9 @@ def user_trips(request):
                 print(f'***********This would delete HITCH {pk}')
                 messages.success(request, 'Your Hitch request was deleted successfully!')
                 # send notification to Driver
-                message_text = ""
-                message = Message(sender=user_id, receiver=receiver, message=message_text)
-                message.save()
+                message_text = "Your trip was cancelled by the Driver"
+                # message = Message(sender=user_id, receiver=receiver, message=message_text)
+                # message.save()
 
                 return redirect('user_trips') 
 
@@ -306,11 +307,10 @@ def user_trips(request):
                 # confirm only for hitches
                 print('you are in confirm')
                 tripPk=request.POST.get('confirm').split('_')
-                print(tripPk)
+                print(f'Trip PK: {tripPk}')
                 pks = request.POST.get(f'hitcherNameID_{tripPk}')
                 pk_ride = tripPk[0]
                 pk_hitcher = tripPk[1]
-
                 print(f'You want to confirm hitcher {pk_hitcher} on ride {pk_ride}')
 
                 return redirect('user_trips')
@@ -318,13 +318,14 @@ def user_trips(request):
         elif 'message' in request.POST:
             # hitcher to driver
                 print('you are in message')
-                tripPk=request.POST.get('message').split('_')
+                tripPk=request.POST.get('message_trip_id').split('_')
+                print(tripPk)
                 pk_trip = tripPk[0]
                 pk_hitcher = tripPk[1]
-                trip = get_object_or_404(Trip, pk=pk_trip)
-                hitch = Hitch_Request.objects.get(hitcher=pk_hitcher)
+                # trip = get_object_or_404(Trip, pk=pk_trip)
+                # hitch = Hitch_Request.objects.get(hitcher=pk_hitcher)
                 
-                print(f' send message for ride {pk_trip} from {hitch.hitcher} to {trip.driver}' )
+                print(f' send message for ride {pk_trip} from hitcher-{pk_hitcher} to driver-{pk_trip}' )
 
                 return redirect('user_trips') 
         
