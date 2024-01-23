@@ -40,7 +40,7 @@
 
       <div class="row">
         {% for s, driver, rating, hitchers_ratings_list in detailed_sorted_list %}
-
+        
         <div class="col-sm-6">
           <!-- change this to 12 for 1 column-->
 
@@ -137,25 +137,42 @@
                           {% for hitcher, hitch_rating in hitchers_ratings_list %}
                           <div>
                             <!-- reveal confirm button-->
-                            <button type="button" class="badge rounded-pill bg-success" id="confirm-{{ s.id }}_{{ hitcher.id }}"
-                              onclick="revealConfirm('{{ s.id }}_{{ hitcher.id }}')">
-                              CONFIRM
-                            </button>
+                           
+                            {% if hitcher.is_approved == True %}
 
-                            <!-- CONFIRM BUTTON-->
-                            <button class="badge rounded-pill bg-danger d-none" name="confirm"
-                              value="{{ s.id }}_{{ hitcher.id }}" id="confirmBtn-{{ s.id }}_{{ hitcher.id }}">
-                              SURE?
-                            </button>
+                            <span id="show_if_confirmed" data-bs-toggle="tooltip"
+                            data-bs-placement="left" data-bs-custom-class="custom-tooltip"
+                            data-bs-title="You approved this Hitcher">
+                              <i class="fa-solid fa-thumbs-up"></i>
+                            </span>
 
+                            {% else %}
+
+                            <span id ="hide_if_confirmed" class="">
+                              <button type="button" class="badge rounded-pill bg-success"
+                                id="confirm-{{ s.id }}_{{ hitcher.id }}"
+                                onclick="revealConfirm('{{ s.id }}_{{ hitcher.id }}')">
+                                CONFIRM
+                              </button>
+                              
+                              <!-- CONFIRM BUTTON-->
+                              <button class="badge rounded-pill bg-danger d-none" name="confirm"
+                                value="{{ s.id }}_{{ hitcher.id }}" id="confirmBtn-{{ s.id }}_{{ hitcher.id }}">
+                                SURE?
+                              </button>
+                            </span>
+
+                            {% endif %}
 
                             {{ hitcher }} {% render_stars hitch_rating %}
 
                             <!--MESSAGE BUTTON-->
                             <!-- Button trigger modal -->
-                            <button type="button" name="message_to" class="badge rounded-pill bg-success open-messageModal" data-bs-toggle="modal"
-                              data-bs-target="#messageModal" value="{{ s.id }}_{{ hitcher.id }}" id="messageBtn-{{ hitcher.id }}"
-                              data-hitcher_id="{{ hitcher.id }}" data-trip_id="{{ s.id }}" data-hitcher="{{ hitcher }}">
+                            <button type="button" name="message_to"
+                              class="badge rounded-pill bg-success open-messageModal" data-bs-toggle="modal"
+                              data-bs-target="#messageModal" value="{{ s.id }}_{{ hitcher.id }}"
+                              id="messageBtn-{{ hitcher.id }}" data-hitcher_id="{{ hitcher.id }}"
+                              data-trip_id="{{ s.id }}" data-hitcher="{{ hitcher }}">
                               <i class="fa-regular fa-message"></i>
                             </button>
 
@@ -240,13 +257,13 @@
   });
 
 
-  $(document).ready(function() {
-        $('.open-messageModal').click(function() {
-            var tripId = $(this).data('trip_id');
-            var hitcherId = $(this).data('hitcher_id');
-            $('#messageModal').find('input[name="message_trip_id"]').val(tripId + '_' + hitcherId);
-        });
+  $(document).ready(function () {
+    $('.open-messageModal').click(function () {
+      var tripId = $(this).data('trip_id');
+      var hitcherId = $(this).data('hitcher_id');
+      $('#messageModal').find('input[name="message_trip_id"]').val(tripId + '_' + hitcherId);
     });
+  });
 </script>
 
 

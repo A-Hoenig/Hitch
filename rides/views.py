@@ -254,7 +254,7 @@ def user_trips(request):
         instance.is_ride = isinstance(instance, Trip)
 
     sorted_list = sorted(combined_list, key=attrgetter('depart_date'))
-    detailed_sorted_list = []
+    detailed_sorted_list = []  
 
     if request.method == "POST":
         print('********************PROCESSING POST******************')
@@ -357,18 +357,34 @@ def user_trips(request):
             return int(round(rating))
 
         for s in sorted_list:
+            hitchers_ratings_list = []  # remove if it goes bad
+                        
             if isinstance(s, Trip):
                 driver = s.driver
                 rating = calculate_rating(s.driver.average_driver_rating)
-                hitchers = [hr.hitcher for hr in s.hitch_requests.all()]
-                hitchers_ratings_list = [(hr.hitcher, round(hr.hitcher.average_hitcher_rating)) for hr in s.hitch_requests.all()]
-            elif isinstance(s, Hitch_Request):
-                driver = s.trip.driver
-                rating = calculate_rating(s.trip.driver.average_driver_rating)
-                hitchers_ratings_list = []
 
+                # hitchers = [hr.hitcher for hr in s.hitch_requests.all()]
+                all_hitch_requests = s.hitch_requests.all() # remove if it goes bad
+                # hitchers_ratings_list = [(hr.hitcher, round(hr.hitcher.average_hitcher_rating)) for hr in s.hitch_requests.all()]
+                
+                for hr in all_hitch_requests:
+                    hitcher = hr.hitcher
+                    hitcher.is_approved = hr.pax_approved
+                    hitchers_ratings_list.append((hitcher, round(hitcher.average_hitcher_rating)))  #delete if bad
+                    
 
-            detailed_sorted_list.append((s, driver, rating, hitchers_ratings_list))
+            # elif isinstance(s, Hitch_Request):
+            #     driver = s.trip.driver
+            #     rating = calculate_rating(s.trip.driver.average_driver_rating)
+            #     hitchers_ratings_list = []
+            elif isinstance(s, Hitch_Request):  # remove if it goes bad
+                driver = s.trip.driver  # remove if it goes bad
+                rating = calculate_rating(s.trip.driver.average_driver_rating)  # remove if it goes bad
+                hitchers_ratings_list = []  # remove if it goes bad
+                
+
+            # detailed_sorted_list.append((s, driver, rating, hitchers_ratings_list))
+            detailed_sorted_list.append((s, driver, rating, hitchers_ratings_list))  # remove if it goes bad
 
     context = {
         "username": request.user,
