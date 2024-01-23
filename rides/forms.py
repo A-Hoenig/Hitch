@@ -183,6 +183,7 @@ class TripForm(forms.ModelForm):
         else:
             raise ValidationError("Invalid duration format. Use 'H:MM'.")
 
+
     class Meta:
         model = Trip
         fields ='__all__'

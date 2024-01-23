@@ -35,8 +35,8 @@ def rides_view(request):
             region = selected_region
 
     # GET ALL APPLICABLE TRIPS AND FILTER
-    trips = Trip.objects.filter(depart_date__gte=timezone.now().date()).order_by("depart_date")
-    trips = Trip.objects.filter(region=region)
+    trips = Trip.objects.filter(depart_date__gte=timezone.now().date(),
+    region=region).order_by("depart_date")
 
     # INITIALIZE LISTS
     average_driver_ratings = []
@@ -164,9 +164,10 @@ def rides_view(request):
 # -------------------------------------------------------
 @login_required
 def hitches(request):
+    # no user authentication check as page only when logged in
+
     form = TripForm()
     region_filter_form = RegionFilterForm(request.GET or None)
-
 
     # Filter trips by selected region and departure_date
     trips = Trip.objects.filter(depart_date__gte=timezone.now().date()).order_by("depart_date")
@@ -229,8 +230,10 @@ def about(request):
 
 # -------------------------------------------------------
 @login_required
+
 def user_trips(request):
-    
+    # no user authentication check as page only when logged in
+        
     user_id = request.user.id
     
     trips = Trip.objects.filter(driver=user_id)
@@ -253,17 +256,23 @@ def user_trips(request):
     detailed_sorted_list = []
 
     if request.method == "POST":
-        print('......PROCESSING POST .....')
+        print('********************PROCESSING POST******************')
 
         if 'edit' in request.POST:
+            print('you are in edit')
             pk = request.POST.get('edit')
             # get trip type from button trip-type attribute
             trip_type = request.POST.get(f'tripTypeName_{pk}')
-            print(f'you want to edit {trip_type}: {pk}')
+            
+            if trip_type == 'True':
+                print(f'you want to edit ride {pk}')
+            else:
+                print(f'you want to edit hitch {pk}')
 
             return redirect('user_trips') 
 
         elif 'delete' in request.POST:
+            print('you are in delete')
             pk = request.POST.get('delete')
             trip_type = request.POST.get(f'tripTypeName_{pk}')
             print(f'you want to delete {trip_type}: {pk}')
@@ -271,8 +280,8 @@ def user_trips(request):
             if trip_type == 'True':
                 #true = ride
                 trip = Trip.objects.get(id=pk)
-                trip.delete()
-                # print(f'**********This would delete RIDE {pk}')
+                # trip.delete()
+                print(f'**********This would delete RIDE {pk}')
                 messages.success(request, 'Your Trip was deleted successfully!')
 
                 return redirect('user_trips') 
@@ -280,9 +289,13 @@ def user_trips(request):
             elif trip_type == 'False':
                 #hitch
                 hitch = Hitch_Request.objects.get(id=pk)
-                hitch.delete()
-                # print(f'***********This would delete HITCH {pk}')
+                # hitch.delete()
+                print(f'***********This would delete HITCH {pk}')
                 messages.success(request, 'Your Hitch request was deleted successfully!')
+                # send notification to Driver
+                message_text = ""
+                message = Message(sender=user_id, receiver=receiver, message=message_text)
+                message.save()
 
                 return redirect('user_trips') 
 
@@ -291,7 +304,7 @@ def user_trips(request):
                 print('you are in confirm')
                 tripPk=request.POST.get('confirm').split('_')
                 print(tripPk)
-                # pks = request.POST.get(f'hitcherNameID_{tripPk}')
+                pks = request.POST.get(f'hitcherNameID_{tripPk}')
                 pk_ride = tripPk[0]
                 pk_hitcher = tripPk[1]
 
