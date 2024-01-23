@@ -298,7 +298,8 @@ def user_trips(request):
                 messages.success(request, 'Your Hitch request was deleted successfully!')
                 # send notification to Driver
                 message_text = "Your trip was cancelled by the Driver"
-                # message = Message(sender=user_id, receiver=receiver, message=message_text)
+                message = Message(sender=user_id, receiver=receiver, message=message_text)
+                print(message)
                 # message.save()
 
                 return redirect('user_trips') 
@@ -319,13 +320,14 @@ def user_trips(request):
             # hitcher to driver
                 print('you are in message')
                 tripPk=request.POST.get('message_trip_id').split('_')
-                print(tripPk)
                 pk_trip = tripPk[0]
+                print(f'Trip Primary Key is {pk_trip}')
                 pk_hitcher = tripPk[1]
-                # trip = get_object_or_404(Trip, pk=pk_trip)
-                # hitch = Hitch_Request.objects.get(hitcher=pk_hitcher)
+                print(f'Hitcher Primary Key is {pk_hitcher}')
+                trip = Trip.objects.get(id=pk_trip)
+                hitch = Hitch_Request.objects.get(trip=pk_trip, hitcher=pk_hitcher)
                 
-                print(f' send message for ride {pk_trip} from hitcher-{pk_hitcher} to driver-{pk_trip}' )
+                print(f' send message for ride {trip.id} from hitcher {hitch.hitcher} (hitch_request-{hitch.id}) to driver-{trip.driver}' )
 
                 return redirect('user_trips') 
         
