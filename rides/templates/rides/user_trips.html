@@ -256,7 +256,6 @@
     });
   });
 
-
   $(document).ready(function () {
     $('.open-messageModal').click(function () {
       var tripId = $(this).data('trip_id');
@@ -264,6 +263,17 @@
       $('#messageModal').find('input[name="message_trip_id"]').val(tripId + '_' + hitcherId);
     });
   });
+
+  // reveal confirm  buttons
+function revealConfirm(elementId) {
+  var deleteBtn = document.getElementById('confirmBtn-' + elementId);
+
+  // Toggle the 'd-none' class
+  deleteBtn.classList.toggle('d-none');
+
+  // Trigger DOM rebuild if needed
+  deleteBtn.offsetWidth;
+}
 </script>
 
 

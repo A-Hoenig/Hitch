@@ -55,16 +55,7 @@ function revealDelete(elementId) {
     deleteBtn.offsetWidth; // Trigger DOM rebuild
 }
 
-// reveal confirm  buttons
-function revealConfirm(elementId) {
-  var deleteBtn = document.getElementById('confirmBtn-' + elementId);
 
-  // Toggle the 'd-none' class
-  deleteBtn.classList.toggle('d-none');
-
-  // Trigger DOM rebuild if needed
-  deleteBtn.offsetWidth;
-}
 
 // Auto-dismiss alert after 5 seconds (5000 milliseconds)
 $(document).ready(function () {
