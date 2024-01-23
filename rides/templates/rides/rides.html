@@ -43,8 +43,6 @@
     </div>
 </div>
 
-<!-- {{ form }} -->
-
 <!-- MODAL FOR HITCH REQUEST - HIDDEN BY DEFAULT-->
 <div class="modal fade" id="RequestModal" tabindex="-1" aria-labelledby="RequestModalLabel" aria-hidden="true">
     <div class="modal-dialog">
@@ -85,6 +83,11 @@
 
                 <form class="form-horizontal" action="{% url 'rides_view' %}" method="post" autocomplete="off">
                     {% csrf_token %}
+                    {{ form.non_field_errors }}
+                    {% for field in form %}
+                        {{ field.errors }}
+                    {% endfor %}
+                    
 
                     <div class="container">
                         <div class="row align-items-center">

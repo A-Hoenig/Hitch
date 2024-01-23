@@ -162,7 +162,7 @@ class TripForm(forms.ModelForm):
     depart_date= forms.DateField(widget=forms.DateInput(attrs={'type': 'date'} ))
     depart_time= forms.TimeField(widget=forms.TimeInput(attrs={'type': 'time'} ))
     expected_duration = forms.CharField(widget=DurationInput(attrs={'placeholder': 'H:MM'}), required=False)
-    return_time= forms.TimeField(widget=forms.DateInput(attrs={'type': 'time'} ), required=False)
+    return_time= forms.TimeField(widget=forms.TimeInput(attrs={'type': 'time'} ), required=False)
 
     # def clean(self):
     #     cleaned_data = super().clean()
@@ -194,17 +194,34 @@ class TripForm(forms.ModelForm):
         super(TripForm, self).__init__(*args, **kwargs)
         
         if user is not None:
-            default_depart_time = (datetime.now() + timedelta(hours=1.5)).strftime('%H:%M')
-            default_depart_date = (datetime.now())
+            # default_depart_time = (datetime.now() + timedelta(hours=1.5)).strftime('%H:%M')
+            # default_depart_date = (datetime.now())
+            
             self.fields['vehicle'].queryset = Vehicle.objects.filter(owner=user).order_by('make')
             self.fields['vehicle'].initial = Vehicle.objects.first()
             self.fields['depart'].queryset = Location.objects.filter(input_by=user).order_by('name')
             self.fields['destination'].queryset = Location.objects.filter(input_by=user).order_by('name')
             self.fields['region'].initial = Region.objects.first()
             self.fields['region'].label = False
-            self.fields['depart_time'].initial = default_depart_time
-            self.fields['depart_date'].initial = default_depart_date
+            # self.fields['depart_time'].initial = default_depart_time
+            # self.fields['depart_date'].initial = default_depart_date
             self.fields['depart_window'].initial = 300
+
+    # ensure return time is added when trip is no one way
+    def clean(self):
+        cleaned_data = super().clean()
+        direction = cleaned_data.get('direction')
+        print(f'form clean direction: {direction}')
+        return_time = cleaned_data.get('return_time')
+        print(f'form clean returntime: {return_time}')
+
+        # Check if the trip is a return trip and return_time is not provided
+        if direction and not return_time:
+            # Add error to the return_time field
+            print("Adding error to return_time")
+            self.add_error('return_time', 'Return time is required for a return trip.')
+
+        return cleaned_data
                
 
 class HitchRequestForm(forms.ModelForm):

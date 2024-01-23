@@ -1,5 +1,6 @@
 from django.shortcuts import render, HttpResponse, get_object_or_404, reverse, redirect, HttpResponseRedirect
 from django.utils import timezone
+from datetime import timedelta, datetime
 from django.views.generic import ListView
 from django.contrib.auth.decorators import login_required
 from rides.models import CustomUser, Vehicle, Trip, Region, Message, Hitch_Request, Location
@@ -39,7 +40,7 @@ def rides_view(request):
     region=region).order_by("depart_date")
 
     # INITIALIZE LISTS
-    average_driver_ratings = []
+    # average_driver_ratings = []
     hitch_seats_list = []
     hitch_groups=[]
     pending_hitch_groups = []  # list of hitch request per ride
@@ -90,73 +91,77 @@ def rides_view(request):
     #  ********************************************************************
     #  ************************ HANDLE POST REQUESTS **********************
     #  ********************************************************************
+    # setup form default values if needed
+    initial_data = {
+        'default_depart_time': (datetime.now() + timedelta(hours=1.5)).strftime('%H:%M'),
+        'default_depart_date': (datetime.now()),
+        'return_time': (datetime.now() + timedelta(hours=0.5)).strftime('%H:%M')
+    }
+    
     if request.method == "POST":
         print('*********************** POST REQUEST ******************')
-        if request.user.is_authenticated:
-            if 'ride_trip_id' in request.POST:
-                trip_id = request.POST.get('ride_trip_id')
-                trip = Trip.objects.get(id=trip_id)
-                message = request.POST.get('message')
-                hitcher = request.user
-                driver = trip.driver
-                
-                # create message instance and store in message Model
-                message = Message(sender=hitcher, receiver=driver, message=message, trip_id=trip_id)
-                message.save()
+        if 'ride_trip_id' in request.POST:
+            trip_id = request.POST.get('ride_trip_id')
+            trip = Trip.objects.get_object_or_404(id=trip_id)
+            message = request.POST.get('message')
+            hitcher = request.user
+            driver = trip.driver
+            
+            # create message instance and store in message Model
+            message = Message(sender=hitcher, receiver=driver, message=message, trip_id=trip_id)
+            message.save()
 
-                # create hitchrequest linked to trip and store in Hitch_Request Model
-                print('building hitch request')
-                hitch_request = Hitch_Request(
-                    trip=trip,
-                    hitcher=hitcher,
-                    region=trip.region,
-                    depart=trip.depart,
-                    destination=trip.destination,
-                    depart_date=trip.depart_date,
-                    depart_time=trip.depart_time,
-                    purpose=trip.purpose,
-                    smoking=trip.vehicle.smoking,
-                    is_public = False
-                    )
-                hitch_request.save()
-                messages.success(request, f'Hitch Request successfully submitted to {trip.driver}. The Driver will get back to you')
-                
+            # create hitchrequest linked to trip and store in Hitch_Request Model
+            print('building hitch request')
+            hitch_request = Hitch_Request(
+                trip=trip,
+                hitcher=hitcher,
+                region=trip.region,
+                depart=trip.depart,
+                destination=trip.destination,
+                depart_date=trip.depart_date,
+                depart_time=trip.depart_time,
+                purpose=trip.purpose,
+                smoking=trip.vehicle.smoking,
+                is_public = False
+                )
+            hitch_request.save()
+            messages.success(request, f'Hitch Request successfully submitted to {trip.driver}. The Driver will get back to you')
+            
+        else:
+            # A DRIVER WANTS TO CREATE A NEW RIDE TO ADD TO THE LIST
+            print('*** USER WANTS TO OFFER/CREATE A NEW RIDE ***')
+            form = TripForm(request.POST, user=request.user)
+            
+            if form.is_valid():
+                new_trip = form.save(commit=False)
+                new_trip.driver = request.user 
+                # new_trip.save()
+                messages.success(request, f'New trip to {new_trip.destination.city} created successfully! Thanks for sharing!')
+                return render(request, 'rides.html', context)
             else:
-                # A DRIVER WANTS TO CREATE A NEW RIDE TO ADD TO THE LIST
-                print('*** USER WANTS TO OFFER/CREATE A NEW RIDE ***')
-                form = TripForm(request.POST, user=request.user)
-                
-                if form.is_valid():
-                    new_trip = form.save(commit=False)
-                    new_trip.driver = request.user 
-                    new_trip.save()
-                    
-                    messages.success(request, f'New trip to {new_trip.destination.city} created successfully! Thanks for sharing!')
-                
+                # form = TripForm(initial=initial_data, user=request.user)
                 #add POST specific context
                 context['form'] = form 
+                return render(request, 'rides.html', context)
 
-            # print(f'post context : {context}')
-            return HttpResponseRedirect(request.path_info) 
+        # print(f'post context : {context}')
+        return render(request, 'rides.html', context)
 
-        else:
-            # user's not authenticated
-            pass
+    
     else:
         #  ********************************************************************
         #  ************************ HANDLE GET REQUESTS ***********************
         #  ********************************************************************
         print('*********************** GET REQUEST *******************')
         
-        if request.user.is_authenticated:
-            form = TripForm(user=request.user)
+        
+        form = TripForm(user=request.user)
 
-        else:
-            form = TripForm()
-
+      
         context['trips']= trips
         context['form'] = form
-      
+        
         return render(request, 'rides/rides.html', context)
 
     
@@ -186,10 +191,7 @@ def hitches(request):
     # minimum value in case no trip in loop
     hitch_seats = 1
 
-    def calculate_rating(rating):
-        if rating is None:
-            return 0  
-        return int(round(rating))
+    
 
     for trip in trips:
         driver = trip.driver
@@ -217,6 +219,10 @@ def hitches(request):
     return render(request, 'rides/hitches.html', context)
 
 
+def calculate_rating(rating):
+        if rating is None:
+            return 0  
+        return int(round(rating))
 
 # -------------------------------------------------------
 def about(request):
@@ -230,7 +236,6 @@ def about(request):
 
 # -------------------------------------------------------
 @login_required
-
 def user_trips(request):
     # no user authentication check as page only when logged in
         
@@ -279,7 +284,7 @@ def user_trips(request):
             
             if trip_type == 'True':
                 #true = ride
-                trip = Trip.objects.get(id=pk)
+                trip = Trip.objects.get_object_or_404(id=pk)
                 # trip.delete()
                 print(f'**********This would delete RIDE {pk}')
                 messages.success(request, 'Your Trip was deleted successfully!')
@@ -318,7 +323,7 @@ def user_trips(request):
                 tripPk=request.POST.get('message').split('_')
                 pk_trip = tripPk[0]
                 pk_hitcher = tripPk[1]
-                trip = Trip.objects.get(pk=pk_trip)
+                trip = Trip.objects.get_object_or_404(pk=pk_trip)
                 hitch = Hitch_Request.objects.get(hitcher=pk_hitcher)
                 
                 print(f' send message for ride {pk_trip} from {hitch.hitcher} to {trip.driver}' )
@@ -493,7 +498,7 @@ def vehicles(request):
                 form.save()
                 messages.success(request, 'Vehicle updated sucessfully!')
 
-        return redirect('vehicles')
+        return redirect('vehicles', context)
 
     else:
         form = VehicleForm()
