@@ -197,10 +197,6 @@ class Trip(models.Model):
     def __str__(self):
         return f"{self.depart} --to-- {self.destination}"
 
-
-
-    
-
 class Hitch_Request(models.Model):
     """
     Stores a request related to  

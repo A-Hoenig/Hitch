@@ -213,14 +213,12 @@ class TripForm(forms.ModelForm):
     def clean(self):
         cleaned_data = super().clean()
         direction = cleaned_data.get('direction')
-        print(f'form clean direction: {direction}')
         return_time = cleaned_data.get('return_time')
-        print(f'form clean returntime: {return_time}')
 
         # Check if the trip is a return trip and return_time is not provided
         if direction and not return_time:
             # Add error to the return_time field
-            print("Adding error to return_time")
+            # print("Adding error to return_time")
             self.add_error('return_time', 'Return time is required for a return trip.')
 
         return cleaned_data
