@@ -8,12 +8,40 @@
 
 {% block content %}
 
-<!-- MODAL FOR MESSAGE SEND - HIDDEN BY DEFAULT-->
 
 
+<!-- MESSAGE MODAL -->
+<div class="modal fade" id="messageModal" tabindex="-1" aria-labelledby="messageModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="messageModalLabel"></h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
 
+        <form method="post" action="{% url 'user_trips' %}">
+          {% csrf_token %}
+          <div class="mb-3">
+            {{ message_form|crispy }}
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
 
+            <button name="message_trip_id" value="" type="submit" class="btn btn-primary">
+              SEND
+            </button>
+          </div>
+          <input type="hidden" id="pkRide" name="pk_ride" value="">
+          <input type="hidden" id="pkHitcher" name="pk_hitcher" value="">
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- END OF MESSAGE MODAL -->
 
+<!-- FOR FOR REGION SELECTION-->
 <div class="container-fluid sticky-top">
   <div class="row">
     <div class="col-12 bg-light gx-0 ">
@@ -21,13 +49,18 @@
         YOUR LIST OF TRIPS
         <form method="get" action="{% url 'user_trips' %}" class="d-flex mt-3" id="filterForm">
           {% csrf_token %}
-          <span class="mt-2 me-1">REGION:</span>{{ region_filter_form|crispy }}
+          <span class="mt-2 me-1">REGION:</span>
+          {{ region_filter_form|crispy }}
         </form>
       </div>
     </div>
   </div>
 </div>
+<!-- END OF REGION SELECT MODAL-->
 
+<!-- RIDE EDIT MODAL -->
+
+<!-- END OF RIDE EDIT MODAL-->
 <div class="container px-1">
 
   <div class="row mt-3">
@@ -130,10 +163,16 @@
 
                           {% for hitcher, hitch_rating in hitchers_ratings_list %}
                           <div>
+                            
+                            <button type="button" class="badge rounded-pill bg-success" id="confirm-{{ s.id }}"
+                              onclick="revealConfirm('{{ s.id }}')">
+                              CONFIRM
+                            </button>
+                            
                             <!-- CONFIRM BUTTON-->
-                            <button class="badge rounded-pill bg-success" name="confirm"
+                            <button class="badge rounded-pill btn-danger d-none" name="confirm"
                               value="{{ s.id }}_{{ hitcher.id }}" id="confirmBtn-{{ s.id }}">
-                              Confirm
+                              SURE?
                             </button>
 
                             <input type="hidden" name="hitcherNameID_{{ s.id }}" id="hitchID_{{ s.id }}"
@@ -143,15 +182,10 @@
 
                             <!--MESSAGE BUTTON-->
                             <!-- Button trigger modal -->
-                            <button type="button" class="badge rounded-pill bg-success open-messageModal" data-bs-toggle="modal"
-                              data-bs-target="#messageModal" value="" id="messageBtn-{{ hitcher.id }}"
-                              data-hitcher="{{ hitcher }}" data-trip_id="{{ s.id }}">
+                            <button type="button" class="badge rounded-pill bg-success open-messageModal"
+                              data-bs-toggle="modal" data-bs-target="#messageModal" value=""
+                              id="messageBtn-{{ hitcher.id }}" data-hitcher="{{ hitcher }}" data-trip_id="{{ s.id }}">
                               <i class="fa-regular fa-message"></i>
-                            </button>
-
-                            <button class="badge rounded-pill bg-success" name="message"
-                              value="{{ s.id }}_{{ hitcher.id }}" id="messageBtn-{{ s.id }}">
-                              old
                             </button>
 
                           </div>
@@ -176,7 +210,7 @@
           </div>
         </div>
 
-        
+
 
         {% endfor %}
       </div>
@@ -186,47 +220,18 @@
   </div>
 </div>
 
-<!-- Message Modal -->
-<div class="modal fade" id="messageModal" tabindex="-1" aria-labelledby="messageModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h1 class="modal-title fs-5" id="messageModalLabel"></h1>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
 
-        <form method="post" action="{% url 'user_trips' %}">
-          {% csrf_token %}
-          <div class="mb-3">
-            {{ message_form|crispy }}
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-
-            <button name="message_trip_id" value="" type="submit" class="btn btn-primary">
-              SEND
-            </button>
-          </div>
-          <input type="hidden" id="pkRide" name="pk_ride" value="">
-           <input type="hidden" id="pkHitcher" name="pk_hitcher" value="">
-        </form>
-      </div>
-    </div>
-  </div>
-</div>
-<!-- END OF MESSAGE MODAL -->
 
 
 
 <!-- fetch hitcher name and pass to modal via data-tag-->
 <script type="text/javascript">
-  console.log('worked');
-  $(document).ready(function() {
-      $('.open-messageModal').click(function() {
-          var hitcherName = $(this).data('hitcher');
-          $('#messageModalLabel').text('SEND MESSAGE TO ' + hitcherName);
-      });
+  // update hitcher name to message modal
+  $(document).ready(function () {
+    $('.open-messageModal').click(function () {
+      var hitcherName = $(this).data('hitcher');
+      $('#messageModalLabel').text('SEND MESSAGE TO ' + hitcherName);
+    });
   });
 </script>
 

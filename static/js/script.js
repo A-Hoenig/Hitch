@@ -55,6 +55,17 @@ function revealDelete(elementId) {
     deleteBtn.offsetWidth; // Trigger DOM rebuild
 }
 
+// reveal confirm  buttons
+function revealConfirm(elementId) {
+  var deleteBtn = document.getElementById('confirmBtn-' + elementId);
+  if (deleteBtn.classList.contains('d-none')) {
+      deleteBtn.classList.remove('d-none');
+  } else {
+      deleteBtn.classList.add('d-none');
+  }
+  deleteBtn.offsetWidth; // Trigger DOM rebuild
+}
+
 // Auto-dismiss alert after 5 seconds (5000 milliseconds)
 $(document).ready(function () {
     window.setTimeout(function () {
@@ -65,5 +76,8 @@ $(document).ready(function () {
 // tool tips (popper))
 const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
 const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
+
+const popoverTriggerList = document.querySelectorAll('[data-bs-toggle="popover"]')
+const popoverList = [...popoverTriggerList].map(popoverTriggerEl => new bootstrap.Popover(popoverTriggerEl))
 
 

@@ -40,13 +40,12 @@ def rides_view(request):
     region=region).order_by("depart_date")
 
     # INITIALIZE LISTS
-    average_driver_ratings = []
     hitch_seats_list = []
     hitch_groups=[]
     pending_hitch_groups = []  # list of hitch request per ride
     hitch_seats = 1  # at least one hitcher seat avail
 
-    # CREATE LIST OF HITCHERS FOR EACH TRIP AND ZIP TO TRIP LIST
+    # CREATE LIST OF HITCHERS FOR EACH TRIP AND TO TRIP INSTANCE
     for trip in trips:
 
         # get average driver rating from DB
@@ -94,58 +93,57 @@ def rides_view(request):
      
     if request.method == "POST":
         print('*********************** POST REQUEST ******************')
-        if request.user.is_authenticated:
-            if 'ride_trip_id' in request.POST:
-                trip_id = request.POST.get('ride_trip_id')
-                trip = Trip.objects.get(id=trip_id)
-                message = request.POST.get('message')
-                hitcher = request.user
-                driver = trip.driver
-                
-                # create message instance and store in message Model
-                message = Message(sender=hitcher, receiver=driver, message=message, trip_id=trip_id)
-                message.save()
+    
+        # User clicked hitch a ride.
+        if 'ride_trip_id' in request.POST:
+            trip_id = request.POST.get('ride_trip_id')
+            trip = Trip.objects.get(id=trip_id)
+            message = request.POST.get('message')
+            hitcher = request.user
+            driver = trip.driver
+            
+            # create message instance and store in message Model
+            message = Message(sender=hitcher, receiver=driver, message=message, trip_id=trip_id)
+            message.save()
 
-                # create hitchrequest linked to trip and store in Hitch_Request Model
-                print('building hitch request')
-                hitch_request = Hitch_Request(
-                    trip=trip,
-                    hitcher=hitcher,
-                    region=trip.region,
-                    depart=trip.depart,
-                    destination=trip.destination,
-                    depart_date=trip.depart_date,
-                    depart_time=trip.depart_time,
-                    purpose=trip.purpose,
-                    smoking=trip.vehicle.smoking,
-                    is_public = False
-                    )
-                hitch_request.save()
-                messages.success(request, f'Hitch Request successfully submitted to {trip.driver}. The Driver will get back to you')
-                
-            else:
-                # A DRIVER WANTS TO CREATE A NEW RIDE TO ADD TO THE LIST
-                print('*** USER WANTS TO OFFER/CREATE A NEW RIDE ***')
-                form = TripForm(request.POST, user=request.user)
-                
-                if form.is_valid():
-                    new_trip = form.save(commit=False)
-                    new_trip.driver = request.user 
-                    # new_trip.save()
-                    messages.success(request, f'New trip to {new_trip.destination.city} created successfully! Thanks for sharing!')
-                    return HttpResponseRedirect(request.path_info)
-                else:
-                    form = TripForm(initial=initial_data, user=request.user)
-                    #add POST specific context
-                    context['form'] = form 
-                    return render(request, 'rides.html', context)
-
-            # print(f'post context : {context}')
-            return HttpResponseRedirect(request.path_info, context) 
-
+            # create hitchrequest linked to trip and store in Hitch_Request Model
+            print('building hitch request')
+            hitch_request = Hitch_Request(
+                trip=trip,
+                hitcher=hitcher,
+                region=trip.region,
+                depart=trip.depart,
+                destination=trip.destination,
+                depart_date=trip.depart_date,
+                depart_time=trip.depart_time,
+                purpose=trip.purpose,
+                smoking=trip.vehicle.smoking,
+                is_public = False
+                )
+            hitch_request.save()
+            messages.success(request, f'Hitch Request successfully submitted to {trip.driver}. The Driver will get back to you')
+            
         else:
-            # user's not authenticated
-            pass
+            # A DRIVER WANTS TO CREATE A NEW RIDE TO ADD TO THE LIST
+            print('*** USER WANTS TO OFFER/CREATE A NEW RIDE ***')
+            form = TripForm(request.POST, user=request.user)
+            
+            if form.is_valid():
+                new_trip = form.save(commit=False)
+                new_trip.driver = request.user 
+                # new_trip.save()
+                messages.success(request, f'New trip to {new_trip.destination.city} created successfully! Thanks for sharing!')
+                return HttpResponseRedirect(request.path_info)
+            else:
+                form = TripForm(initial=initial_data, user=request.user)
+                #add POST specific context
+                context['form'] = form 
+                return render(request, 'rides.html', context)
+
+        # print(f'post context : {context}')
+        return HttpResponseRedirect(request.path_info, context) 
+
+    
     else:
         #  ********************************************************************
         #  ************************ HANDLE GET REQUESTS ***********************
@@ -270,6 +268,7 @@ def user_trips(request):
             
             if trip_type == 'True':
                 print(f'you want to edit ride {pk}')
+                
             else:
                 print(f'you want to edit hitch {pk}')
 
