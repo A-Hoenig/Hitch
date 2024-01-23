@@ -4,13 +4,13 @@ from .models import Region, Location, CustomUser, Purpose, Vehicle, User_rating,
 
 class CustomUserAdmin(UserAdmin):
     list_display = (
-        'id','username', 'average_driver_rating','average_hitcher_rating','first_name', 'last_name',
+        'username', 'average_driver_rating','average_hitcher_rating','first_name', 'last_name',
         'gender', 'DOB', 'DL_date'
         )
 
     fieldsets = (
         (None, {
-            'fields': ('id','username', 'password', 'user_image')
+            'fields': ('username', 'password', 'user_image')
         }),
         ('Personal info', {
             'fields': ('first_name', 'last_name', 'email', 'gender','average_driver_rating','average_hitcher_rating')

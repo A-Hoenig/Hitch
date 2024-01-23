@@ -36,3 +36,4 @@ urlpatterns = [
      path('change-password/', PasswordChangeView.as_view(), name='password_change'),
 ]
 
+
