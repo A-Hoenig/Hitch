@@ -31,3 +31,8 @@
    /* top: -5px !important; */
  }
 
+ /* force small font sizein message dates*/
+ .small-date {
+   font-size: 8px!important;
+ }
+
