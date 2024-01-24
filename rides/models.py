@@ -237,7 +237,8 @@ class Message(models.Model):
     sender = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="sender")
     receiver = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="receiver")
     message = models.CharField(max_length=500, null=True, blank=True)
-
+    was_read = models.BooleanField(default=False)
+    
     class Meta:
         ordering = ["-date_created"]
 

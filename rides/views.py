@@ -6,7 +6,7 @@ from django.contrib.auth.decorators import login_required
 from rides.models import CustomUser, Vehicle, Trip, Region, Message, Hitch_Request, Location
 from django.contrib import messages
 from django.contrib.auth.models import User
-
+from django.db.models import Q
 from django.contrib.auth.forms import UserCreationForm
 from django.views.generic.edit import CreateView
 from django.urls import reverse_lazy
@@ -231,8 +231,12 @@ def about(request):
 # -------------------------------------------------------
 @login_required
 def messages(request):
+    
+    user_messages = Message.objects.filter(Q(sender=request.user) | Q(receiver=request.user))
+    
     context = {
-        "username": request.user,
+        'username': request.user,
+        'user_messages': user_messages, 
     }
     return render(request, 'rides/messages.html', context)
 

@@ -3,10 +3,9 @@
 {% load crispy_forms_tags %}
 {% load customfilters %}
 
-
-
-
 {% block content %}
+
+
 <div class="container-fluid  sticky-top shadow">
     <div class="row">
         <div class="col-12 bg-light">
@@ -18,17 +17,17 @@
   </div>
 
 
-
 <div class="alert alert-warning" role="alert">
     MESSAGES COMING SOON...
 </div>
 
-  <span class="position-relative">
-    <i class="fa-regular fa-message fs-3"></i>
-    <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger custom-badge">
-      1
-      <span class="visually-hidden">your messages</span>
-    </span>
-  </span>
+ 
+{% for message in user_messages %}
+
+<ul>
+<li>{{ message }}</li>
+</ul>
+{% endfor %}
+
 
 {% endblock %}

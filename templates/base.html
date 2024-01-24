@@ -83,8 +83,8 @@
                 <li class="nav-item position-relative">
                     <a class="nav-link {% if request.path == messages_url %} active{% endif %}" aria-current="page"
                        href="{% url 'messages' %}">
-                      <i class="fa-regular fa-message fs-4"></i>
-                      <span class="position-absolute top-50 start-75 translate-middle badge rounded-pill bg-danger custom-badge">
+                      <i class="fa-regular fa-message fs-5"></i>
+                      <span class="position-absolute top-50 start-75 translate-middle badge rounded-pill bg-danger custom-badge d-none" id="count_pill">
                         1
                         <span class="visually-hidden">your messages</span>
                       </span>
