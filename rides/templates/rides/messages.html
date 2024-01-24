@@ -26,11 +26,16 @@
 
 
 <div class="card mb-4 border-2">
-    <div class="card-header bg-secondary d-md-flex justify-content-between align-items-center">
-        <span class="mb-3 mb-md-0">TRIP: {{ message.trip }}</span>
+    <div class="card-header bg-secondary d-md-flex justify-content-between align-items-center px-1">
+        <span class="mb-3 mb-md-0">
+            TRIP:{{ message.trip.id }}
+            FROM: {{ message.trip.depart.city }}
+            TO: {{ message.trip.destination.city }}
+            ON: {{ message.trip.depart_date }}
+        </span>
         <div class="d-flex align-items-center">
-            <a href="#" class="btn btn-primary me-2">Mark Read</a>
-            <a href="#" class="btn btn-danger">Delete</a>
+            <a href="#" class="btn btn-primary me-2 mt-2 mt-sm-0">Mark Read</a>
+            <a href="#" class="btn btn-danger mt-1 mt-sm-0">X</a>
         </div>
     </div>
     <div class="card-body">
