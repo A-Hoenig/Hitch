@@ -84,6 +84,7 @@ class Location(models.Model):
     """
     Stores previous locations related to :model:`rides.Region`,`auth.User`
     """
+    date_created = models.DateTimeField(auto_now_add=True)
     region = models.ForeignKey(Region, on_delete=models.CASCADE)
     input_by = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     name = models.CharField(max_length=100)
@@ -102,7 +103,8 @@ class Location(models.Model):
 
 class Purpose(models.Model):
     """
-    Stores trip purposes and corresponding font-awesome icon tag related to  :model: `trip`, `hitch_request`
+    Stores trip purposes and corresponding font-awesome icon tag related to  :model: `tripython3 manage.py runserver
+    p`, `hitch_request`
     """
     
     purpose = models.CharField(max_length=50, unique=True)

@@ -43,7 +43,6 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 });
 
-
 // reveal confirm delete buttons
 function revealDelete(elementId) {
     var deleteBtn = document.getElementById('deleteBtn-' + elementId);
@@ -54,8 +53,6 @@ function revealDelete(elementId) {
     }
     deleteBtn.offsetWidth; // Trigger DOM rebuild
 }
-
-
 
 // Auto-dismiss alert after 5 seconds (5000 milliseconds)
 $(document).ready(function () {

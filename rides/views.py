@@ -451,7 +451,7 @@ def profile(request):
 @login_required
 def locations(request):
     form = LocationForm()
-    filter_value = request.GET.get('status')
+    
     # Check if the user has a Date of Birth set
     if request.user.DOB:
         today = date.today()
@@ -463,17 +463,17 @@ def locations(request):
     if request.method == "POST":
         if 'save' in request.POST:
             form = LocationForm(request.POST)
-            
             form.instance.input_by = request.user
-            
             if form.is_valid():
                 form.save()
                 messages.success(request, 'Location added successfully!')
         elif 'delete' in request.POST:
             pk = request.POST.get('delete')
+            print(f'**************** pk is {pk}*****************')
             location = Location.objects.get(id=pk)
+            print(location)
             location.delete()
-            messages.success(request, 'Location deleted successfully!')
+            # messages.success(request, 'Location deleted successfully!')
         elif 'update' in request.POST:
             pk = request.POST.get('update')
             
@@ -490,12 +490,7 @@ def locations(request):
     else:
         form = LocationForm()
         # favorite user locations
-        if filter_value in ['True', 'False']:
-            filter_value = filter_value == 'True'
-            locations = Location.objects.filter(input_by=request.user).order_by('name')
-        else:
-            # Empty value = 'All'
-            locations = Location.objects.filter(input_by=request.user).order_by('name')
+        locations = Location.objects.filter(input_by=request.user).order_by('name')
             
         # Create a list of forms for each location instance
         forms = [LocationForm(instance=location) for location in locations]
@@ -547,7 +542,7 @@ def vehicles(request):
                 form.save()
                 messages.success(request, 'Vehicle updated sucessfully!')
 
-        return redirect('vehicles', context)
+        return redirect('vehicles')
 
     else:
         form = VehicleForm()
