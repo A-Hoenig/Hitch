@@ -39,9 +39,9 @@
             </div>
             <div class="card-body">
                 {% for message in messages %}
-                    <div class="{% if message.sender == username %}text-end{% endif %}">
-                        <h5 class="card-title">{{ message.sender }}</h5>
-                        <p class="card-text">{{ message.content }}</p>
+                    <div class="{% if message.sender == username %}text-end{% endif %} mb-4">
+                        <h6 class="card-title mb-0">{{ message.sender }}</h6>
+                        <p class="card-text text-secondary">{{ message.content }}</p>
                     </div>
                 {% endfor %}
             </div>
