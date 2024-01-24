@@ -225,9 +225,15 @@ def calculate_rating(rating):
 def about(request):
     context = {
         "username": request.user,
-
     }
     return render(request, 'rides/about.html', context)
+
+# -------------------------------------------------------
+def messages(request):
+    context = {
+        "username": request.user,
+    }
+    return render(request, 'rides/messages.html', context)
 
 
 

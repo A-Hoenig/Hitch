@@ -5,6 +5,7 @@
 {% url 'account_login' as login_url %}
 {% url 'account_signup' as signup_url %}
 {% url 'account_logout' as logout_url %}
+{% url 'messages' as messages_url %}
 {% url 'user_trips' as user_trips_url %}
 
 
@@ -79,6 +80,11 @@
                     <a class="nav-link {% if request.path == user_trips_url %} active" aria-current="page{% endif %}"
                         href="{% url 'user_trips' %}">Your Trips</a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link {% if request.path == messages_url %} active" aria-current="page{% endif %}"
+                        href="{% url 'messages' %}"><i class="fa-regular fa-message"></i></a>
+                </li>
+               
                 {% endif %}
             </ul>
             <ul class="nav navbar-nav ml-auto w-100 justify-content-end">
