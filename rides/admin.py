@@ -61,9 +61,9 @@ class RegionAdmin(admin.ModelAdmin):
 admin.site.register(Region, RegionAdmin)
 
 class CustomLocationAdmin(admin.ModelAdmin):
-    list_display = ('id','region', 'date_created')
+    list_display = ('id','region', 'date_created','input_by')
     list_filter = ['region', 'date_created']
-    
+
 admin.site.register(Location, CustomLocationAdmin)
 
 admin.site.register(Stop_Type)
