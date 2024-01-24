@@ -10,7 +10,7 @@ from django.db.models import Q
 from django.contrib.auth.forms import UserCreationForm
 from django.views.generic.edit import CreateView
 from django.urls import reverse_lazy
-
+from collections import defaultdict
 from django.contrib.auth.decorators import login_required
 from rides.forms import UserForm, VehicleForm, TripForm, RegionFilterForm, MessageForm, LocationForm
 from datetime import date
@@ -231,12 +231,17 @@ def about(request):
 # -------------------------------------------------------
 @login_required
 def messages(request):
-    
     user_messages = Message.objects.filter(Q(sender=request.user) | Q(receiver=request.user))
+    
+    # use dict to group Trips / add individual messages
+    trips = defaultdict(list)
+    for message in user_messages:
+        trip_id = message.trip.id
+        trips[trip_id].append(message)
     
     context = {
         'username': request.user,
-        'user_messages': user_messages, 
+        'trips': trips.values(),
     }
     return render(request, 'rides/messages.html', context)
 
