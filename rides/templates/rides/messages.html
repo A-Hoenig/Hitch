@@ -25,17 +25,22 @@
 <div class="container">
     {% for messages in trips %}
         <div class="card mb-4 border-2">
-            <div class="card-header bg-secondary d-md-flex justify-content-between align-items-center px-1">
+            <div class="card-header bg-light d-md-flex justify-content-between align-items-center px-1 text-white">
                 <span class="mb-3 mb-md-0">
-                    TRIP: {{ messages.0.trip.id }}
-                    FROM: {{ messages.0.trip.depart.city }}
-                    TO: {{ messages.0.trip.destination.city }}
-                    ON: {{ messages.0.trip.depart_date }}
+                    <div class="fs-4"">
+                        <span class="badge bg-secondary">{{ messages.0.trip.purpose.purpose_icon|safe }}</span>
+                        <span class="badge bg-secondary">
+                            {{ messages.0.trip.depart_date|DM }} |
+                            {{ messages.0.trip.depart_time|HHMM }}
+                        </span>
+                        <span class="badge bg-secondary">{{ messages.0.trip.depart.city }}</span>
+                        <span class="badge bg-secondary">{{ messages.0.trip.destination.city }}</span>
+                      </div>
                 </span>
-                <div class="d-flex align-items-center">
+                <!-- <div class="d-flex align-items-center">
                     <a href="#" class="btn btn-primary me-2 mt-2 mt-sm-0">Mark Read</a>
                     <a href="#" class="btn btn-danger mt-1 mt-sm-0">X</a>
-                </div>
+                </div> -->
             </div>
             <div class="card-body">
                 {% for message in messages %}
