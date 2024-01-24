@@ -231,7 +231,7 @@ def about(request):
 # -------------------------------------------------------
 @login_required
 def messages(request):
-    user_messages = Message.objects.filter(Q(sender=request.user) | Q(receiver=request.user)).order_by('date_created')
+    user_messages = Message.objects.filter(Q(sender=request.user)| Q(receiver=request.user)).order_by('trip__depart_date','date_created')
     
     # use dict to group Trips / add individual messages
     trips = defaultdict(list)
