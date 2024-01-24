@@ -229,6 +229,7 @@ def about(request):
     return render(request, 'rides/about.html', context)
 
 # -------------------------------------------------------
+@login_required
 def messages(request):
     context = {
         "username": request.user,
