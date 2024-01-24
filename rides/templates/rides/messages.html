@@ -27,7 +27,10 @@
         <div class="card mb-4 border-2">
             <div class="card-header bg-secondary d-md-flex justify-content-between align-items-center px-1">
                 <span class="mb-3 mb-md-0">
-                    TRIP ID: {{ messages.0.trip.id }}
+                    TRIP: {{ messages.0.trip.id }}
+                    FROM: {{ messages.0.trip.depart.city }}
+                    TO: {{ messages.0.trip.destination.city }}
+                    ON: {{ messages.0.trip.depart_date }}
                 </span>
                 <div class="d-flex align-items-center">
                     <a href="#" class="btn btn-primary me-2 mt-2 mt-sm-0">Mark Read</a>
@@ -36,8 +39,10 @@
             </div>
             <div class="card-body">
                 {% for message in messages %}
-                    <h5 class="card-title">{{ message.sender }}</h5>
-                    <p class="card-text">{{ message.content }}</p>
+                    <div class="{% if message.sender == username %}text-end{% endif %}">
+                        <h5 class="card-title">{{ message.sender }}</h5>
+                        <p class="card-text">{{ message.content }}</p>
+                    </div>
                 {% endfor %}
             </div>
         </div>
