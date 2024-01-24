@@ -25,17 +25,19 @@
 {% for message in user_messages %}
 
 
-<div class="card">
-    <div class="card-header">
-      Featured
+<div class="card mb-4 border-2">
+    <div class="card-header bg-secondary d-md-flex justify-content-between align-items-center">
+        <span class="mb-3 mb-md-0">TRIP: {{ message.trip }}</span>
+        <div class="d-flex align-items-center">
+            <a href="#" class="btn btn-primary me-2">Mark Read</a>
+            <a href="#" class="btn btn-danger">Delete</a>
+        </div>
     </div>
     <div class="card-body">
-      <h5 class="card-title">{{ message.sender }}</h5>
-      <p class="card-text">{{ message.content }}</p>
-      <a href="#" class="btn btn-primary">Go somewhere</a>
+        <h5 class="card-title">{{ message.sender }}</h5>
+        <p class="card-text">{{ message.content }}</p>
     </div>
-  </div>
-
+</div>
 
 {% endfor %}
 
