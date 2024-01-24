@@ -36,5 +36,3 @@ urlpatterns = [
     path('user_trips/', views.user_trips, name='user_trips'),
     path('change-password/', PasswordChangeView.as_view(), name='password_change'),
 ]
-
-

@@ -103,8 +103,7 @@ class Location(models.Model):
 
 class Purpose(models.Model):
     """
-    Stores trip purposes and corresponding font-awesome icon tag related to  :model: `tripython3 manage.py runserver
-    p`, `hitch_request`
+    Stores trip purposes and corresponding font-awesome icon tag related to  :model: `trip`, `hitch_request`
     """
     
     purpose = models.CharField(max_length=50, unique=True)
@@ -126,9 +125,7 @@ class Vehicle(models.Model):
     year = models.CharField(max_length=4, null=True, blank=True)
     engine = models.IntegerField(choices=ENGINE, default=0)
     smoking = models.IntegerField(choices=YES_NO, default=0)
-    max_pax = models.IntegerField(
-        default=1,
-     )
+    max_pax = models.IntegerField(default=1,)
     owner = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True)
     operator = models.CharField(verbose_name="Operated by", max_length=50, null=True, blank=True)
     status = models.BooleanField(choices=VEHICLE_STATUS, default=True)
