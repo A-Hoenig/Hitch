@@ -17,3 +17,5 @@ messages.json
 regions.json
 ratings.json
 purposes.json
+notepad.py
+templates/notepad.html

@@ -1,18 +1,30 @@
 {% load static %}
-{% url 'rides' as rides_url %}
+{% url 'rides_view' as rides_url %}
 {% url 'about' as about_url %}
 {% url 'hitches' as hitches_url %}
 {% url 'account_login' as login_url %}
 {% url 'account_signup' as signup_url %}
 {% url 'account_logout' as logout_url %}
+{% url 'messages' as messages_url %}
+{% url 'user_trips' as user_trips_url %}
 
 
 <!DOCTYPE html>
 <html class="h-100" lang="en">
 
 <head>
-    <title>Hitch - A ridesharing community</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Hitch</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="A ridesharing community to help our environment and decongest our roads.">
+    <meta name="keywords" content="Ride, Environment, Eco Friendly, Hitch, Hitchhiking, Ridesharing, HOV lane">
+    <meta name="author" content="LimeyDeveloper">
+
+    <!-- FAVICON -->
+    <link rel="icon" href="{% static 'favicons/favicon.ico' %}" type="image/x-icon">
+    <link rel="apple-touch-icon" sizes="180x180" href="{% static 'favicons/apple-touch-icon.png' %}">
+    <link rel="icon" type="image/png" sizes="32x32" href="{% static 'favicons/favicon-32x32.png' %}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{% static 'favicons/favicon-16x16.png' %}">
 
     <!-- Google Fonts CSS -->
     <link rel="preconnect" href="https://fonts.gstatic.com">
@@ -25,16 +37,23 @@
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-
+    
     <!-- Custom CSS -->
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
+
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous">
+    </script>
 </head>
 
 <body class="d-flex flex-column h-100 main-bg">
 
     <!-- Navigation -->
-    <nav class="navbar navbar-dark navbar-expand-md bg-faded justify-content-center bg-dark">
-        <a href="/" class="navbar-brand d-flex w-50 mr-auto ms-3" href="{% url 'rides' %}">
+    <nav class="navbar navbar-dark navbar-expand-md bg-faded justify-content-center bg-dark sticky-top">
+        <a class="logo img-fluid ms-3"  href="/">
+            <img src="{% static 'images/hitch-logo-bg.png' %}" alt="Hitch Logo" width="42" height="42">
+        </a>
+        <a href="/" class="navbar-brand d-flex w-50 mr-auto ms-1" href="{% url 'rides_view' %}">
             Hitch
             <i class="fa-solid fa-thumbs-up"></i>
             <span class="h6 text-muted ms-3 d-none d-sm-block">a ridesharing community.</span>
@@ -50,17 +69,28 @@
                 </li>
                 <li class="nav-item">
                     <a class="nav-link {% if request.path == rides_url %} active" aria-current="page{% endif %}"
-                        href="{% url 'rides' %}">Rides</a>
+                        href="{% url 'rides_view' %}">Rides</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link {% if request.path == hitches_url %} active" aria-current="page{% endif %}"
                         href="{% url 'hitches' %}">Hitches</a>
                 </li>
                 {% if user.is_authenticated %}
-                <li class="nav-item">
+                <li class="nav-item  text-nowrap">
                     <a class="nav-link {% if request.path == user_trips_url %} active" aria-current="page{% endif %}"
                         href="{% url 'user_trips' %}">Your Trips</a>
                 </li>
+                <li class="nav-item position-relative">
+                    <a class="nav-link {% if request.path == messages_url %} active{% endif %}" aria-current="page"
+                       href="{% url 'message_center' %}">
+                      <i class="fa-regular fa-message fs-5"></i>
+                      <span class="position-absolute top-50 start-75 translate-middle badge rounded-pill bg-danger custom-badge d-none" id="count_pill">
+                        1
+                        <span class="visually-hidden">your messages</span>
+                      </span>
+                    </a>
+                  </li>
+               
                 {% endif %}
             </ul>
             <ul class="nav navbar-nav ml-auto w-100 justify-content-end">
@@ -70,14 +100,14 @@
                     <a class="nav-link {% if request.path == logout_url %}active" aria-current="page{% endif %}"
                         href="{% url 'account_logout' %}">Sign Out</a>
                 </li>
-                <li class="nav-item nolink">
-                    <a class="nav-link d-none d-sm-block" aria-current="welcome back message"
-                        href="{% url 'user_profile' %}">Welcome,
-                        {{ username }}</a>
+                <li class="nav-item nolink ">
+                    <a class="nav-link d-none d-sm-block text-right" aria-current="welcome back message"
+                        href="{% url 'user_profile' %}">
+                        {{ user.username }}</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link {% if request.path == hitches_url %} active" aria-current="page{% endif %}"
-                        href="{% url 'user_profile' %}"><i class="fa-solid fa-gear"></i></a>
+                        href="{% url 'user_profile' %}"><i class="fa-solid fa-gear h5"></i></a>
                 </li>
 
                 {% else %}
@@ -97,11 +127,11 @@
     <main class="flex-shrink-0 main-bg">
         <!-- site message alert -->
         {% if messages %}
-            {% for message in messages %}
-            <div class="alert alert-success alert-dismissible fade show" role="alert">
-                <strong>MESSAGE:</strong> {{ message }}
-            </div>
-            {% endfor %}
+        {% for message in messages %}
+        <div class="alert alert-success alert-dismissible fade show mb-0" role="alert">
+            <strong>MESSAGE:</strong> {{ message }}
+        </div>
+        {% endfor %}
         {% endif %}
 
 
@@ -129,37 +159,19 @@
     <span class="text-center">&#169; 2024 Alex Hoenig</span>
 
 
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>   
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous">
+    </script>
+   
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous">
     </script>
 
-
     <script src="https://kit.fontawesome.com/47b432aa42.js" crossorigin="anonymous"></script>
-    <script src="{% static 'js/script.js' %}"></script>
+    
+    <script defer src="{% static 'js/script.js' %}"></script>
 
-    <!-- script to handle revealing confirm delele button-->
-    <script>
-        function revealDelete(elementId) {
-            var deleteBtn = document.getElementById('deleteBtn-' + elementId);
-            if (deleteBtn.classList.contains('d-none')) {
-                deleteBtn.classList.remove('d-none');
-            } else {
-                deleteBtn.classList.add('d-none');
-            }
-            deleteBtn.offsetWidth; // Trigger DOM rebuild
-        }
-    </script>
-
-    <script>
-        $(document).ready(function () {
-            // Auto-dismiss alert after 5 seconds (5000 milliseconds)
-            window.setTimeout(function () {
-                $(".alert").alert('close');
-            }, 5000);
-        });
-    </script>
 </body>
 
 

@@ -1,24 +1,280 @@
 {% extends "base.html" %}
 {% load crispy_forms_tags %}
 {% load static %}
+{% crispy message_form %}
+{% load customfilters %}
+{% load star_rating_tags %}
 
 
 {% block content %}
 
 
-<!-- <h1 class="text-center">YOUR VEHICLES</h1> -->
-<div class="container-fluid">
-    <div class="row">
-        <div class="col-12 bg-light">
-            <div class="p-3">
-              YOUR TRIPS
-            </div>
-        </div>
+
+
+
+<!-- FOR FOR REGION SELECTION-->
+<div class="container-fluid sticky-top">
+  <div class="row">
+    <div class="col-12 bg-light gx-0 ">
+      <div class="px-3 py-0 d-sm-flex justify-content-between align-items-center mt-auto border-bottom shadow">
+        YOUR LIST OF TRIPS
+        <form method="get" action="{% url 'user_trips' %}" class="d-flex mt-3" id="filterForm">
+          {% csrf_token %}
+          <span class="mt-2 me-1">REGION:</span>
+          {{ region_filter_form|crispy }}
+        </form>
+      </div>
     </div>
   </div>
-<div class="container-xl px-4 mt-4">
+</div>
+<!-- END OF REGION SELECT MODAL-->
+
+<!-- RIDE EDIT MODAL -->
+<!-- END OF RIDE EDIT MODAL-->
+
+
+<div class="container px-1">
+
+  <div class="row mt-3">
+    <div class="col-sm-12">
+
+      <div class="row">
+        {% for s, driver, rating, hitchers_ratings_list in detailed_sorted_list %}
+        
+        <div class="col-sm-6">
+          <!-- change this to 12 for 1 column-->
+
+          <div class="card my-2 bg-light">
+            <div class="card-body">
+
+              <!------ PILL TRIP TYPE LABEL------>
+              {% if s.is_ride %}
+
+              <span class="position-absolute top-0 start-50 translate-middle badge rounded-pill bg-success">
+                <i class="fa-solid fa-car"></i> RIDE {{s.id}}
+              </span>
+              {% else %}
+              <span class="position-absolute top-0 start-50 translate-middle badge rounded-pill bg-warning">
+                <i class="fa-solid fa-thumbs-up"></i> HITCH {{s.id}}
+              </span>
+              {% endif %}
+
+              <!------   mini card title    ------>
+              <div class="row">
+                <div class="col-md-12">
+
+                  <form method="POST" action="{% url 'user_trips' %}">
+                    {% csrf_token %}
+                    <div class="card-title h4 d-flex justify-content-between">
+                      <div>
+                        {{ t.purpose.purpose_icon|safe }}
+                        <span class="badge bg-secondary">{{ s.purpose.purpose_icon|safe }}</span>
+                        <span class="badge bg-secondary">{{ s.depart_date|DM }}</span>
+                        <span class="badge bg-secondary">{{ s.depart_time|HHMM }}</span>
+                      </div>
+
+                      <div>
+                        <span>
+                          <!-- hidden input field to store ride or hitch BOOL (true = ride)-->
+                          <input type="hidden" name="tripTypeName_{{ s.id }}" id="tripTypeID_{{ s.id }}"
+                            value="{{ s.is_ride }}">
+
+                          <!-- EDIT TBD ENABLE HERE -->
+                          <!-- <button type="submit" name="edit" value="{{ s.id }}" id="editBtn-{{ s.id }}"
+                            class="btn badge bg-secondary">
+                            <i class="fa-solid fa-pen-to-square"></i>
+                          </button> -->
+
+                          <button type="submit" name="delete" value="{{ s.id }}" id="deleteBtn-{{ s.id }}"
+                            class="btn badge bg-danger">
+                            <i class="fa-regular fa-trash-can"></i>
+                          </button>
+                        </span>
+                      </div>
+
+                    </div>
+
+                    <!-- *********************************    TRIP DETAILS ********************************-->
+                    <div class="card-title h4">
+                      <div>
+                        <span class="text-secondary">
+                          {{ s.depart.stoptype.stop_icon|safe }}
+                        </span>
+
+                        <span class="ms-1">
+                          {{ s.depart.city }}
+                        </span>
+
+                        <span class="text-secondary fs-6">
+                          - {{ s.depart.name }}
+                        </span>
+                      </div>
+                      <div>
+                        <span class="text-secondary">
+                          {{ s.destination.stoptype.stop_icon|safe }}
+                        </span>
+
+                        <span>
+                          {{ s.destination.city}}
+                        </span>
+
+                        <span class="text-secondary fs-6">
+                          - {{ s.destination.name }}
+                        </span>
+                      </div>
+                    </div>
+
+                    <!-- DRIVER HITCHER DETAILS-->
+                    <div class="row">
+                      <div class="col-md-12">
+                        <!------     mini card body     ------>
+                        <div class="card-text">
+                          Driver: {{ driver }} {% render_stars rating %}
+                        </div>
+                        <div class="card-text">
+                          Hitchers:
+
+                          {% for hitcher, hitch_rating in hitchers_ratings_list %}
+                          <div>
+                            <!-- reveal confirm button-->
+                           
+                            {% if hitcher.is_approved == True %}
+
+                            <span id="show_if_confirmed" data-bs-toggle="tooltip"
+                            data-bs-placement="left" data-bs-custom-class="custom-tooltip"
+                            data-bs-title="You approved this Hitcher">
+                              <i class="fa-solid fa-thumbs-up"></i>
+                            </span>
+
+                            {% else %}
+
+                            <span id ="hide_if_confirmed" class="">
+                              <button type="button" class="badge rounded-pill bg-success"
+                                id="confirm-{{ s.id }}_{{ hitcher.id }}"
+                                onclick="revealConfirm('{{ s.id }}_{{ hitcher.id }}')">
+                                CONFIRM
+                              </button>
+                              
+                              <!-- CONFIRM BUTTON-->
+                              <button class="badge rounded-pill bg-danger d-none" name="confirm"
+                                value="{{ s.id }}_{{ hitcher.id }}" id="confirmBtn-{{ s.id }}_{{ hitcher.id }}">
+                                SURE?
+                              </button>
+                            </span>
+
+                            {% endif %}
+
+                            {{ hitcher }} {% render_stars hitch_rating %}
+
+                            <!--MESSAGE BUTTON-->
+                            <!-- Button trigger modal -->
+                            <button type="button" name="message_to"
+                              class="badge rounded-pill bg-success open-messageModal" data-bs-toggle="modal"
+                              data-bs-target="#messageModal" value="{{ s.id }}_{{ hitcher.id }}"
+                              id="messageBtn-{{ hitcher.id }}" data-hitcher_id="{{ hitcher.id }}"
+                              data-trip_id="{{ s.id }}" data-hitcher="{{ hitcher }}">
+                              <i class="fa-regular fa-message"></i>
+                            </button>
+
+                          </div>
+
+                          {% empty %}
+
+                          <div>
+                            No hitchers yet
+                          </div>
+
+                          {% endfor %}
+
+
+                        </div>
+                      </div>
+                    </div>
+
+
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+
+        {% endfor %}
+      </div>
+
+    </div>
+
+  </div>
 </div>
 
+
+<!-- Message Modal -->
+<div class="modal fade" id="messageModal" tabindex="-1" aria-labelledby="messageModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="messageModalLabel"></h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+
+        <form method="post" action="{% url 'user_trips' %}">
+          {% csrf_token %}
+          <div class="mb-3">
+            {{ message_form|crispy }}
+          </div>
+          <div class="modal-footer">
+            <input type="hidden" name="message_trip_id" value="">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+
+            <button type="submit" class="btn btn-primary">
+              SEND
+            </button>
+
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- END OF MESSAGE MODAL -->
+
+
+
+
+
+
+<!-- fetch hitcher name and pass to modal via data-tag-->
+<script type="text/javascript">
+  // update hitcher name to message modal
+  $(document).ready(function () {
+    $('.open-messageModal').click(function () {
+      var hitcherName = $(this).data('hitcher');
+      $('#messageModalLabel').text('SEND MESSAGE TO ' + hitcherName);
+    });
+  });
+
+  $(document).ready(function () {
+    $('.open-messageModal').click(function () {
+      var tripId = $(this).data('trip_id');
+      var hitcherId = $(this).data('hitcher_id');
+      $('#messageModal').find('input[name="message_trip_id"]').val(tripId + '_' + hitcherId);
+    });
+  });
+
+  // reveal confirm  buttons
+function revealConfirm(elementId) {
+  var deleteBtn = document.getElementById('confirmBtn-' + elementId);
+
+  // Toggle the 'd-none' class
+  deleteBtn.classList.toggle('d-none');
+
+  // Trigger DOM rebuild if needed
+  deleteBtn.offsetWidth;
+}
+</script>
 
 
 

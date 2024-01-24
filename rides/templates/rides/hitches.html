@@ -1,167 +1,94 @@
 {% extends "base.html" %}
 {% load static %}
+{% load crispy_forms_tags %}
+{% load customfilters %}
+{% url 'about' as about_url %}
+
 
 
 {% block content %}
-<div class="container-fluid">
+<div class="container-fluid  sticky-top">
     <div class="row">
-        <div class="col-12 bg-light">
-            <div class="p-3">
-              HITCH REQUESTS
+        <div class="col-12 bg-light gx-0">
+            <div class="px-3 py-0 d-sm-flex justify-content-between align-items-center mt-auto border-bottom shadow">
+                
+                
+                <div>REQUESTED RIDES (HITCHES) IN SELECTED REGION:</div>
+
+                <div>
+                    <button name="ride_trip_id" value="{{ t.id }}" type="button" class="badge rounded-pill bg-success fs-4 mt-2 mt-md-0 me-2"
+                        data-bs-toggle="modal" data-bs-target="#OfferModal" data-bs-whatever=""
+                        data-trip-id="{{ t.id }}">
+                        <i class="fa-solid fa-thumbs-up"></i> REQUEST TO HITCH
+                    </button>
             </div>
-        </div>
-    </div>
-  </div>
 
-<div class="container-sm text-center">
-    <div class="row gx-5">
-        <div class="col">
+                <form method="get" action="{% url 'rides_view' %}" class="d-flex mt-3" id="filterForm">
+                    {% csrf_token %}
+                    <span class="mt-2 me-1">REGION:</span>{{ region_filter_form|crispy }}
+                </form>
 
-            <div class="accordion" id="accordionExample">
-                <div class="accordion-item">
-                    <h2 class="accordion-header">
-                        <button class="accordion-button" type="button" data-bs-toggle="collapse"
-                            data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                            <div class="container text-center">
-                                <div class="row align-items-center">
-                                    <div class="col text-start">
-                                        LANDSBERG - KAUFERING
-                                    </div>
-                                    <div class="col">
-                                        MON 01.02.24
-                                    </div>
-                                    <div class="col">
-                                        15:00
-                                    </div>
-                                    {% if user.is_authenticated %}
-                                    <div class="col">
-                                        <a class="btn btn-info" data-bs-toggle="collapse" href="{% url 'about' %}"
-                                            role="button">Offer Ride</a>
-                                    </div>
-                                    {% else%}
-                                    <div class="col">
-                                        <a class="btn btn-info" data-bs-toggle="collapse"
-                                            href="{% url 'account_login' %}" role=" button">Sign In</a>
-                                    </div>
-                                    {% endif%}
-                                </div>
-                            </div>
-                        </button>
-                    </h2>
 
-                    <div id="collapseOne" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
-                        <div class="accordion-body">
-                            <table class="table">
-                                <thead>
-                                    <tr>
-                                        <th scope="col">#</th>
-                                        <th scope="col">First</th>
-                                        <th scope="col">Last</th>
-                                        <th scope="col">Handle</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <th scope="row">1</th>
-                                        <td>Mark</td>
-                                        <td>Otto</td>
-                                        <td>@mdo</td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row">2</th>
-                                        <td>Jacob</td>
-                                        <td>Thornton</td>
-                                        <td>@fat</td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row">3</th>
-                                        <td>Larry the Bird</td>
-                                        <td>@twitter</td>
-                                        <td>@mdo</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="accordion-item">
-                    <h2 class="accordion-header">
-                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                            data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                            <div class="container text-center">
-                                <div class="row align-items-center">
-                                    <div class="col text-start">
-                                        KAUFERING - LANDSBERG
-                                    </div>
-                                    <div class="col">
-                                        MON 01.02.24
-                                    </div>
-                                    <div class="col">
-                                        19:00
-                                    </div>
-                                    {% if user.is_authenticated %}
-                                    <div class="col">
-                                        <a class="btn btn-info" data-bs-toggle="collapse" href="{% url 'about' %}"
-                                            role="button">Offer Ride</a>
-                                    </div>
-                                    {% else%}
-                                    <div class="col">
-                                        <a class="btn btn-info" data-bs-toggle="collapse"
-                                            href="{% url 'account_login' %}" role=" button">Sign In</a>
-                                    </div>
-                                    {% endif%}
-                                </div>
-                            </div>
-                        </button>
-                    </h2>
-                    <div id="collapseTwo" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
-                        <div class="accordion-body">
-                            <strong>This is the second item's accordion body.</strong>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="accordion-item">
-                    <h2 class="accordion-header">
-                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                            data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-                            <div class="container text-center">
-                                <div class="row align-items-center">
-                                    <div class="col text-start">
-                                        LANDSBERG - KAUFERING
-                                    </div>
-                                    <div class="col">
-                                        MON 01.02.24
-                                    </div>
-                                    <div class="col">
-                                        15:00
-                                    </div>
-                                    {% if user.is_authenticated %}
-                                    <div class="col">
-                                        <a class="btn btn-info" data-bs-toggle="collapse" href="{% url 'about' %}"
-                                            role="button">Offer Ride</a>
-                                    </div>
-                                    {% else%}
-                                    <div class="col">
-                                        <a class="btn btn-info" data-bs-toggle="collapse"
-                                            href="{% url 'account_login' %}" role=" button">Sign In</a>
-                                    </div>
-                                    {% endif%}
-                                </div>
-                            </div>
-                        </button>
-                    </h2>
-                    <div id="collapseThree" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
-                        <div class="accordion-body">
-                            <strong>This is the third item's accordion body.</strong>
-                        </div>
-                    </div>
-                </div>
             </div>
         </div>
     </div>
 </div>
 
+<!-- MODAL FOR OFFERING A RIDE - HIDDEN BY DEFAULT-->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Offer a ride...</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="mb-3">
+                        <label for="message-text" class="col-form-label">Message:</label>
+                        <textarea class="form-control" id="message-text"></textarea>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Offer Ride</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- END OF MODAL FOR HITCH REQUEST -->
+
+<!-- MODAL FOR REQEusTING A HITCH - HIDDEN BY DEFAULT-->
+<div class="modal fade" id="OfferModal" tabindex="-1" aria-labelledby="OfferModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="OfferModalLabel">Where do you need to go?</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+
+                <form method="post" action="{% url 'rides_view' %}">
+                    {% csrf_token %}
+                    <div class="mb-3">
+                        REQUEST HITCH FORM GOES HERE
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button name="ride_trip_id" value="" type="submit" class="btn btn-primary">Offer Ride</button>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
+</div>
+<!-- END OF MODAL FOR HITCH REQUEST -->
+
+<div class="alert alert-warning" role="alert">
+    HITCH REQUESTS COMING SOON...
+  </div>
 
 {% endblock %}

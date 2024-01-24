@@ -34,13 +34,6 @@ VEHICLE_TYPE = (
     (5, "Bus"),
     (6, "LKW")
     )
-STOP_TYPE = (
-    (0, "Address"), 
-    (1, "Bus Stop"), 
-    (2, "Intersection"), 
-    (3, "Parking Lot"),
-    (4, "Gas Station")
-    )
 
 VEHICLE_STATUS = (
     (True, "Active"), 
@@ -58,8 +51,10 @@ class CustomUser(AbstractUser):
     adr_country = models.CharField(max_length=50, verbose_name="Country", blank=True, null=True)
     phone = models.CharField(max_length=15, verbose_name="Phone Number")
     DL_date = models.DateField(default=None, blank=True, null=True, verbose_name="Driver's License Date")
-    contactable = models.BooleanField(choices=YES_NO, default=0)
+    contactable = models.BooleanField(choices=YES_NO, default=False)
     user_image = CloudinaryField('image', default='placeholder')
+    average_driver_rating = models.DecimalField(max_digits=3, decimal_places=1, default=0.0, blank=True, null=True)
+    average_hitcher_rating = models.DecimalField(max_digits=3, decimal_places=1, default=0.0, blank=True, null=True)
 
 
 class Region(models.Model):
@@ -73,14 +68,27 @@ class Region(models.Model):
     def __str__(self):
         return self.region
 
+class Stop_Type(models.Model):
+    """
+    Stores the type of drop off point and a symbol to represent it`
+    """
+    
+    stop = models.CharField(max_length=50, unique=True)
+    stop_icon = models.CharField(max_length=50)
+    
+
+    def __str__(self):
+        return self.stop
+
 class Location(models.Model):
     """
     Stores previous locations related to :model:`rides.Region`,`auth.User`
     """
+    date_created = models.DateTimeField(auto_now_add=True)
     region = models.ForeignKey(Region, on_delete=models.CASCADE)
     input_by = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     name = models.CharField(max_length=100)
-    stop_type = models.IntegerField(choices=STOP_TYPE, default=0)
+    stoptype = models.ForeignKey(Stop_Type, on_delete=models.CASCADE, null=True, blank=True)
     street = models.CharField(max_length=100)
     city = models.CharField(max_length=50)
     zipcode = models.CharField(max_length=15)
@@ -91,11 +99,11 @@ class Location(models.Model):
     note = models.TextField(null=True, blank=True)
 
     def __str__(self):
-        return f'{self.city}, {self.street} ({self.get_stop_type_display()})'
+        return f'{self.name} | {self.city}'
 
 class Purpose(models.Model):
     """
-    Stores trip purposes and corresponding font-awesome icon tag related to  :model:``
+    Stores trip purposes and corresponding font-awesome icon tag related to  :model: `trip`, `hitch_request`
     """
     
     purpose = models.CharField(max_length=50, unique=True)
@@ -104,6 +112,7 @@ class Purpose(models.Model):
 
     def __str__(self):
         return self.purpose
+
 
 class Vehicle(models.Model):
     """
@@ -115,23 +124,27 @@ class Vehicle(models.Model):
     type = models.IntegerField(choices=VEHICLE_TYPE, default=0)
     year = models.CharField(max_length=4, null=True, blank=True)
     engine = models.IntegerField(choices=ENGINE, default=0)
-    smoking = models.BooleanField(choices=YES_NO, default=False)
-    max_pax = models.IntegerField(
-        default=1,
-     )
+    smoking = models.IntegerField(choices=YES_NO, default=0)
+    max_pax = models.IntegerField(default=1,)
     owner = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True)
     operator = models.CharField(verbose_name="Operated by", max_length=50, null=True, blank=True)
     status = models.BooleanField(choices=VEHICLE_STATUS, default=True)
 
     def __str__(self):
-        return f"{self.make} {self.model} ({self.get_type_display()}), owned by {self.owner}"
+        return f"{self.make} {self.model} ({self.get_type_display()})"
 
-class Driver_rating(models.Model):
+class User_rating(models.Model):
     """
     Stores driver ratings related to  :model:`rides.Trip` and :model:`auth.User`
     """
+    RATING_TYPE_CHOICES = (
+        ('driver', 'Driver'),
+        ('hitcher', 'Hitcher'),
+    )
+    
     date_created = models.DateTimeField(auto_now_add=True)
-    driver = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    rating_type = models.CharField(max_length=7, choices=RATING_TYPE_CHOICES)
     star_rating = models.DecimalField(
         max_digits=2, 
         decimal_places=1,
@@ -139,7 +152,7 @@ class Driver_rating(models.Model):
     comment = models.TextField(max_length=300, null=True, blank=True)
 
     def __str__(self):
-        return f"Driver: {self.driver} | Rating: {self.star_rating} | {self.comment}"
+        return f"{self.get_rating_type_display()}: {self.user} | Rating: {self.star_rating} | {self.comment}"
 
 class Trip(models.Model):
     """
@@ -149,11 +162,11 @@ class Trip(models.Model):
     
     date_created = models.DateTimeField(auto_now_add=True)
     region = models.ForeignKey(Region, on_delete=models.CASCADE)
-    trip_date = models.DateField()
-    trip_status = models.IntegerField(choices=TRIP_STATUS, default=0)
+    depart_date = models.DateField()
+    trip_status = models.IntegerField(choices=TRIP_STATUS, default=0, null=True, blank=True)
     driver = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True)
     vehicle = models.ForeignKey(Vehicle, on_delete=models.SET_NULL, null=True)
-    max_hitch = models.IntegerField(default=0,)
+    max_hitch = models.IntegerField(default=1)
     depart = models.ForeignKey(Location, on_delete=models.SET_DEFAULT, default="no record", related_name="depart")
     destination = models.ForeignKey(Location, on_delete=models.SET_DEFAULT, default="no record")
     depart_time = models.TimeField()
@@ -161,9 +174,9 @@ class Trip(models.Model):
     expected_arrival_time = models.TimeField(null=True, blank=True)
     depart_window = models.DurationField(null=True, blank=True)
     note = models.CharField(max_length=150, null=True, blank=True)
-    direction = models.IntegerField(choices=DIRECTION, default=0)
+    direction = models.BooleanField(choices=DIRECTION, default=False)
     return_time = models.TimeField(null=True, blank=True)
-    recurring = models.BooleanField(choices=YES_NO, default=0)
+    recurring = models.BooleanField(choices=YES_NO, default=False)
     mon = models.BooleanField(default=False)
     tue = models.BooleanField(default=False)
     wed = models.BooleanField(default=False)
@@ -173,41 +186,45 @@ class Trip(models.Model):
     sun = models.BooleanField(default=False)
     purpose = models.ForeignKey(Purpose, on_delete=models.SET_DEFAULT, default="deleted")
     suggested_tip = models.FloatField(null=True, blank=True)
-    pickup_radius = models.IntegerField(default=2,)
-    max_detour_dist = models.IntegerField(default=5,)
+    pickup_radius = models.IntegerField(null=True, blank=True,default=2,)
+    max_detour_dist = models.IntegerField(null=True, blank=True,default=5)
 
-    class Meta:
-        ordering = ["-trip_date"]
-
-    def __str__(self):
-        return f"{self.trip_date} at {self.depart_time} | from {self.depart} --to-- {self.destination}"
-    
-
-class Request(models.Model):
-    """
-    Stores a trip request related to  
-    :model:`rides.Trip`,`rides.Region`,`auth.User`, `rides.purpose`, `rides.location`
-    """
-    date_created = models.DateTimeField(auto_now_add=True)
-    trip_id = models.ForeignKey(Trip, on_delete=models.SET_NULL, null=True, blank=True)
-    hitcher = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    region = models.ForeignKey(Region, on_delete=models.CASCADE)
-    depart = models.ForeignKey(Location, on_delete=models.SET_NULL, null=True, blank=True, related_name="request_depart")
-    destination = models.ForeignKey(Location, on_delete=models.SET_NULL, null=True, blank=True)
-    depart_date = models.DateTimeField()
-    depart_time = models.DateTimeField(null=True, blank=True)
-    depart_window = models.DurationField(null=True, blank=True)
-    smoking = models.IntegerField(choices=YES_NO, default=0)
-    note = models.TextField(null=True, blank=True)
-    direction = models.IntegerField(choices=DIRECTION, default=0)
-    recurring = models.IntegerField(null=True, blank=True)
-    purpose = models.ForeignKey(Purpose, on_delete=models.SET_DEFAULT, default="deleted")
     
     class Meta:
         ordering = ["-depart_date"]
 
     def __str__(self):
-        return f"{self.date} at {self.depart_time} | from {self.depart} to {self.destination}"
+        return f"{self.depart} --to-- {self.destination}"
+
+class Hitch_Request(models.Model):
+    """
+    Stores a request related to  
+    :model:`rides.Trip`,`rides.Region`,`auth.User`, `rides.purpose`, `rides.location`
+    """
+    date_created = models.DateTimeField(auto_now_add=True)
+    trip = models.ForeignKey(Trip, on_delete=models.CASCADE, null=True, blank=True, related_name="hitch_requests")
+    hitcher = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    region = models.ForeignKey(Region, on_delete=models.CASCADE)
+    depart = models.ForeignKey(Location, on_delete=models.SET_NULL, null=True, blank=True, related_name="request_depart")
+    destination = models.ForeignKey(Location, on_delete=models.SET_NULL, null=True, blank=True)
+    depart_date = models.DateField()
+    depart_time = models.TimeField(null=True, blank=True)
+    depart_window = models.DurationField(null=True, blank=True)
+    smoking = models.BooleanField(choices=YES_NO, default=False)
+    note = models.TextField(null=True, blank=True)
+    direction = models.IntegerField(choices=DIRECTION, default=0)
+    recurring = models.IntegerField(null=True, blank=True)
+    purpose = models.ForeignKey(Purpose, on_delete=models.SET_DEFAULT, default=None, null=True)
+    pax_approved = models.BooleanField(choices=YES_NO, default=False)
+    trip_rating = models.IntegerField(null=True, blank=True)
+    trip_comment = models.CharField(max_length=50, null=True, blank=True)
+    is_public = models.BooleanField(default=False)
+    
+    class Meta:
+        ordering = ["-depart_date"]
+
+    def __str__(self):
+        return f"{self.depart_date} at {self.depart_time} | from {self.depart} to {self.destination}"
 
 
 class Message(models.Model):
@@ -218,10 +235,11 @@ class Message(models.Model):
     trip = models.ForeignKey(Trip, on_delete=models.CASCADE)
     sender = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="sender")
     receiver = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="receiver")
-    message = models.TextField()
+    content = models.CharField(max_length=500, null=True, blank=True)
+    was_read = models.BooleanField(default=False)
 
     class Meta:
         ordering = ["-date_created"]
 
     def __str__(self):
-        return f"{self.sender} -> {self.receiver} | {self.message}"
+        return f"{self.sender} -> {self.receiver} | {self.content}"

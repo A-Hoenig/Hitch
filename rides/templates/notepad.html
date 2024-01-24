@@ -1,0 +1,27 @@
+<!-- Action Buttons -->
+<form method="post" action="">
+    {% csrf_token %}
+    <button type="submit" class="btn btn-primary btn-sm">Mark as Read</button>
+
+    {% csrf_token %}
+    <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+</form>
+
+
+Read: {{ message.was_read|yesno:"Yes,No" }} -
+
+
+{% for message in user_messages %}
+<div class="card mb-3 {% if message.sender == username %}text-right{% else %}text-left{% endif %}">
+    <div class="card-header">
+        From: {{ message.sender.username }} - To: {{ message.receiver.username }}
+    </div>
+    <div class="card-body">
+        <p class="card-text">{{ message.content }}</p>
+    </div>
+    <div class="card-footer text-muted">
+        Read: {{ message.was_read|yesno:"Yes,No" }} - Trip ID: {{ message.trip }}
+
+    </div>
+</div>
+{% endfor %}
