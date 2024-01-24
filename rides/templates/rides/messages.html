@@ -10,24 +10,36 @@
     <div class="row">
         <div class="col-12 bg-light">
             <div class="p-3 border-bottom">
-                <i class="fa-regular fa-message"></i> MESSAGE CENTER
+                <i class="fa-regular fa-message"></i> MESSAGE CENTER <span class="font-weight-bold fs-4"> {{ username }} </span>
             </div>
         </div>
     </div>
   </div>
 
 
-<div class="alert alert-warning" role="alert">
+<!-- <div class="alert alert-warning" role="alert">
     MESSAGES COMING SOON...
-</div>
+</div> -->
 
  
 {% for message in user_messages %}
 
-<ul>
-<li>{{ message }}</li>
-</ul>
+
+<div class="card">
+    <div class="card-header">
+      Featured
+    </div>
+    <div class="card-body">
+      <h5 class="card-title">{{ message.sender }}</h5>
+      <p class="card-text">{{ message.content }}</p>
+      <a href="#" class="btn btn-primary">Go somewhere</a>
+    </div>
+  </div>
+
+
 {% endfor %}
+
+
 
 
 {% endblock %}

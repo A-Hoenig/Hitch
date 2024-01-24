@@ -236,11 +236,11 @@ class Message(models.Model):
     trip = models.ForeignKey(Trip, on_delete=models.CASCADE)
     sender = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="sender")
     receiver = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="receiver")
-    message = models.CharField(max_length=500, null=True, blank=True)
+    content = models.CharField(max_length=500, null=True, blank=True)
     was_read = models.BooleanField(default=False)
-    
+
     class Meta:
         ordering = ["-date_created"]
 
     def __str__(self):
-        return f"{self.sender} -> {self.receiver} | {self.message}"
+        return f"{self.sender} -> {self.receiver} | {self.content}"

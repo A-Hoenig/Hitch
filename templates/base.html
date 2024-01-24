@@ -76,7 +76,7 @@
                         href="{% url 'hitches' %}">Hitches</a>
                 </li>
                 {% if user.is_authenticated %}
-                <li class="nav-item">
+                <li class="nav-item  text-nowrap">
                     <a class="nav-link {% if request.path == user_trips_url %} active" aria-current="page{% endif %}"
                         href="{% url 'user_trips' %}">Your Trips</a>
                 </li>
@@ -100,14 +100,14 @@
                     <a class="nav-link {% if request.path == logout_url %}active" aria-current="page{% endif %}"
                         href="{% url 'account_logout' %}">Sign Out</a>
                 </li>
-                <li class="nav-item nolink">
-                    <a class="nav-link d-none d-sm-block" aria-current="welcome back message"
-                        href="{% url 'user_profile' %}">Welcome,
+                <li class="nav-item nolink ">
+                    <a class="nav-link d-none d-sm-block text-right" aria-current="welcome back message"
+                        href="{% url 'user_profile' %}">
                         {{ user.username }}</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link {% if request.path == hitches_url %} active" aria-current="page{% endif %}"
-                        href="{% url 'user_profile' %}"><i class="fa-solid fa-gear h3"></i></a>
+                        href="{% url 'user_profile' %}"><i class="fa-solid fa-gear h5"></i></a>
                 </li>
 
                 {% else %}
