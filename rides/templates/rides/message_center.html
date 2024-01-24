@@ -50,13 +50,13 @@
                         {% if message.sender != username %}
                             <div class="col-12">
                                 <div class="d-flex justify-content-start">
-                                    <div class="message-container non-user-message">
+                                    <div class="message-container">
                                         <div class="sender fs-6">
                                             <span>{{ message.sender }}</span>
                                             <span class="date small-date">{{ message.date_created }}</span>
                                         </div>
-                                        <div class="message mb-3 bg-primary text-white rounded p-2">
-                                            <span class="message-content">{{ message.content }}</span>
+                                        <div class="message mb-3 bg-primary text-white rounded p-2 shadow">
+                                            <span>{{ message.content }}</span>
                                         </div>
                                     </div>
                                 </div>
@@ -64,12 +64,12 @@
                         {% else %}
                             <div class="col-12">
                                 <div class="d-flex justify-content-end">
-                                    <div class="message-container user-message">
+                                    <div class="message-container">
                                         <div class="date small-date text-end">
                                             <span>You on: {{ message.date_created }}</span>
                                         </div>
-                                        <div class="message mb-3 bg-primary text-white rounded p-2">
-                                            <span class="message-content">{{ message.content }}</span>
+                                        <div class="message mb-3 bg-primary text-white rounded p-2 shadow">
+                                            <span class="">{{ message.content }}</span>
                                         </div>
                                     </div>
                                 </div>
