@@ -50,7 +50,7 @@
    }
 
    /* change text to black for first large image*/
-   .carousel-item.active .carousel-caption {
+   #pic1 {
       color: black;
    }
 
