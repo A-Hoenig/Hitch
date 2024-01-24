@@ -281,7 +281,7 @@ class MessageForm(forms.Form):
         self.helper.form_method = 'POST'
         self.helper.layout = Layout(
             Div(
-                Div('message', css_class='col-md-12'),
+                Div('content', css_class='col-md-12'),
                 css_class='row'
             ),
         )
@@ -289,7 +289,7 @@ class MessageForm(forms.Form):
     class Meta:
 
         model = Message
-        fields = ['message']
+        fields = ['content']
   
 
 class LocationForm(forms.ModelForm):

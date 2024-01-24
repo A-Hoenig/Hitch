@@ -32,7 +32,7 @@ urlpatterns = [
     path('user_profile/', views.profile, name='user_profile'),
     path('vehicles/', views.vehicles, name='vehicles'),
     path('locations/', views.locations, name='locations'),
-    path('messages/', views.messages, name='messages'),
+    path('message_center/', views.message_center, name='message_center'),
     path('user_trips/', views.user_trips, name='user_trips'),
     path('change-password/', PasswordChangeView.as_view(), name='password_change'),
 ]

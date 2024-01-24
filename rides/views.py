@@ -103,7 +103,7 @@ def rides_view(request):
             driver = trip.driver
             
             # create message instance and store in message Model
-            message = Message(sender=hitcher, receiver=driver, message=message, trip_id=trip_id)
+            message = Message(sender=hitcher, receiver=driver, content=message, trip_id=trip_id)
             message.save()
 
             # create hitchrequest linked to trip and store in Hitch_Request Model
@@ -230,7 +230,7 @@ def about(request):
 
 # -------------------------------------------------------
 @login_required
-def messages(request):
+def message_center(request):
     user_messages = Message.objects.filter(Q(sender=request.user)| Q(receiver=request.user)).order_by('trip__depart_date','date_created')
     
     # use dict to group Trips / add individual messages
@@ -243,7 +243,7 @@ def messages(request):
         'username': request.user,
         'trips': trips.values(),
     }
-    return render(request, 'rides/messages.html', context)
+    return render(request, 'rides/message_center.html', context)
 
 
 
@@ -338,7 +338,7 @@ def user_trips(request):
                 hitch.pax_approved = True
                 hitch.save()
                 message_content = f'Hello {hitch.hitcher.first_name}! {trip.driver} just approved your HitchRequest!'
-                message = Message(trip=trip, sender=trip.driver, receiver=hitch.hitcher, message=message_content)
+                message = Message(trip=trip, sender=trip.driver, receiver=hitch.hitcher, content=message_content)
                 message.save()
                 messages.success(request, f'You approved {hitch.hitcher}. An automated message was sent to let {hitch.hitcher} know.')
 
@@ -357,7 +357,7 @@ def user_trips(request):
                 message_form = MessageForm(request.POST)
                 if message_form.is_valid():
                     message_content = message_form.cleaned_data['message']
-                    message = Message(trip=trip, sender=trip.driver, receiver=hitch.hitcher, message=message_content)
+                    message = Message(trip=trip, sender=trip.driver, receiver=hitch.hitcher, content=message_content)
                     message.save()
                     messages.success(request, 'Your message was sent!')
 
