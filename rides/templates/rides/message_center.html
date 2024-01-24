@@ -46,20 +46,20 @@
                 {% for message in messages %}
                     <div class="{% if message.sender != username %}non-user-message{% endif %}">
                         {% if message.sender != username %}
-                            <div class="sender">
+                            <div class="sender text-primary fs-4">
                                 <span>{{ message.sender }}</span>
-                                <span class="date">{{ message.date_created }}</span>
+                                <span class="date small-date">{{ message.date_created }}</span>
                             </div>
-                            <div class="message">
+                            <div class="message mb-3 border-bottom">
                                 <span class="message-content">{{ message.content }}</span>
                             </div>
                         {% endif %}
                         {% if message.sender == username %}
                             <div class="user-message text-end">
-                                <div class="date">
-                                    <span>{{ message.date_created }}</span>
+                                <div class="date small-date text-primary">
+                                    <span> You on: {{ message.date_created }}</span>
                                 </div>
-                                <div class="message">
+                                <div class="message mb-3 border-bottom">
                                     <span class="message-content">{{ message.content }}</span>
                                 </div>
                             </div>
