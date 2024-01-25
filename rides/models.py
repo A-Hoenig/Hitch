@@ -15,7 +15,7 @@ from cloudinary.models import CloudinaryField
 TRIP_STATUS = ((0, "Confirmed"), (1, "Completed"), (2, "Cancelled"))
 GENDER = ((0, "Female"), (1, "Male"), (2, "Non Binary"), (3, "Prefer not to say"))
 DIRECTION = ((0, "One Way"), (1, "Return Trip"))
-YES_NO = ((True, "Yes"), (False, "No"))
+YES_NO = ((1, "Yes"), (0, "No"))
 
 ENGINE = (
     (0, "Gasoline"), 

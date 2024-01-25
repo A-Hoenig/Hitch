@@ -523,6 +523,7 @@ def vehicles(request):
         if 'save' in request.POST:
             form = VehicleForm(request.POST)
             form.instance.owner = request.user
+            
             if form.is_valid():
                 form.save()
                 messages.success(request, 'Vehicle added successfully!')
@@ -537,7 +538,7 @@ def vehicles(request):
             vehicle = Vehicle.objects.get(id=pk)
             post_data = request.POST.copy()
             form = VehicleForm(request.POST, instance=vehicle)
-
+            
             if form.is_valid():
                 form.save()
                 messages.success(request, 'Vehicle updated sucessfully!')
