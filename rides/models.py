@@ -62,7 +62,7 @@ class Region(models.Model):
     Stores a specific region to limit trips locally 
     related to  :model: ``
     """
-    date_created = models.DateTimeField(auto_now_add=True)
+    date_created = models.DateTimeField(auto_now_add=True, db_index=True)
     region = models.CharField(max_length=100, unique=True)
 
     def __str__(self):
@@ -142,7 +142,7 @@ class User_rating(models.Model):
         ('hitcher', 'Hitcher'),
     )
     
-    date_created = models.DateTimeField(auto_now_add=True)
+    date_created = models.DateTimeField(auto_now_add=True, db_index=True)
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     rating_type = models.CharField(max_length=7, choices=RATING_TYPE_CHOICES)
     star_rating = models.DecimalField(
@@ -160,11 +160,11 @@ class Trip(models.Model):
     :model:`auth.User`, `region`, `vehicle`, `purpose`, `location`
     """
     
-    date_created = models.DateTimeField(auto_now_add=True)
-    region = models.ForeignKey(Region, on_delete=models.CASCADE)
+    date_created = models.DateTimeField(auto_now_add=True, db_index=True)
+    region = models.ForeignKey(Region, on_delete=models.CASCADE, db_index=True)
     depart_date = models.DateField()
     trip_status = models.IntegerField(choices=TRIP_STATUS, default=0, null=True, blank=True)
-    driver = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True)
+    driver = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     vehicle = models.ForeignKey(Vehicle, on_delete=models.SET_NULL, null=True)
     max_hitch = models.IntegerField(default=1)
     depart = models.ForeignKey(Location, on_delete=models.SET_DEFAULT, default="no record", related_name="depart")
@@ -201,10 +201,10 @@ class Hitch_Request(models.Model):
     Stores a request related to  
     :model:`rides.Trip`,`rides.Region`,`auth.User`, `rides.purpose`, `rides.location`
     """
-    date_created = models.DateTimeField(auto_now_add=True)
+    date_created = models.DateTimeField(auto_now_add=True, db_index=True)
     trip = models.ForeignKey(Trip, on_delete=models.SET_NULL, null=True, blank=True, related_name="hitch_requests")
     hitcher = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    region = models.ForeignKey(Region, on_delete=models.CASCADE)
+    region = models.ForeignKey(Region, on_delete=models.CASCADE, db_index=True)
     depart = models.ForeignKey(Location, on_delete=models.SET_NULL, null=True, blank=True, related_name="request_depart")
     destination = models.ForeignKey(Location, on_delete=models.SET_NULL, null=True, blank=True)
     depart_date = models.DateField()
@@ -231,9 +231,11 @@ class Message(models.Model):
     """
     Stores in app messages between users related to  :model:`rides.Trip`,auth.User
     """
-    date_created = models.DateTimeField(auto_now_add=True)
-    trip = models.ForeignKey(Trip, on_delete=models.CASCADE, related_name='messages')
-    hitch_request = models.ForeignKey(Hitch_Request, on_delete=models.CASCADE, related_name='messages')
+    date_created = models.DateTimeField(auto_now_add=True, db_index=True)
+    trip = models.ForeignKey(Trip, on_delete=models.SET_NULL, null=True, blank=True)
+    hitch_request = models.ForeignKey(Hitch_Request, on_delete=models.SET_NULL, null=True, blank=True)
+    sender = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True, blank=True, related_name="sender")
+    receiver = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True, blank=True, related_name="receiver")
     content = models.CharField(max_length=500, null=True, blank=True)
     was_read = models.BooleanField(default=False)
 
@@ -245,5 +247,7 @@ class Message(models.Model):
     # trip might not exist yet so has to be dealt with
         driver = self.trip.driver if self.trip else "No Trip yet"
         hitcher = self.hitch_request.hitcher if self.hitch_request else "No Hitch Request"
+        sender = self.sender
+        receiver = self.receiver
 
-        return f"{hitcher} -> {driver} | {self.content}"
+        return f"{sender} -> {receiver} | {self.content}"

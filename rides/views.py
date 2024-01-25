@@ -222,21 +222,54 @@ def about(request):
 # -------------------------------------------------------
 @login_required
 def message_center(request):
-    # Fetch messageseither trip driver or a hitch hitcher
-    user_messages = Message.objects.filter(
-        Q(trip__driver=request.user) | 
-        Q(hitch_request__hitcher=request.user)
-    ).order_by('trip__depart_date', 'date_created')
+    # Fetch messages either trip driver or a hitch hitcher
+    # user_messages = Message.objects.filter(
+    #     Q(trip__driver=request.user) | 
+    #     Q(hitch_request__hitcher=request.user)
+    # ).order_by('trip__depart_date', 'date_created')
 
-    # Use dict to group messages by their trips
-    trips = defaultdict(list)
-    for message in user_messages:
-        trip_id = message.trip.id if message.trip else "No Trip"
-        trips[trip_id].append(message)
+    # # Use dict to group messages by their trips
+    # trips = defaultdict(list)
+
+    # for message in user_messages:
+        
+    #     message.driver = message.trip.driver
+    #     print(f'driver {message.driver}')
+    #     message.hitcher = message.hitch_request.hitcher
+    #     print(f'hitcher{message.hitcher}')
+    #     # Determine if the logged-in user sent this message
+    #     message.is_logged_in_user = request.user == message.driver or request.user == message.hitcher
+    #     print(f'request user={request.user} so {message.is_logged_in_user}')
+
+    #     trips[message.trip.id].append(message)
+    user = request.user
+    user_trips = Trip.objects.filter(driver=user)
+    user_hitch_requests = Hitch_Request.objects.filter(hitcher=user)
+
+    trip_messages = Message.objects.filter(Q(trip__in=user_trips) | Q(hitch_request__in=user_hitch_requests)).order_by('trip')
+
+    messages_grouped_by_trip = {}
+    for message in trip_messages:
+        # Determine the message context (hitch request creation or approval)
+        if message.hitch_request and message.hitch_request.hitcher == user:
+            # User is the sender (hitch request creation)
+            is_sender = True
+        else:
+            # User is the receiver (hitch request approval or other context)
+            is_sender = False
+
+        # Group messages by trip
+        if message.trip not in messages_grouped_by_trip:
+            messages_grouped_by_trip[message.trip] = [(message, is_sender)]
+        else:
+            messages_grouped_by_trip[message.trip].append((message, is_sender))
+
+    print(messages_grouped_by_trip)
 
     context = {
         'username': request.user,
-        'trips': trips.values(),
+        # 'trips': trips.values(),
+        'messages_grouped_by_trip': messages_grouped_by_trip,
     }
     return render(request, 'rides/message_center.html', context)
 
@@ -335,14 +368,14 @@ def user_trips(request):
                 hitch.pax_approved = True
                 hitch.save()
                 message_content = f'Hello {hitch.hitcher.first_name}! {trip.driver} just approved your HitchRequest!'
-                message = Message(trip=trip, hitch_request=hitch, content=message_content)
+                message = Message(trip=trip, hitch_request=hitch, sender=trip.driver , receiver=hitch.hitcher , content=message_content)
                 message.save()
                 messages.success(request, f'You approved {hitch.hitcher}. An automated message was sent to let {hitch.hitcher} know.')
 
                 return redirect('user_trips')
 
         elif 'message' in request.POST:
-            # hitcher to driver
+            # driver to hitcher next to approval line
                 print('you are in message')
                 # get trip PK and hitcherPK from Form Button
                 tripPk=request.POST.get('message_trip_id').split('_')
@@ -354,8 +387,9 @@ def user_trips(request):
                 message_form = MessageForm(request.POST)
                 if message_form.is_valid():
                     message_content = message_form.cleaned_data['message']
-                    message = Message(trip=trip, hitch_request=hitch, content=message_content)
-                    message.save()
+                    message = Message(trip=trip, hitch_request=hitch, sender=trip.driver, receiver=hitch.hitcher , content=message_content)
+                    print(message)
+                    # message.save
                     messages.success(request, 'Your message was sent!')
 
                 return redirect('user_trips') 
@@ -370,34 +404,25 @@ def user_trips(request):
             return int(round(rating))
 
         for s in sorted_list:
-            hitchers_ratings_list = []  # remove if it goes bad
+            hitchers_ratings_list = []  
                         
             if isinstance(s, Trip):
                 driver = s.driver
                 rating = calculate_rating(s.driver.average_driver_rating)
 
-                # hitchers = [hr.hitcher for hr in s.hitch_requests.all()]
-                all_hitch_requests = s.hitch_requests.all() # remove if it goes bad
-                # hitchers_ratings_list = [(hr.hitcher, round(hr.hitcher.average_hitcher_rating)) for hr in s.hitch_requests.all()]
+                all_hitch_requests = s.hitch_requests.all() 
                 
                 for hr in all_hitch_requests:
                     hitcher = hr.hitcher
                     hitcher.is_approved = hr.pax_approved
-                    hitchers_ratings_list.append((hitcher, round(hitcher.average_hitcher_rating)))  #delete if bad
-                    
-
-            # elif isinstance(s, Hitch_Request):
-            #     driver = s.trip.driver
-            #     rating = calculate_rating(s.trip.driver.average_driver_rating)
-            #     hitchers_ratings_list = []
-            elif isinstance(s, Hitch_Request):  # remove if it goes bad
-                driver = s.trip.driver  # remove if it goes bad
-                rating = calculate_rating(s.trip.driver.average_driver_rating)  # remove if it goes bad
-                hitchers_ratings_list = []  # remove if it goes bad
-                
-
-            # detailed_sorted_list.append((s, driver, rating, hitchers_ratings_list))
-            detailed_sorted_list.append((s, driver, rating, hitchers_ratings_list))  # remove if it goes bad
+                    hitchers_ratings_list.append((hitcher, round(hitcher.average_hitcher_rating))) 
+     
+            elif isinstance(s, Hitch_Request):  
+                driver = s.trip.driver  
+                rating = calculate_rating(s.trip.driver.average_driver_rating) 
+                hitchers_ratings_list = [] 
+  
+            detailed_sorted_list.append((s, driver, rating, hitchers_ratings_list)) 
 
     context = {
         "username": request.user,
