@@ -341,4 +341,7 @@ class LocationForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super(LocationForm, self).__init__(*args, **kwargs)
         instance = kwargs.get('instance')
+        first_region = Region.objects.first()
+        if first_region:
+            self.fields['region'].initial = first_region
  
