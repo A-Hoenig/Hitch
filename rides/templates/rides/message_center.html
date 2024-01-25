@@ -47,12 +47,12 @@
             <div class="card-body">
                 {% for message in messages %}
                     <div class="row mb-2">
-                        {% if message.sender != username %}
+                        {% if message.trip.driver != username %}
                             <div class="col-12">
                                 <div class="d-flex justify-content-start">
                                     <div class="message-container">
                                         <div class="sender fs-6">
-                                            <span>{{ message.sender.first_name}}</span><span class="small-date"> ({{ message.sender }})</span>
+                                            <span>{{ message.trip.driver.first_name}}</span><span class="small-date"> ({{ message.trip.driver }})</span>
                                             <span class="small-date">{{ message.date_created }}</span>
                                         </div>
                                         <div class="message mb-3 bg-primary text-white rounded p-2 shadow">
