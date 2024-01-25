@@ -512,14 +512,14 @@
                                             <i class="fa-solid fa-car"></i><span>This is your trip</span>
                                         </div>
                                         <!-- Check if the user is in the approved hitch group -->
-                                        {% elif user.username in t.hitch_group %}
+                                        {% elif user in t.hitch_group %}
                                         <!-- User is approved to join -->
                                         <div class="btn btn-success badge rounded-pill fs-4 mt-2 disabled my-3">
                                             <i class="fa-solid fa-thumbs-up"></i><span>You are approved to join this
                                                 Ride!</span>
                                         </div>
                                         <!-- Check if the user has a pending request -->
-                                        {% elif user.username in t.pending_hitchers %}
+                                        {% elif user in t.pending_hitchers %}
                                         <!-- User has already requested -->
                                         <div class="btn btn-success badge rounded-pill fs-4 mt-2 disabled my-3">
                                             <i class="fa-solid fa-thumbs-up"></i><span>You already requested this

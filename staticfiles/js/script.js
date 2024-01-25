@@ -26,6 +26,7 @@ document.addEventListener('DOMContentLoaded', function() {
   });
 });
 
+// update ride or hitch region filter when user selects one from dropdown
 document.addEventListener('DOMContentLoaded', function () {
   var form = document.getElementById('filterForm');
   
@@ -36,7 +37,6 @@ document.addEventListener('DOMContentLoaded', function () {
     // Check for regionDropdown first
     if (regionDropdown) {
       regionDropdown.addEventListener('change', function () {
-        
         form.submit();
       });
     }
@@ -61,11 +61,12 @@ $(document).ready(function () {
     }, 5000);
 });
 
+
 // tool tips (popper))
 const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
 const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
 
-const popoverTriggerList = document.querySelectorAll('[data-bs-toggle="popover"]')
-const popoverList = [...popoverTriggerList].map(popoverTriggerEl => new bootstrap.Popover(popoverTriggerEl))
+// const popoverTriggerList = document.querySelectorAll('[data-bs-toggle="popover"]')
+// const popoverList = [...popoverTriggerList].map(popoverTriggerEl => new bootstrap.Popover(popoverTriggerEl))
 
 

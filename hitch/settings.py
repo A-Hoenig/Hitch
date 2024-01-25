@@ -34,9 +34,8 @@ DEBUG = True
 
 ALLOWED_HOSTS = [
     '8000-ahoenig-hitch-pl9oitcsar1.ws-eu107.gitpod.io',
-    '8000-ahoenig-hitch-pl9oitcsar1.ws-eu107.gitpod.io/',
-    'hitch-bef4789c03e6.herokuapp.com'
-    '.herokuapp.com',
+    'hitch-bef4789c03e6.herokuapp.com',
+    '*.herokuapp.com',
     ]
 
 
@@ -58,8 +57,6 @@ INSTALLED_APPS = [
     'crispy_forms',
     'crispy_bootstrap5',
     'rides',
-   
-    
 ]
 
 SITE_ID = 1
