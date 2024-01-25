@@ -202,7 +202,7 @@ class Hitch_Request(models.Model):
     :model:`rides.Trip`,`rides.Region`,`auth.User`, `rides.purpose`, `rides.location`
     """
     date_created = models.DateTimeField(auto_now_add=True)
-    trip = models.ForeignKey(Trip, on_delete=models.CASCADE, null=True, blank=True, related_name="hitch_requests")
+    trip = models.ForeignKey(Trip, on_delete=models.SET_NULL, null=True, blank=True, related_name="hitch_requests")
     hitcher = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     region = models.ForeignKey(Region, on_delete=models.CASCADE)
     depart = models.ForeignKey(Location, on_delete=models.SET_NULL, null=True, blank=True, related_name="request_depart")
@@ -232,9 +232,8 @@ class Message(models.Model):
     Stores in app messages between users related to  :model:`rides.Trip`,auth.User
     """
     date_created = models.DateTimeField(auto_now_add=True)
-    trip = models.ForeignKey(Trip, on_delete=models.CASCADE)
-    sender = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="sender")
-    receiver = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="receiver")
+    trip = models.ForeignKey(Trip, on_delete=models.CASCADE, related_name='messages')
+    hitch_request = models.ForeignKey(Hitch_Request, on_delete=models.CASCADE, related_name='messages')
     content = models.CharField(max_length=500, null=True, blank=True)
     was_read = models.BooleanField(default=False)
 
@@ -242,4 +241,9 @@ class Message(models.Model):
         ordering = ["-date_created"]
 
     def __str__(self):
-        return f"{self.sender} -> {self.receiver} | {self.content}"
+    # need to get driver and hitcher from FK relationship now
+    # trip might not exist yet so has to be dealt with
+        driver = self.trip.driver if self.trip else "No Trip yet"
+        hitcher = self.hitch_request.hitcher if self.hitch_request else "No Hitch Request"
+
+        return f"{hitcher} -> {driver} | {self.content}"

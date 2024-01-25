@@ -1,5 +1,5 @@
 from django import forms
-from .models import CustomUser, Vehicle, Trip, Region, Hitch_Request, Message, Location
+from .models import CustomUser, Vehicle, Trip, Region, Hitch_Request, Location, Message
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Submit, Layout, Div
 from django.core.validators import RegexValidator

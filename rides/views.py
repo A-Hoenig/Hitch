@@ -1,9 +1,11 @@
 from django.shortcuts import render, HttpResponse, get_object_or_404, reverse, redirect, HttpResponseRedirect
+from rides.forms import UserForm, VehicleForm, TripForm, RegionFilterForm, LocationForm, MessageForm
+
 from django.utils import timezone
 from datetime import timedelta, datetime
 from django.views.generic import ListView
 from django.contrib.auth.decorators import login_required
-from rides.models import CustomUser, Vehicle, Trip, Region, Message, Hitch_Request, Location
+from rides.models import CustomUser, Vehicle, Trip, Region, Hitch_Request, Location, Message
 from django.contrib import messages
 from django.contrib.auth.models import User
 from django.db.models import Q
@@ -12,7 +14,7 @@ from django.views.generic.edit import CreateView
 from django.urls import reverse_lazy
 from collections import defaultdict
 from django.contrib.auth.decorators import login_required
-from rides.forms import UserForm, VehicleForm, TripForm, RegionFilterForm, MessageForm, LocationForm
+
 from datetime import date
 from itertools import chain
 from operator import attrgetter
@@ -81,20 +83,15 @@ def rides_view(request):
      
     if request.method == "POST":
         print('*********************** POST REQUEST ******************')
-    
+
         # User clicked hitch a ride.
         if 'ride_trip_id' in request.POST:
             trip_id = request.POST.get('ride_trip_id')
             trip = Trip.objects.get(id=trip_id)
-            message = request.POST.get('message')
             hitcher = request.user
             driver = trip.driver
             
-            # create message instance and store in message Model
-            message = Message(sender=hitcher, receiver=driver, content=message, trip_id=trip_id)
-            message.save()
-
-            # create hitchrequest linked to trip and store in Hitch_Request Model
+            # Create hitchrequest linked to trip and store in Hitch_Request Model
             print('building hitch request')
             hitch_request = Hitch_Request(
                 trip=trip,
@@ -106,10 +103,16 @@ def rides_view(request):
                 depart_time=trip.depart_time,
                 purpose=trip.purpose,
                 smoking=trip.vehicle.smoking,
-                is_public = False
-                )
+                is_public=False
+            )
             hitch_request.save()
-            messages.success(request, f'Hitch Request successfully submitted to {trip.driver}. The Driver will get back to you')
+            print('saving hitch')
+            messages.success(request, f'Hitch Request successfully submitted to {driver}. The Driver will get back to you')
+
+            # Create message instance and store in message Model
+            message_content = request.POST.get('message')
+            message_instance = Message(trip=trip, hitch_request=hitch_request, content=message_content)
+            message_instance.save()
             
         else:
             # A DRIVER WANTS TO CREATE A NEW RIDE TO ADD TO THE LIST
@@ -219,14 +222,18 @@ def about(request):
 # -------------------------------------------------------
 @login_required
 def message_center(request):
-    user_messages = Message.objects.filter(Q(sender=request.user)| Q(receiver=request.user)).order_by('trip__depart_date','date_created')
-    
-    # use dict to group Trips / add individual messages
+    # Fetch messageseither trip driver or a hitch hitcher
+    user_messages = Message.objects.filter(
+        Q(trip__driver=request.user) | 
+        Q(hitch_request__hitcher=request.user)
+    ).order_by('trip__depart_date', 'date_created')
+
+    # Use dict to group messages by their trips
     trips = defaultdict(list)
     for message in user_messages:
-        trip_id = message.trip.id
+        trip_id = message.trip.id if message.trip else "No Trip"
         trips[trip_id].append(message)
-    
+
     context = {
         'username': request.user,
         'trips': trips.values(),
@@ -306,9 +313,10 @@ def user_trips(request):
                 # send notification to Driver
                 message_text = f"Hitcher {hitch.hitcher.first_name} cancelled the hitch request"
                 message = Message(sender=hitch.hitcher, receiver=driver, content=message_text)
+                
                 print(message)
                 hitch.delete()
-                message.save()
+                
 
                 return redirect('user_trips') 
 
@@ -327,7 +335,7 @@ def user_trips(request):
                 hitch.pax_approved = True
                 hitch.save()
                 message_content = f'Hello {hitch.hitcher.first_name}! {trip.driver} just approved your HitchRequest!'
-                message = Message(trip=trip, sender=trip.driver, receiver=hitch.hitcher, content=message_content)
+                message = Message(trip=trip, hitch_request=hitch, content=message_content)
                 message.save()
                 messages.success(request, f'You approved {hitch.hitcher}. An automated message was sent to let {hitch.hitcher} know.')
 
@@ -346,7 +354,7 @@ def user_trips(request):
                 message_form = MessageForm(request.POST)
                 if message_form.is_valid():
                     message_content = message_form.cleaned_data['message']
-                    message = Message(trip=trip, sender=trip.driver, receiver=hitch.hitcher, content=message_content)
+                    message = Message(trip=trip, hitch_request=hitch, content=message_content)
                     message.save()
                     messages.success(request, 'Your message was sent!')
 
