@@ -54,14 +54,18 @@ class CustomUserAdmin(UserAdmin):
 
 admin.site.register(CustomUser, CustomUserAdmin)
 
+
+
 class RegionAdmin(admin.ModelAdmin):
     list_display = ('id','region', 'date_created')
     list_filter = ['region', 'date_created']
 
 admin.site.register(Region, RegionAdmin)
 
+
+
 class CustomLocationAdmin(admin.ModelAdmin):
-    list_display = ('id','region', 'date_created','input_by')
+    list_display = ('id','region','name','city', 'date_created','input_by')
     list_filter = ['region', 'date_created']
 
 admin.site.register(Location, CustomLocationAdmin)

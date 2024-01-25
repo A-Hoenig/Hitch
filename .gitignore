@@ -7,15 +7,7 @@ __pycache__/
 node_modules/
 .github/
 cloudinary_python.txt
-db.json
-cars.json
-users.json
-trips.json
-requests.json
-locations.json
-messages.json
-regions.json
-ratings.json
-purposes.json
 notepad.py
 templates/notepad.html
+db_purp.json
+db_stops.json

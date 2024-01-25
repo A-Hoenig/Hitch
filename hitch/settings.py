@@ -75,6 +75,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'allauth.account.middleware.AccountMiddleware',
+    # 'allauth.account.middleware.SocialAccountMiddleware',
 ]
 
 ROOT_URLCONF = 'hitch.urls'
@@ -115,7 +116,8 @@ DATABASES = {
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
 
-DATE_INPUT_FORMATS = ['%d.%m.%Y']
+
+DATE_INPUT_FORMATS = ['%d-%m-%Y', '%Y-%m-%d','%d.%m.%Y', '%Y.%m.%d',]
 
 CSRF_TRUSTED_ORIGINS = [
     "https://*.herokuapp.com",
