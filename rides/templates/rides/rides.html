@@ -83,12 +83,7 @@
 
                 <form class="form-horizontal" action="{% url 'rides_view' %}" method="post" autocomplete="off">
                     {% csrf_token %}
-                    {{ form.non_field_errors }}
-                    {% for field in form %}
-                    {{ field.errors }}
-                    {% endfor %}
-
-
+           
                     <div class="container">
                         <div class="row align-items-center">
                             <div class="col-md">{{ form.depart_date|as_crispy_field }}</div>
@@ -134,7 +129,10 @@
                         <div class="row align-items-center">
                             <div class="col-md">{{ form.purpose|as_crispy_field }}</div>
                             <div class="col-md">{{ form.pickup_radius|as_crispy_field }}</div>
-                            <div class="col-md">{{ form.max_hitch|as_crispy_field }}</div>
+                            <div class="col-md" data-bs-toggle="tooltip" data-bs-placement="left"
+                                data-bs-custom-class="custom-tooltip"
+                                data-bs-title="Select how many hitchers you'll accept for this trip">
+                                {{ form.max_hitch|as_crispy_field }}</div>
                         </div>
                         <div class="row align-items-center">
                             <div class="col-md-12">{{ form.note|as_crispy_field }}</div>
@@ -173,7 +171,7 @@
                     <!----------------------------- accordion header row starts here --------------------------->
                     <div class="accordion-item">
                         <h2 class="accordion-header">
-                            <button class="accordion-button collapsed p-2" type="button" data-bs-toggle="collapse"
+                            <button class="accordion-button collapsed p-2 shadow" type="button" data-bs-toggle="collapse"
                                 data-bs-target="#flush-collapse{{t.id}}" aria-expanded="false"
                                 aria-controls="flush-collapse{{t.id}}">
 
@@ -185,8 +183,8 @@
 
                                             <div class="row d-flex justify-content-sm-start align-items-center">
                                                 <!-- *********** DEBUG **********************-->
-                                                <div class="col-md-auto fs-5"><span
-                                                        class="text-secondary">{{t.id}}</span></div>
+                                                <!-- <div class="col-md-auto fs-5"><span
+                                                        class="text-secondary">{{t.id}}</span></div> -->
                                                 <!-- Depart -->
                                                 <div class="col-md-auto fs-5"><span
                                                         class="text-secondary">{{t.depart.stoptype.stop_icon|safe}}</span>
@@ -547,6 +545,34 @@
         });
     });
 
-   
+    // show or hide weekdays based on Recurring value in trip form.
+    document.addEventListener("DOMContentLoaded", function () {
+        var dropdown = document.getElementById("id_recurring");
+        var elementToToggle = document.getElementById("weekday-checkboxes");
+
+        function updateVisibility() {
+            // Convert the selected value to a number
+            var selectedValue = +dropdown.value;
+            elementToToggle.classList.toggle("d-none", selectedValue === 0);
+        }
+        // Setstate based on the current value of the dropdown
+        updateVisibility();
+
+        // Add event listener for changes
+        dropdown.addEventListener("change", updateVisibility);
+    });
+
+    // show or hide return time in trip form based on trip direction.
+    document.addEventListener('DOMContentLoaded', function () {
+        var directionSelect = document.getElementById('id_direction').querySelector('select');
+        var returnTimeDiv = document.getElementById('id_return_time');
+
+        directionSelect.addEventListener('change', function () {
+            returnTimeDiv.classList.toggle('d-none', +directionSelect.value !== 1);
+        });
+
+        // Trigger the function initially to set the correct state
+        directionSelect.dispatchEvent(new Event('change'));
+    });
 </script>
 {% endblock %}
