@@ -52,19 +52,11 @@ class CustomUserAdmin(UserAdmin):
         
     )
 
-admin.site.register(CustomUser, CustomUserAdmin)
-
-class RegionAdmin(admin.ModelAdmin):
-    list_display = ('id','region', 'date_created')
-    list_filter = ['region', 'date_created']
-
-
 class RegionAdmin(admin.ModelAdmin):
     list_display = ('id','region', 'date_created')
     list_filter = ['region', 'date_created']
 
 admin.site.register(Region, RegionAdmin)
-
 
 
 class CustomLocationAdmin(admin.ModelAdmin):
@@ -83,17 +75,17 @@ admin.site.register(User_rating)
 
 
 class TripAdmin(admin.ModelAdmin):
-    list_display = ('id','driver','date_created_YMD', 'depart_date_YMD','depart_time_HHMM','depart','destination',)
+    list_display = ('id','driver','date_created_DMY', 'depart_date','depart_time','depart','destination',)
     list_filter = ('region','driver',)
 
     # create some more readable date/time formats for datatable
-    def date_created_YMD(self, obj):
-        return obj.date_created.strftime("%Y.%m.%d (%H:%M)")
-    date_created_YMD.short_description = "submitted"
+    def date_created_DMY(self, obj):
+        return obj.date_created.strftime("%d.%m.%Y (%H:%M)")
+    date_created_DMY.short_description = "submitted"
 
-    def depart_date_YMD(self, obj):
+    def depart_date_DM(self, obj):
         return obj.date_created.strftime("%d.%b")
-    depart_date_YMD.short_description = "Leave"
+    depart_date_DM.short_description = "Leave"
 
     def depart_time_HHMM(self, obj):
         return obj.date_created.strftime("%H:%M")
@@ -117,7 +109,7 @@ class Hitch_RequestAdmin(admin.ModelAdmin):
 
     # create some more readable date/time formats for datatable
     def date_created_YMD(self, obj):
-        return obj.date_created.strftime("%Y.%m.%d (%H:%M)")
+        return obj.date_created.strftime("%d.%m.%Y (%H:%M)")
     date_created_YMD.short_description = "submitted"
 
     def depart_date_YMD(self, obj):
