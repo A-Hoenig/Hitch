@@ -1,34 +1,71 @@
+
+// add specific event listener to submit buttons inside accordions
 document.addEventListener('DOMContentLoaded', function() {
-    // Get all the anchor tags inside the accordion
-    var accordionLinks = document.querySelectorAll('.accordion a');
-  
-    // Add a click event listener to each anchor tag
-    accordionLinks.forEach(function(link) {
-      link.addEventListener('click', function(event) {
-        // Prevent the default action of the link - no accordion
-        event.preventDefault();
-        // Open the link's URL in the current tab
-        window.location.href = link.getAttribute('href');
-      });
+  // Get all the ids containing Btn tags inside the accordion
+  var accordionLinks = document.querySelectorAll('.accordion-body [id*="Btn"]');
+
+  // Add a click event listener to each button with ID containing 'Btn'
+  accordionLinks.forEach(function(link) {
+    link.removeEventListener('click', preventDefaultAction);
+    link.addEventListener('click', function(event) {
     });
   });
 
-const exampleModal = document.getElementById('exampleModal')
-if (exampleModal) {
-  exampleModal.addEventListener('show.bs.modal', event => {
-    // Button that triggered the modal
-    const button = event.relatedTarget
-    // Extract info from data-bs-* attributes
-    const recipient = button.getAttribute('data-bs-whatever')
-    // If necessary, you could initiate an Ajax request here
-    // and then do the updating in a callback.
+  // function to prevent the default action
+  function preventDefaultAction(event) {
+    event.preventDefault();
+  }
+});
 
-    // Update the modal's content.
-    const modalTitle = exampleModal.querySelector('.modal-title')
-    const modalBodyInput = exampleModal.querySelector('.modal-body input')
+document.addEventListener('DOMContentLoaded', function() {
+  var accordions = document.querySelectorAll('.accordion');
+  accordions.forEach(function(accordion) {
+      new bootstrap.Collapse(accordion, {
+          toggle: false
+      });
+  });
+});
 
-    modalTitle.textContent = `New message to ${recipient}`
-    modalBodyInput.value = recipient
-  })
+document.addEventListener('DOMContentLoaded', function () {
+  var form = document.getElementById('filterForm');
+  
+  // check a form is present first
+  if (form) {
+    var regionDropdown = form.querySelector('#id_selected_region');
+
+    // Check for regionDropdown first
+    if (regionDropdown) {
+      regionDropdown.addEventListener('change', function () {
+        
+        form.submit();
+      });
+    }
+  }
+});
+
+// reveal confirm delete buttons
+function revealDelete(elementId) {
+    var deleteBtn = document.getElementById('deleteBtn-' + elementId);
+    if (deleteBtn.classList.contains('d-none')) {
+        deleteBtn.classList.remove('d-none');
+    } else {
+        deleteBtn.classList.add('d-none');
+    }
+    deleteBtn.offsetWidth; // Trigger DOM rebuild
 }
+
+// Auto-dismiss alert after 5 seconds (5000 milliseconds)
+$(document).ready(function () {
+    window.setTimeout(function () {
+        $(".alert").alert('close');
+    }, 5000);
+});
+
+// tool tips (popper))
+const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
+const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
+
+const popoverTriggerList = document.querySelectorAll('[data-bs-toggle="popover"]')
+const popoverList = [...popoverTriggerList].map(popoverTriggerEl => new bootstrap.Popover(popoverTriggerEl))
+
 

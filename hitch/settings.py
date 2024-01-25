@@ -117,7 +117,8 @@ DATABASES = {
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
 
 
-DATE_INPUT_FORMATS = ['%d-%m-%Y', '%Y-%m-%d','%d.%m.%Y', '%Y.%m.%d',]
+DATE_INPUT_FORMATS = ['%d-%m-%Y','%d.%m.%Y',]
+DATE_FORMAT = 'd.m.Y'
 
 CSRF_TRUSTED_ORIGINS = [
     "https://*.herokuapp.com",

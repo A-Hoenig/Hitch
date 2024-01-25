@@ -159,17 +159,13 @@ class TripForm(forms.ModelForm):
 
     depart_window = forms.ChoiceField(choices=DEPART_WINDOW_CHOICES, required=False)
     pickup_radius = forms.ChoiceField(choices=PICKUP_RADIUS_CHOICES, required=False)
-    depart_date= forms.DateField(widget=forms.DateInput(attrs={'type': 'date'} ))
+    depart_date = forms.DateField(
+        input_formats=['%d.%m.%Y', '%d-%m-%Y'],
+        widget=forms.DateInput(format='%d.%m.%Y'))
     depart_time= forms.TimeField(widget=forms.TimeInput(attrs={'type': 'time'} ))
     return_time= forms.TimeField(widget=forms.TimeInput(attrs={'type': 'time'} ), required=False)
     expected_duration = forms.CharField(widget=DurationInput(attrs={'placeholder': 'H:MM'}), required=False)
-    
 
-    # def clean(self):
-    #     cleaned_data = super().clean()
-    #     # Exclude 'driver' from validation
-    #     cleaned_data.pop('driver', None)
-    #     return cleaned_data
     
     def clean_expected_duration(self):
         duration_str = self.cleaned_data.get('expected_duration')
@@ -196,7 +192,7 @@ class TripForm(forms.ModelForm):
         
         if user is not None:
             default_depart_time = (datetime.now() + timedelta(hours=1.5)).strftime('%H:%M')
-            default_depart_date = (datetime.now())
+            default_depart_date = (datetime.now()).strftime('%d.%m.%Y')
             default_return_time = (datetime.now() + timedelta(hours=2)).strftime('%H:%M')
             self.fields['vehicle'].queryset = Vehicle.objects.filter(owner=user).order_by('make')
             self.fields['vehicle'].initial = Vehicle.objects.first()

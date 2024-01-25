@@ -1,17 +1,58 @@
-
-.black-carousel-caption{
-    color: #111;
+.black-carousel-caption {
+   color: #111;
 }
- .add-shadow {
-    filter: drop-shadow(white 0.1rem 0.1rem 10px);
- }
 
- #model {
-    display: inline-block;
-    width: 80px;
- }
+.add-shadow {
+   filter: drop-shadow(white 0.1rem 0.1rem 10px);
+}
 
- .icon {
-    display: inline-block;
-    width: 20px;
- }
+#model {
+   display: inline-block;
+   width: 80px;
+}
+
+.icon {
+   display: inline-block;
+   width: 20px;
+}
+
+#type {
+   display: inline-block;
+   width: 300px;
+}
+
+#deleteBtn {
+   display: none !important;
+}
+
+/* force small font size and position for message badge */
+.custom-badge {
+   font-size: 8px;
+   /* top: -5px !important; */
+}
+
+/* force small font sizein message dates*/
+.small-date {
+   font-size: 10px !important;
+}
+
+.message-bg {
+   background-color: rgba(0, 123, 255, 0.5);
+}
+
+/* custom media query to captions up for large screens*/
+@media (min-width: 1200px) {
+
+   /* Adjust 1200px to the breakpoint you consider 'large' */
+   .carousel-caption {
+      top: 50%;
+      transform: translateY(-30%);
+   }
+
+   /* change text to black for first large image*/
+   #pic1 {
+      color: black;
+   }
+
+
+}
