@@ -271,9 +271,11 @@ def user_trips(request):
             trip_type = request.POST.get(f'tripTypeName_{pk}')
             
             if trip_type == 'True':
+
                 print(f'you want to edit ride {pk}')
-                
+
             else:
+                
                 print(f'you want to edit hitch {pk}')
 
             return redirect('user_trips') 

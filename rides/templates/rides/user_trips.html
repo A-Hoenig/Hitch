@@ -35,13 +35,13 @@
 {% if not detailed_sorted_list %}
 <div class="container h-100">
   <div class="row h-100 justify-content-center align-items-center">
-      <div class="col-md-6">
-          <div class="text-center p-4 bg-secondary text-white rounded shadow">
-              <p>You have not offered or requested any trips in this region yet.</p>
-              <p>Go to Rides or Hitches to get started...</p>
-              <p class="fs-1"><i class="fa-solid fa-car"></i> <i class="fa-solid fa-thumbs-up"></i> </p>
-          </div>
+    <div class="col-md-6">
+      <div class="text-center p-4 bg-secondary text-white rounded shadow">
+        <p>You have not offered or requested any trips in this region yet.</p>
+        <p>Go to Rides or Hitches to get started...</p>
+        <p class="fs-1"><i class="fa-solid fa-car"></i> <i class="fa-solid fa-thumbs-up"></i> </p>
       </div>
+    </div>
   </div>
 </div>
 {% endif %}
@@ -53,7 +53,7 @@
 
       <div class="row">
         {% for s, driver, rating, hitchers_ratings_list in detailed_sorted_list %}
-        
+
         <div class="col-sm-6">
           <!-- change this to 12 for 1 column-->
 
@@ -98,10 +98,19 @@
                             <i class="fa-solid fa-pen-to-square"></i>
                           </button> -->
 
-                          <button type="submit" name="delete" value="{{ s.id }}" id="deleteBtn-{{ s.id }}"
-                            class="btn badge bg-danger">
-                            <i class="fa-regular fa-trash-can"></i>
-                          </button>
+                          <span id="hide_if_confirmed" class="">
+                            <!-- -->
+                            <button type="submit" name="delete" value="{{ s.id }}" id="deleteBtn-{{ s.id }}"
+                              class="badge rounded-pill bg-danger d-none">
+                              CONFIRM
+                            </button>
+                            <button type="button" class="btn badge bg-danger" id="delete-{{ s.id }}"
+                              onclick="revealDelete('{{ s.id }}')">
+                              <i class="fa-regular fa-trash-can"></i>
+                            </button>
+                          </span>
+
+
                         </span>
                       </div>
 
@@ -154,24 +163,23 @@
                           {% for hitcher, hitch_rating in hitchers_ratings_list %}
                           <div>
                             <!-- reveal confirm button-->
-                           
+
                             {% if hitcher.is_approved == True %}
 
-                            <span id="show_if_confirmed" data-bs-toggle="tooltip"
-                            data-bs-placement="left" data-bs-custom-class="custom-tooltip"
-                            data-bs-title="You approved this Hitcher">
+                            <span id="show_if_confirmed" data-bs-toggle="tooltip" data-bs-placement="left"
+                              data-bs-custom-class="custom-tooltip" data-bs-title="You approved this Hitcher">
                               <i class="fa-solid fa-thumbs-up"></i>
                             </span>
 
                             {% else %}
 
-                            <span id ="hide_if_confirmed" class="">
+                            <span id="hide_if_confirmed" class="">
                               <button type="button" class="badge rounded-pill bg-success"
                                 id="confirm-{{ s.id }}_{{ hitcher.id }}"
                                 onclick="revealConfirm('{{ s.id }}_{{ hitcher.id }}')">
                                 CONFIRM
                               </button>
-                              
+
                               <!-- CONFIRM BUTTON-->
                               <button class="badge rounded-pill bg-danger d-none" name="confirm"
                                 value="{{ s.id }}_{{ hitcher.id }}" id="confirmBtn-{{ s.id }}_{{ hitcher.id }}">
@@ -185,7 +193,7 @@
                             {% else %}
                             {{ hitcher.first_name }} {% render_stars rating %}
                             {% endif %}
-                            
+
 
                             <!--MESSAGE BUTTON-->
                             <!-- Button trigger modal -->
@@ -286,15 +294,15 @@
   });
 
   // reveal confirm  buttons
-function revealConfirm(elementId) {
-  var deleteBtn = document.getElementById('confirmBtn-' + elementId);
+  function revealConfirm(elementId) {
+    var deleteBtn = document.getElementById('confirmBtn-' + elementId);
 
-  // Toggle the 'd-none' class
-  deleteBtn.classList.toggle('d-none');
+    // Toggle the 'd-none' class
+    deleteBtn.classList.toggle('d-none');
 
-  // Trigger DOM rebuild if needed
-  deleteBtn.offsetWidth;
-}
+    // Trigger DOM rebuild if needed
+    deleteBtn.offsetWidth;
+  }
 </script>
 
 
