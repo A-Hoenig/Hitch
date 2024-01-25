@@ -58,8 +58,8 @@ class UserForm(forms.ModelForm):
         )
     
     last_name = forms.CharField(label='Last Name', min_length=3, max_length= 40, validators=[AlphanumericValidator])   
-    DOB = forms.DateField(widget=forms.TextInput(attrs={'type': 'date'}),required=True, label="Birthday")
-    DL_date = forms.DateField(widget=forms.TextInput(attrs={'type': 'date'}),required=True, label="Driver's License Date")
+    DOB = forms.DateField(required=True, label="Birthday", input_formats=['%d.%m.%Y'] )
+    DL_date = forms.DateField(required=True, label="Driver's License Date",input_formats=['%d.%m.%Y'] )
     email = forms.EmailField(max_length=64, widget=forms.TextInput(attrs={'readonly':'readonly'}), required=True)
 
     class Meta:
@@ -79,7 +79,12 @@ class UserForm(forms.ModelForm):
             'phone',
             'contactable',
             ]
+    
+    def __init__(self, *args, **kwargs):
+        super(UserForm, self).__init__(*args, **kwargs)
 
+        self.fields['DOB'].widget.format = '%d.%m.%Y'
+        self.fields['DL_date'].widget.format = '%d.%m.%Y'
 
 class VehicleForm(forms.ModelForm):
     """
