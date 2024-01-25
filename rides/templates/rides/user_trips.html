@@ -32,6 +32,19 @@
 <!-- RIDE EDIT MODAL -->
 <!-- END OF RIDE EDIT MODAL-->
 
+{% if not detailed_sorted_list %}
+<div class="container h-100">
+  <div class="row h-100 justify-content-center align-items-center">
+      <div class="col-md-6">
+          <div class="text-center p-4 bg-secondary text-white rounded shadow">
+              <p>You have not offered or requested any trips yet.</p>
+              <p>Go to Rides or Hitches to get started...</p>
+              <p class="fs-1"><i class="fa-solid fa-car"></i> <i class="fa-solid fa-thumbs-up"></i> </p>
+          </div>
+      </div>
+  </div>
+</div>
+{% endif %}
 
 <div class="container px-1">
 
