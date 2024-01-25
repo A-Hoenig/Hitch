@@ -62,43 +62,36 @@ $(document).ready(function () {
 });
 
 
-// show or hide weekday based on Recurring value in trip form.
+// show or hide weekdays based on Recurring value in trip form.
 document.addEventListener("DOMContentLoaded", function () {
   var dropdown = document.getElementById("id_recurring");
   var elementToToggle = document.getElementById("weekday-checkboxes");
-
   function updateVisibility() {
-      var selectedValue = dropdown.value;
-      elementToToggle.classList.toggle("d-none", selectedValue === "False");
+      // Convert the selected value to a number
+      var selectedValue = +dropdown.value;
+      elementToToggle.classList.toggle("d-none", selectedValue === 0);
   }
-  // Set initial state based on the current value of the dropdown
+  // Setstate based on the current value of the dropdown
   updateVisibility();
 
-  // now add event
+  // Add event listener for changes
   dropdown.addEventListener("change", updateVisibility);
 });
 
 
+
 // show or hide return time in trip form based on trip direction.
 document.addEventListener('DOMContentLoaded', function () {
-  var directionSelect = document.querySelector('#id_direction select');
+  var directionSelect = document.getElementById('id_direction').querySelector('select');
   var returnTimeDiv = document.getElementById('id_return_time');
 
-  function updateReturnTimeVisibility() {
-      if (directionSelect.value === 'True') {
-          returnTimeDiv.classList.remove('d-none');
-      } else {
-          returnTimeDiv.classList.add('d-none');
-      }
-  }
+  directionSelect.addEventListener('change', function() {
+      returnTimeDiv.classList.toggle('d-none', +directionSelect.value !== 1);
+  });
 
-  // Initial check when the page loads
-  updateReturnTimeVisibility();
-
-  // Event listener for changes in the dropdown
-  directionSelect.addEventListener('change', updateReturnTimeVisibility);
+  // Trigger the function initially to set the correct state
+  directionSelect.dispatchEvent(new Event('change'));
 });
-
 
 
 // tool tips (popper))

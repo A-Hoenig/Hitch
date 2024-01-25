@@ -85,9 +85,9 @@
                     {% csrf_token %}
                     {{ form.non_field_errors }}
                     {% for field in form %}
-                        {{ field.errors }}
+                    {{ field.errors }}
                     {% endfor %}
-                    
+
 
                     <div class="container">
                         <div class="row align-items-center">
@@ -186,7 +186,7 @@
                                             <div class="row d-flex justify-content-sm-start align-items-center">
                                                 <!-- *********** DEBUG **********************-->
                                                 <div class="col-md-auto fs-5"><span
-                                                    class="text-secondary">{{t.id}}</span></div>
+                                                        class="text-secondary">{{t.id}}</span></div>
                                                 <!-- Depart -->
                                                 <div class="col-md-auto fs-5"><span
                                                         class="text-secondary">{{t.depart.stoptype.stop_icon|safe}}</span>
@@ -531,8 +531,8 @@
 </div>
 
 
-
 <!-- PAGE SPECIFIC SCRIPTS GO HERE-->
+
 <script>
     // pass trip_id and destination value from individual ride in loop to the request modal (outside loop)
     document.addEventListener('DOMContentLoaded', (event) => {
@@ -547,6 +547,6 @@
         });
     });
 
-    
+   
 </script>
 {% endblock %}
