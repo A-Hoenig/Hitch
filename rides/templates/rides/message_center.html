@@ -10,115 +10,77 @@
     <div class="row">
         <div class="col-12 bg-light">
             <div class="p-3 border-bottom">
-                <i class="fa-regular fa-message"></i> MESSAGE CENTER <span class="font-weight-bold fs-4"> {{ username }}
-                </span>
+                <i class="fa-regular fa-message"></i> MESSAGE CENTER <span class="font-weight-bold fs-4"> {{ username }} </span>
             </div>
         </div>
     </div>
-</div>
+  </div>
 
 
+<!-- <div class="alert alert-warning" role="alert">
+    MESSAGES COMING SOON...
+</div> -->
+
+ 
 <div class="container">
     {% for messages in trips %}
-    <div class="card mb-4 border-2">
-        <div class="card-header bg-light d-md-flex justify-content-between align-items-center px-1">
-            <span class="mb-3 mb-md-0">
-                <div class="fs-4"">
-                        <span class=" badge bg-secondary">{{ messages.0.trip.purpose.purpose_icon|safe }}
-            </span>
-            <span class="badge bg-secondary">
-                {{ messages.0.trip.depart_date|DM }} |
-                {{ messages.0.trip.depart_time|HHMM }}
-            </span>
-            <span class="badge bg-secondary">{{ messages.0.trip.depart.city }}</span> -
-            <span class="badge bg-secondary">{{ messages.0.trip.destination.city }}</span>
-        </div>
-        </span>
-        <!-- <div class="d-flex align-items-center">
-                    <a href="#" class="btn btn-primary me-2 mt-2 mt-sm-0">Mark Read</a>
-                    <a href="#" class="btn btn-danger mt-1 mt-sm-0">X</a>
-                </div> -->
-    </div>
-
-
-    <div class="card-body">
-        {% for message in messages %}
-
-
-        <p>sender {{ message.driver}}</p>
-        <p>receiver {{ message.hitcher }}</p>
-        <p>logged in ?{{ message.is_logged_in_user }}</p>
-        <p>message {{ message.content }}</p>
-        <p>------</p>
-
-
-
-
-        {% for trip, messages in user_trip_messages.items %}
-        <div class="trip-messages">
-            <h3>Trip ID: {{ trip.id }}</h3>
-            {% for message in messages %}
-            <div
-                class="{% if message.trip.driver == user or message.hitch_request.hitcher == user %}message-right{% else %}message-left{% endif %}">
-                <p>{{ message.content }}</p>
-                <!-- Indicate role based on trip or hitch request -->
-                <span class="role-context">
-                    {% if message.trip.driver == user %}You as Driver{% else %}You as Hitcher{% endif %}
+        <div class="card mb-4 border-2">
+            <div class="card-header bg-light d-md-flex justify-content-between align-items-center px-1">
+                <span class="mb-3 mb-md-0">
+                    <div class="fs-4"">
+                        <span class="badge bg-secondary">{{ messages.0.trip.purpose.purpose_icon|safe }}</span>
+                        <span class="badge bg-secondary">
+                            {{ messages.0.trip.depart_date|DM }} |
+                            {{ messages.0.trip.depart_time|HHMM }}
+                        </span>
+                        <span class="badge bg-secondary">{{ messages.0.trip.depart.city }}</span> -
+                        <span class="badge bg-secondary">{{ messages.0.trip.destination.city }}</span>
+                      </div>
                 </span>
+              
             </div>
-            {% endfor %}
+
+            
+            <div class="card-body">
+                {% for message in messages %}
+                    <div class="row mb-2">
+                        {% if message.sender.username == username %}
+                        <!-- Display logged-in user's message on the right -->
+                        <div class="col-12">
+                            <div class="d-flex justify-content-end">
+                                <div class="message-container">
+                                    <div class="small-date text-end">
+                                        <span>You on: {{ message.date_created }}</span>
+                                    </div>
+                                    <div class="message mb-3 bg-primary text-white rounded p-2 shadow">
+                                        <span>{{ message.content }}</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    {% else %}
+                        <!-- Display other user's message on the left -->
+                        <div class="col-12">
+                            <div class="d-flex justify-content-start">
+                                <div class="message-container">
+                                    <div class="sender fs-6">
+                                        <span>{{ message.sender.first_name}}</span><span class="small-date"> ({{ message.sender }})</span>
+                                        <span class="small-date">{{ message.date_created }}</span>
+                                    </div>
+                                    <div class="message mb-3 bg-primary text-white rounded p-2 shadow">
+                                        <span>{{ message.content }}</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    {% endif %}
+                    </div>
+                {% endfor %}
+            </div>
+
+
         </div>
-        {% endfor %}
-
-
-        <!-- <div class="row mb-2">
-                        {% if message.trip.driver != username %}
-                            <div class="col-12">
-                                <div class="d-flex justify-content-start">
-                                    <div class="message-container">
-                                        <div class="sender fs-6">
-                                            <span>{{ message.trip.driver.first_name}}</span><span class="small-date"> ({{ message.trip.driver }})</span>
-                                            <span class="small-date">{{ message.date_created }}</span>
-                                        </div>
-                                        <div class="message mb-3 bg-primary text-white rounded p-2 shadow">
-                                            <span>{{ message.content }}</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        {% else %}
-                            <div class="col-12">
-                                <div class="d-flex justify-content-end">
-                                    <div class="message-container">
-                                        <div class="small-date text-end">
-                                            <span>You on: {{ message.date_created }}</span>
-                                        </div>
-                                        <div class="message mb-3 bg-primary text-white rounded p-2 shadow">
-                                            <span class="">{{ message.content }}</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        {% endif %}
-                    </div> -->
-
-
-
-
-
-
-
-
-
-
-
-        {% endfor %}
-    </div>
-
-
-
-</div>
-{% endfor %}
+    {% endfor %}
 </div>
 
 
