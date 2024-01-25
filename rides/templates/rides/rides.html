@@ -352,7 +352,7 @@
 
                                             <!--depart address -->
                                             <div class="col-sm-3">
-                                                <div class="container text-secondary mx-0 px-0">
+                                                <div class="container text-secondary mx-auto px-1 py-0 border rounded border-2 shadow-sm">
                                                     <p class="text-primary text-start small mb-0">From:</p>
                                                     <p class="text-start small mb-0">{{ t.depart.name }}</p>
                                                     <p class="text-start small mb-0">{{ t.depart.street }}</p>
@@ -363,7 +363,7 @@
 
                                             <!--destination address -->
                                             <div class="col-sm-3">
-                                                <div class="container text-secondary mx-0 px-0">
+                                                <div class="container text-secondary mx-auto px-1 py-0 border rounded border-2 shadow-sm">
                                                     <p class="text-primary text-start small mb-0">To:</p>
                                                     <p class="text-start small mb-0">{{ t.destination.name }}</p>
                                                     <p class="text-start small mb-0">{{ t.destination.street }}</p>
@@ -374,7 +374,7 @@
 
                                             <!--vehicle data -->
                                             <div class="col-sm-3">
-                                                <div class="container text-secondary mx-0 px-0">
+                                                <div class="container text-secondary mx-0 px-1 py-0 border rounded border-2 shadow-sm">
                                                     <p class="text-primary text-start small mb-0">Vehicle:</p>
                                                     <p class="text-start small mb-0">{{ t.vehicle.make }}
                                                         {{ t.vehicle.model }}</p>
@@ -386,7 +386,7 @@
 
                                             <!--drivers data  -->
                                             <div class="col-sm-3">
-                                                <div class="container text-secondary mx-0 px-0">
+                                                <div class="container text-secondary mx-0 px-1 py-0 border rounded border-2 shadow-sm">
                                                     <p class="text-primary text-start small mb-0">Driver:
                                                         <span>
                                                             {% if t.driver.contactable %}
@@ -396,17 +396,27 @@
                                                             {% endif %}
                                                         </span>
                                                     </p>
-                                                    <p class="text-start small mb-0">{{ t.driver }}
-                                                        <span>{% render_stars t.average_driver_rating %}</span>
+                                                    <p class="text-start small mb-0">
+                                                        {% if not t.driver.first_name %}
+                                                        {{ t.driver }} {% render_stars hitch_rating %}
+                                                        {% else %}
+                                                        {{ t.driver.first_name }} {% render_stars rating %}
+                                                        {% endif %}
                                                     </p>
-                                                    <p class="text-primary text-start small mb-0">Hitchers:</p>
+                                                    <p class="text-primary text-start small mb-0">Confirmed hitchers:</p>
                                                     <!-- Display available hitch slots -->
                                                     <ol class="list-unstyled p-0">
                                                         {% for hitcher in t.hitch_group %}
                                                         <li class="text-start small mb-0 text-secondary">
-                                                            {{ hitcher }}
+                                                        {% if not hitcher.first_name %}
+                                                        <i class="fa-solid fa-thumbs-up"></i> {{ hitcher }} {% render_stars hitch_rating %}
+                                                        {% else %}
+                                                        <i class="fa-solid fa-thumbs-up"></i> {{ hitcher.first_name }} {% render_stars rating %}
+                                                        {% endif %}
                                                         </li>
                                                         {% endfor %}
+                                                        <!-- display pending hitchers not approved-->
+                                                        <li class="text-start small mb-0 text-secondary">({{ t.pending_hitchers|length }} requests pending)</li>
                                                     </ol>
                                                 </div>
                                             </div>

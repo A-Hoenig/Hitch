@@ -56,27 +56,15 @@ def rides_view(request):
         else:
             trip.average_driver_rating = 0
 
-        # get the driver's allowed hitch seats from trip model
-        hitch_seats = trip.max_hitch
-        hitch_seats_list.append(hitch_seats)
-        
         # find any hitchers already approved by driver and create list - per trip
         approved_hitch_requests = Hitch_Request.objects.filter(trip=trip, pax_approved=True)
-        hitchers = [hr.hitcher.username for hr in approved_hitch_requests]
-        hitch_group = []
-        for i in range(hitch_seats):
-            if i < len(hitchers):
-                hitch_group.append(f'{i + 1}-{hitchers[i]}')
-            else:
-                hitch_group.append(f'{i + 1}- .......')
-        hitch_groups.append(hitch_group)
-        # attach to trip
-        trip.hitch_group = hitch_group
+        approved_hitchers = [hr.hitcher for hr in approved_hitch_requests]
+        trip.hitch_group = approved_hitchers
+        trip.remaining_seats = trip.max_hitch - len(approved_hitchers)
 
         # get pending hitchrequests - not approved - per trip
         all_hitch_requests = Hitch_Request.objects.filter(trip=trip)
-        pending_hitchers = [ph.hitcher.username for ph in all_hitch_requests if ph.hitcher.username not in hitchers]
-        # attach to trip
+        pending_hitchers = [hr.hitcher for hr in all_hitch_requests if hr.hitcher not in approved_hitchers]
         trip.pending_hitchers = pending_hitchers
         
     #SET UP UNIVERSAL CONTEXT

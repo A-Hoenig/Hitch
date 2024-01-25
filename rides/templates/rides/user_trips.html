@@ -142,7 +142,11 @@
                       <div class="col-md-12">
                         <!------     mini card body     ------>
                         <div class="card-text">
+                          {% if not driver.first_name %}
                           Driver: {{ driver }} {% render_stars rating %}
+                          {% else %}
+                          Driver: {{ driver.first_name }} {% render_stars rating %}
+                          {% endif %}
                         </div>
                         <div class="card-text">
                           Hitchers:
@@ -176,8 +180,12 @@
                             </span>
 
                             {% endif %}
-
+                            {% if not hitcher.first_name %}
                             {{ hitcher }} {% render_stars hitch_rating %}
+                            {% else %}
+                            {{ hitcher.first_name }} {% render_stars rating %}
+                            {% endif %}
+                            
 
                             <!--MESSAGE BUTTON-->
                             <!-- Button trigger modal -->
