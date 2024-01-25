@@ -29,7 +29,7 @@ TEMPLATES_DIR = os.path.join(BASE_DIR, 'templates')
 SECRET_KEY = os.environ.get("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 
 ALLOWED_HOSTS = [
@@ -70,7 +70,6 @@ CRISPY_TEMPLATE_PACK = "bootstrap5"
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
-    # 'debug_toolbar.middleware.DebugToolbarMiddleware',  #remove this before submit
     'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -128,7 +127,6 @@ DATE_FORMAT = 'd.m.Y'
 CSRF_TRUSTED_ORIGINS = [
     "https://*.herokuapp.com",
     "https://8000-ahoenig-hitch-pl9oitcsar1.ws-eu107.gitpod.io",
-    "https://8000-hitch-pl9oitcsar1.ws-eu107.gitpod.io/"
 ]
 
 AUTH_PASSWORD_VALIDATORS = [
