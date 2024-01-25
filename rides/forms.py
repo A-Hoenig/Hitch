@@ -58,8 +58,8 @@ class UserForm(forms.ModelForm):
         )
     
     last_name = forms.CharField(label='Last Name', min_length=3, max_length= 40, validators=[AlphanumericValidator])   
-    DOB = forms.DateField(widget=forms.TextInput(attrs={'type': 'date'}),required=True, label="Birthday")
-    DL_date = forms.DateField(widget=forms.TextInput(attrs={'type': 'date'}),required=True, label="Driver's License Date")
+    DOB = forms.DateField(required=True, label="Birthday", input_formats=['%d.%m.%Y'] )
+    DL_date = forms.DateField(required=True, label="Driver's License Date",input_formats=['%d.%m.%Y'] )
     email = forms.EmailField(max_length=64, widget=forms.TextInput(attrs={'readonly':'readonly'}), required=True)
 
     class Meta:
@@ -79,7 +79,12 @@ class UserForm(forms.ModelForm):
             'phone',
             'contactable',
             ]
+    
+    def __init__(self, *args, **kwargs):
+        super(UserForm, self).__init__(*args, **kwargs)
 
+        self.fields['DOB'].widget.format = '%d.%m.%Y'
+        self.fields['DL_date'].widget.format = '%d.%m.%Y'
 
 class VehicleForm(forms.ModelForm):
     """
@@ -159,17 +164,13 @@ class TripForm(forms.ModelForm):
 
     depart_window = forms.ChoiceField(choices=DEPART_WINDOW_CHOICES, required=False)
     pickup_radius = forms.ChoiceField(choices=PICKUP_RADIUS_CHOICES, required=False)
-    depart_date= forms.DateField(widget=forms.DateInput(attrs={'type': 'date'} ))
+    depart_date = forms.DateField(
+        input_formats=['%d.%m.%Y', '%d-%m-%Y'],
+        widget=forms.DateInput(format='%d.%m.%Y'))
     depart_time= forms.TimeField(widget=forms.TimeInput(attrs={'type': 'time'} ))
     return_time= forms.TimeField(widget=forms.TimeInput(attrs={'type': 'time'} ), required=False)
     expected_duration = forms.CharField(widget=DurationInput(attrs={'placeholder': 'H:MM'}), required=False)
-    
 
-    # def clean(self):
-    #     cleaned_data = super().clean()
-    #     # Exclude 'driver' from validation
-    #     cleaned_data.pop('driver', None)
-    #     return cleaned_data
     
     def clean_expected_duration(self):
         duration_str = self.cleaned_data.get('expected_duration')
@@ -196,7 +197,7 @@ class TripForm(forms.ModelForm):
         
         if user is not None:
             default_depart_time = (datetime.now() + timedelta(hours=1.5)).strftime('%H:%M')
-            default_depart_date = (datetime.now())
+            default_depart_date = (datetime.now()).strftime('%d.%m.%Y')
             default_return_time = (datetime.now() + timedelta(hours=2)).strftime('%H:%M')
             self.fields['vehicle'].queryset = Vehicle.objects.filter(owner=user).order_by('make')
             self.fields['vehicle'].initial = Vehicle.objects.first()
@@ -341,4 +342,7 @@ class LocationForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super(LocationForm, self).__init__(*args, **kwargs)
         instance = kwargs.get('instance')
+        first_region = Region.objects.first()
+        if first_region:
+            self.fields['region'].initial = first_region
  

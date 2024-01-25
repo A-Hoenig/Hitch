@@ -8,7 +8,6 @@ node_modules/
 .github/
 cloudinary_python.txt
 notepad.py
-notepad.html
+templates/notepad.html
 db_purp.json
 db_stops.json
-region.json

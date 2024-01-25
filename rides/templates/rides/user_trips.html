@@ -32,6 +32,19 @@
 <!-- RIDE EDIT MODAL -->
 <!-- END OF RIDE EDIT MODAL-->
 
+{% if not detailed_sorted_list %}
+<div class="container h-100">
+  <div class="row h-100 justify-content-center align-items-center">
+      <div class="col-md-6">
+          <div class="text-center p-4 bg-secondary text-white rounded shadow">
+              <p>You have not offered or requested any trips in this region yet.</p>
+              <p>Go to Rides or Hitches to get started...</p>
+              <p class="fs-1"><i class="fa-solid fa-car"></i> <i class="fa-solid fa-thumbs-up"></i> </p>
+          </div>
+      </div>
+  </div>
+</div>
+{% endif %}
 
 <div class="container px-1">
 
@@ -129,7 +142,11 @@
                       <div class="col-md-12">
                         <!------     mini card body     ------>
                         <div class="card-text">
+                          {% if not driver.first_name %}
                           Driver: {{ driver }} {% render_stars rating %}
+                          {% else %}
+                          Driver: {{ driver.first_name }} {% render_stars rating %}
+                          {% endif %}
                         </div>
                         <div class="card-text">
                           Hitchers:
@@ -163,8 +180,12 @@
                             </span>
 
                             {% endif %}
-
+                            {% if not hitcher.first_name %}
                             {{ hitcher }} {% render_stars hitch_rating %}
+                            {% else %}
+                            {{ hitcher.first_name }} {% render_stars rating %}
+                            {% endif %}
+                            
 
                             <!--MESSAGE BUTTON-->
                             <!-- Button trigger modal -->
@@ -181,7 +202,7 @@
                           {% empty %}
 
                           <div>
-                            No hitchers yet
+                            No requests yet
                           </div>
 
                           {% endfor %}
@@ -246,7 +267,7 @@
 
 
 
-<!-- fetch hitcher name and pass to modal via data-tag-->
+<!-- fetch hitcher name and pass to message modal via data-tag-->
 <script type="text/javascript">
   // update hitcher name to message modal
   $(document).ready(function () {

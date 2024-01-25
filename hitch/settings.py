@@ -34,6 +34,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = [
     '8000-ahoenig-hitch-pl9oitcsar1.ws-eu107.gitpod.io',
+    '8000-ahoenig-hitch-pl9oitcsar1.ws-eu107.gitpod.io/'
     '.herokuapp.com',
     ]
 
@@ -78,7 +79,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'allauth.account.middleware.AccountMiddleware',
-    
+    # 'allauth.account.middleware.SocialAccountMiddleware',
 ]
 
 ROOT_URLCONF = 'hitch.urls'
@@ -120,11 +121,14 @@ DATABASES = {
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
 
-DATE_INPUT_FORMATS = ['%d.%m.%Y']
+
+DATE_INPUT_FORMATS = ['%d-%m-%Y','%d.%m.%Y',]
+DATE_FORMAT = 'd.m.Y'
 
 CSRF_TRUSTED_ORIGINS = [
     "https://*.herokuapp.com",
-    "https://8000-ahoenig-hitch-pl9oitcsar1.ws-eu107.gitpod.io"
+    "https://8000-ahoenig-hitch-pl9oitcsar1.ws-eu107.gitpod.io",
+    "https://8000-hitch-pl9oitcsar1.ws-eu107.gitpod.io/"
 ]
 
 AUTH_PASSWORD_VALIDATORS = [
@@ -141,6 +145,19 @@ AUTH_PASSWORD_VALIDATORS = [
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
+
+AUTHENTICATION_BACKENDS = (
+   
+    'allauth.account.auth_backends.AuthenticationBackend',
+    
+)
+
+AUTHENTICATION_CLASSES = (
+    
+    'allauth.account.auth_backends.AuthenticationBackend',
+    
+)
+
 
 ACCOUNT_EMAIL_VERIFICATION = 'none'
 

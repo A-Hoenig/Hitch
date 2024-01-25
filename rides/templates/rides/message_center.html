@@ -52,8 +52,8 @@
                                 <div class="d-flex justify-content-start">
                                     <div class="message-container">
                                         <div class="sender fs-6">
-                                            <span>{{ message.sender }}</span>
-                                            <span class="date small-date">{{ message.date_created }}</span>
+                                            <span>{{ message.sender.first_name}}</span><span class="small-date"> ({{ message.sender }})</span>
+                                            <span class="small-date">{{ message.date_created }}</span>
                                         </div>
                                         <div class="message mb-3 bg-primary text-white rounded p-2 shadow">
                                             <span>{{ message.content }}</span>
@@ -65,7 +65,7 @@
                             <div class="col-12">
                                 <div class="d-flex justify-content-end">
                                     <div class="message-container">
-                                        <div class="date small-date text-end">
+                                        <div class="small-date text-end">
                                             <span>You on: {{ message.date_created }}</span>
                                         </div>
                                         <div class="message mb-3 bg-primary text-white rounded p-2 shadow">
