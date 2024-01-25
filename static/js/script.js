@@ -45,7 +45,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
 // reveal confirm delete buttons
 function revealDelete(elementId) {
-    var deleteBtn = document.getElementById('deleteBtn-' + elementId);
+  console.log("Called revealDelete with ID:", elementId); // Debugging  
+  var deleteBtn = document.getElementById('deleteBtn-' + elementId);
     if (deleteBtn.classList.contains('d-none')) {
         deleteBtn.classList.remove('d-none');
     } else {

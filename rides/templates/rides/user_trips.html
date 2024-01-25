@@ -86,6 +86,16 @@
                         <span class="badge bg-secondary">{{ s.depart_time|HHMM }}</span>
                       </div>
 
+
+
+
+
+
+
+
+
+
+
                       <div>
                         <span>
                           <!-- hidden input field to store ride or hitch BOOL (true = ride)-->
@@ -100,12 +110,12 @@
 
                           <span id="hide_if_confirmed" class="">
                             <!-- -->
-                            <button type="submit" name="delete" value="{{ s.id }}" id="deleteBtn-{{ s.id }}"
+                            <button type="submit" name="delete" value="{{ s.id }}" id="tripDeleteBtn-{{ s.id }}"
                               class="badge rounded-pill bg-danger d-none">
                               CONFIRM
                             </button>
-                            <button type="button" class="btn badge bg-danger" id="delete-{{ s.id }}"
-                              onclick="revealDelete('{{ s.id }}')">
+                            <button type="button" class="btn badge bg-danger" id="Tdelete-{{ s.id }}"
+                              onclick="revealTDelete('{{ s.id }}')">
                               <i class="fa-regular fa-trash-can"></i>
                             </button>
                           </span>
@@ -113,6 +123,18 @@
 
                         </span>
                       </div>
+
+
+
+
+
+
+
+
+
+
+
+
 
                     </div>
 
@@ -293,7 +315,7 @@
     });
   });
 
-  // reveal confirm  buttons
+  // reveal CONFIRM  buttons
   function revealConfirm(elementId) {
     var deleteBtn = document.getElementById('confirmBtn-' + elementId);
 
@@ -302,6 +324,17 @@
 
     // Trigger DOM rebuild if needed
     deleteBtn.offsetWidth;
+  }
+
+  // reveal confirm delete buttons your_trips page only
+  function revealTDelete(elementId) {
+    var deleteBtn = document.getElementById('tripDeleteBtn-' + elementId);
+    if (deleteBtn.classList.contains('d-none')) {
+      deleteBtn.classList.remove('d-none');
+    } else {
+      deleteBtn.classList.add('d-none');
+    }
+    deleteBtn.offsetWidth; // Trigger DOM rebuild
   }
 </script>
 

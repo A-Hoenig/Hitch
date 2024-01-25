@@ -275,7 +275,7 @@ def user_trips(request):
                 print(f'you want to edit ride {pk}')
 
             else:
-                
+
                 print(f'you want to edit hitch {pk}')
 
             return redirect('user_trips') 
@@ -299,17 +299,16 @@ def user_trips(request):
             elif trip_type == 'False':
                 #hitch
                 hitch = Hitch_Request.objects.get(id=pk)
+                linked_trip = hitch.trip
+                driver = linked_trip.driver
                 print(f'***********This would delete HITCH {pk}')
                 messages.success(request, 'Your Hitch request was deleted successfully!')
-                
                 # send notification to Driver
-                
-                # **** NEED TO GET TRIP OBJECT FOR MESSAGE_SENDER
-                message_text = "This hitcher cancelled his request"
-                # message = Message(sender=user_id, receiver=hitch.hitcher, message=message_text)
-                
+                message_text = f"Hitcher {hitch.hitcher.first_name} cancelled the hitch request"
+                message = Message(sender=hitch.hitcher, receiver=driver, content=message_text)
+                print(message)
                 hitch.delete()
-                # message.save()
+                message.save()
 
                 return redirect('user_trips') 
 
