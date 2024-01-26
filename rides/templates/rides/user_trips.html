@@ -54,7 +54,7 @@
       <div class="row">
         {% for s, driver, rating, hitchers_ratings_list in detailed_sorted_list %}
 
-        <div class="col-sm-6">
+        <div class="col-sm-12">
           <!-- change this to 12 for 1 column-->
 
           <div class="card my-2 bg-light">
@@ -85,7 +85,6 @@
                         <span class="badge bg-secondary">{{ s.depart_date|DM }}</span>
                         <span class="badge bg-secondary">{{ s.depart_time|HHMM }}</span>
                       </div>
-
                       <div>
                         <span>
                           <!-- hidden input field to store ride or hitch BOOL (true = ride)-->
@@ -99,22 +98,21 @@
                           </button> -->
 
                           <span id="hide_if_confirmed" class="">
-                            <!-- -->
-                            <button type="submit" name="delete" value="{{ s.id }}" id="tripDeleteBtn-{{ s.id }}"
-                              class="badge rounded-pill bg-danger d-none">
-                              CONFIRM
-                            </button>
                             <button type="button" class="btn badge bg-danger" id="Tdelete-{{ s.id }}"
                               onclick="revealTDelete('{{ s.id }}')">
                               <i class="fa-regular fa-trash-can"></i>
                             </button>
                           </span>
-
-
                         </span>
                       </div>
-
-
+                    </div>
+                    <div class="row">
+                      <div class="col-12 d-flex justify-content-end">
+                        <button type="submit" name="delete" value="{{ s.id }}" id="tripDeleteBtn-{{ s.id }}"
+                          class="badge rounded-pill bg-danger d-none fs-6">
+                          CONFIRM
+                        </button>
+                      </div>
                     </div>
 
                     <!-- *********************************    TRIP DETAILS ********************************-->
@@ -123,11 +121,9 @@
                         <span class="text-secondary">
                           {{ s.depart.stoptype.stop_icon|safe }}
                         </span>
-
                         <span class="ms-1">
                           {{ s.depart.city }}
                         </span>
-
                         <span class="text-secondary fs-6">
                           - {{ s.depart.name }}
                         </span>
@@ -136,11 +132,9 @@
                         <span class="text-secondary">
                           {{ s.destination.stoptype.stop_icon|safe }}
                         </span>
-
                         <span>
                           {{ s.destination.city}}
                         </span>
-
                         <span class="text-secondary fs-6">
                           - {{ s.destination.name }}
                         </span>
@@ -158,9 +152,6 @@
                           Driver: {{ driver.first_name }} {% render_stars rating %}
                           {% endif %}
                         </div>
-
-
-
 
                         {% if s.is_ride %}
                         <div class="card-text">
@@ -196,9 +187,9 @@
                             {% endif %}
 
                             {% if not hitcher.first_name %}
-                              {{ hitcher }} {% render_stars hitch_rating %}
+                            {{ hitcher }} {% render_stars hitch_rating %}
                             {% else %}
-                              {{ hitcher.first_name }} {% render_stars rating %}
+                            {{ hitcher.first_name }} {% render_stars rating %}
                             {% endif %}
 
                             <!--MESSAGE BUTTON-->
@@ -220,40 +211,33 @@
                           {% endfor %}
                         </div>
 
-                        {% else %} 
+                        {% else %}
                         <!-- it is a hitch request-->
                         {% if s.pax_approved %}
                         <span class="badge bg-warning">
                           <i class="fa-solid fa-thumbs-up"></i>
-                           Your Hitch Was Approved!
-                          </span>
-                        
+                          Your Hitch Was Approved!
+                        </span>
+
                         {% else %}
                         <span class="badge bg-secondary">
-                        Your Hitch Request ({{ s.date_created|DM }}) is pending.
-                          </span>
+                          Your Hitch Request ({{ s.date_created|DM }}) is pending.
+                        </span>
                         {% endif %}
 
                         {% endif %}
 
                       </div>
                     </div>
-
-
                   </form>
                 </div>
               </div>
             </div>
           </div>
         </div>
-
-
-
         {% endfor %}
       </div>
-
     </div>
-
   </div>
 </div>
 
