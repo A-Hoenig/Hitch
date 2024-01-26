@@ -194,13 +194,13 @@ class TripForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         user = kwargs.pop('user', None)
         super(TripForm, self).__init__(*args, **kwargs)
+        self.fields['depart'].initial = None
+        self.fields['destination'].initial = None
         
         if user is not None:
             default_depart_time = (datetime.now() + timedelta(hours=1.5)).strftime('%H:%M')
             default_depart_date = (datetime.now()).strftime('%d.%m.%Y')
             default_return_time = (datetime.now() + timedelta(hours=2)).strftime('%H:%M')
-            self.fields['vehicle'].queryset = Vehicle.objects.filter(owner=user).order_by('make')
-            self.fields['vehicle'].initial = Vehicle.objects.first()
             self.fields['depart'].queryset = Location.objects.filter(input_by=user).order_by('name')
             self.fields['destination'].queryset = Location.objects.filter(input_by=user).order_by('name')
             self.fields['region'].initial = Region.objects.first()
@@ -209,6 +209,9 @@ class TripForm(forms.ModelForm):
             self.fields['depart_date'].initial = default_depart_date
             self.fields['return_time'].initial = default_return_time
             self.fields['depart_window'].initial = 300
+            cars = Vehicle.objects.filter(owner=user).order_by('make')
+            if cars.exists():
+                self.fields['vehicle'].initial = cars.first()
 
     # ensure return time is added when trip is no one way
     def clean(self):
@@ -246,10 +249,8 @@ class HitchRequestForm(forms.ModelForm):
         model = Hitch_Request
         
         fields ='__all__'
-  
-    
 
-
+   
 class RegionFilterForm(forms.Form):
     selected_region = forms.ModelChoiceField(queryset=Region.objects.all(), empty_label=None, initial=Region.objects.first())
     print(f'Form {selected_region}')
