@@ -6,7 +6,6 @@
 {% url 'vehicles' as vehicles_url %}
 {% url 'locations' as locations_url %}
 
-
 {% block content %}
 
 <!-- MODAL FOR ADDING A LOCATION-->
@@ -17,14 +16,12 @@
                 <h1 class="fs-5" id="exampleModalLabel">Add new Location</h1>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <div class="modal-body">
-
-                <form class="form-horizontal" action="{% url 'locations' %}" method="post" autocomplete="off">
+            <!-- FORM FOR ENTERING AND EDITING A LOCATION-->
+            <form class="form-horizontal" action="{% url 'locations' %}" method="post" autocomplete="off">
+                <div class="modal-body">
                     {% csrf_token %}
-
                     <div class="row mb-2">
                         <div class="col-12">{{ form.region|as_crispy_field }}</div>
-                        
                     </div>
                     <div class="row mb-2">
                         <div class="col-6">{{ form.name|as_crispy_field }}</div>
@@ -32,7 +29,6 @@
                     </div>
                     <div class="row mb-2">
                         <div class="col-12">{{ form.street|as_crispy_field }}</div>
-
                     </div>
                     <div class="row mb-2">
                         <div class="col-6">{{ form.zipcode|as_crispy_field }}</div>
@@ -42,20 +38,18 @@
                         <div class="col-6">{{ form.country|as_crispy_field }}</div>
                         <div class="col-6">{{ form.note|as_crispy_field }}</div>
                     </div>
-                    
-
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="submit" name="save" class="btn btn-primary">Save</button>
-            </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" name="save" class="btn btn-primary">Save</button>
+                </div>
             </form>
         </div>
     </div>
 </div>
 <!-- END MODAL-->
 
-
+<!-- HEADER ROW -->
 <div class="container-fluid sticky-top shadow">
     <div class="row">
         <div class="col-12 bg-light">
@@ -72,10 +66,9 @@
         <a class="nav-link ms-0" href="{% url 'user_profile' %}">Profile</a>
         <a class="nav-link" href="{% url 'vehicles' %}">Vehicles</a>
         <a class="nav-link active" href="{% url 'locations' %}">Locations</a>
-
     </nav>
 
-    <!------------- TAB CONTENT ---------------->
+    <!-- TAB CONTENT -->
     <div class="row">
         <div class="col-md-8">
             <!-- HEADER -->
@@ -83,7 +76,6 @@
                 <div class="card-header d-flex align-items-center justify-content-between">
                     <h3>Your Locations</h3>
                 </div>
-
                 <Div class="mt-3">
                     <div>
                         <button type="button" class="btn btn-primary ms-2" data-bs-toggle="modal"
@@ -92,95 +84,70 @@
                         </button>
                     </div>
                 </Div>
-
-
                 <!-- main content under here:  -->
                 <div class="card-body mx-0 px-0">
-
-
-
-
                     <div class="accordion" id="VehicleAccordionList">
 
                         <!-- loop through each vehile in the db-->
                         {% for l, form in locations %}
-                        <form method="post">
-                            {% csrf_token %}
+                            <form method="post">
+                                {% csrf_token %}
 
-                            <!-- accordion header row starts here-->
-                            <div class="accordion-item">
-                                <h2 class="accordion-header">
-                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                                        data-bs-target="#flush-collapse{{l.id}}" aria-expanded="false"
-                                        aria-controls="flush-collapse{{l.id}}">
-                                        <div class="grid gap-3">
-                                            <!-- add  thumbnail icon based on type-->
-                                            
-                                            {{ l.stoptype.stop_icon|safe }}
+                                <!-- accordion header row starts here-->
+                                <div class="accordion-item">
+                                    <h2 class="accordion-header">
+                                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                            data-bs-target="#flush-collapse{{l.id}}" aria-expanded="false"
+                                            aria-controls="flush-collapse{{l.id}}">
+                                            <div class="grid gap-3">
+                                                <!-- add  thumbnail icon based on type-->
+                                                {{ l.stoptype.stop_icon|safe }}
+                                                <span class="ms-2" id="name">{{l.name}}</span>
+                                                <span class="ms-2 me-2">|</span>
+                                                <span>{{l.street}},</span>
+                                                <span>{{l.city}}</span>
+                                            </div>
+                                        </button>
+                                    </h2>
+                                    <!-- Drop down details form-->
+                                    <div id="flush-collapse{{l.id}}" class="accordion-collapse collapse"
+                                        data-bs-parent="#VehicleAccordionList">
+                                        <div class="accordion-body">
 
-                                            <span class="ms-2" id="name">{{l.name}}</span>
-                                            <span class="ms-2 me-2">|</span>
-                                            <span>{{l.street}},</span>
-                                            <span>{{l.city}}</span>
+                                            <form novalidate class="form-horizontal" action="{% url 'locations' %}"
+                                                method="post" autocomplete="off">
+                                                {% csrf_token %}
 
+                                                {% crispy form %}
+
+                                                <button type="submit" name="update" value="{{ l.id }}"
+                                                    id="submitBtn-{{ l.id }}" class="btn btn-primary">
+                                                    Update
+                                                </button>
+                                                <button type="button" class="btn btn-danger" id="update-{{ l.id }}"
+                                                    onclick="revealDelete('{{ l.id }}')">
+                                                    Delete
+                                                </button>
+                                                <button type="submit" class="btn btn-danger d-none"
+                                                    id="deleteBtn-{{ l.id }}" name="delete" value="{{ l.id }}">
+                                                    Confirm Delete
+                                                </button>
+                                            </form>
                                         </div>
-                                    </button>
-                                </h2>
-                                <!-- drop down details form-->
-                                <div id="flush-collapse{{l.id}}" class="accordion-collapse collapse"
-                                    data-bs-parent="#VehicleAccordionList">
-                                    <div class="accordion-body">
-
-                                        <form novalidate class="form-horizontal" action="{% url 'locations' %}"
-                                            method="post" autocomplete="off">
-                                            {% csrf_token %}
-                                            {% crispy form %}
-
-                                            <button type="submit" name="update" value="{{ l.id }}"
-                                                id="submitBtn-{{ l.id }}" class="btn btn-primary">
-                                                Update
-                                            </button>
-
-                                            <button type="button" class="btn btn-danger" id="update-{{ l.id }}"
-                                                onclick="revealDelete('{{ l.id }}')">
-                                                Delete
-                                            </button>
-
-                                            <button type="submit" class="btn btn-danger d-none"
-                                                id="deleteBtn-{{ l.id }}" name="delete" value="{{ l.id }}">
-                                                Confirm Delete
-                                            </button>
-
-                                        </form>
-
                                     </div>
                                 </div>
-                            </div>
-
                             {% endfor %}
                         </form>
                     </div>
-
-
-
-
                 </div>
             </div>
-
-
         </div>
-
-
-
 
         <div class="col-md-4">
             <img src="https://res.cloudinary.com/dd9slw6f0/image/upload/v1705659214/map-pins_lgwfk6.jpg"
                 class="img-fluid rounded" alt="A map with pins">
-
         </div>
     </div>
 </div>
-
-
 
 {% endblock %}

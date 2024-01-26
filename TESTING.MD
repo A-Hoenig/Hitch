@@ -5,38 +5,62 @@ Find it on GitHub: <a href="https://github.com/A-Hoenig/Hitch">HITCH</a>
 <img src="./static/images/hitch-logo-bg.png" alt="Hitch" width="400"/>
 <img src="./static/docs/amiresponsive-1.png" alt="AmIResponsive" width="400"/>
 
-## CONTENTS
+# CONTENTS
 
 <!-- TABLE OF CONTENTS -->
 
   <summary>Table of Contents</summary>
   <ol>
-    <li><a href="#about-the-project">About The Project</a></li>
-    <li><a href="#user-stories">User Stories</a></li>
-    <li><a href="#design">Design</a></li>
-
+    <li><a href="#validator-testing">Validator Testing</a></li>
+    <li><a href="#manual-testing">Manual Testing</a></li>
+    <li><a href="#known-bugs">Known Bugs</a></li>
   </ol>
 
+# Epics and User Stories
 
-## Validator Testing
+For simplicity, the App design was divided into 3 major Epics
 
-### W2C HTML Validator
+* Admin
+* Ride Sharing
+* Messaging
 
-### Jigsaw CSS Validator
+**Admin** By using Django framework, most of the admin would be taken care of by the built in user models and account handling
+Only the extended user data had to be integrated to allow tracking of information for the Ride sharing specifically.
 
-### PEP8 Python Validator
+**Ride Shring**
+All user stories relating to hitching a ride with another driver fall under this category.
+
+**Messaging**
+Once Admin and Ride Sharing were accomplihed an additional layer of in app messaging became possible.
+
+
+
+# Validator Testing
+
+## W2C HTML Validator
+It is a known issue that the W3C Validator does not recognise django template language (DTL) and flags it as an error.
+The focus was on finding any HTML errors and bad badpractices AROUND the DTL issues.
+
+## Jigsaw CSS Validator
+
+## PEP8 Python Validator
 
  - No errors were returned when passing through the official [CI pep8 Linter](https://pep8ci.herokuapp.com/)
 <img src="./assets/images/linter-result.png" alt="Linter" width="700"/>
 
-### Chrome DEV Tools Lighthouse
+## Chrome DEV Tools Lighthouse
 
 
- 
+EPICS 
+Hitch A Ride
+Messaging
+Admin
 
 
 
-## Manual Testing
+# Manual Testing
+
+## Admin Epic
 
 ### 1. GENERAL TESTS
 | Feature/Story       | Action | Result |
@@ -88,7 +112,7 @@ The deployed app on heroku was tested on most popular browsers for functionality
 * Edge
 * Opera
 
-### Known Bugs
+## Known Bugs
 
 
 

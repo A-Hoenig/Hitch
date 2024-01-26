@@ -5,12 +5,7 @@
 {% load customfilters %}
 {% load star_rating_tags %}
 
-
 {% block content %}
-
-
-
-
 
 <!-- FOR FOR REGION SELECTION-->
 <div class="container-fluid sticky-top">
@@ -30,8 +25,10 @@
 <!-- END OF REGION SELECT MODAL-->
 
 <!-- RIDE EDIT MODAL -->
+<!-- Ride form will go here -->
 <!-- END OF RIDE EDIT MODAL-->
 
+<!-- MESSAGE IF NOT TRIPS YET-->
 {% if not detailed_sorted_list %}
 <div class="container h-100">
   <div class="row h-100 justify-content-center align-items-center">
@@ -47,35 +44,27 @@
 {% endif %}
 
 <div class="container px-1">
-
   <div class="row mt-3">
     <div class="col-sm-12">
-
       <div class="row">
+        <!-- MAIN LOOP -----  combined ride/hitch list sorted = s ------------------->
         {% for s, driver, rating, hitchers_ratings_list in detailed_sorted_list %}
-
-        <div class="col-sm-12">
-          <!-- change this to 12 for 1 column-->
-
+        <div class="col-sm-12"><!-- change this to 12 for 1 column-->
           <div class="card my-2 bg-light">
             <div class="card-body">
-
-              <!------ PILL TRIP TYPE LABEL------>
+              <!------ PILL TRIP PR HITCH LABEL------>
               {% if s.is_ride %}
-
-              <span class="position-absolute top-0 start-50 translate-middle badge rounded-pill bg-success">
-                <i class="fa-solid fa-car"></i> RIDE
-              </span>
+                  <span class="position-absolute top-0 start-50 translate-middle badge rounded-pill bg-success">
+                    <i class="fa-solid fa-car"></i> RIDE
+                  </span>
               {% else %}
-              <span class="position-absolute top-0 start-50 translate-middle badge rounded-pill bg-warning">
-                <i class="fa-solid fa-thumbs-up"></i> HITCH
-              </span>
+                  <span class="position-absolute top-0 start-50 translate-middle badge rounded-pill bg-warning">
+                    <i class="fa-solid fa-thumbs-up"></i> HITCH
+                  </span>
               {% endif %}
-
               <!------   mini card title    ------>
               <div class="row">
                 <div class="col-md-12">
-
                   <form method="POST" action="{% url 'user_trips' %}">
                     {% csrf_token %}
                     <div class="card-title h4 d-flex justify-content-between">
@@ -86,6 +75,7 @@
                         <span class="badge bg-secondary">{{ s.depart_time|HHMM }}</span>
                       </div>
                       <div>
+
                         <span>
                           <!-- hidden input field to store ride or hitch BOOL (true = ride)-->
                           <input type="hidden" name="tripTypeName_{{ s.id }}" id="tripTypeID_{{ s.id }}"
@@ -96,7 +86,7 @@
                             class="btn badge bg-secondary">
                             <i class="fa-solid fa-pen-to-square"></i>
                           </button> -->
-
+                          <!-- TRASHCAN DELETE ICON -->
                           <span id="hide_if_confirmed" class="">
                             <button type="button" class="btn badge bg-danger" id="Tdelete-{{ s.id }}"
                               onclick="revealTDelete('{{ s.id }}')">
@@ -104,8 +94,10 @@
                             </button>
                           </span>
                         </span>
+
                       </div>
                     </div>
+                    <!-- CONFIRM DELETE BUTTON -->
                     <div class="row">
                       <div class="col-12 d-flex justify-content-end">
                         <button type="submit" name="delete" value="{{ s.id }}" id="tripDeleteBtn-{{ s.id }}"
@@ -114,7 +106,6 @@
                         </button>
                       </div>
                     </div>
-
                     <!-- *********************************    TRIP DETAILS ********************************-->
                     <div class="card-title h4">
                       <div>
@@ -140,93 +131,81 @@
                         </span>
                       </div>
                     </div>
-
                     <!-- DRIVER HITCHER DETAILS-->
                     <div class="row">
                       <div class="col-md-12">
                         <!------     mini card body     ------>
                         <div class="card-text">
                           {% if not driver.first_name %}
-                          Driver: {{ driver }} {% render_stars rating %}
+                              Driver: {{ driver }} {% render_stars rating %}
                           {% else %}
-                          Driver: {{ driver.first_name }} {% render_stars rating %}
+                              Driver: {{ driver.first_name }} {% render_stars rating %}
                           {% endif %}
                         </div>
-
+                        <!-- HANDLE RIDE INFOS -->
                         {% if s.is_ride %}
                         <div class="card-text">
                           Hitchers:
-
+                          <!-- LOOP THROUGH ALL HITCHERS ATTACHED TO RIDE -->
                           {% for hitcher, hitch_rating in hitchers_ratings_list %}
-                          <div>
-                            <!-- reveal confirm button-->
+                              <div>
+                                <!-- Thumbs up icon for confirmed hitchers-->
+                                {% if hitcher.is_approved == True %}
+                                    <span id="show_if_confirmed" data-bs-toggle="tooltip" data-bs-placement="left"
+                                      data-bs-custom-class="custom-tooltip" data-bs-title="You approved this Hitcher">
+                                      <i class="fa-solid fa-thumbs-up"></i>
+                                    </span>
+                                {% else %}
+                                    <!-- reveal confirm button-->
+                                    <span id="hide_if_confirmed" class="">
+                                      <button type="button" class="badge rounded-pill bg-success"
+                                        id="confirm-{{ s.id }}_{{ hitcher.id }}"
+                                        onclick="revealConfirm('{{ s.id }}_{{ hitcher.id }}')">
+                                        CONFIRM
+                                      </button>
+                                      <!-- CONFIRM BUTTON-->
+                                      <button class="badge rounded-pill bg-danger d-none" name="confirm"
+                                        value="{{ s.id }}_{{ hitcher.id }}" id="confirmBtn-{{ s.id }}_{{ hitcher.id }}">
+                                        SURE?
+                                      </button>
+                                    </span>
+                                {% endif %}
 
-                            {% if hitcher.is_approved == True %}
+                                {% if not hitcher.first_name %}
+                                {{ hitcher }} {% render_stars hitch_rating %}
+                                {% else %}
+                                {{ hitcher.first_name }} {% render_stars rating %}
+                                {% endif %}
 
-                            <span id="show_if_confirmed" data-bs-toggle="tooltip" data-bs-placement="left"
-                              data-bs-custom-class="custom-tooltip" data-bs-title="You approved this Hitcher">
-                              <i class="fa-solid fa-thumbs-up"></i>
-                            </span>
-
-                            {% else %}
-
-                            <span id="hide_if_confirmed" class="">
-                              <button type="button" class="badge rounded-pill bg-success"
-                                id="confirm-{{ s.id }}_{{ hitcher.id }}"
-                                onclick="revealConfirm('{{ s.id }}_{{ hitcher.id }}')">
-                                CONFIRM
-                              </button>
-
-                              <!-- CONFIRM BUTTON-->
-                              <button class="badge rounded-pill bg-danger d-none" name="confirm"
-                                value="{{ s.id }}_{{ hitcher.id }}" id="confirmBtn-{{ s.id }}_{{ hitcher.id }}">
-                                SURE?
-                              </button>
-                            </span>
-
-                            {% endif %}
-
-                            {% if not hitcher.first_name %}
-                            {{ hitcher }} {% render_stars hitch_rating %}
-                            {% else %}
-                            {{ hitcher.first_name }} {% render_stars rating %}
-                            {% endif %}
-
-                            <!--MESSAGE BUTTON-->
-                            <!-- Button trigger modal -->
-                            <button type="button" name="message_to"
-                              class="badge rounded-pill bg-success open-messageModal" data-bs-toggle="modal"
-                              data-bs-target="#messageModal" value="{{ s.id }}_{{ hitcher.id }}"
-                              id="messageBtn-{{ hitcher.id }}" data-hitcher_id="{{ hitcher.id }}"
-                              data-trip_id="{{ s.id }}" data-hitcher="{{ hitcher.first_name }}">
-                              <i class="fa-regular fa-message"></i>
-                            </button>
-
-                          </div>
-                          {% empty %}
-                          <div>
-                            No requests yet
-                          </div>
-
-                          {% endfor %}
+                                <!--MESSAGE BUTTON-->
+                                <!-- trigger modal -->
+                                <button type="button" name="message_to"
+                                  class="badge rounded-pill bg-success open-messageModal" data-bs-toggle="modal"
+                                  data-bs-target="#messageModal" value="{{ s.id }}_{{ hitcher.id }}"
+                                  id="messageBtn-{{ hitcher.id }}" data-hitcher_id="{{ hitcher.id }}"
+                                  data-trip_id="{{ s.id }}" data-hitcher="{{ hitcher.first_name }}">
+                                  <i class="fa-regular fa-message"></i>
+                                </button>
+                              </div>
+                              {% empty %} <!-- NO REQUESTS RETURNED FROM VIEW -->
+                              <div>
+                                No requests yet
+                              </div>
+                          {% endfor %} <!-- END OF HITCHER LOOP-->
                         </div>
-
                         {% else %}
-                        <!-- it is a hitch request-->
-                        {% if s.pax_approved %}
-                        <span class="badge bg-warning">
-                          <i class="fa-solid fa-thumbs-up"></i>
-                          Your Hitch Was Approved!
-                        </span>
-
-                        {% else %}
-                        <span class="badge bg-secondary">
-                          Your Hitch Request ({{ s.date_created|DM }}) is pending.
-                        </span>
+                              <!-- it is a hitch request-->
+                              {% if s.pax_approved %}
+                                  <span class="badge bg-warning">
+                                    <i class="fa-solid fa-thumbs-up"></i>
+                                    Your Hitch Was Approved!
+                                  </span>
+                                  {% else %}
+                                  <span class="badge bg-secondary">
+                                    Your Hitch Request ({{ s.date_created|DM }}) is pending.
+                                  </span>
+                              {% endif %}
                         {% endif %}
-
-                        {% endif %}
-
                       </div>
                     </div>
                   </form>
@@ -235,12 +214,11 @@
             </div>
           </div>
         </div>
-        {% endfor %}
+        {% endfor %} <!-- END OF MAIN LOOP-->
       </div>
     </div>
   </div>
 </div>
-
 
 <!-- Message Modal -->
 <div class="modal fade" id="messageModal" tabindex="-1" aria-labelledby="messageModalLabel" aria-hidden="true">
@@ -251,7 +229,6 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-
         <form method="post" action="{% url 'user_trips' %}">
           {% csrf_token %}
           <div class="mb-3">
@@ -260,11 +237,9 @@
           <div class="modal-footer">
             <input type="hidden" name="message_trip_id" value="">
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-
             <button type="submit" class="btn btn-primary">
               SEND
             </button>
-
           </div>
         </form>
       </div>
@@ -274,9 +249,7 @@
 <!-- END OF MESSAGE MODAL -->
 
 
-
-
-
+<!--  SCRIPTS GO HERE -->
 
 <!-- fetch hitcher name and pass to message modal via data-tag-->
 <script type="text/javascript">
@@ -288,6 +261,7 @@
     });
   });
 
+  // APPEND TRIP AND HITCHER ID TO MESSAGE MODAL
   $(document).ready(function () {
     $('.open-messageModal').click(function () {
       var tripId = $(this).data('trip_id');
@@ -318,7 +292,5 @@
     deleteBtn.offsetWidth; // Trigger DOM rebuild
   }
 </script>
-
-
 
 {% endblock %}

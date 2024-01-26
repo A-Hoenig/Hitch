@@ -5,7 +5,6 @@
 {% load star_rating_tags %}
 {% url 'about' as about_url %}
 
-
 {% block content %}
 
 <!-- USER FEEDBACK BAR, ACTION BUTTON AND REGION SELECT-->
@@ -52,19 +51,16 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-
                 <form method="post" action="{% url 'rides_view' %}">
                     {% csrf_token %}
                     <div class="mb-3">
                         {{ message_form|crispy }}
                     </div>
-
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                         <button name="ride_trip_id" value="" type="submit" class="btn btn-primary">Request Ride</button>
                     </div>
                 </form>
-
             </div>
         </div>
     </div>
@@ -79,11 +75,8 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-
-
                 <form class="form-horizontal" action="{% url 'rides_view' %}" method="post" autocomplete="off">
                     {% csrf_token %}
-           
                     <div class="container">
                         <div class="row align-items-center">
                             <div class="col-md">{{ form.depart_date|as_crispy_field }}</div>
@@ -91,24 +84,19 @@
                             <div class="col-md">{{ form.depart_window|as_crispy_field }}</div>
                             <div class="col-md">{{ form.expected_duration|as_crispy_field }}</div>
                         </div>
-
                         <div class="row align-items-center">
-                            <!-- Left  -->
                             <div class="col-md">
                                 {{ form.depart|as_crispy_field }}
                             </div>
-                            <!-- Center  -->
                             <div class="col-md-auto mt-md-3">
                                 <a href="{% url 'locations' %}" class="btn btn-primary"
                                     style="width: 100px; height: 36px;">
                                     New Location</a>
                             </div>
-                            <!-- Right  -->
                             <div class="col-md">
                                 {{ form.destination|as_crispy_field }}
                             </div>
                         </div>
-
                         <div class="row align-items-center">
                             <div class="col-md-6" id="id_direction">{{ form.direction|as_crispy_field }}</div>
                             <div class="col-md d-none" id="id_return_time">{{ form.return_time|as_crispy_field }}</div>
@@ -138,7 +126,6 @@
                             <div class="col-md-12">{{ form.note|as_crispy_field }}</div>
                         </div>
                     </div>
-
                     <div class="container">
                         <div class="modal-footer align-middle">
                             <span class="mt-4">{{ form.region|as_crispy_field }}</span>
@@ -147,15 +134,11 @@
                         </div>
                     </div>
                 </form>
-
-
-
             </div>
         </div>
     </div>
 </div>
 <!-- END OF MOADL FOR OFFER RIDE-->
-
 
 <!-- MAIN ACCORDION TRIP STYLE - LOOPED-->
 <div class="container-sm mt-2">
@@ -167,32 +150,23 @@
                 {% for t in trips %}
                 <form method="post">
                     {% csrf_token %}
-
                     <!----------------------------- accordion header row starts here --------------------------->
                     <div class="accordion-item">
                         <h2 class="accordion-header">
-                            <button class="accordion-button collapsed p-2 py-sm-4 shadow " type="button" data-bs-toggle="collapse"
-                                data-bs-target="#flush-collapse{{t.id}}" aria-expanded="false"
+                            <button class="accordion-button collapsed p-2 py-sm-4 shadow " type="button"
+                                data-bs-toggle="collapse" data-bs-target="#flush-collapse{{t.id}}" aria-expanded="false"
                                 aria-controls="flush-collapse{{t.id}}">
-
                                 <!--------------------- TOP ROW ---------------------->
                                 <div class="container px-1">
                                     <div class="row">
-
                                         <div class="col-sm-6">
-
                                             <div class="row d-flex justify-content-sm-start align-items-center">
-                                                <!-- *********** DEBUG **********************-->
-                                                <!-- <div class="col-md-auto fs-5"><span
-                                                        class="text-secondary">{{t.id}}</span></div> -->
                                                 <!-- Depart -->
                                                 <div class="col-md-auto fs-5"><span
                                                         class="text-secondary">{{t.depart.stoptype.stop_icon|safe}}</span>
                                                     {{t.depart.city}}</div>
-
                                                 <!-- Trip Arrows -->
                                                 <div class="col-md-auto fs-5">
-
                                                     {% if t.recurring == False and t.direction == 0 %}
                                                     <i class="fa-solid fa-angle-right" data-bs-toggle="tooltip"
                                                         data-bs-placement="left" data-bs-custom-class="custom-tooltip"
@@ -213,18 +187,13 @@
                                                         class="fa-solid fa-angles-right"></i>
                                                     {% endif %}
                                                 </div>
-
                                                 <!-- Destination -->
                                                 <div class="col-sm-auto fs-5"><span
                                                         class="text-secondary">{{t.destination.stoptype.stop_icon|safe}}</span>
                                                     {{t.destination.city}}</div>
-
                                             </div>
-
                                         </div>
-
                                         <div class="col-sm-3">
-
                                             <!-- Depart Date -->
                                             <div class="my-1 text-secondary">
                                                 <span>
@@ -248,23 +217,16 @@
                                                             {{ t.return_time|HHMM }})
                                                         </span>
                                                         {% endif %}
-
                                                     </div>
                                                 </span>
                                             </div>
-
                                         </div>
-
-
                                         <div class="col-md-3">
-
                                             <!-- Trip Symbols -->
-                                            
-                                            
                                             <div class="fs-4">
-                                                <span class="text-nowrap fs-5" data-bs-toggle="tooltip" data-bs-placement="left"
-                                                data-bs-custom-class="custom-tooltip"
-                                                data-bs-title="Remaining seats being offered">
+                                                <span class="text-nowrap fs-5" data-bs-toggle="tooltip"
+                                                    data-bs-placement="left" data-bs-custom-class="custom-tooltip"
+                                                    data-bs-title="Remaining seats being offered">
                                                     {{ t.remaining_seats }} <i class="fa-solid fa-thumbs-up"></i>
                                                 </span>
                                                 <!-- add electic plug icon based for electric and hybrid-->
@@ -296,18 +258,15 @@
                                                     <span class="icon"><i class="fa-solid fa-car"></i></span>
                                                     {% endif %}
                                                 </span>
-
                                                 <!-- purpose icon - HTML stored in DB -->
                                                 <span class="mx-1" data-bs-toggle="tooltip" data-bs-placement="left"
                                                     data-bs-custom-class="custom-tooltip"
                                                     data-bs-title="{{ t.purpose.purpose }}">
                                                     {{ t.purpose.purpose_icon|safe }}
                                                 </span>
-
                                                 <!-- Smoking or No Smoking -->
                                                 <span class="mx-1">
                                                     {% if t.vehicle.smoking == False %}
-
                                                     <i class="fa-solid fa-ban-smoking text-danger fs-4"
                                                         data-bs-toggle="tooltip" data-bs-placement="left"
                                                         data-bs-custom-class="custom-tooltip"
@@ -318,7 +277,6 @@
                                                         data-bs-title="This driver allows smoking."></i>
                                                     {% endif %}
                                                 </span>
-
                                                 <!-- Driver Note -->
                                                 <span class="mx-1 me-4">
                                                     {% if t.note %}
@@ -327,39 +285,26 @@
                                                         data-bs-title="{{t.note}}"></i>
                                                     {% endif %}
                                                 </span>
-
                                             </div>
-
                                         </div>
-
-
                                     </div>
-
-
                                 </div>
-
-
                             </button>
                         </h2>
                     </div>
-
                     <!------------------------------------      drop down details form      ------------------------------------------>
                     <div id="flush-collapse{{t.id}}" class="accordion-collapse collapse border bg-light"
                         data-bs-parent="#RidesAccordionList">
-
                         <div class="accordion-body p-1">
                             <div class="container-sm mx-0 px-0">
-
                                 <!---------      TOP ROW     ----------->
                                 <div class="row px-3">
-
                                     <div class="container-sm mx-0 px-0">
-
                                         <div class="row">
-
                                             <!--depart address -->
                                             <div class="col-sm-3">
-                                                <div class="container text-secondary mx-auto px-1 py-0 border rounded border-2 shadow-sm">
+                                                <div
+                                                    class="container text-secondary mx-auto px-1 py-0 border rounded border-2 shadow-sm">
                                                     <p class="text-primary text-start small mb-0">From:</p>
                                                     <p class="text-start small mb-0">{{ t.depart.name }}</p>
                                                     <p class="text-start small mb-0">{{ t.depart.street }}</p>
@@ -367,10 +312,10 @@
                                                     <p class="text-start small mb-0">{{ t.depart.zipcode }}</p>
                                                 </div>
                                             </div>
-
                                             <!--destination address -->
                                             <div class="col-sm-3">
-                                                <div class="container text-secondary mx-auto px-1 py-0 border rounded border-2 shadow-sm">
+                                                <div
+                                                    class="container text-secondary mx-auto px-1 py-0 border rounded border-2 shadow-sm">
                                                     <p class="text-primary text-start small mb-0">To:</p>
                                                     <p class="text-start small mb-0">{{ t.destination.name }}</p>
                                                     <p class="text-start small mb-0">{{ t.destination.street }}</p>
@@ -378,13 +323,13 @@
                                                     <p class="text-start small mb-0">{{ t.destination.zipcode }}</p>
                                                 </div>
                                             </div>
-
                                             <!--vehicle data -->
                                             <div class="col-sm-3">
-                                                <div class="container text-secondary mx-0 px-1 py-0 border rounded border-2 shadow-sm">
+                                                <div
+                                                    class="container text-secondary mx-0 px-1 py-0 border rounded border-2 shadow-sm">
                                                     <p class="text-primary text-start small mb-0">Vehicle:</p>
-                                                    <p class="text-start small mb-0">{{ t.vehicle.make }}
-                                                        {{ t.vehicle.model }}</p>
+                                                    <p class="text-start small mb-0">
+                                                        {{ t.vehicle.make }}{{ t.vehicle.model }}</p>
                                                     <p class="text-start small mb-0">
                                                         {{ t.vehicle.get_engine_display }}
                                                     </p>
@@ -394,10 +339,10 @@
                                                     <p> </p>
                                                 </div>
                                             </div>
-
                                             <!--drivers data  -->
                                             <div class="col-sm-3">
-                                                <div class="container text-secondary mx-0 px-1 py-0 border rounded border-2 shadow-sm">
+                                                <div
+                                                    class="container text-secondary mx-0 px-1 py-0 border rounded border-2 shadow-sm">
                                                     <p class="text-primary text-start small mb-0">Driver:
                                                         <span>
                                                             {% if t.driver.contactable %}
@@ -414,23 +359,28 @@
                                                         {{ t.driver.first_name }} {% render_stars rating %}
                                                         {% endif %}
                                                     </p>
-                                                    <p class="text-primary text-start small mb-0">Confirmed hitchers:</p>
+                                                    <p class="text-primary text-start small mb-0">Confirmed hitchers:
+                                                    </p>
                                                     <!-- Display available hitch slots -->
                                                     <ol class="list-unstyled p-0">
                                                         {% for hitcher in t.hitch_group %}
                                                         <li class="text-start small mb-0 text-secondary">
-                                                        {% if not hitcher.first_name %}
-                                                        <i class="fa-solid fa-thumbs-up"></i> {{ hitcher }} {% render_stars hitch_rating %}
-                                                        {% else %}
-                                                        <i class="fa-solid fa-thumbs-up"></i> {{ hitcher.first_name }} {% render_stars rating %}
-                                                        {% endif %}
+                                                            {% if not hitcher.first_name %}
+                                                            <i class="fa-solid fa-thumbs-up"></i> {{ hitcher }}
+                                                            {% render_stars hitch_rating %}
+                                                            {% else %}
+                                                            <i class="fa-solid fa-thumbs-up"></i>
+                                                            {{ hitcher.first_name }} {% render_stars rating %}
+                                                            {% endif %}
                                                         </li>
                                                         {% endfor %}
                                                         <!-- display pending hitchers not approved-->
                                                         {% if t.pending_hitchers|length == 0 %}
-                                                        <li class="text-start small mb-0 text-secondary">No requests yet</li>
+                                                        <li class="text-start small mb-0 text-secondary">No requests yet
+                                                        </li>
                                                         {% else %}
-                                                        <li class="text-start small mb-0 text-secondary">({{ t.pending_hitchers|length }} requests pending)</li>
+                                                        <li class="text-start small mb-0 text-secondary">
+                                                            ({{ t.pending_hitchers|length }} requests pending)</li>
                                                         {% endif %}
                                                     </ol>
                                                 </div>
@@ -438,7 +388,6 @@
                                         </div>
                                     </div>
                                 </div>
-
                                 <!-----------      MIDDLE ROW        ---------->
                                 <div class="row">
                                     <div class="col-sm-12 mx-1 mb-3">
@@ -449,7 +398,6 @@
                                         {% endif %}
                                     </div>
                                 </div>
-
                                 <!-- BOTTOM ROW -->
                                 <div class="row">
                                     <div class="col-sm-6 px-3">
@@ -493,13 +441,11 @@
                                                 {% else %}
                                                 <span CLASS="badge bg-secondary rounded-pill">SUN</span>
                                                 {% endif %}
-
                                             </span>
                                         </div>
                                         {% endif %}
                                     </div>
                                 </div>
-
                                 <div class="">
                                     <form method="post" action="{% url 'account_login' %}?next={{ request.path }}">
                                         {% csrf_token %}
@@ -541,7 +487,6 @@
                                         {% endif %}
                                     </form>
                                 </div>
-
                             </div>
                         </div>
                     </div>
@@ -551,7 +496,6 @@
         </div>
     </div>
 </div>
-
 
 <!-- PAGE SPECIFIC SCRIPTS GO HERE-->
 
@@ -599,4 +543,5 @@
         directionSelect.dispatchEvent(new Event('change'));
     });
 </script>
+
 {% endblock %}

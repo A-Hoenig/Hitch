@@ -5,29 +5,24 @@
 
 {% block content %}
 
-
 <div class="container-fluid  sticky-top shadow">
     <div class="row">
         <div class="col-12 bg-light">
             <div class="p-3 border-bottom">
-                <i class="fa-regular fa-message"></i> MESSAGE CENTER <span class="font-weight-bold fs-4"> {{ username }} </span>
+                <i class="fa-regular fa-message"></i> MESSAGE CENTER <span class="font-weight-bold fs-4"> {{ username }}
+                </span>
             </div>
         </div>
     </div>
-  </div>
+</div>
 
-
-<!-- <div class="alert alert-warning" role="alert">
-    MESSAGES COMING SOON...
-</div> -->
-
- 
 <div class="container">
+    <!--LOOP THROUGH ALL TRIPS/HITCHES PASSED IN-->
     {% for messages in trips %}
         <div class="card mb-4 border-2">
             <div class="card-header bg-light d-md-flex justify-content-between align-items-center px-1">
                 <span class="mb-3 mb-md-0">
-                    <div class="fs-4"">
+                    <div class="fs-4">
                         <span class="badge bg-secondary">{{ messages.0.trip.purpose.purpose_icon|safe }}</span>
                         <span class="badge bg-secondary">
                             {{ messages.0.trip.depart_date|DM }} |
@@ -35,13 +30,12 @@
                         </span>
                         <span class="badge bg-secondary">{{ messages.0.trip.depart.city }}</span> -
                         <span class="badge bg-secondary">{{ messages.0.trip.destination.city }}</span>
-                      </div>
+                    </div>
                 </span>
-              
             </div>
 
-            
             <div class="card-body">
+                <!-- ITERATE THROUGH ALL MESSAGES FOR EACH TRIP-->
                 {% for message in messages %}
                     <div class="row mb-2">
                         {% if message.sender.username == username %}
@@ -58,13 +52,14 @@
                                 </div>
                             </div>
                         </div>
-                    {% else %}
+                        {% else %}
                         <!-- Display other user's message on the left -->
                         <div class="col-12">
                             <div class="d-flex justify-content-start">
                                 <div class="message-container">
                                     <div class="sender fs-6">
-                                        <span>{{ message.sender.first_name}}</span><span class="small-date"> ({{ message.sender }})</span>
+                                        <span>{{ message.sender.first_name}}</span><span class="small-date">
+                                            ({{ message.sender }})</span>
                                         <span class="small-date">{{ message.date_created }}</span>
                                     </div>
                                     <div class="message mb-3 bg-primary text-white rounded p-2 shadow">
@@ -73,16 +68,12 @@
                                 </div>
                             </div>
                         </div>
-                    {% endif %}
+                        {% endif %}
                     </div>
                 {% endfor %}
             </div>
-
-
         </div>
     {% endfor %}
 </div>
-
-
 
 {% endblock %}

@@ -4,8 +4,6 @@
 {% load customfilters %}
 {% url 'about' as about_url %}
 
-
-
 {% block content %}
 <!-- HEADER ROW -->
 <div class="container-fluid  sticky-top">
@@ -14,13 +12,12 @@
             <div class="px-3 py-0 d-sm-flex justify-content-between align-items-center mt-auto border-bottom shadow">
                 <div>REQUESTED RIDES (HITCHES) IN SELECTED REGION:</div>
                 <div>
-                    <button name="ride_trip_id" value="{{ t.id }}" type="button" class="badge rounded-pill bg-success fs-4 mt-2 mt-md-0 me-2"
-                        data-bs-toggle="modal" data-bs-target="#OfferModal" data-bs-whatever=""
-                        data-trip-id="{{ t.id }}">
+                    <button name="ride_trip_id" value="{{ t.id }}" type="button"
+                        class="badge rounded-pill bg-success fs-4 mt-2 mt-md-0 me-2" data-bs-toggle="modal"
+                        data-bs-target="#OfferModal" data-bs-whatever="" data-trip-id="{{ t.id }}">
                         <i class="fa-solid fa-thumbs-up"></i> REQUEST TO HITCH
                     </button>
-            </div>
-
+                </div>
                 <form method="get" action="{% url 'rides_view' %}" class="d-flex mt-3" id="filterForm">
                     {% csrf_token %}
                     <span class="mt-2 me-1">REGION:</span>{{ region_filter_form|crispy }}
@@ -29,31 +26,6 @@
         </div>
     </div>
 </div>
-
-<!-- MODAL FOR OFFERING A RIDE - HIDDEN BY DEFAULT-->
-<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h1 class="modal-title fs-5" id="exampleModalLabel">Offer a ride...</h1>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <form>
-                    <div class="mb-3">
-                        <label for="message-text" class="col-form-label">Message:</label>
-                        <textarea class="form-control" id="message-text"></textarea>
-                    </div>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Offer Ride</button>
-            </div>
-        </div>
-    </div>
-</div>
-<!-- END OF MODAL FOR HITCH REQUEST -->
 
 <!-- MODAL FOR REQUESTING A HITCH - HIDDEN BY DEFAULT-->
 <div class="modal fade" id="OfferModal" tabindex="-1" aria-labelledby="OfferModalLabel" aria-hidden="true">
@@ -64,16 +36,14 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-
                 <form method="post" action="{% url 'rides_view' %}">
                     {% csrf_token %}
                     <div class="mb-3">
                         REQUEST A HITCH IS COMING SOON!
                     </div>
-
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <button name="ride_trip_id" value="" type="submit" class="btn btn-primary">Offer Ride</button>
+                        <button name="ride_trip_id" value="" type="submit" class="btn btn-primary">Request Hitch</button>
                     </div>
                 </form>
             </div>
@@ -84,6 +54,6 @@
 
 <div class="alert alert-warning" role="alert">
     HITCH REQUESTS COMING SOON...
-  </div>
+</div>
 
 {% endblock %}
