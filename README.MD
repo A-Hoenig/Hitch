@@ -371,6 +371,7 @@ The testing documentation can be found at [Testing](TESTING.MD)
 |Code|Source|
  |:--|:---|
  |Generic User Profile Page|https://www.bootdey.com/snippets/view/bs5-edit-profile-account-details|
+ |REGEX|https://digitalfortress.tech/tips/top-15-commonly-used-regex/|
  |GIJGO JQuery Bootstrap timepicker (not used yet)|https://gijgo.com/datetimepicker/example/bootstrap-5|
  |Online CSS grid practice|https://grid.layoutit.com/|
  |Django Tutorial|https://docs.djangoproject.com/en/5.0/intro/tutorial01/|
@@ -380,8 +381,7 @@ The testing documentation can be found at [Testing](TESTING.MD)
  |Django Explined in 8 Minutes|https://www.youtube.com/watch?v=0sMtoedWaf0|
  |Django Chat Room|https://www.youtube.com/watch?v=Rv6gkYcN88Q|
  |CodeInstitute Django Blog|https://codeinstitute.net/de/?nab=0|
-
-
+ |CO2 Commuting Calculator (Not used yet)|https://www.openco2.net/en/co2-commuting-calculator|
 
 ### Research Help
 
