@@ -3,7 +3,7 @@
 Find it on GitHub: <a href="https://github.com/A-Hoenig/Hitch">HITCH</a>
 
 <img src="./static/images/hitch-logo-bg.png" alt="Hitch" width="400"/>
-<img src="./static/docs/responsive.png" alt="Hitch" width="650"/>
+<img src="./static/docs/amiresponsive-1.png" alt="AmIResponsive" width="400"/>
 
 ## CONTENTS
 
@@ -12,11 +12,9 @@ Find it on GitHub: <a href="https://github.com/A-Hoenig/Hitch">HITCH</a>
   <summary>Table of Contents</summary>
   <ol>
     <li><a href="#about-the-project">About The Project</a></li>
-    <li><a href="#user-stories">User Stories</a></li>
     <li><a href="#design">Design</a></li>
     <li><a href="#technologies-used">Technologies</a></li>
-    <li><a href="#evaluation-and-assessment">Project Evaluation</a></li>
-    <li><a href="#repository">Deployment</a></li>
+    <li><a href="#deployment">Deployment</a></li>
     <li><a href="#future-development">Future Development</a></li>
     <li><a href="#license">License</a></li>
     <li><a href="#testing">Testing</a></li>
@@ -36,106 +34,248 @@ Find it on GitHub: <a href="https://github.com/A-Hoenig/Hitch">HITCH</a>
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-* Hitch is a web based app that enables likeminded travellers to connect and offer each other rides.
-* The mindest is that when sharing available transportation, we reduce the nunber of vehicles on the road 
+* Hitch is a web based app that enables likeminded travellers to connect and offer to share each other's rides
+* The mindest is that when sharing available transportation, we reduce the number of vehicles on the road 
 * This is not just economical, but also helps reduce road congestion leading to fewer traffic jams
-* Less cars on the road of course also help out environment, especially in cities with large population densities
-* We can all do our part to help reduce carbon emissions and leave this world a little beter than when we found it
+* Less cars on the road of course also helps out the environment, especially in cities with large population densities
+* We can all do our part to help reduce carbon emissions and leave this world a little better than when we found it
 
-The app connect drivers and 'Hitchers' in localised regions. 
-Regions can be set up by community that is interconnected and will help connect neigbors and fellow commuinty members that need a ride somewhere. While the could theoretically be used to connect and share long distance trips, the main benefit lies in sharing small but frequent trips such as regular shopping runs, Work commutes or sport events.
+The app connects drivers and 'Hitchers' in localised regions. A Trip is made up of a Ride and a Hitch. The driver offers a ride and a hitcher Hitches a ride .. just like in real life on the roadside.
 
-When a driver offer to give rides, he can enter a trip as a single or recurring event. Also they can specify whether it is a one way trip, of if it will return at a later time.
+Regions can be set up by a community that is interconnected and will help connect neigbors and fellow community members that need a ride somewhere. While the app could theoretically be used to connect and share long distance trips, the main benefit lies in sharing small but frequent trips such as regular shopping runs, work commutes or sport workouts etc.
 
-* Available Rides are listed in chronological order showing the next nearest ride happening in the selected region.
-* If someone want to hitch a ride, they can select teh interested ride, and request to join it - a message can also be passed.
-* Driver and Hitchers can communicate ia message inside teh app and do not need to share personal information such as address, telephone or email unless they offer to do so.
-* A rating system will be implemented to allow drivers andpassengers to gice feeback and keep everybody honest and curteous
-* The system is based on volunteers! no mandatory fee is implements, however a suggested tip will be calculated to help the driver with the operating costs of their vehicle.
+When a driver offer to give rides, he can publish it as a single or recurring event letting users know that he is offering multiple hitch opportunities. Also they can specify whether it is a one way trip, of if it will return at a later time.
 
+* Available Rides are listed in chronological order showing the next ride happening in the selected region
+* If someone wants to hitch a ride, they can select the interested ride, and request to join it - a message can also be passed
+* Driver and Hitchers can communicate via message inside the app and do not need to share personal information such as address, telephone or email unless they offer to do so
+* A rating system will be implemented to allow drivers and passengers to give feeback and keep everybody honest and curteous
+* The system is based on volunteers! no mandatory fee is implemented, however a suggested tip will be calculated to help the driver with the operating costs of their vehicle
+
+### Agile Developement
+Agile design thinking was adopted to react to changes in design and ideas as the deveoplment process evolved. For this, Git hub Kanban boards in the project section were used to keep track of user stories and milestones as well as the progress and acceptance criteria for having achieved a specific feature in the application. The project KANBAN board is set to public and can be accessed here:
+<a href="https://github.com/users/A-Hoenig/projects/4/views/1?visibleFields=%5B%22Title%22%2C%22Assignees%22%2C%22Status%22%2C%22Labels%22%2C%22Milestone%22%5D">Hitch Project KANBAN</a>
+
+<img src="./static/docs/hitch-kanban.png" alt="ERD" width="1024"/>
+
+A fourth column was included to track features that would be added to a future development cycle. For the purpose of a single person development team in a very limited amount of time, the overall design was made to think of a real world fully functioning app, however, only a subset of features was possible to implement.
 
 ## Data Models / Database Design
-The Database Model is shown below. For initial functionality, many options can be edited by the super user. In future som emodification will be neccessary to maintain the database when cascade delete events might permanently delete records of interest.
+The Database Model is shown below. For initial functionality, many options can be edited by the superuser. In future some modification will be neccessary to maintain the database when cascade delete events might permanently delete records of interest.
 
-For instance teh user model will cascade delete. Since multpile users can be linked to a single trip (Driver and Hitchers) if one of the users deletes their profile, the cascade will delete all trips they were associated with, also removing teh event from other, still valid users who might need access to previous events. For this reason, cascade delete was avoided where possible... When a usr account is deleted, all instances of that users database record wil have to be replaced with a generic palceholder to maintain the integrity of the all liked tables via foreignkeys.
+For instance the user model will cascade delete. Since multpile users can be linked to a single trip (Driver and Hitchers) if one of the users deletes their profile, the cascade will delete all trips they were associated with, also removing the event from other passenger, - still valid users who might need access to previous events. For this reason, cascade delete was avoided where possible... When a user account is deleted, all instances of that users database record will eventually have to be replaced with a generic palceholder to maintain the integrity of the all linked tables via foreignkeys.
 
-FO rthe initial 'proof of concept' this was not full implemented yet.
+For the initial 'proof of concept' this was not fully implemented yet.
 
-<img src="./static/docs/hitch-erd.png" alt="HitchERD" width="1024"/>
+<img src="./static/docs/erd.png" alt="ERD" width="1024"/>
 
+<p align="right">(<a href="#contents">back to top</a>)</p>
 ## Design
 
-Bootstrap offer very modern and well designed web elements that were extensively used throughout this project.
-The main design choice was teh use of accordion style lists that allow a consolidated view vor quick review, and then allow a user to expand each line to see more details on any trip they might be interested in.
-in order to maximise information presented on a mobile first design philosophy, the site uses easy to recognize symbols to graphically convey facts about each trip these include:
+Bootstrap offers very modern and well designed web elements that were extensively used throughout this project.
+The main design choice was the use of **accordion style lists** that allow a consolidated list for quick review, and then allow a user to expand each line to see more details on any trip they might be interested in.
 
+An initial wirframe was setup to derive the basic layput of the elements and decide on the optimum information density for give realestate.
+
+### Wireframe Mockups
+
+<img src="./static/docs/wireframe-1.png" alt="ERD" width="350"/>
+<img src="./static/docs/wireframe-2.png" alt="ERD" width="350"/>
+<img src="./static/docs/wireframe-3.png" alt="ERD" width="350"/>
+
+In order to maximise information presented on a mobile first design philosophy, the site uses easy to recognize symbols to graphically convey facts about each trip these include:
+
+* Number of spots still available
 * The direction and frequency of the trip (one way, return, single or regular)
 * Vehicle Type
-* Location Type ie Reststop, Busstop, Address etc
+* Location Type, ie. Reststop, Busstop, Address etc
 * Electric vehicle for envoronmentally conscious users
-* Smoking or non smoking
-* The purpose of the trip / main destination ie Shopping, Outting etc
+* Smoking or non-smoking
+* The purpose of the trip / main destination ie Shopping, Outting, Gym etc
 * Message details
 
-To speed up the user learning curve, most symbols have mouse over tool tips to exaplain their meaning
-
+To speed up the user learning curve, most symbols have mouse over tool tips to explain their meaning
 This can be seen below:
 
 <img src="./static/docs/mouseover.gif" alt="MouseOver" width="800"/>
 
-### The Landing / About Page
+### The Final Design Details
+
+<img src="./static/docs/rides-detailed.png" alt="detailed" width="800"/>
+
+<img src="./static/docs/your-view-summary.jpg" alt="your view ride" width="400"/>
+
+<img src="./static/docs/your-view-ride.jpg" alt="rides" width="266"/>
+<img src="./static/docs/your-view-hitcher-confirm.jpg" alt="confirm hitcher" width="266"/>
+<img src="./static/docs/your-view-hitcher-confirmed.jpg" alt="confirm the confirm" width="266"/>
+
+<img src="./static/docs/your-view-hitch-pending.png" alt="ERD" width="400"/>
+<img src="./static/docs/your-view-hitch-approved.png" alt="ERD" width="400"/>
+
+### User feedback
+Throughout the application, the built in messaging feature of Django was used to relay message to the user. This was implemented in a bottstrap alert that is built into the navigation header and therefore available on all subpages. The message times out after 5 seconds and is removed. Several massages can be stacked underneath each other if needed.
+
+<img src="./static/docs/message-feedback.jpg" alt="Feedback" width="800"/>
+
+<p align="right">(<a href="#contents">back to top</a>)</p>
+<hr>
+
+
+## The Landing / About Page
 
 <img src="./static/docs/landing-page.png" alt="HitchERD" width="800"/>
+<hr>
 
-### The Rides Page
+<p>
 
-<img src="./static/docs/rides.png" alt="HitchERD" width="800"/>
+The about page offers a pleasant welcome and explains the mission. An easy to navigate NAV bar shows the options on the site.
+**Your Trips** and the **Gear Icon** are user spcific and only displayed after a user is logged on.
 
-### The Hitch Request Page
+## The Rides Page
 
-### The Your Trips Page
+This page is the first point of contact with the ride sharing world. Upcoming offered rides are listed in order of date and time and summarise the Trip using graphical symbols. The page is fully responsive using Bootstrap's extensive built-in media queries. 
 
-### The User Admin Page
+For mobile first philisophy, all views were generated to optimize UX/UI on phones.
 
+### The Rides page features a prominent **Call to Action** button to encourage the user to sign up or offer a ride.
+
+Alternate screen sizes shown below:
+
+<img src="./static/docs/rides-large.jpg" alt="Ride Large" width="800"/>
+<img src="./static/docs/rides-medium.jpg" alt="Ride Large" width="400"/>
+<img src="./static/docs/rides-small.jpg" alt="Ride Large" width="210"/>
+
+### Clicking on any ride will accordion expand the line to reveal the full details of the trip:
+
+<img src="./static/docs/rides-detail.jpg" alt="Ride Large" width="800"/>
+<hr>
+Dynamic buttons change based on the status of the ride in relation to the logged in user these are:
+
+* Not logged in yet -> <img src="./static/docs/button-signin.png" alt="SignIn" width="150"/>
+
+* Logged in Request a ride -> <img src="./static/docs/button-request-ride.png" alt="Request" width="150"/>
+
+* Already Requested this ride -> <img src="./static/docs/button-already-requested.png" alt="AlreadyReq" width="150"/>
+
+* You are driver of ride -> <img src="./static/docs/button-your-trip.png" alt="Driver" width="150"/>
+
+<p align="right">(<a href="#contents">back to top</a>)</p>
+
+## The Hitches Page
+
+The Hitches page is not yet implemented in this iteration. In principle it will be almost identical to the rides page, except the logic is reversed. If someone wihtout a car is in need of a ride somewhere they can add the requested Hitch to this page. In this case volunteers can check if there are any hitch requests published going in their direction and can offer to give them a ride. This way rides and hitches can be matched up in both directions. The database structure is already set up to handle this principle.
+
+Rides can have many Hitch requests, and some of them will be approved=linked. (these request instances are not published and serve only to track relationships)
+
+Hitch Requests can only have one Ride associated with them.(these ride requests will be published and are displayed on the Hitches page)
+
+<img src="./static/docs/hitches-page.png" alt="Ride Large" width="800"/>
+<p align="right">(<a href="#contents">back to top</a>)</p>
+
+## The Your Trips Page
+
+This page is the management page of a user's Rides and Hitches. It displays both types of trip in chronological order with the soonest at the top of the list.
+
+- For drivers, any rides they have offered will show any hitch requests they have received. Each request is next to a confirm button, with which the driver can approve a hitcher. A system message is automatically generated and sent to the hitcher to let them know they are approved.
+
+- For any hitch requests in the list, the user can see if their request is still pending or if it has been approved. Likewise they will receive a message if the driver has approved them.
+
+- Additionally the users will have the option to delete and/or edit their trips should changes be neccessary. This is not yet fully implemented and pushed to a future iteration of the development cycle. For now minmum viable product (MVP) functionality is defined as:
+
+> **"A user can see rides available and be put in contact with the driver. Once they are connected and can message or call each other, the purpose of the site is achieved"**
+
+<img src="./static/docs/your-view-summary.jpg" alt="YourView" width="800"/>
+<p align="right">(<a href="#contents">back to top</a>)</p>
+
+## The User Admin Page
+
+The user admi pag displays the extended data of the built in django user model which is used throughout. User can create accounts, log in and out, reset password and delete account all implemented thorugh the django framework securely. Additionally details needed for the Hitch application are added to this database. This includes:
+
+ |Field|Reason|
+ |:--|:---|
+ |DOB|user should be over 18|
+ |Drivers license date|User might decide to ride or not based on driver age/experience|
+ |Gender|Females may elect not to ride with men alone|
+ |Phonenumber|user can elect to hide their number or publish|
+
+ <img src="./static/docs/user-account.jpg" alt="user account" width="800"/>
+
+ The account page is a fully implemented form and the user can edit their data anytime.
+ The User Profile page also has subtabs to allow the creation of favorite locations for quick access and to add a vehicle they will be using to share rides.
+
+ Both tabs offer full CRUD functionality, where users can Create, Read, Update and Delete their data as needed. Vehicle and Location lists make use of the same accordion display where a user can see a condensed list adn then click to expand the details. In this case, the details are already in a form allowing for quick change of data.
+
+ To offer rides a user must have at least one vehicle and 2 seperate locations that can serve as depart and destination selection.
+ <p align="right">(<a href="#contents">back to top</a>)</p>
+
+### The Vehicle SubTab
+ <img src="./static/docs/vehicle-edit.jpg" alt="vehicles" width="800"/>
+
+### The Locations SubTab
+ <img src="./static/docs/location-list.jpg" alt="locations" width="400"/>
+ <img src="./static/docs/location-edit.jpg" alt="locations" width="400"/>
 
 
 ## Future Development
 
-* option 1
-* option 2
+The real world potential is undenialble and a lot more features could be implemented to make this a truly useful community.
+Most of the immediately obvious future options have been brainstomed in the <a href="https://github.com/users/A-Hoenig/projects/4/views/1?visibleFields=%5B%22Title%22%2C%22Assignees%22%2C%22Status%22%2C%22Labels%22%2C%22Milestone%22%5D">Hitch Project KANBAN</a> and can be seen in the future development column.
+<p align="right">(<a href="#contents">back to top</a>)</p>
 
 ## Technologies Used
 
+* [DrawSQL](https://drawsql.app/diagrams) - Used to generate the ERD (Entity Relationship Diagram)
+* [ElephantSQL](https://www.elephantsql.com/) - Free PostgreSQL Database
+* [Balsamiq](https://balsamiq.com/) - Used to create wireframes and mockups.
+* [Git](https://git-scm.com/) - For version control.
+* [Github](https://github.com/) - To save and store the files for the website.
+* [GitPod](https://gitpod.io/) - IDE used to create the site.
+* [Heroku](https://www.heroku.com) - Hosts a mock CLI to run python app
+* [Affinity Designer](https://affinity.serif.com/en-gb/) - To design the Hitch Logo
+* [Favicon.io](https://favicon.io/) - used for generating the website favicon
+* [Diffchecker](https://www.diffchecker.com/) - used for comparing the code
+* [Font Awesome](https://fontawesome.com/) - for creating atractive UX with icons
+* [Bootstrap5](https://getbootstrap.com/) - for adding predifined styled elements and creating responsiveness
+* [PEP8 Validator](http://pep8online.com/) - used for validating the python code
+* [HTML - W3C HTML Validator](https://validator.w3.org/#validate_by_uri+with_options) - used for validating the HTML
+* [CSS - Jigsaw CSS Validator](https://jigsaw.w3.org/css-validator/#validate_by_uri) - used for validating the CSS
+* [Chrome Del Tools](https://developer.chrome.com/docs/devtools/) - for debugging the project
+* [Cloudinary](https://cloudinary.com/) - for storing static data
 #### Languages:
 
-PYTHON / DJANGO FOR MAIN APP. HTML, CSS and JS together with Bootstrap framework.
+* PYTHON / DJANGO for App Logic. HTML, CSS and JS together with Bootstrap framework.
 
-* [DrawSQL](https://drawsql.app/diagrams) - Used to generate the ERD (Entity Relationship Diagram)
+#### Python Packages:
 
-* [EDrawMax](https://www.edrawsoft.com/ad/edrawmax-diagram-tool.html?gad_source=1&gclid=CjwKCAiAjfyqBhAsEiwA-UdzJP7WWEuJcqaBE2Vag1b0U3ukJ_MwizjN76YlORg6EU2jBAXaFfTgxxoC2vAQAvD_BwE) - Used to create flowcharts.
+* asgiref
+* cloudinary
+* crispy-bootstrap5
+* dj-database-url
+* dj3-cloudinary-storage
+* Django
+* django-allauth
+* django-bootstrap-v5
+* django-ckeditor
+* django-cloudinary-storage
+* django-crispy-forms
+* django-js-asset
+* gunicorn
+* httptools
+* install
+* jsmin
+* oauthlib
+* psycopg
+* psycopg2
+* PyJWT
+* python-slugify
+* python3-openid
+* pytz
+* requests-oauthlib
+* sqlparse
+* text-unidecode
+* urllib3
+* whitenoise
 
-* [Git](https://git-scm.com/) - For version control.
-
-* [Github](https://github.com/) - To save and store the files for the website.
-
-* [GitPod](https://gitpod.io/) - IDE used to create the site.
-
-* [Heroku](https://www.heroku.com) - Hosts a mock CLI to run python app
-
-#### Python Libraries:
-| Library        | Needed For |
-| :-------------- | :------ |
-|gspread|google sheet manipulation|
-|from google.oauth2.service_account import Credentials|authenticate google sheets|
-|html|decode special characters from trivia site|
-|requests|used for trivia API query|
-|json|used to parse the recieved dictionary|
-|os|needed to be able to clear CLI|
-|random|needed to randomize questions answers|
-|time|used to pause app long enough for user to read feedback|
-|getpass|allow password entry without showing input text|
-|from pyfiglet import Figlet|ASCII font art generator|
-|from datetime import date|format date string for google sheet data|
 
 <p align="right">(<a href="#contents">back to top</a>)</p>
 
@@ -143,197 +283,62 @@ PYTHON / DJANGO FOR MAIN APP. HTML, CSS and JS together with Bootstrap framework
 ## Running the app
 
 The finished app is hosted with HEROKU here:
-<br>
-<a href="https://MEGA-QUIZ-c93f32d70f60.herokuapp.com/">MEGA-QUIZ</a>
+**<a href="https://hitch-bef4789c03e6.herokuapp.com/">Hitch, a ride sharing community</a>**
 <br/>
 
-For full app functionality, a google sheet needs to be set up with API credentials as well.
-A step by step guide on how to do this can be referenced [Here (README_googleAPI)](README_googleAPI.md)
+## Deployment
 
-once the google sheet is created,
+### Deploy on Heroku
+ 1. Fork or Clone the repository
+ 
+ 2. Generate a requirements file of all installed python packages. 
+ 
+  ` pip3 freeze > requirements.txt`, and a file with all requirements will be created.
 
-1. Fork or clone the repository and enter your IDE
-2. add the creds.json file to the root directory
-2. In the terminal / command line type: **python3 run.py** to run the app on your IDE
+ * Create .env file to store environmental variables for Cloudinary, DB URL andn SECRET KEY
+   * **WARNING** ensure your .env file is added to the .git ignore file or it will be published on Git
+ 
+ 3. Setting up Heroku
 
-## Repository
+    * Heroku website (https://www.heroku.com/) 
+    * Login to Heroku and choose **Create App** 
+    * Click **New** and **Create a new app**
+    * Choose a name and select your location
+    * Go to the **Resources** tab 
+    * From the Resources list select **Heroku Postgres**
+    * Navigate to the **Deploy** tab
+    * Click on **Connect to Github** and search for your repository
+    * Navigate to the **Settings** tab
+    * Reveal Config Vars and add your Cloudinary, Database URL (from Heroku-Postgres) and Secret key.   
+    * This project uses [ElephantSQL](https://www.elephantsql.com/). 
+    * If you elect to use the same make sure you install a DB with PostgrSQL version 13 or higher.
+    * Then share the DB URL same as above
 
-###  **Deploying to Heroku**
+4. Deployment on Heroku
 
-1. Go to [Heroku](https://id.heroku.com/login), create account if you don't have and log in.
+    * Go to the Deploy tab.
+    * Choose the main branch for deploying and enable automatic deployment 
+    * Select manual deploy for building the App 
+    
+### How to Fork the repository
+For creating a copy of the repository on your account and change it without affecting the original project, use <b>Fork</b> directly from GitHub:
+- On [My Repository Page](https://github.com/A-Hoenig/Hitch), press <i>Fork</i> in the top right of the page
+- A forked version of my project will appear in your repository<br></br>
 
-2. Head to your dashboard and click "New", then "Create new app"
-
-    <details>
-    <summary>New / Create New App</summary>
-              
-    ![New/CreateNewApp](/assets/images/deployment/step1-create-new-app.png)  
-
-    </details>
-
-3. Next step is to give your app a name and to choose region. After that click on "Create app".
-
-    <details>
-    <summary>Name / Region / Create</summary>
-              
-    ![Name/Region/Create](/assets/images/deployment/step2.png)  
-
-    </details>
-
-4. After that head to "Settings" tab which you can find on top of your Heroku page and under the "Config Vars" set your Key/Value Pairs.
-
-    <details>
-    <summary>CREDS / PORT</summary>
-              
-    ![CREDS/PORT](/assets/images/deployment/step3.png)  
-
-    </details>
-
-    First Key = **CREDS**. Value: Paste content of **creds.json** file  
-    Second Key = **PORT**. Value: **8000**
-
-5. Then in the "Buildpacks" section you will need to add buildpacks. Pay attention to the order in which you add buildpacks you need. In my case I had to add Python first and nodejs second.
-
-    <details>
-    <summary>Buildpacks</summary>
-              
-    ![Buildpacks](/assets/images/deployment/step4.png)  
-
-    </details>
-
-6. First add "Python", by clicking on Python icon and then click on "Add Buildpack".
-
-    <details>
-    <summary>Python</summary>
-              
-    ![Python](/assets/images/deployment/step5-python.png)  
-
-    </details>
-
-7. Then add "nodejs", by clicking on nodejs icon and then click on "Add Buildpack".
-
-    <details>
-    <summary>nodejs</summary>
-              
-    ![nodejs](/assets/images/deployment/step6-nodejs.png)  
-
-    </details>
-
-8. Then head to "Deployment" tab which you can also find on top of your Heroku page and under "Deployment method" click on "GitHub"(in my case that's where my repository is).
-
-    <details>
-    <summary>GitHub</summary>
-              
-    ![GitHub](/assets/images/deployment/step7-github.png)  
-
-    </details>
-
-9. After that, just under the "Deployment method" section is "Connect to GitHub" section where you need to find your repository and then click on "Connect".
-
-    <details>
-    <summary>Connect</summary>
-              
-    ![Connect](/assets/images/deployment/step8.png)  
-
-    </details>
-
-10. Just under "Connect to GitHub" section is "Automatic deploys" section where you can click on "Enable Automatic Deploys" if that's what you want and just under is "Manual Deploy" section, where you need to click on "Deploy Manually".
-
-    <details>
-    <summary>Enable Automatic Deploys / Deploy Manually</summary>
-              
-    ![EnableAutomaticDeploys/DeployManually](/assets/images/deployment/step9-deployment-type.png)  
-
-    </details>
-
-### Local Development
-
-#### How to Fork
-
-To fork the repository:
-
-1. Log in (or sign up) to Github.
-2. Go to the repository for this project, [A-Hoenig/megaquiz](https://github.com/A-Hoenig/megaquiz)
-3. Click the Fork button in the top right corner.
-4. Drag and drop the CREDS.json file into the root directory
-5. Make sure to add CREDS.json to the .gitignore file to prevent the secure key being commited to github
-6. To run the quiz type: **python3 run.py** in the command line / terminal
-
-#### How to Clone
-
-To clone the repository:
-
-1. Log in (or sign up) to GitHub.
-2. Go to the repository for this project, [A-Hoenig/megaquiz](https://github.com/A-Hoenig/megaquiz)
-3. Click on the code button, select whether you would like to clone with HTTPS, SSH or GitHub CLI and copy the link shown.
-4. Open the terminal in your code editor and change the current working directory to the location you want to use for the cloned directory.
-5. Type 'git clone' into the terminal and then paste the link you copied in step 3. Press enter.
-6. Ensure the CREDS.json file is uploaded and ignored as mentioned above.
+### How to Clone the repository
+For creating a clone of the repository on your local machine, use<b>Clone</b>:
+- In my [GitHub](https://github.com/A-Hoenig/Hitch), click the green <i>Code</i> button.
+- Choose from <i>HTTPS, SSH and GitClub CLI</i> format and copy (preferably <i>HTTPS</i>)
+- In your <i>IDE</i> open <i>Git Bash</i>
+- Enter the command <code>git clone</code> followed by the copied URL
+- Your clone is created
+<hr>
 
 <p align="right">(<a href="#contents">back to top</a>)</p>
 
 ## Testing
 
-### Validator Testing
-
-#### PYTHON
-  - No errors were returned when passing through the official [CI pep8 Linter](https://pep8ci.herokuapp.com/)
-<img src="./assets/images/linter-result.png" alt="Linter" width="700"/>
-
-## Manual Testing
-
-### 1. GENERAL TESTS / LOGIC
-| Feature/Story       | Action | Result |
-| :-------------- |:------ | :------ |
-|App starts after run.py|Enter command in CLI|Verified OK|
-
-
-### 2. MENU TESTS
-| Feature/Story       | Action | Result |
-| :-------------- |:------ | :------ |
-|Main Menu displays correct in CLI|start app|Verified OK|
-
-
-### 3. LOGIN / USER ACCOUNT TESTS
-| Feature/Story       | Action | Result |
-| :-------------- |:------ | :------ |
-|User can log in|input dummy user and pw|Verified OK|
-|Password entry is checked|typed correct and wrong pw|Verified OK|
-|Wrong password x3 = back to menu|type 3 wrong pw|Verified OK|
-|Password blank entry rejected|Type enter without text|Verified OK|
-|User recognized|logged in correectly|Verified OK|
-|Username validation rejects special characters|input @$_ etc|Verified OK|
-|Unreconized User triggers 'create new'|typed a new username|Verified OK|
-|New user can enter password|new user name + password input|Verified OK|
-|New password is checked matching|typed wrong and correct repeat pw|Verified OK|
-|Feedback given to user|typed all options|Verified OK|
-|User can create a new profile|select 8 and chose user+PW|Verified OK|
-|New user name checked available|input known and unknown name|Verified OK|
-
-### 4. API TESTS
-| Feature/Story       | Action | Result |
-| :-------------- |:------ | :------ |
-||||
-||||
-
-
-### 5. OTHER TESTS
-| Feature/Story       | Action | Result |
-| :-------------- |:------ | :------ |
-||||
-||||
-
-
-### Browser Compatibility
-
-The deployed app on heroku was tested on most popular browsers for functionality:
-* Chrome
-* Safari - CI CLI app does not accept keyboard input on macOS/iOS Safari and iOS Chrome!
-* Edge
-* Opera
-
-### Known Bugs
-
+The testing documentation can be found at [TESTING.MD](TESTING.MD)
 
 
 ## Credits
@@ -362,6 +367,5 @@ Project Link: [MEGA-QUIZ](https://github.com/A-Hoenig/megaquiz)
 I would like to acknowledge the following people:
 
 * Jubril Akolade - My Code Institute Mentor for the guidance.
-
 
 <p align="right">(<a href="#contents">back to top</a>)</p>

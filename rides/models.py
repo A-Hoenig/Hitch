@@ -88,7 +88,7 @@ class Location(models.Model):
     region = models.ForeignKey(Region, on_delete=models.CASCADE)
     input_by = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     name = models.CharField(max_length=100)
-    stoptype = models.ForeignKey(Stop_Type, on_delete=models.CASCADE, null=True, blank=True)
+    stoptype = models.ForeignKey(Stop_Type, on_delete=models.SET_NULL, null=True, blank=True)
     street = models.CharField(max_length=100)
     city = models.CharField(max_length=50)
     zipcode = models.CharField(max_length=15)
