@@ -1,11 +1,13 @@
 from django.contrib import admin
+from django.utils.html import format_html
+from django.utils.safestring import mark_safe
 from django.contrib.auth.admin import UserAdmin
 from .models import Region, Location, CustomUser, Purpose, Vehicle, User_rating, Trip, Hitch_Request, Stop_Type, Message 
 
 class CustomUserAdmin(UserAdmin):
     list_display = (
-        'username', 'average_driver_rating','average_hitcher_rating','first_name', 'last_name',
-        'gender', 'DOB', 'DL_date'
+        'username', 'first_name', 'last_name',
+        'gender', 'DOB', 'average_driver_rating','average_hitcher_rating'
         )
 
     fieldsets = (
@@ -67,7 +69,15 @@ class CustomLocationAdmin(admin.ModelAdmin):
 
 admin.site.register(Location, CustomLocationAdmin)
 
-admin.site.register(Stop_Type)
+
+class StopTypeAdmin(admin.ModelAdmin):
+    list_display = ('stop', 'stop_icon')
+
+    def icon_display(self, obj):
+        return mark_safe(obj.stop_icon)
+    icon_display.short_description = 'Icon'
+
+admin.site.register(Stop_Type, StopTypeAdmin)
 
 admin.site.register(Purpose)
 
