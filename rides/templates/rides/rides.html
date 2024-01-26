@@ -354,9 +354,9 @@
                                                     </p>
                                                     <p class="text-start small mb-0">
                                                         {% if not t.driver.first_name %}
-                                                        {{ t.driver }} {% render_stars hitch_rating %}
+                                                        {{ t.driver }} R{{ hitch_rating }} {% render_stars hitch_rating %}
                                                         {% else %}
-                                                        {{ t.driver.first_name }} {% render_stars rating %}
+                                                        {{ t.driver.first_name }} R{{ hitch_rating }} {% render_stars rating %}
                                                         {% endif %}
                                                     </p>
                                                     <p class="text-primary text-start small mb-0">Confirmed hitchers:

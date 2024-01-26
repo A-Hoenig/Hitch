@@ -68,8 +68,8 @@ def rides_view(request):
     # INITIALIZE LISTS
     hitch_seats_list = []
     hitch_groups = []
-    pending_hitch_groups = []  # list of hitch request per ride
-    hitch_seats = 1  # at least one hitcher seat avail
+    pending_hitch_groups = []
+    hitch_seats = 1
 
     # CREATE LIST OF HITCHERS FOR EACH TRIP AND TO TRIP INSTANCE
     for trip in trips:
@@ -83,8 +83,8 @@ def rides_view(request):
         else:
             trip.average_driver_rating = 0
 
-        # find any hitchers already approved
-        # by driver and create list - per trip
+        # find any hitchers already approved by
+        # driver and create list - per trip
         approved_hitch_requests = Hitch_Request.objects.filter(
             trip=trip, pax_approved=True)
         approved_hitchers = [hr.hitcher for hr in approved_hitch_requests]
@@ -122,7 +122,7 @@ def rides_view(request):
             driver = trip.driver
 
             # Create hitchrequest linked to trip
-            # store in Hitch_Request Model
+            # store in Hitch_Request Table
             hitch_request = Hitch_Request(
                 trip=trip,
                 hitcher=hitcher,
@@ -142,7 +142,7 @@ def rides_view(request):
                 f'The Driver will get back to you'
             )
 
-            # Create message instance and store in message Model
+            # Create message instance and store in message Table
             message_content = request.POST.get('message')
             message_instance = Message(
                 trip=trip,
@@ -184,6 +184,7 @@ def rides_view(request):
         else:
             form = TripForm()
 
+        # PASS TRIPS AND FORM TO TEMPLATE
         context['trips'] = trips
         context['form'] = form
 
@@ -193,57 +194,15 @@ def rides_view(request):
 # -------------------------------------------------------
 @login_required
 def hitches(request):
-    # no user authentication check as page only when logged in
 
-    form = TripForm()
     region_filter_form = RegionFilterForm(request.GET or None)
-
-    # Filter trips by selected region and departure_date
-    trips = Trip.objects.filter(
-        depart_date__gte=timezone.now().date()).order_by("depart_date")
-
-    if region_filter_form.is_valid():
-        selected_region = region_filter_form.cleaned_data['selected_region']
-        trips = trips.filter(region=selected_region)
-
-    # Create a list of forms for each trip instance
-    forms = [TripForm(instance=trip) for trip in trips]
-
-    # Calculate the average rating for the driver for each trip
-    # also remember the avaialble hitch seats per trip
-    average_ratings = []
-    hitch_seats_list = []
-    # minimum value in case no trip in loop
-    hitch_seats = 1
-
-    for trip in trips:
-        driver = trip.driver
-        driver_ratings = calculate_rating(trip.driver.average_driver_rating)
-
-        average_ratings.append(driver_ratings)
-
-        # get the driver allowed hitch seats from trip model
-        hitch_seats = trip.max_hitch
-        hitch_seats_list.append(hitch_seats)
-
-    # get any attached hitchers to this trip
 
     context = {
         "username": request.user,
-        "form": form,
-        "trips": zip(trips, forms, average_ratings, hitch_seats_list),
         "region_filter_form": region_filter_form,
-        "average_ratings": average_ratings,
-        "hitcher_slots": range(hitch_seats),
     }
 
     return render(request, 'rides/hitches.html', context)
-
-
-def calculate_rating(rating):
-    if rating is None:
-        return 0
-    return int(round(rating))
 
 
 # -------------------------------------------------------
@@ -344,7 +303,7 @@ def user_trips(request):
                 message_text = (
                     f"Hitcher {hitch.hitcher.first_name} cancelled "
                     f"the hitch request")
-                # FIXXXXX THISSSSSSSSSSSSSSSSSSSSSS
+                # CHECK THISSSSSSSSSSSSSSSSSSSSSS
                 message = Message(
                     trip = None,
                     hitch = hitch,
@@ -408,11 +367,7 @@ def user_trips(request):
     else:
         message_form = MessageForm()
 
-        def calculate_rating(rating):
-            if rating is None:
-                return 0
-            return int(round(rating))
-
+        # LOOP THROUGH COMBINED/SORTED LIST
         for s in sorted_list:
             hitchers_ratings_list = []
 
@@ -604,3 +559,9 @@ def vehicles(request):
         }
 
     return render(request, 'rides/vehicles.html', context)
+
+# Calculate rounded rating from db value
+def calculate_rating(rating):
+    if rating is None:
+        return 0
+    return int(round(rating))
