@@ -7,14 +7,12 @@
 
 
 {% block content %}
+<!-- HEADER ROW -->
 <div class="container-fluid  sticky-top">
     <div class="row">
         <div class="col-12 bg-light gx-0">
             <div class="px-3 py-0 d-sm-flex justify-content-between align-items-center mt-auto border-bottom shadow">
-                
-                
                 <div>REQUESTED RIDES (HITCHES) IN SELECTED REGION:</div>
-
                 <div>
                     <button name="ride_trip_id" value="{{ t.id }}" type="button" class="badge rounded-pill bg-success fs-4 mt-2 mt-md-0 me-2"
                         data-bs-toggle="modal" data-bs-target="#OfferModal" data-bs-whatever=""
@@ -27,8 +25,6 @@
                     {% csrf_token %}
                     <span class="mt-2 me-1">REGION:</span>{{ region_filter_form|crispy }}
                 </form>
-
-
             </div>
         </div>
     </div>
@@ -59,7 +55,7 @@
 </div>
 <!-- END OF MODAL FOR HITCH REQUEST -->
 
-<!-- MODAL FOR REQEusTING A HITCH - HIDDEN BY DEFAULT-->
+<!-- MODAL FOR REQUESTING A HITCH - HIDDEN BY DEFAULT-->
 <div class="modal fade" id="OfferModal" tabindex="-1" aria-labelledby="OfferModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -80,7 +76,6 @@
                         <button name="ride_trip_id" value="" type="submit" class="btn btn-primary">Offer Ride</button>
                     </div>
                 </form>
-
             </div>
         </div>
     </div>

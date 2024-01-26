@@ -14,9 +14,15 @@ Find it on GitHub: <a href="https://github.com/A-Hoenig/Hitch">HITCH</a>
     <li><a href="#about-the-project">About The Project</a></li>
     <li><a href="#design">Design</a></li>
     <li><a href="#technologies-used">Technologies</a></li>
+    <li><a href="#the-about-page">About Page</a></li>
+    <li><a href="#the-rides-page">Rides Page</a></li>
+    <li><a href="#the-hitches-paget">Hitches Page</a></li>
+    <li><a href="#the-message-center-page">Message Page</a></li>
+    <li><a href="#the-user-admin-page">User Admin Page</a></li>
     <li><a href="#deployment">Deployment</a></li>
     <li><a href="#future-development">Future Development</a></li>
     <li><a href="#license">License</a></li>
+    <li><a href="#credits">Credits</a></li>
     <li><a href="#testing">Testing</a></li>
     <li><a href="#contact">Contact</a></li>
     <li><a href="#acknowledgments">Acknowledgments</a></li>
@@ -121,7 +127,7 @@ Throughout the application, the built in messaging feature of Django was used to
 <hr>
 
 
-## The Landing / About Page
+## The About Page
 
 <img src="./static/docs/landing-page.png" alt="HitchERD" width="800"/>
 <hr>
@@ -186,6 +192,13 @@ This page is the management page of a user's Rides and Hitches. It displays both
 
 <img src="./static/docs/your-view-summary.jpg" alt="YourView" width="800"/>
 <p align="right">(<a href="#contents">back to top</a>)</p>
+
+
+## The Message Center Page
+The message center collates all message related to a Trip and displays them in a messenger style format. It is not intended as yet another messagin app, but a single source view of all the communication that has been exchanges about a single trip at a glance. Individuals will still need to communicate directly eithe rby using the message center to exchange social media contacts or by electign to reveal your phone number.
+
+<img src="./static/docs/message-medium.jpg" alt="YourView" width="600"/>
+<img src="./static/docs/message-phone.jpg" alt="YourView" width="200"/>
 
 ## The User Admin Page
 
@@ -338,15 +351,42 @@ For creating a clone of the repository on your local machine, use<b>Clone</b>:
 
 ## Testing
 
-The testing documentation can be found at [TESTING.MD](TESTING.MD)
+The testing documentation can be found at [Testing](TESTING.MD)
 
 
 ## Credits
 
-### External Help
+### Image sources
 
-* Google / Stackoverflow
-* Thanks to https://github.com/AleksandarJavorovic for sharing the instructions on how best to deploy the app on Heroku.
+|Image|Source|
+ |:--|:---|
+ |Hitchhiker 1|https://unsplash.com/photos/person-standing-beside-road-doing-handsign-VGOiY1gZZYg|
+ |Girl Hitchhiker|https://unsplash.com/photos/woman-in-blue-denim-jacket-and-blue-denim-jeans-walking-on-road-during-daytime-F017VdnVpWs|
+ |Inside Car Picture|https://unsplash.com/photos/man-driving-car-during-golden-hour-IAc1x02D9K0|
+ |Map with pins|https://unsplash.com/photos/world-map-with-pins-TrhLCn1abMU|
+ |Car On A highway|https://www.pexels.com/de-de/foto/autos-voraus-auf-der-strasse-593172/|
+
+### Code Help
+
+|Code|Source|
+ |:--|:---|
+ |Generic User Profile Page|https://www.bootdey.com/snippets/view/bs5-edit-profile-account-details|
+ |GIJGO JQuery Bootstrap timepicker (not used yet)|https://gijgo.com/datetimepicker/example/bootstrap-5|
+ |Online CSS grid practice|https://grid.layoutit.com/|
+ |Django Tutorial|https://docs.djangoproject.com/en/5.0/intro/tutorial01/|
+ |Django Tutorial for Beginners|https://www.youtube.com/watch?v=SLTXTG6ZXIM&list=PLNgB0BBP9Z8ow4juNxe5EnNtJqFglWHa0&index=4|
+ |Django Forms and Crispy Forms Tutorial|https://www.youtube.com/watch?v=8xb9s3jnRF8|
+ |Django Full Stack Development Udemy|https://www.udemy.com/course/full-stack-web-development-using-django/learn/lecture/41067332?start=255#overview|
+ |Django Explined in 8 Minutes|https://www.youtube.com/watch?v=0sMtoedWaf0|
+ |Django Chat Room|https://www.youtube.com/watch?v=Rv6gkYcN88Q|
+ |CodeInstitute Django Blog|https://codeinstitute.net/de/?nab=0|
+
+
+
+### Research Help
+
+* Google / Stackoverflow / Redit / Bootstrap Docs / Django Docs
+
 
 ## License
 
@@ -360,7 +400,7 @@ It is for educational use only.
 
 Alex Hönig -  LimeyDeveloper@pm.me
 
-Project Link: [MEGA-QUIZ](https://github.com/A-Hoenig/megaquiz)
+Project Link: [HITCH](https://github.com/A-Hoenig/Hitch)
 
 ## Acknowledgments
 
