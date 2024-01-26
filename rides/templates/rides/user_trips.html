@@ -158,6 +158,11 @@
                           Driver: {{ driver.first_name }} {% render_stars rating %}
                           {% endif %}
                         </div>
+
+
+
+
+                        {% if s.is_ride %}
                         <div class="card-text">
                           Hitchers:
 
@@ -189,12 +194,12 @@
                             </span>
 
                             {% endif %}
-                            {% if not hitcher.first_name %}
-                            {{ hitcher }} {% render_stars hitch_rating %}
-                            {% else %}
-                            {{ hitcher.first_name }} {% render_stars rating %}
-                            {% endif %}
 
+                            {% if not hitcher.first_name %}
+                              {{ hitcher }} {% render_stars hitch_rating %}
+                            {% else %}
+                              {{ hitcher.first_name }} {% render_stars rating %}
+                            {% endif %}
 
                             <!--MESSAGE BUTTON-->
                             <!-- Button trigger modal -->
@@ -207,17 +212,30 @@
                             </button>
 
                           </div>
-
                           {% empty %}
-
                           <div>
                             No requests yet
                           </div>
 
                           {% endfor %}
-
-
                         </div>
+
+                        {% else %} 
+                        <!-- it is a hitch request-->
+                        {% if s.pax_approved %}
+                        <span class="badge bg-warning">
+                          <i class="fa-solid fa-thumbs-up"></i>
+                           Your Hitch Was Approved!
+                          </span>
+                        
+                        {% else %}
+                        <span class="badge bg-secondary">
+                        Your Hitch Request ({{ s.date_created|DM }}) is pending.
+                          </span>
+                        {% endif %}
+
+                        {% endif %}
+
                       </div>
                     </div>
 
