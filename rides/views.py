@@ -248,6 +248,7 @@ def message_center(request):
 # -------------------------------------------------------
 @login_required
 def user_trips(request):
+    paginate_by = 3
     # no user authentication check as page only when logged in
     user_id = request.user.id
 

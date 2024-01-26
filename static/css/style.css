@@ -54,10 +54,12 @@
       color: black;
    }
 }
+
 /* style nav bar spacing when collapsed*/
 @media (max-width: 767px) {
    .navbar-nav .nav-item {
        padding-left: 30px;
    }
 }
+
 

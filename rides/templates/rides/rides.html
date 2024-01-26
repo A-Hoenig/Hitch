@@ -171,7 +171,7 @@
                     <!----------------------------- accordion header row starts here --------------------------->
                     <div class="accordion-item">
                         <h2 class="accordion-header">
-                            <button class="accordion-button collapsed p-2 shadow" type="button" data-bs-toggle="collapse"
+                            <button class="accordion-button collapsed p-2 py-sm-4 shadow " type="button" data-bs-toggle="collapse"
                                 data-bs-target="#flush-collapse{{t.id}}" aria-expanded="false"
                                 aria-controls="flush-collapse{{t.id}}">
 
@@ -515,8 +515,7 @@
                                         {% elif user in t.hitch_group %}
                                         <!-- User is approved to join -->
                                         <div class="btn btn-success badge rounded-pill fs-4 mt-2 disabled my-3">
-                                            <i class="fa-solid fa-thumbs-up"></i><span>You are approved to join this
-                                                Ride!</span>
+                                            <i class="fa-solid fa-thumbs-up"></i><span>APPROVED!</span>
                                         </div>
                                         <!-- Check if the user has a pending request -->
                                         {% elif user in t.pending_hitchers %}
