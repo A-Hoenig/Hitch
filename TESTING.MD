@@ -46,20 +46,28 @@ All HTML files for the project pass W3C Validator (with the noted exceptions).
 **Rides**
 <img src="./static/docs/validation/rides.html_W3C.png" alt="Lint Result" width="800"/>
 
+<p align="right">(<a href="#contents">back to top</a>)</p>
+
 **Hitches**
 <img src="./static/docs/validation/hitches.html_W3C.png" alt="Lint Result" width="800"/>
 
 **User_Profile**
 <img src="./static/docs/validation/user_profile.html_W3C.png" alt="Lint Result" width="800"/>
 
+<p align="right">(<a href="#contents">back to top</a>)</p>
+
 **Vehicles**
 <img src="./static/docs/validation/vehicle.html_W3C.png" alt="Lint Result" width="800"/>
+
+<p align="right">(<a href="#contents">back to top</a>)</p>
 
 **Locations**
 <img src="./static/docs/validation/location.html_W3C.png" alt="Lint Result" width="800"/>
 
 **Messages**
 <img src="./static/docs/validation/message_center.html_W3C.png" alt="Lint Result" width="800"/>
+
+<p align="right">(<a href="#contents">back to top</a>)</p>
 
 
 ## 2. Jigsaw CSS Validator
@@ -76,6 +84,8 @@ The project makes maximum use of Bootstrap framwwork classes. Only minimal custo
 
 <img src="./static/docs/validation/style.CSS_Jigsaw.png" alt="CSS Jigsaw" width="800"/>
 
+<p align="right">(<a href="#contents">back to top</a>)</p>
+
 ## 3. PEP8 Python Validator
 
  - No errors were returned when passing through the official [CI pep8 Linter](https://pep8ci.herokuapp.com/)
@@ -90,11 +100,15 @@ The project makes maximum use of Bootstrap framwwork classes. Only minimal custo
 **views.py**
 <img src="./static/docs/validation/views.py_linted.png" alt="Lint Result" width="400"/>
 
+<p align="right">(<a href="#contents">back to top</a>)</p>
+
 ## 3. JSHint Javascript Validator
 
  - no errors were returned when passing through  [JSHint Validator](https://jshint.com/)
 
 <img src="./static/docs/validation/script.js_jshint.png" alt="JS Lint Result" width="800"/>
+
+<p align="right">(<a href="#contents">back to top</a>)</p>
 
 
 ## 4. Chrome DEV Tools Lighthouse
@@ -150,6 +164,7 @@ The project makes maximum use of Bootstrap framwwork classes. Only minimal custo
 ||||
 ||||
 
+<p align="right">(<a href="#contents">back to top</a>)</p>
 
 ### Browser Compatibility
 
