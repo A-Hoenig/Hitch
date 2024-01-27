@@ -4,7 +4,7 @@
 {% load customfilters %}
 
 {% block content %}
-
+<!-- MESSAGE CENTER PAGE-->
 <div class="container-fluid  sticky-top shadow">
     <div class="row">
         <div class="col-12 bg-light">
@@ -21,16 +21,14 @@
     {% for messages in trips %}
         <div class="card mb-4 border-2">
             <div class="card-header bg-light d-md-flex justify-content-between align-items-center px-1">
-                <span class="mb-3 mb-md-0">
-                    <div class="fs-4">
-                        <span class="badge bg-secondary">{{ messages.0.trip.purpose.purpose_icon|safe }}</span>
-                        <span class="badge bg-secondary">
-                            {{ messages.0.trip.depart_date|DM }} |
-                            {{ messages.0.trip.depart_time|HHMM }}
-                        </span>
-                        <span class="badge bg-secondary">{{ messages.0.trip.depart.city }}</span> -
-                        <span class="badge bg-secondary">{{ messages.0.trip.destination.city }}</span>
-                    </div>
+                <span class="mb-3 mb-md-0 d-block fs-4">
+                    <span class="badge bg-secondary">{{ messages.0.trip.purpose.purpose_icon|safe }}</span>
+                    <span class="badge bg-secondary">
+                        {{ messages.0.trip.depart_date|DM }} |
+                        {{ messages.0.trip.depart_time|HHMM }}
+                    </span>
+                    <span class="badge bg-secondary">{{ messages.0.trip.depart.city }}</span> -
+                    <span class="badge bg-secondary">{{ messages.0.trip.destination.city }}</span>
                 </span>
             </div>
 

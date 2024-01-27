@@ -90,52 +90,47 @@
 
                         <!-- loop through each vehile in the db-->
                         {% for l, form in locations %}
-                            <form method="post">
-                                {% csrf_token %}
+                        <form novalidate method="post">
+                            {% csrf_token %}
 
-                                <!-- accordion header row starts here-->
-                                <div class="accordion-item">
-                                    <h2 class="accordion-header">
-                                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                                            data-bs-target="#flush-collapse{{l.id}}" aria-expanded="false"
-                                            aria-controls="flush-collapse{{l.id}}">
-                                            <div class="grid gap-3">
-                                                <!-- add  thumbnail icon based on type-->
-                                                {{ l.stoptype.stop_icon|safe }}
-                                                <span class="ms-2" id="name">{{l.name}}</span>
-                                                <span class="ms-2 me-2">|</span>
-                                                <span>{{l.street}},</span>
-                                                <span>{{l.city}}</span>
-                                            </div>
+                            <!-- accordion header row starts here-->
+                            <div class="accordion-item">
+                                <h2 class="accordion-header">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                        data-bs-target="#flush-collapse{{l.id}}" aria-expanded="false"
+                                        aria-controls="flush-collapse{{l.id}}">
+                                        <span class="d-flex align-items-center gap-3">
+                                            <!-- add thumbnail icon based on type-->
+                                            {{ l.stoptype.stop_icon|safe }}
+                                            <span class="ms-2" id="name">{{l.name}}</span>
+                                            <span class="ms-2 me-2">|</span>
+                                            <span>{{l.street}},</span>
+                                            <span>{{l.city}}</span>
+                                        </span>
+                                    </button>
+                                </h2>
+                                <!-- Drop down details form-->
+                                <div id="flush-collapse{{l.id}}" class="accordion-collapse collapse"
+                                    data-bs-parent="#VehicleAccordionList">
+                                    <div class="accordion-body">
+
+                                        {% crispy form %}
+
+                                        <button type="submit" name="update" value="{{ l.id }}" id="submitBtn-{{ l.id }}"
+                                            class="btn btn-primary">
+                                            Update
                                         </button>
-                                    </h2>
-                                    <!-- Drop down details form-->
-                                    <div id="flush-collapse{{l.id}}" class="accordion-collapse collapse"
-                                        data-bs-parent="#VehicleAccordionList">
-                                        <div class="accordion-body">
-
-                                            <form novalidate class="form-horizontal" action="{% url 'locations' %}"
-                                                method="post" autocomplete="off">
-                                                {% csrf_token %}
-
-                                                {% crispy form %}
-
-                                                <button type="submit" name="update" value="{{ l.id }}"
-                                                    id="submitBtn-{{ l.id }}" class="btn btn-primary">
-                                                    Update
-                                                </button>
-                                                <button type="button" class="btn btn-danger" id="update-{{ l.id }}"
-                                                    onclick="revealDelete('{{ l.id }}')">
-                                                    Delete
-                                                </button>
-                                                <button type="submit" class="btn btn-danger d-none"
-                                                    id="deleteBtn-{{ l.id }}" name="delete" value="{{ l.id }}">
-                                                    Confirm Delete
-                                                </button>
-                                            </form>
-                                        </div>
+                                        <button type="button" class="btn btn-danger" id="update-{{ l.id }}"
+                                            onclick="revealDelete('{{ l.id }}')">
+                                            Delete
+                                        </button>
+                                        <button type="submit" class="btn btn-danger d-none" id="deleteBtn-{{ l.id }}"
+                                            name="delete" value="{{ l.id }}">
+                                            Confirm Delete
+                                        </button>
                                     </div>
                                 </div>
+                            </div>
                             {% endfor %}
                         </form>
                     </div>

@@ -3,7 +3,7 @@
 {% load static %}
 
 {% block content %}
-
+<!-- USER PROFILE PAGE-->
 <!-- HEADER ROW -->
 <div class="container-fluid sticky-top shadow">
   <div class="row">
@@ -37,6 +37,7 @@
             {% csrf_token %}
             {% crispy form %}
             <a href="{% url 'password_change' %}">Change Password</a>
+          </form>
         </div>
       </div>
     </div>

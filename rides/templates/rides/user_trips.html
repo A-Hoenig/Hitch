@@ -47,12 +47,12 @@
   <div class="row mt-3">
     <div class="col-sm-12">
       <div class="row">
-        <!-- MAIN LOOP -----  combined ride/hitch list sorted = s ------------------->
+        <!-- MAIN LOOP *******  combined ride/hitch list sorted = s *******-->
         {% for s, driver, rating, hitchers_ratings_list in detailed_sorted_list %}
         <div class="col-sm-12"><!-- change this to 12 for 1 column-->
           <div class="card my-2 bg-light">
             <div class="card-body">
-              <!------ PILL TRIP PR HITCH LABEL------>
+              <!---******* PILL TRIP PR HITCH LABEL*******-->
               {% if s.is_ride %}
                   <span class="position-absolute top-0 start-50 translate-middle badge rounded-pill bg-success">
                     <i class="fa-solid fa-car"></i> RIDE
@@ -62,7 +62,7 @@
                     <i class="fa-solid fa-thumbs-up"></i> HITCH
                   </span>
               {% endif %}
-              <!------   mini card title    ------>
+              <!--*******   mini card title   *******-->
               <div class="row">
                 <div class="col-md-12">
                   <form method="POST" action="{% url 'user_trips' %}">
@@ -86,6 +86,7 @@
                             class="btn badge bg-secondary">
                             <i class="fa-solid fa-pen-to-square"></i>
                           </button> -->
+
                           <!-- TRASHCAN DELETE ICON -->
                           <span id="hide_if_confirmed" class="">
                             <button type="button" class="btn badge bg-danger" id="Tdelete-{{ s.id }}"
@@ -134,7 +135,7 @@
                     <!-- DRIVER HITCHER DETAILS-->
                     <div class="row">
                       <div class="col-md-12">
-                        <!------     mini card body     ------>
+                        <!--*******    mini card body *******-->
                         <div class="card-text">
                           {% if not driver.first_name %}
                               Driver: {{ driver }} {% render_stars rating %}
