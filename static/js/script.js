@@ -17,14 +17,6 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 });
 
-document.addEventListener('DOMContentLoaded', function() {
-  var accordions = document.querySelectorAll('.accordion');
-  accordions.forEach(function(accordion) {
-      new bootstrap.Collapse(accordion, {
-          toggle: false
-      });
-  });
-});
 
 // update ride or hitch region filter when user selects one from dropdown
 document.addEventListener('DOMContentLoaded', function () {
@@ -52,7 +44,6 @@ function revealDelete(elementId) {
     } else {
         deleteBtn.classList.add('d-none');
     }
-    deleteBtn.offsetWidth; // Trigger DOM rebuild
 }
 
 // Auto-dismiss alert after 5 seconds (5000 milliseconds)
@@ -64,8 +55,8 @@ $(document).ready(function () {
 
 
 // tool tips (popper))
-const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
-const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
+const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]');
+const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl));
 
 // const popoverTriggerList = document.querySelectorAll('[data-bs-toggle="popover"]')
 // const popoverList = [...popoverTriggerList].map(popoverTriggerEl => new bootstrap.Popover(popoverTriggerEl))

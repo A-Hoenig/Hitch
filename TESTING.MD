@@ -24,19 +24,18 @@ For simplicity, the App design was divided into 3 major Epics
 * Ride Sharing
 * Messaging
 
-**Admin** By using Django framework, most of the admin would be taken care of by the built in user models and account handling
-Only the extended user data had to be integrated to allow tracking of information for the Ride sharing specifically.
+**Admin** By using Django framework, most of the admin would be taken care of by the built in user models and account handling. Only the extended user data had to be integrated to allow tracking of information for the Ride sharing specifically.
 
 **Ride Shring**
 All user stories relating to hitching a ride with another driver fall under this category.
 
 **Messaging**
-Once Admin and Ride Sharing were accomplihed an additional layer of in app messaging became possible.
+Once Admin and Ride Sharing were accomplished an additional layer of in app messaging became possible.
 
 
 # Validator Testing
 
-## W3C HTML Validator
+## 1. W3C HTML Validator
 It is a known issue that the W3C Validator does not recognise django template language (DTL) and flags it as an error.
 The focus was on finding any HTML errors and bad badpractices AROUND the DTL issues.
 All HTML files for the project pass W3C Validator (with the noted exceptions).
@@ -63,7 +62,7 @@ All HTML files for the project pass W3C Validator (with the noted exceptions).
 <img src="./static/docs/validation/message_center.html_W3C.png" alt="Lint Result" width="800"/>
 
 
-## Jigsaw CSS Validator
+## 2. Jigsaw CSS Validator
 
 The project makes maximum use of Bootstrap framwwork classes. Only minimal custom CSS was use to acheive specific non-standard styling.
 
@@ -77,7 +76,7 @@ The project makes maximum use of Bootstrap framwwork classes. Only minimal custo
 
 <img src="./static/docs/validation/style.CSS_Jigsaw.png" alt="CSS Jigsaw" width="800"/>
 
-## PEP8 Python Validator
+## 3. PEP8 Python Validator
 
  - No errors were returned when passing through the official [CI pep8 Linter](https://pep8ci.herokuapp.com/)
 
@@ -91,14 +90,18 @@ The project makes maximum use of Bootstrap framwwork classes. Only minimal custo
 **views.py**
 <img src="./static/docs/validation/views.py_linted.png" alt="Lint Result" width="400"/>
 
+## 3. JSHint Javascript Validator
 
-## Chrome DEV Tools Lighthouse
+ - no errors were returned when passing through  [JSHint Validator](https://jshint.com/)
+
+<img src="./static/docs/validation/script.js_jshint.png" alt="JS Lint Result" width="800"/>
 
 
-EPICS 
-Hitch A Ride
-Messaging
-Admin
+## 4. Chrome DEV Tools Lighthouse
+
+
+
+
 
 
 
