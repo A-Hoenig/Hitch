@@ -34,19 +34,63 @@ All user stories relating to hitching a ride with another driver fall under this
 Once Admin and Ride Sharing were accomplihed an additional layer of in app messaging became possible.
 
 
-
 # Validator Testing
 
-## W2C HTML Validator
+## W3C HTML Validator
 It is a known issue that the W3C Validator does not recognise django template language (DTL) and flags it as an error.
 The focus was on finding any HTML errors and bad badpractices AROUND the DTL issues.
+All HTML files for the project pass W3C Validator (with the noted exceptions).
+
+**About**
+<img src="./static/docs/validation/about.html_W3C.png" alt="Lint Result" width="800"/>
+
+**Rides**
+<img src="./static/docs/validation/rides.html_W3C.png" alt="Lint Result" width="800"/>
+
+**Hitches**
+<img src="./static/docs/validation/hitches.html_W3C.png" alt="Lint Result" width="800"/>
+
+**User_Profile**
+<img src="./static/docs/validation/user_profile.html_W3C.png" alt="Lint Result" width="800"/>
+
+**Vehicles**
+<img src="./static/docs/validation/vehicle.html_W3C.png" alt="Lint Result" width="800"/>
+
+**Locations**
+<img src="./static/docs/validation/location.html_W3C.png" alt="Lint Result" width="800"/>
+
+**Messages**
+<img src="./static/docs/validation/message_center.html_W3C.png" alt="Lint Result" width="800"/>
+
 
 ## Jigsaw CSS Validator
+
+The project makes maximum use of Bootstrap framwwork classes. Only minimal custom CSS was use to acheive specific non-standard styling.
+
+<p>
+<a href="http://jigsaw.w3.org/css-validator/check/referer">
+    <img style="border:0;width:88px;height:31px"
+        src="http://jigsaw.w3.org/css-validator/images/vcss-blue"
+        alt="Valid CSS!" />
+    </a>
+</p>
+
+<img src="./static/docs/validation/style.CSS_Jigsaw.png" alt="CSS Jigsaw" width="800"/>
 
 ## PEP8 Python Validator
 
  - No errors were returned when passing through the official [CI pep8 Linter](https://pep8ci.herokuapp.com/)
-<img src="./assets/images/linter-result.png" alt="Linter" width="700"/>
+
+**admin.py**
+<img src="./static/docs/validation/admin.py_linted.png" alt="Lint Result" width="400"/>
+**models.py**
+<img src="./static/docs/validation/models.py_linted.png" alt="Lint Result" width="400"/>
+
+**forms.py**
+<img src="./static/docs/validation/forms.py_linted.png" alt="Lint Result" width="400"/>
+**views.py**
+<img src="./static/docs/validation/views.py_linted.png" alt="Lint Result" width="400"/>
+
 
 ## Chrome DEV Tools Lighthouse
 
