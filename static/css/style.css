@@ -3,11 +3,7 @@
 }
 
 .add-shadow {
-   text-shadow: 0.1rem 0.1rem 10px rgba(255, 255, 255, 0.7); 
-}
-
-.caption-bg {
-   background-color: rgba(255, 255, 255, 0.5);
+   text-shadow: 0.1rem 0.1rem 20px rgba(255, 255, 255, 1); 
 }
 
 #model {
