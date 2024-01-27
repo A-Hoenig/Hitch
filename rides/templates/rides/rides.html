@@ -163,8 +163,6 @@
             <div class="accordion" id="RidesAccordionList">
                 <!-- loop through each trip in the db-->
                 {% for t in trips %}
-                <form method="post">
-                    {% csrf_token %}
                     <!--********************* accordion header row starts here *********************-->
                     <div class="accordion-item">
                         <h2 class="accordion-header">
@@ -184,7 +182,6 @@
 
                                                 <!-- Trip Arrows -->
                                                 <span class="col-md-auto fs-5">
-                                                    <!-- Your icons and conditions here -->
                                                     {% if t.recurring == False and t.direction == 0 %}
                                                     <i class="fa-solid fa-angle-right" data-bs-toggle="tooltip"
                                                         data-bs-placement="left" data-bs-custom-class="custom-tooltip"
@@ -313,8 +310,7 @@
                         </h2>
                     </div>
                     
-
-                    <!--*********************      drop down details form    *********************-->
+                    <!--*********************      DROP DOWN DETAILS ACCORDION    *********************-->
                     <div id="flush-collapse{{t.id}}" class="accordion-collapse collapse border bg-light"
                         data-bs-parent="#RidesAccordionList">
 
@@ -424,92 +420,90 @@
                                 <!-- BOTTOM ROW -->
                                 <div class="row">
                                     <div class="col-sm-6 px-3">
-                                        {% if t.recurring  %}
-                                        <div class="d-flex justify-content-start">
-                                            <span id="weekday_pills">
-                                                <div class="text-start small mb-0 text-secondary">Regular Trip Days:
+                                        {% if t.recurring %}
+                                            <div class="d-flex justify-content-start">
+                                                <div id="weekday_pills">
+                                                    <div class="text-start small mb-0 text-secondary">Regular Trip Days:</div>
+                                                    {% if t.mon %}
+                                                        <span class="badge bg-success rounded-pill">MON</span>
+                                                    {% else %}
+                                                        <span class="badge bg-secondary rounded-pill">MON</span>
+                                                    {% endif %}
+                                                    {% if t.tue %}
+                                                        <span class="badge bg-success rounded-pill">TUE</span>
+                                                    {% else %}
+                                                        <span class="badge bg-secondary rounded-pill">TUE</span>
+                                                    {% endif %}
+                                                    {% if t.wed %}
+                                                        <span class="badge bg-success rounded-pill">WED</span>
+                                                    {% else %}
+                                                        <span class="badge bg-secondary rounded-pill">WED</span>
+                                                    {% endif %}
+                                                    {% if t.thu %}
+                                                        <span class="badge bg-success rounded-pill">THU</span>
+                                                    {% else %}
+                                                        <span class="badge bg-secondary rounded-pill">THU</span>
+                                                    {% endif %}
+                                                    {% if t.fri %}
+                                                        <span class="badge bg-success rounded-pill">FRI</span>
+                                                    {% else %}
+                                                        <span class="badge bg-secondary rounded-pill">FRI</span>
+                                                    {% endif %}
+                                                    {% if t.sat %}
+                                                        <span class="badge bg-success rounded-pill">SAT</span>
+                                                    {% else %}
+                                                        <span class="badge bg-secondary rounded-pill">SAT</span>
+                                                    {% endif %}
+                                                    {% if t.sun %}
+                                                        <span class="badge bg-success rounded-pill">SUN</span>
+                                                    {% else %}
+                                                        <span class="badge bg-secondary rounded-pill">SUN</span>
+                                                    {% endif %}
                                                 </div>
-                                                {% if t.mon  %}
-                                                <span CLASS="badge bg-success rounded-pill">MON</span>
-                                                {% else %}
-                                                <span CLASS="badge bg-secondary rounded-pill">MON</span>
-                                                {% endif %}
-                                                {% if t.tue  %}
-                                                <span CLASS="badge bg-success rounded-pill">TUE</span>
-                                                {% else %}
-                                                <span CLASS="badge bg-secondary rounded-pill">TUE</span>
-                                                {% endif %}
-                                                {% if t.wed  %}
-                                                <span CLASS="badge bg-success rounded-pill">WED</span>
-                                                {% else %}
-                                                <span CLASS="badge bg-secondary rounded-pill">WED</span>
-                                                {% endif %}
-                                                {% if t.thu  %}
-                                                <span CLASS="badge bg-success rounded-pill">THU</span>
-                                                {% else %}
-                                                <span CLASS="badge bg-secondary rounded-pill">THU</span>
-                                                {% endif %}
-                                                {% if t.fri  %}
-                                                <span CLASS="badge bg-success rounded-pill">FRI</span>
-                                                {% else %}
-                                                <span CLASS="badge bg-secondary rounded-pill">FRI</span>
-                                                {% endif %}
-                                                {% if t.sat  %}
-                                                <span CLASS="badge bg-success rounded-pill">SAT</span>
-                                                {% else %}
-                                                <span CLASS="badge bg-secondary rounded-pill">SAT</span>
-                                                {% endif %}
-                                                {% if t.sun  %}
-                                                <span CLASS="badge bg-success rounded-pill">SUN</span>
-                                                {% else %}
-                                                <span CLASS="badge bg-secondary rounded-pill">SUN</span>
-                                                {% endif %}
-
-                                            </span>
-                                        </div>
+                                            </div>
                                         {% endif %}
                                     </div>
                                 </div>
 
-                                <div class="">
+                                <div>
                                     <form method="post" action="{% url 'account_login' %}?next={{ request.path }}">
                                         {% csrf_token %}
                                         <!-- Check if the user is authenticated -->
                                         {% if user.is_authenticated %}
-                                        <!-- Check if the user is the driver of the trip -->
-                                        {% if user.username == t.driver.username %}
-                                        <!-- User is the driver -->
-                                        <div class="btn btn-success badge rounded-pill fs-4 mt-2 disabled my-3">
-                                            <i class="fa-solid fa-car"></i><span>This is your trip</span>
-                                        </div>
-                                        <!-- Check if the user is in the approved hitch group -->
-                                        {% elif user in t.hitch_group %}
-                                        <!-- User is approved to join -->
-                                        <div class="btn btn-success badge rounded-pill fs-4 mt-2 disabled my-3">
-                                            <i class="fa-solid fa-thumbs-up"></i><span>You are approved to join this
-                                                Ride!</span>
-                                        </div>
-                                        <!-- Check if the user has a pending request -->
-                                        {% elif user in t.pending_hitchers %}
-                                        <!-- User has already requested -->
-                                        <div class="btn btn-success badge rounded-pill fs-4 mt-2 disabled my-3">
-                                            <i class="fa-solid fa-thumbs-up"></i><span>You already requested this
-                                                ride!</span>
-                                        </div>
+                                                <!-- Check if the user is the driver of the trip -->
+                                                {% if user.username == t.driver.username %}
+                                                        <!-- User is the driver -->
+                                                        <div class="btn btn-success badge rounded-pill fs-4 mt-2 disabled my-3">
+                                                            <i class="fa-solid fa-car"></i><span>This is your trip</span>
+                                                        </div>
+                                                        <!-- Check if the user is in the approved hitch group -->
+                                                {% elif user in t.hitch_group %}
+                                                        <!-- User is approved to join -->
+                                                        <div class="btn btn-success badge rounded-pill fs-4 mt-2 disabled my-3">
+                                                            <i class="fa-solid fa-thumbs-up"></i><span>You are approved to join this
+                                                                Ride!</span>
+                                                        </div>
+                                                        <!-- Check if the user has a pending request -->
+                                                {% elif user in t.pending_hitchers %}
+                                                        <!-- User has already requested -->
+                                                        <div class="btn btn-success badge rounded-pill fs-4 mt-2 disabled my-3">
+                                                            <i class="fa-solid fa-thumbs-up"></i><span>You already requested this
+                                                                ride!</span>
+                                                        </div>
+                                                {% else %}
+                                                        <!-- User can request to hitch a ride -->
+                                                        <button name="ride_trip_id" value="{{ t.id }}" type="button"
+                                                            class="btn btn-primary badge rounded-pill fs-4 mt-2" data-bs-toggle="modal"
+                                                            data-bs-target="#RequestModal" data-bs-whatever="" data-trip-id="{{ t.id }}"
+                                                            data-trip-destination="{{ t.destination.city }}">
+                                                            <i class="fa-solid fa-thumbs-up"></i> Request to Hitch a Ride!
+                                                        </button>
+                                                {% endif %}
                                         {% else %}
-                                        <!-- User can request to hitch a ride -->
-                                        <button name="ride_trip_id" value="{{ t.id }}" type="button"
-                                            class="btn btn-primary badge rounded-pill fs-4 mt-2" data-bs-toggle="modal"
-                                            data-bs-target="#RequestModal" data-bs-whatever="" data-trip-id="{{ t.id }}"
-                                            data-trip-destination="{{ t.destination.city }}">
-                                            <i class="fa-solid fa-thumbs-up"></i> Request to Hitch a Ride!
-                                        </button>
-                                        {% endif %}
-                                        {% else %}
-                                        <!-- User not logged in - show login button -->
-                                        <a class="btn btn-primary badge rounded-pill fs-4 mt-2"
-                                            href="{% url 'account_login' %}?next={{ request.path }}" role="button">Sign
-                                            In to request a ride</a>
+                                                <!-- User not logged in - show login button -->
+                                                <a class="btn btn-primary badge rounded-pill fs-4 mt-2"
+                                                    href="{% url 'account_login' %}?next={{ request.path }}" role="button">Sign
+                                                    In to request a ride</a>
                                         {% endif %}
                                     </form>
                                 </div>
@@ -518,7 +512,6 @@
                         </div>
                     </div>
                     {% endfor %}
-                </form>
             </div>
         </div>
     </div>
