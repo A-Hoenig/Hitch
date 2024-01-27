@@ -41,35 +41,35 @@ Find it on GitHub: <a href="https://github.com/A-Hoenig/Hitch">HITCH</a>
 ## About The Project
 
 * Hitch is a web based app that enables likeminded travellers to connect and offer to share each other's rides
-* The mindest is that when sharing available transportation, we reduce the number of vehicles on the road 
+* The mindset is that when sharing available transportation, we reduce the number of vehicles on the road 
 * This is not just economical, but also helps reduce road congestion leading to fewer traffic jams
 * Less cars on the road of course also helps out the environment, especially in cities with large population densities
 * We can all do our part to help reduce carbon emissions and leave this world a little better than when we found it
 
 The app connects drivers and 'Hitchers' in localised regions. A Trip is made up of a Ride and a Hitch. The driver offers a ride and a hitcher Hitches a ride .. just like in real life on the roadside.
 
-Regions can be set up by a community that is interconnected and will help connect neigbors and fellow community members that need a ride somewhere. While the app could theoretically be used to connect and share long distance trips, the main benefit lies in sharing small but frequent trips such as regular shopping runs, work commutes or sport workouts etc.
+Regions can be set up by a community that is interconnected and will help connect neighbors and fellow community members that need a ride somewhere. While the app could theoretically be used to connect and share long distance trips, the main benefit lies in sharing small but frequent trips such as regular shopping runs, work commutes or sport workouts etc.
 
-When a driver offer to give rides, he can publish it as a single or recurring event letting users know that he is offering multiple hitch opportunities. Also they can specify whether it is a one way trip, of if it will return at a later time.
+When a driver offers to give rides, he can publish it as a single or recurring event letting users know that he is offering multiple hitch opportunities. Also they can specify whether it is a one way trip, of if it will return at a later time.
 
 * Available Rides are listed in chronological order showing the next ride happening in the selected region
 * If someone wants to hitch a ride, they can select the interested ride, and request to join it - a message can also be passed
-* Driver and Hitchers can communicate via message inside the app and do not need to share personal information such as address, telephone or email unless they offer to do so
+* Drivers and Hitchers can communicate via message inside the app and do not need to share personal information such as address, telephone or email unless they offer to do so
 * A rating system will be implemented to allow drivers and passengers to give feeback and keep everybody honest and curteous
-* The system is based on volunteers! no mandatory fee is implemented, however a suggested tip will be calculated to help the driver with the operating costs of their vehicle
+* The system is based on volunteers! No mandatory fee is implemented, however a suggested tip will be calculated to help the driver with the operating costs of their vehicle.
 
 ### Agile Developement
-Agile design thinking was adopted to react to changes in design and ideas as the deveoplment process evolved. For this, Git hub Kanban boards in the project section were used to keep track of user stories and milestones as well as the progress and acceptance criteria for having achieved a specific feature in the application. The project KANBAN board is set to public and can be accessed here:
+Agile design thinking was adopted to react to changes in design and ideas as the deveoplment process evolved. For this, GitHub Kanban boards in the project section were used to keep track of user stories and milestones as well as the progress and acceptance criteria for having achieved a specific feature in the application. The project Kanban board is set to public and can be accessed here:
 <a href="https://github.com/users/A-Hoenig/projects/4/views/1?visibleFields=%5B%22Title%22%2C%22Assignees%22%2C%22Status%22%2C%22Labels%22%2C%22Milestone%22%5D">Hitch Project KANBAN</a>
 
-<img src="./static/docs/hitch-kanban.png" alt="ERD" width="1024"/>
+<img src="./static/docs/hitch-kanban.png" alt="kanban" width="1024"/>
 
 A fourth column was included to track features that would be added to a future development cycle. For the purpose of a single person development team in a very limited amount of time, the overall design was made to think of a real world fully functioning app, however, only a subset of features was possible to implement.
 
 ## Data Models / Database Design
-The Database Model is shown below. For initial functionality, many options can be edited by the superuser. In future some modification will be neccessary to maintain the database when cascade delete events might permanently delete records of interest.
+The Database Model is shown below. For initial functionality, many options can be edited by the superuser. In future, some modification will be neccessary to maintain the database when cascade delete events might permanently delete records of interest.
 
-For instance the user model will cascade delete. Since multpile users can be linked to a single trip (Driver and Hitchers) if one of the users deletes their profile, the cascade will delete all trips they were associated with, also removing the event from other passenger, - still valid users who might need access to previous events. For this reason, cascade delete was avoided where possible... When a user account is deleted, all instances of that users database record will eventually have to be replaced with a generic palceholder to maintain the integrity of the all linked tables via foreignkeys.
+For instance, the user model will cascade delete. Since multiple users can be linked to a single trip (Driver and Hitchers), if one of the users deletes their profile, the cascade will delete all trips they were associated with, also removing the event from other passengers, - still valid users who might need access to previous events. For this reason, cascade delete was avoided where possible... When a user account is deleted, all instances of that user's database record will eventually have to be replaced with a generic palceholder to maintain the integrity of the all linked tables via foreignkeys.
 
 For the initial 'proof of concept' this was not fully implemented yet.
 
@@ -81,7 +81,7 @@ For the initial 'proof of concept' this was not fully implemented yet.
 Bootstrap offers very modern and well designed web elements that were extensively used throughout this project.
 The main design choice was the use of **accordion style lists** that allow a consolidated list for quick review, and then allow a user to expand each line to see more details on any trip they might be interested in.
 
-An initial wirframe was setup to derive the basic layput of the elements and decide on the optimum information density for give realestate.
+An initial wireframe was setup to derive the basic layout of the elements and decide on the optimum information density for the given realestate.
 
 ### Wireframe Mockups
 
@@ -100,7 +100,7 @@ In order to maximise information presented on a mobile first design philosophy, 
 * The purpose of the trip / main destination ie Shopping, Outting, Gym etc
 * Message details
 
-To speed up the user learning curve, most symbols have mouse over tool tips to explain their meaning
+To speed up the user learning curve, most symbols have mouse-over tool-tips to explain their meaning
 This can be seen below:
 
 <img src="./static/docs/mouseover.gif" alt="MouseOver" width="800"/>
@@ -119,7 +119,7 @@ This can be seen below:
 <img src="./static/docs/your-view-hitch-approved.png" alt="ERD" width="400"/>
 
 ### User feedback
-Throughout the application, the built in messaging feature of Django was used to relay message to the user. This was implemented in a bottstrap alert that is built into the navigation header and therefore available on all subpages. The message times out after 5 seconds and is removed. Several massages can be stacked underneath each other if needed.
+Throughout the application, the built in messaging feature of Django was used to relay messages to the user. This was implemented in a bootstrap alert that is built into the navigation header and therefore available on all subpages. The message times out after 5 seconds and is removed. Several massages can be stacked underneath each other if needed.
 
 <img src="./static/docs/message-feedback.jpg" alt="Feedback" width="800"/>
 
@@ -135,11 +135,11 @@ Throughout the application, the built in messaging feature of Django was used to
 <p>
 
 The about page offers a pleasant welcome and explains the mission. An easy to navigate NAV bar shows the options on the site.
-**Your Trips** and the **Gear Icon** are user spcific and only displayed after a user is logged on.
+**Your Trips**, **Messages** and the **Gear Icon** are user specific and only displayed after a user is logged on. The pages are also set to require logon, so they autmoatically redirect to the sing-in page should a user not be loggeed in and enter teh URL directly.
 
 ## The Rides Page
 
-This page is the first point of contact with the ride sharing world. Upcoming offered rides are listed in order of date and time and summarise the Trip using graphical symbols. The page is fully responsive using Bootstrap's extensive built-in media queries. 
+This page is the first point of contact with the ride sharing world. Upcoming offered rides are listed in order of date and time and summarise the Trip using graphical symbols. The page is fully responsive using Bootstrap's extensive built-in media queries.  Only trip after the current date are shown. Days on the same day and the next are labelled TODAY and TOMORROW for ease of reading and quick location.
 
 For mobile first philisophy, all views were generated to optimize UX/UI on phones.
 
@@ -151,11 +151,11 @@ Alternate screen sizes shown below:
 <img src="./static/docs/rides-medium.jpg" alt="Ride Large" width="400"/>
 <img src="./static/docs/rides-small.jpg" alt="Ride Large" width="210"/>
 
-### Clicking on any ride will accordion expand the line to reveal the full details of the trip:
+### Clicking on any ride will accordion-expand the line to reveal the full details of the trip:
 
 <img src="./static/docs/rides-detail.jpg" alt="Ride Large" width="800"/>
 <hr>
-Dynamic buttons change based on the status of the ride in relation to the logged in user these are:
+Dynamic buttons change based on the status of the ride in relation to the logged in user. These are:
 
 * Not logged in yet -> <img src="./static/docs/button-signin.png" alt="SignIn" width="150"/>
 
@@ -163,15 +163,15 @@ Dynamic buttons change based on the status of the ride in relation to the logged
 
 * Already Requested this ride -> <img src="./static/docs/button-already-requested.png" alt="AlreadyReq" width="150"/>
 
-* You are driver of ride -> <img src="./static/docs/button-your-trip.png" alt="Driver" width="150"/>
+* You are driver of this ride -> <img src="./static/docs/button-your-trip.png" alt="Driver" width="150"/>
 
 <p align="right">(<a href="#contents">back to top</a>)</p>
 
 ## The Hitches Page
 
-The Hitches page is not yet implemented in this iteration. In principle it will be almost identical to the rides page, except the logic is reversed. If someone wihtout a car is in need of a ride somewhere they can add the requested Hitch to this page. In this case volunteers can check if there are any hitch requests published going in their direction and can offer to give them a ride. This way rides and hitches can be matched up in both directions. The database structure is already set up to handle this principle.
+The Hitches page is not yet implemented in this iteration. In principle it will be almost identical to the rides page, except the logic is reversed. If someone without a car is in need of a ride somewhere they can add the requested Hitch to this page. In this case, volunteers can check if there are any hitch requests published going in their direction and can offer to give them a ride. This way rides and hitches can be matched up in both directions. The database structure is already set up to handle this principle.
 
-Rides can have many Hitch requests, and some of them will be approved=linked. (these request instances are not published and serve only to track relationships)
+Rides can have many Hitch requests, and some of them will be approved (=linked). (these request instances are not published and serve only to track relationships)
 
 Hitch Requests can only have one Ride associated with them.(these ride requests will be published and are displayed on the Hitches page)
 
@@ -195,14 +195,14 @@ This page is the management page of a user's Rides and Hitches. It displays both
 
 
 ## The Message Center Page
-The message center collates all message related to a Trip and displays them in a messenger style format. It is not intended as yet another messagin app, but a single source view of all the communication that has been exchanges about a single trip at a glance. Individuals will still need to communicate directly eithe rby using the message center to exchange social media contacts or by electign to reveal your phone number.
+The message center collates all messages related to a Trip and displays them in a messenger style format. It is not intended as yet another messaging app, but a single source view of all the communication that has been exchanged about a single trip at a glance. Individuals will still need to communicate directly either by using the message center to exchange social media contacts or by electing to reveal their phone number.
 
 <img src="./static/docs/message-medium.jpg" alt="YourView" width="600"/>
 <img src="./static/docs/message-phone.jpg" alt="YourView" width="200"/>
 
 ## The User Admin Page
 
-The user admi pag displays the extended data of the built in django user model which is used throughout. User can create accounts, log in and out, reset password and delete account all implemented thorugh the django framework securely. Additionally details needed for the Hitch application are added to this database. This includes:
+The user admin page displays the extended data of the built-in django user model which is used throughout. Users can create accounts, log in and out, make changes and reset passwords, all implemented through the django framework securely. Additional details needed for the Hitch application are added to this database. This includes:
 
  |Field|Reason|
  |:--|:---|
@@ -216,18 +216,24 @@ The user admi pag displays the extended data of the built in django user model w
  The account page is a fully implemented form and the user can edit their data anytime.
  The User Profile page also has subtabs to allow the creation of favorite locations for quick access and to add a vehicle they will be using to share rides.
 
- Both tabs offer full CRUD functionality, where users can Create, Read, Update and Delete their data as needed. Vehicle and Location lists make use of the same accordion display where a user can see a condensed list adn then click to expand the details. In this case, the details are already in a form allowing for quick change of data.
+ Both tabs offer full CRUD functionality, where users can Create, Read, Update and Delete their data as needed. Vehicle and Location lists make use of the same accordion display where a user can see a condensed list and then click to expand the details. In this case, the details are already in a form allowing for quick change of data.
 
- To offer rides a user must have at least one vehicle and 2 seperate locations that can serve as depart and destination selection.
+ To offer rides, a user must have at least one vehicle and 2 seperate locations that can serve as depart and destination selection.
  <p align="right">(<a href="#contents">back to top</a>)</p>
 
 ### The Vehicle SubTab
+
+In the vehicle tab, the user can add one or more vehicles to their database. Basic facts about the vehicle can be provided and not many are mandatory. Smoking or non smoking are implemented as some car traverllers still like to smoke on the road and this would not be very pleasant for non smokers. Likewise, since the app is for environmentally conscious individuals, the engine type is provided to allow hithers to chose rides with electric vehicles or avoid diesels. 
+The maximum hithc seat value tracks the maximum number of seats available for that car. Theoretically a bus company could add a bus and all 100+ seats available.
+
  <img src="./static/docs/vehicle-edit.jpg" alt="vehicles" width="800"/>
 
 ### The Locations SubTab
+
+The locations tab let sthe user store frequently used locations for quick reference. For this iteration, user must create a list of locations to use before offering rides or making hitch requests. In future this will be fully integrated with google earth to allow entering a dstination without having to first create a stored location. This will also allow maps displays, distance and time caluculation etc.
+
  <img src="./static/docs/location-list.jpg" alt="locations" width="400"/>
  <img src="./static/docs/location-edit.jpg" alt="locations" width="400"/>
-
 
 ## Future Development
 

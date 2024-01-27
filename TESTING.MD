@@ -120,15 +120,15 @@ The default bootstrap colors did cause some issues in the your trips page where 
 Text is shown mostly black to satisfy accessibility suggestions.
 
 
-<img src="./static/docs/validation/lighthouse-about.png" alt="JS Lint Result" width="400"/>
+<img src="./static/docs/validation/lighthouse-about.png" alt="JS Lint Result" width="400"/><br>
 
-<img src="./static/docs/validation/lighthouse-rides.png" alt="JS Lint Result" width="400"/>
+<img src="./static/docs/validation/lighthouse-rides.png" alt="JS Lint Result" width="400"/><br>
 
-<img src="./static/docs/validation/lighthouse-hitches.png" alt="JS Lint Result" width="400"/>
+<img src="./static/docs/validation/lighthouse-hitches.png" alt="JS Lint Result" width="400"/><br>
 
-<img src="./static/docs/validation/lighthouse-yourtrips.png" alt="JS Lint Result" width="400"/>
+<img src="./static/docs/validation/lighthouse-yourtrips.png" alt="JS Lint Result" width="400"/><br>
 
-<img src="./static/docs/validation/lighthouse-message.png" alt="JS Lint Result" width="400"/>
+<img src="./static/docs/validation/lighthouse-message.png" alt="JS Lint Result" width="400"/><br>
 
 
 # Manual Testing
