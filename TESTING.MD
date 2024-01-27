@@ -113,10 +113,22 @@ The project makes maximum use of Bootstrap framwwork classes. Only minimal custo
 
 ## 4. Chrome DEV Tools Lighthouse
 
+Code was inspected and tested through Chrome lighthouse and all pages returned acceptable scores. Changes were made where neccessary to achieve 100% accessibility for screen readers and graphics contrast.
+
+The default bootstrap colors did cause some issues in the your trips page where even large type with color primary on a grey background was being flagged as having not enough contrast. The use of color to highight important information in an eyecatching way and subdue less important infos was therefore not possible in this context.
+
+Text is shown mostly black to satisfy accessibility suggestions.
 
 
+<img src="./static/docs/validation/lighthouse-about.png" alt="JS Lint Result" width="400"/>
 
+<img src="./static/docs/validation/lighthouse-rides.png" alt="JS Lint Result" width="400"/>
 
+<img src="./static/docs/validation/lighthouse-hitches.png" alt="JS Lint Result" width="400"/>
+
+<img src="./static/docs/validation/lighthouse-yourtrips.png" alt="JS Lint Result" width="400"/>
+
+<img src="./static/docs/validation/lighthouse-message.png" alt="JS Lint Result" width="400"/>
 
 
 # Manual Testing

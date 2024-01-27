@@ -20,7 +20,7 @@
                 </div>
                 <form method="get" action="{% url 'rides_view' %}" class="d-flex mt-3" id="filterForm">
                     {% csrf_token %}
-                    <span class="mt-2 me-1">REGION:</span>{{ region_filter_form|crispy }}
+                    <span class="mt-2 me-1">{{ region_filter_form|crispy }}</span>
                 </form>
             </div>
         </div>

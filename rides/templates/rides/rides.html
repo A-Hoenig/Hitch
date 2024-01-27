@@ -13,9 +13,7 @@
     <div class="row">
         <div class="col-12 bg-light gx-0">
             <div class="px-3 py-0 d-sm-flex justify-content-between align-items-center mt-auto border-bottom shadow">
-
                 <div>UPCOMING RIDES IN SELECTED REGION:</div>
-
                 <div>
 
                     {% if user.is_authenticated %}
@@ -32,9 +30,9 @@
                     </div>
                     {% endif %}
                 </div>
-                <form method="get" action="{% url 'rides_view' %}" class="d-flex mt-3" id="filterForm">
+                <form method="get" action="{% url 'rides_view' %}" class="d-flex mt-3" id="filterForm"</form>
                     {% csrf_token %}
-                    <span class="mt-2 me-1">REGION:</span>{{ region_filter_form|crispy }}
+                    <span class="mt-2 me-1"></span>{{ region_filter_form|crispy }}
                 </form>
 
             </div>

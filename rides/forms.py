@@ -336,12 +336,13 @@ class RegionFilterForm(forms.Form):
 
     def __init__(self, *args, **kwargs):
         super(RegionFilterForm, self).__init__(*args, **kwargs)
-        self.fields['selected_region'].label = ''
+        self.fields['selected_region'].label = 'REGION:'
         self.fields['selected_region'].queryset = Region.objects.all()
         self.fields['selected_region'].empty_label = None
         self.fields['selected_region'].initial = Region.objects.first()
         self.fields['selected_region'].widget.attrs.update(
-            style='max-width: 12em')
+            style='max-width: 12em',
+            aria_label='Region Filter')
 
 
 class MessageForm(forms.Form):

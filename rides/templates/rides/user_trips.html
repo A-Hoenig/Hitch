@@ -15,8 +15,8 @@
         YOUR LIST OF TRIPS
         <form method="get" action="{% url 'user_trips' %}" class="d-flex mt-3" id="filterForm">
           {% csrf_token %}
-          <span class="mt-2 me-1">REGION:</span>
-          {{ region_filter_form|crispy }}
+          <span class="mt-0 me-1">{{ region_filter_form|crispy }}</span>
+          
         </form>
       </div>
     </div>
@@ -58,7 +58,7 @@
                     <i class="fa-solid fa-car"></i> RIDE
                   </span>
               {% else %}
-                  <span class="position-absolute top-0 start-50 translate-middle badge rounded-pill bg-warning">
+                  <span class="position-absolute top-0 start-50 translate-middle badge rounded-pill bg-dark">
                     <i class="fa-solid fa-thumbs-up"></i> HITCH
                   </span>
               {% endif %}
@@ -90,7 +90,7 @@
                           <!-- TRASHCAN DELETE ICON -->
                           <span id="hide_if_confirmed" class="">
                             <button type="button" class="btn badge bg-danger" id="Tdelete-{{ s.id }}"
-                              onclick="revealTDelete('{{ s.id }}')">
+                              onclick="revealTDelete('{{ s.id }}')" aria-label="Delete">
                               <i class="fa-regular fa-trash-can"></i>
                             </button>
                           </span>
@@ -102,7 +102,7 @@
                     <div class="row">
                       <div class="col-12 d-flex justify-content-end">
                         <button type="submit" name="delete" value="{{ s.id }}" id="tripDeleteBtn-{{ s.id }}"
-                          class="badge rounded-pill bg-danger d-none fs-6">
+                          class="badge rounded-pill bg-danger d-none fs-6" aria-label="Confirm Delete">
                           CONFIRM
                         </button>
                       </div>
@@ -110,24 +110,24 @@
                     <!-- *********************************    TRIP DETAILS ********************************-->
                     <div class="card-title h4">
                       <div>
-                        <span class="text-secondary">
+                        <span class="dark">
                           {{ s.depart.stoptype.stop_icon|safe }}
                         </span>
                         <span class="ms-1">
                           {{ s.depart.city }}
                         </span>
-                        <span class="text-secondary fs-6">
+                        <span class="dark fs-6">
                           - {{ s.depart.name }}
                         </span>
                       </div>
                       <div>
-                        <span class="text-secondary">
+                        <span class="dark">
                           {{ s.destination.stoptype.stop_icon|safe }}
                         </span>
                         <span>
                           {{ s.destination.city}}
                         </span>
-                        <span class="text-secondary fs-6">
+                        <span class="dark fs-6">
                           - {{ s.destination.name }}
                         </span>
                       </div>
@@ -161,12 +161,12 @@
                                     <span id="hide_if_confirmed" class="">
                                       <button type="button" class="badge rounded-pill bg-success"
                                         id="confirm-{{ s.id }}_{{ hitcher.id }}"
-                                        onclick="revealConfirm('{{ s.id }}_{{ hitcher.id }}')">
+                                        onclick="revealConfirm('{{ s.id }}_{{ hitcher.id }}')" aria-label="Confirm this Hitcher">
                                         CONFIRM
                                       </button>
                                       <!-- CONFIRM BUTTON-->
-                                      <button class="badge rounded-pill bg-danger d-none" name="confirm"
-                                        value="{{ s.id }}_{{ hitcher.id }}" id="confirmBtn-{{ s.id }}_{{ hitcher.id }}">
+                                      <button class="badge rounded-pill bg-dark d-none" name="confirm"
+                                        value="{{ s.id }}_{{ hitcher.id }}" id="confirmBtn-{{ s.id }}_{{ hitcher.id }}" aria-label="Are You Sure?">
                                         SURE?
                                       </button>
                                     </span>
@@ -184,7 +184,8 @@
                                   class="badge rounded-pill bg-success open-messageModal" data-bs-toggle="modal"
                                   data-bs-target="#messageModal" value="{{ s.id }}_{{ hitcher.id }}"
                                   id="messageBtn-{{ hitcher.id }}" data-hitcher_id="{{ hitcher.id }}"
-                                  data-trip_id="{{ s.id }}" data-hitcher="{{ hitcher.first_name }}">
+                                  data-trip_id="{{ s.id }}" data-hitcher="{{ hitcher.first_name }}"
+                                  aria-label="Send message to hitcher">
                                   <i class="fa-regular fa-message"></i>
                                 </button>
                               </div>
@@ -197,7 +198,7 @@
                         {% else %}
                               <!-- it is a hitch request-->
                               {% if s.pax_approved %}
-                                  <span class="badge bg-warning">
+                                  <span class="badge bg-danger">
                                     <i class="fa-solid fa-thumbs-up"></i>
                                     Your Hitch Was Approved!
                                   </span>

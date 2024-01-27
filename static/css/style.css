@@ -40,6 +40,7 @@
    background-color: rgba(0, 123, 255, 0.5);
 }
 
+
 /* custom media query to captions up for large screens*/
 @media (min-width: 1200px) {
 
