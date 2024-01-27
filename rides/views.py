@@ -73,16 +73,6 @@ def rides_view(request):
 
     # CREATE LIST OF HITCHERS FOR EACH TRIP AND TO TRIP INSTANCE
     for trip in trips:
-
-        # get average driver rating from DB
-        driver = trip.driver
-        # attach to trip
-        if driver is not None:
-            trip.average_driver_rating = round(
-                trip.driver.average_driver_rating)
-        else:
-            trip.average_driver_rating = 0
-
         # find any hitchers already approved by
         # driver and create list - per trip
         approved_hitch_requests = Hitch_Request.objects.filter(

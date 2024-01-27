@@ -6,7 +6,7 @@ register = template.Library()
 
 @register.simple_tag
 def render_stars(rating):
-    
+    print(rating)
     if str(rating).isdigit() and 0 <= int(rating) <= 5:
         rating = int(rating)
     else:
