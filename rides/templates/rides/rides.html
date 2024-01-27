@@ -379,13 +379,13 @@
                                                     <!-- Display available hitch slots -->
                                                     <ol class="list-unstyled p-0">
                                                         {% for hitcher in t.hitch_group %}
-                                                        <li class="text-start small mb-0 text-secondary">
-                                                        {% if not hitcher.first_name %}
-                                                        <i class="fa-solid fa-thumbs-up"></i> {{ hitcher }} {% render_stars hitch_rating %}
-                                                        {% else %}
-                                                        <i class="fa-solid fa-thumbs-up"></i> {{ hitcher.first_name }} {% render_stars rating %}
-                                                        {% endif %}
-                                                        </li>
+                                                            <li class="text-start small mb-0 text-secondary">
+                                                            {% if not hitcher.first_name %}
+                                                                <i class="fa-solid fa-thumbs-up"></i> {{ hitcher }} {% render_stars hitcher.average_hitcher_rating %}
+                                                            {% else %}
+                                                                <i class="fa-solid fa-thumbs-up"></i> {{ hitcher.first_name }} {% render_stars hitcher.average_hitcher_rating %}
+                                                            {% endif %}
+                                                            </li>
                                                         {% endfor %}
                                                         <!-- display pending hitchers not approved-->
                                                         {% if t.pending_hitchers|length == 0 %}
