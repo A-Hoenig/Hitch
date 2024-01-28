@@ -131,6 +131,8 @@
                                     </div>
                                 </div>
                             </div>
+                            {% empty %}
+                            <button type="button" class="btn btn-warning mx-5 my-3">Please add at least 2 locations. (depart and destination)</button>
                             {% endfor %}
                         </form>
                     </div>

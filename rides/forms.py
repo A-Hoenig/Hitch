@@ -160,7 +160,9 @@ class VehicleForm(forms.ModelForm):
     Form class for users vehicles
     Use Helper to size and layout form
     """
-
+    make = forms.CharField(required=True)
+    model = forms.CharField(required=True)
+    
     helper = FormHelper()
     helper.layout = Layout(
         Div(

@@ -158,7 +158,7 @@ For testing purposes 4 drivers and 3 Hitcher accounts have been created that can
 
 ## Admin Epic
 
-### 1. USERPROFILE TESTS
+### 1. USER_PROFILE TESTS
 | Feature/Story       | Action | Result |
 | :-------------- |:------ | :------ |
 |Visitor can see site but not logged in only pages|Enter Your_Trip, Message, User_profile URLs in browser directly|user is directed to sign in/up page|
@@ -173,23 +173,41 @@ For testing purposes 4 drivers and 3 Hitcher accounts have been created that can
 |Data Verification in Account Details form|enter wrong phone number std|Field is highlighted, entry not accepted (phone format only per regex)|
 |Required fields are marked as mantatory|Omit data entry on *Fields|User feedback given before submitting form|
 |User can change password|Click change Password Link|User redirected to Django password reset standard template| 
-|User can click button to add vehicle|Click ADD VEHICLE button|Add Vehicle Userform is shwon in modal|
-|User can add vehicel information|Fill out form for car data||
 
 
 ### 2. USERPROFILE / VEHICLE TESTS
 | Feature/Story       | Action | Result |
 | :-------------- |:------ | :------ |
 |User can switch to Vehicle tab in user profile|Click on Vehicle Tab|Vehicle List Displayed|
-|If user has not cars, a reminder is visible|Check page with new profile|No vehicles message is displayed|
+|If user has no cars, a reminder is visible|Check page with new profile|No vehicles message is displayed|
+|User can click button to add vehicle|Click ADD VEHICLE button|Add Vehicle Userform is shown in modal|
+|User can add vehicle information|Fill out form for car data|Form is submitted and vehicle added to list|
+|User can edit vehicle information|Click on vehicle row|Form is shown in dropdown with vehicle data|
+|User can delete vehicle information|Click on vehicle row and then delete button|Confirmation is shown and vehicle entry is deleted|
+|Required fields are marked as mantatory|Leave Make & model Blank|rejected with please fill in this field|
+|Data Verification in Vehicle Form|enter maxpax < 0|rejected with must be equal or greater 0|
+|Vehicle Icon changes based on type|Change vehicle to different types|Symbol changes as expected|
+|Vehicle list filter|Select ALL|all vehicles shown|
+|Vehicle list filter|change status of vehicle to Not Active and selecte inactive filter|Only Inactive vehicles shown|
+|Vehicle list filter|select Active button filter|only Active vehicles shown|
 
 
 ### 3. LOGIN / USER ACCOUNT TESTS
 | Feature/Story       | Action | Result |
 | :-------------- |:------ | :------ |
-|User can create an account (Signup)|input dummy user and pw|Verified OK|
-|User can log in (sign In)||
-|||
+|User can switch to Location tab in user profile|Click on Loction Tab|Location List Displayed|
+|If user has no locations, a reminder is visible|Check page with new profile or delete all locations|No locations message is displayed|
+|User can click button to add location|Click ADD VEHICLE button|Add Vehicle Userform is shown in modal|
+|User can add location information|Fill out form for car data|Form is submitted and location added to list|
+|User can edit location information|Click on location row|Form is shown in dropdown with location data|
+|User can delete location information|Click on location row and then delete button|Confirmation is shown and location entry is deleted|
+|Required fields are marked as mantatory|Leave Make & model Blank|rejected with please fill in this field|
+|Data Verification in Vehicle Form|enter maxpax < 0|rejected with must be equal or greater 0|
+|Vehicle Icon changes based on type|Change location to different types|Symbol changes as expected|
+|Vehicle list filter|Select ALL|all locations shown|
+|Vehicle list filter|change status of location to Not Active and selecte inactive filter|Only Inactive locations shown|
+|Vehicle list filter|select Active button filter|only Active locations shown|
+
 
 
 ### 4. UI/UX TESTS
