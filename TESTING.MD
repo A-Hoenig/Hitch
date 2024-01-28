@@ -145,8 +145,8 @@ Essentially there are 4 types of user / visitor to the website.
 For testing purposes 4 drivers and 3 Hitcher accounts have been created that can interact with each other. All accounts except Admin have the same Password to ease switching between accounts and verifying app logic and correect display. Admin and User password have been provided elsewhere.
 
 ## Users:
-| User       | Role | PW |
-| :-------------- |:------ | :------ |
+| User| Role | PW |
+| :--- |:--- | :--- |
 |Admin|Admin|AdminPW|
 |Angie|Driver/Hitcher|StandardPW|
 |Driver1|Driver/Hitcher|StandardPW|
@@ -159,9 +159,10 @@ For testing purposes 4 drivers and 3 Hitcher accounts have been created that can
 ## Admin Epic
 
 ### 1. USER_PROFILE TESTS
-| Feature/Story       | Action | Result |
-| :-------------- |:------ | :------ |
+| Feature/Story| Action | Result |
+| :---|:--- | :--- |
 |Visitor can see site but not logged in only pages|Enter Your_Trip, Message, User_profile URLs in browser directly|user is directed to sign in/up page|
+|Logged in user can see additional pages|signin|Your Trips, Message, User Name and Gear Icon visible|
 |Visitor can create profile and is automatically signed in|click signup and enter data|account created and redirect to about page logged in. Nav bar shows restricted pages|
 |User can sign out of page|click signout button in nav bar on user only page|user signed out and redirected to about page. Nav bar hides restricted pages|
 |User can enter personal data on new profile|on user profile add data and click UPDATE DATA|Data is saved with user feedback given|
@@ -176,8 +177,8 @@ For testing purposes 4 drivers and 3 Hitcher accounts have been created that can
 
 
 ### 2. USERPROFILE / VEHICLE TESTS
-| Feature/Story       | Action | Result |
-| :-------------- |:------ | :------ |
+| Feature/Story| Action | Result |
+| :---|:--- | :--- |
 |User can switch to Vehicle tab in user profile|Click on Vehicle Tab|Vehicle List Displayed|
 |If user has no cars, a reminder is visible|Check page with new profile|No vehicles message is displayed|
 |User can click button to add vehicle|Click ADD VEHICLE button|Add Vehicle Userform is shown in modal|
@@ -186,41 +187,95 @@ For testing purposes 4 drivers and 3 Hitcher accounts have been created that can
 |User can delete vehicle information|Click on vehicle row and then delete button|Confirmation is shown and vehicle entry is deleted|
 |Required fields are marked as mantatory|Leave Make & model Blank|rejected with please fill in this field|
 |Data Verification in Vehicle Form|enter maxpax < 0|rejected with must be equal or greater 0|
+|Delete action requires confirmation|press delete button|confirm delete button is shown|
+|User recieves feeback on CRUD operations|add, modify and delete records|feedback is shown correctly to user|
+|CRUD operations work as expected|add, modify and delete records|logged on to admin page and verified DB is accurate with changes|
 |Vehicle Icon changes based on type|Change vehicle to different types|Symbol changes as expected|
 |Vehicle list filter|Select ALL|all vehicles shown|
 |Vehicle list filter|change status of vehicle to Not Active and selecte inactive filter|Only Inactive vehicles shown|
 |Vehicle list filter|select Active button filter|only Active vehicles shown|
 
 
-### 3. LOGIN / USER ACCOUNT TESTS
-| Feature/Story       | Action | Result |
-| :-------------- |:------ | :------ |
+### 3. USERPROFILE / LOCATION TESTS
+| Feature/Story| Action | Result |
+| :--- |:---| :---|
 |User can switch to Location tab in user profile|Click on Loction Tab|Location List Displayed|
 |If user has no locations, a reminder is visible|Check page with new profile or delete all locations|No locations message is displayed|
-|User can click button to add location|Click ADD VEHICLE button|Add Vehicle Userform is shown in modal|
-|User can add location information|Fill out form for car data|Form is submitted and location added to list|
+|User can click button to add location|Click Add New Location button|Add Location Userform is shown in modal|
+|User can add location information|Fill out form for location data|Form is submitted and location added to list|
 |User can edit location information|Click on location row|Form is shown in dropdown with location data|
 |User can delete location information|Click on location row and then delete button|Confirmation is shown and location entry is deleted|
-|Required fields are marked as mantatory|Leave Make & model Blank|rejected with please fill in this field|
-|Data Verification in Vehicle Form|enter maxpax < 0|rejected with must be equal or greater 0|
-|Vehicle Icon changes based on type|Change location to different types|Symbol changes as expected|
-|Vehicle list filter|Select ALL|all locations shown|
-|Vehicle list filter|change status of location to Not Active and selecte inactive filter|Only Inactive locations shown|
-|Vehicle list filter|select Active button filter|only Active locations shown|
+|Required fields are marked as mantatory|Leave *Fields Blank|rejected with please fill in this field|
+|User recieves feeback on CRUD operations|add, modify and delete records|feedback is shown correctly to user|
+|CRUD operations work as expected|add, modify and delete records|logged on to admin page and verified DB is accurate with changes|
+|Delete action requires confirmation|press delete button|confirm delete button is shown|
+|Data Verification in Location Form|enter maxpax < 0|rejected with must be equal or greater 0|
+|Location Icon changes based on stop_type|Change location to different stop_types|Symbol changes as expected|
 
+### 4. ABOUT PAGE
+| Feature/Story| Action | Result |
+| :--- |:--- | :--- |
+|About page is shown as landing page|enter blank URL|About page is shown|
+|About page is displayed|click on About link in Nav bar|About page shown as expected|
+|About page content carousell works|3 main hero images cycle automatically|verified|
+|About page content carousell nav arrows work|click on left-right arrows to switch image|verified|
+|Text Displayed correctly|---|verified|
 
+### 5. RIDES PAGE & UI/UX
+| Feature/Story| Action | Result |
+| :---|:--- | :--- |
+|Rides page is shown|Click on Rides link in Nav Bar|Rides Page loads as expected|
+|User feedback bar is shwon|----|verified|
+|Call to action button changes based on login status|signin signout|changes from START HERE to OFFER A RIDE as expected|
+|Region Filter form is displayed with first db entry as default|---|verified|
+|Available rides shown in chronological order|--- |verified|
+|Available rides shown in selected region|change region filter|rides list updates|
+|Rides on same day or nextday date shown as TODAY or TOMORROW|Input rides with appropriate date from today|verified|
+|Rides depart&destination shown with correct stop_type symbol|input many different locations|verified|
+|Ride direction arrows correctly show type of trip|enter one way, return, single and multiple rides|verified|
+|Ride depart time shown in correct time format|---|verified|
+|Ride depart time-window shown correctly|crete rides with different time windows|verified|
+|Number of remaining hitch slots shown correctly|add hitchers to ride|diffenrece to max hitcher and actual hitchers correctly calculated|
+|Electric vehicle symbol shown|check rides with Electric or Hybrid Motors|Shown where expected|
+|Vehicle symbol shon based on type|chck rides wiht different vehicle types|Shown as expected|
+|Ride purpose symbol is shown|Check rides with varying trip purpose|expected symbols shown|
+|Ride displays smoking status|Check rides with varying vehicles|appropriate symbol shown based on vehicle selected|
+|If ride has a driver message, msg symbol shows|check message symbol on rides with a note|correctly shows and mouse over shows message|
+|Mouse over tool tips show correct message|Hover over all symbols|appropriate message is correctly shown|
+|UX: Accordion list works as expected|click on different rides|Detail pane opens and closes as expected for only one ride at a time|
 
-### 4. UI/UX TESTS
-| Feature/Story       | Action | Result |
-| :-------------- |:------ | :------ |
+#### RIDE DETAIL VIEW
+| Feature/Story| Action | Result |
+| :--- |:--- |:--- |
+|From Address correctly shown|compare location db data|correct address for location shown|
+|To Address correctly shown|compare location db data|correct address for location shown|
+|Vehicle Data correctly shown|compare trip vehicle with db|correct vehicle data shown|
+|Driver Telephone Shown if profile set accordingly|check user with /without contactable set|number displays or not as expected|
+|Driver username or first name shown|check ride from users with without first name set|Either option displays as expected|
+|Driver rating is displayed|Check different drivers and comapre DB|star rating for driver average rating in DB correctly shown|
+|List of hitchers is displayed for each ride|compare rides with different hitch status|confirmed hitchers displayed by name|
+|List of hitchers is displayed for each ride|compare rides with different hitch status|non confirmed hitchers calculated correctly|
+|List of hitchers is displayed for each ride|compare rides with different hitch status|confirmed hitchers displayed with username or first name|
+|List of hitchers is displayed for each ride|compare rides with different hitch status|confirmed hitchers displayed with hitch thumb icon|
+|List of hitchers is displayed for each ride|compare rides with different hitch status|confirmed hitchers displayed with correct star rating based on average hitch rating in DB|
+|'No requests' shown if no more hitch requests for ride|compare rides with different hitch status|verified|
+|Drivers message is displayed if note is filled out|Create different rides with whith note|Displayed where expected|
+|Recurring trips show weekdays in green|creat trips with/without recurring and different days selected|displayed only when recurring = true and days as expected|
+|Request to Hitch a ride button shown|logged in and not driver|shows correctly|
+|This is your ride button shown|logged in and driver|shows correctly|
+|You already requested a ride button shown|logged in and hitch request sent|shows correctly|
+|Sign Up to request a ride|Sign out and select a ride|shows correctly|
+
+#### UI/UX
+| Feature/Story| Action | Result |
+| :--- |:--- |:--- |
+|site is responsive|change screen size in browser window|ride lines reshape as expected on smaller screens|
+|site is responsive|change screen size in browser window|nav bar reshapes as expected on smaller screens|
+|site is responsive|change screen size in browser window|detail view reshapes as expected on smaller screens|
+|site is responsive|nav bar scrolls but user bar with region and button sticky on top|verified as expected on scroll|
 ||||
 ||||
 
-### 5. CRUD
-| Feature/Story       | Action | Result |
-| :-------------- |:------ | :------ |
-||||
-||||
 
 <p align="right">(<a href="#contents">back to top</a>)</p>
 

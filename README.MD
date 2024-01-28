@@ -205,7 +205,7 @@ The message center collates all messages related to a Trip and displays them in 
 The user admin page displays the extended data of the built-in django user model which is used throughout. Users can create accounts, log in and out, make changes and reset passwords, all implemented through the django framework securely. Additional details needed for the Hitch application are added to this database. This includes:
 
  |Field|Reason|
- |:--|:---|
+ |:---|:---|
  |DOB|user should be over 18|
  |Drivers license date|User might decide to ride or not based on driver age/experience|
  |Gender|Females may elect not to ride with men alone|
@@ -365,7 +365,7 @@ The testing documentation can be found at [Testing](TESTING.MD)
 ### Image sources
 
 |Image|Source|
- |:--|:---|
+ |:---|:---|
  |Hitchhiker 1|https://unsplash.com/photos/person-standing-beside-road-doing-handsign-VGOiY1gZZYg|
  |Girl Hitchhiker|https://unsplash.com/photos/woman-in-blue-denim-jacket-and-blue-denim-jeans-walking-on-road-during-daytime-F017VdnVpWs|
  |Inside Car Picture|https://unsplash.com/photos/man-driving-car-during-golden-hour-IAc1x02D9K0|
@@ -375,7 +375,7 @@ The testing documentation can be found at [Testing](TESTING.MD)
 ### Code Help
 
 |Code|Source|
- |:--|:---|
+ |:---|:---|
  |Generic User Profile Page|https://www.bootdey.com/snippets/view/bs5-edit-profile-account-details|
  |REGEX|https://digitalfortress.tech/tips/top-15-commonly-used-regex/|
  |GIJGO JQuery Bootstrap timepicker (not used yet)|https://gijgo.com/datetimepicker/example/bootstrap-5|
