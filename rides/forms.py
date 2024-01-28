@@ -5,7 +5,7 @@ from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Submit, Layout, Div
 from django.core.validators import RegexValidator
 from django.utils import timezone
-from datetime import timedelta, datetime
+from datetime import date, timedelta, datetime
 import re
 
 # REGEX VALIDATORS FOR VALIDATING USER ENTRIES
@@ -22,7 +22,7 @@ NumberValidator = RegexValidator(
     'Only numbers are allowed.'
     )
 PhoneNumberValidator = RegexValidator(
-    r'^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3,4}[-\s\.]?[0-9]{4,6}$',
+    r'(\(?([\d \-\)\–\+\/\(]+)\)?([ .\-–\/]?)([\d]+))',
     'Not a valid phone number.'
     )
 EmailValidator = RegexValidator(
@@ -103,16 +103,30 @@ class UserForm(forms.ModelForm):
         widget=forms.TextInput(attrs={'readonly': 'readonly'}),
         required=True
         )
+    phone = forms.CharField(
+        max_length=20,
+        validators=[PhoneNumberValidator],
+        required=True
+        )
 
     def clean(self):
         cleaned_data = super().clean()
         birthday = cleaned_data.get('DOB')
         drivers_license_date = cleaned_data.get('DL_date')
-        min_driving_age = 18
+        min_driving_age = 17
+        min_age = 18
+        if birthday:
+            if birthday:
+                today = date.today()
+                min_allowed_birthday = today - timedelta(days=(min_age*365))
+                if birthday > min_allowed_birthday:
+                    raise forms.ValidationError(
+                        f'Sorry, must be {min_age} years of age to participate')
         if drivers_license_date:
             min_allowed = birthday + timedelta(days=(min_driving_age*365))
             if drivers_license_date < min_allowed:
-                raise forms.ValidationError(f'Must be {min_driving_age} years old for license')
+                raise forms.ValidationError(
+                    f'Must be {min_driving_age} years old for license')
 
     class Meta:
         """

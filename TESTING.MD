@@ -166,6 +166,7 @@ For testing purposes 4 drivers and 3 Hitcher accounts have been created that can
 |User can sign out of page|click signout button in nav bar on user only page|user signed out and redirected to about page. Nav bar hides restricted pages|
 |User can enter personal data on new profile|on user profile add data and click UPDATE DATA|Data is saved with user feedback given|
 |User age is displayed once birthday is entered|Enter valid birthday|No age is shown. After entry correct age is calculated and added to name|
+|User must be 18 to have drivers license|Enter a date < 18 years after birthday|Form gives feedback of min age|
 |Data Verification in Account Details form|enter wrong date|Field is highlighted, entry not accepted|
 |Data Verification in Account Details form|enter 2 letter surname|Field is highlighted, entry not accepted (min 3 letters)|
 |Data Verification in Account Details form|enter #$%#^Eewe surname|Field is highlighted, entry not accepted (alphanumerics only)|

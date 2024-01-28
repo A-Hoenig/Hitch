@@ -70,7 +70,7 @@ class CustomUser(AbstractUser):
         max_length=50,
         verbose_name="Country",
         blank=True, null=True)
-    phone = models.CharField(max_length=15, verbose_name="Phone Number")
+    phone = models.CharField(max_length=20, verbose_name="Phone Number")
     DL_date = models.DateField(
         default=None,
         blank=True, null=True,
