@@ -295,9 +295,7 @@ class TripForm(forms.ModelForm):
                 datetime.now()).strftime('%d.%m.%Y')
             default_return_time = (
                 datetime.now() + timedelta(hours=2)).strftime('%H:%M')
-            self.fields['depart'].queryset = Location.objects.filter(
-                input_by=user).order_by('name')
-            self.fields['destination'].queryset = Location.objects.filter(
+            locations = Location.objects.filter(
                 input_by=user).order_by('name')
             self.fields['region'].initial = Region.objects.first()
             self.fields['region'].label = False
@@ -305,10 +303,18 @@ class TripForm(forms.ModelForm):
             self.fields['depart_date'].initial = default_depart_date
             self.fields['return_time'].initial = default_return_time
             self.fields['depart_window'].initial = 300
+            
             cars = Vehicle.objects.filter(owner=user).filter(status=True).order_by('make')
             if cars.exists():
                 self.fields['vehicle'].queryset = cars
                 self.fields['vehicle'].initial = cars.first()
+            if locations.exists():
+                self.fields['depart'].queryset = locations
+                self.fields['depart'].initial = locations.first()
+                self.fields['depart'].required = True
+                self.fields['destination'].queryset = locations
+                self.fields['destination'].initial = locations.first()
+                self.fields['destination'].required = True
 
     # ensure return time is added when trip is not a one-way
     def clean(self):
@@ -322,7 +328,6 @@ class TripForm(forms.ModelForm):
             self.add_error(
                 'return_time',
                 'Return time is required for a return trip.')
-
         return cleaned_data
 
 

@@ -166,12 +166,12 @@ For testing purposes 4 drivers and 3 Hitcher accounts have been created that can
 |Visitor can create profile and is automatically signed in|click signup and enter data|account created and redirect to about page logged in. Nav bar shows restricted pages|
 |User can sign out of page|click signout button in nav bar on user only page|user signed out and redirected to about page. Nav bar hides restricted pages|
 |User can enter personal data on new profile|on user profile add data and click UPDATE DATA|Data is saved with user feedback given|
-|User age is displayed once birthday is entered|Enter valid birthday|No age is shown. After entry correct age is calculated and added to name|
-|User must be 18 to have drivers license|Enter a date < 18 years after birthday|Form gives feedback of min age|
+|User age is displayed once birthday is entered|Enter valid birthday|**did not work initially** - fixed now: No age is shown. After entry correct age is calculated and added to name|
+|User must be 18 to have drivers license|Enter a date < 18 years after birthday|**did not work initially** - fixed now: Form gives feedback of min age|
 |Data Verification in Account Details form|enter wrong date|Field is highlighted, entry not accepted|
 |Data Verification in Account Details form|enter 2 letter surname|Field is highlighted, entry not accepted (min 3 letters)|
 |Data Verification in Account Details form|enter #$%#^Eewe surname|Field is highlighted, entry not accepted (alphanumerics only)|
-|Data Verification in Account Details form|enter wrong phone number std|Field is highlighted, entry not accepted (phone format only per regex)|
+|Data Verification in Account Details form|enter wrong phone number std|**did not work initially** - fixed now: Field is highlighted, entry not accepted (phone format only per regex)|
 |Required fields are marked as mantatory|Omit data entry on *Fields|User feedback given before submitting form|
 |User can change password|Click change Password Link|User redirected to Django password reset standard template| 
 
@@ -241,9 +241,9 @@ For testing purposes 4 drivers and 3 Hitcher accounts have been created that can
 |Ride direction arrows correctly show type of trip|enter one way, return, single and multiple rides|verified|
 |Ride depart time shown in correct time format|---|verified|
 |Ride depart time-window shown correctly|crete rides with different time windows|verified|
-|Number of remaining hitch slots shown correctly|add hitchers to ride|diffenrece to max hitcher and actual hitchers correctly calculated|
+|Number of remaining hitch slots shown correctly|add hitchers to ride|difference to max hitcher and actual hitchers correctly calculated|
 |Electric vehicle symbol shown|check rides with Electric or Hybrid Motors|Shown where expected|
-|Vehicle symbol shon based on type|chck rides wiht different vehicle types|Shown as expected|
+|Vehicle symbol shown based on type|check rides with different vehicle types|Shown as expected|
 |Ride purpose symbol is shown|Check rides with varying trip purpose|expected symbols shown|
 |Ride displays smoking status|Check rides with varying vehicles|appropriate symbol shown based on vehicle selected|
 |If ride has a driver message, msg symbol shows|check message symbol on rides with a note|correctly shows and mouse over shows message|
@@ -252,15 +252,15 @@ For testing purposes 4 drivers and 3 Hitcher accounts have been created that can
 |Clicking Request a ride button opens a message form modal with destination title|click REQUEST RIDE|verified|
 |Clicking request ride creates ride request and message|click REQUEST RIDE|verified in DB hitchrequest and message correctly generated|
 |Clicking OFFER A RIDE shows Offer Ride Form Modal|click OFFER A RIDE|verified|
-|Offer ride form Depart Date default is Today|click button|verified|
-|Offer ride form Depart Time default is 30 minutes from NOW|click button|verified|
-|Offer ride form Depart window default is 5min|click button|verified|
-|Offer ride form Depart Direction default is One way|click button|verified|
-|Offer ride form Recurring default is No|click button|verified|
-|Offer ride form Vehicle default is First car in users list|click button|verified|
-|Offer ride form Vehicle drop down only shows users cars|click button|verified|
-|Offer ride form Depart Date default is Today|click button|verified|
-
+|**Offer ride form** - Depart Date default is Today|----|verified|
+|**Offer ride form** - Depart Time default is 30 minutes from NOW|----|verified|
+|**Offer ride form** - Depart window default is 5min|----|verified|
+|**Offer ride form** - Depart Direction default is One way|----|verified|
+|**Offer ride form** - Recurring default is No|----|verified|
+|**Offer ride form** - Vehicle default is First car in users list|----|verified|
+|**Offer ride form** - Vehicle drop down only shows users active cars|----|**this did not work in test**. form was modifed and now verified|
+|**Offer ride form** - Depart Dropdown only shows user locations|----|verified|
+|**Offer ride form** -Destination Dropdown only shows user locations|----|verified|
 ||||
 ||||
 ||||

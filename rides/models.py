@@ -241,15 +241,16 @@ class Trip(models.Model):
     max_hitch = models.PositiveIntegerField(default=1)
     depart = models.ForeignKey(
         Location,
-        on_delete=models.SET_DEFAULT,
-        default="no record",
-        related_name="depart",
-        null=True, blank=True)
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        related_name="depart",)
     destination = models.ForeignKey(
         Location,
-        on_delete=models.SET_DEFAULT,
-        default="no record",
-        null=True, blank=True)
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        related_name="destination",)
     depart_time = models.TimeField()
     expected_duration = models.DurationField(null=True, blank=True)
     expected_arrival_time = models.TimeField(null=True, blank=True)
