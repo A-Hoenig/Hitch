@@ -3,7 +3,7 @@ from .models import CustomUser, Vehicle, Trip, Region
 from .models import Hitch_Request, Location, Message
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Submit, Layout, Div
-from django.core.validators import RegexValidator
+from django.core.validators import RegexValidator, MinValueValidator
 from django.utils import timezone
 from datetime import date, timedelta, datetime
 import re
@@ -160,6 +160,7 @@ class VehicleForm(forms.ModelForm):
     Form class for users vehicles
     Use Helper to size and layout form
     """
+
     helper = FormHelper()
     helper.layout = Layout(
         Div(
@@ -206,6 +207,8 @@ class VehicleForm(forms.ModelForm):
         if instance is not None:
             self.fields['smoking'].initial = instance.smoking
             self.fields['status'].initial = instance.status
+
+
 
 
 class TripForm(forms.ModelForm):

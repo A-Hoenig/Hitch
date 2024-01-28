@@ -169,7 +169,7 @@ class Vehicle(models.Model):
     year = models.CharField(max_length=4, null=True, blank=True)
     engine = models.IntegerField(choices=ENGINE, default=0)
     smoking = models.IntegerField(choices=YES_NO, default=0)
-    max_pax = models.IntegerField(default=1,)
+    max_pax = models.PositiveIntegerField(default=1,)
     owner = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         on_delete=models.SET_NULL, null=True)
@@ -238,7 +238,7 @@ class Trip(models.Model):
         on_delete=models.CASCADE)
     vehicle = models.ForeignKey(
         Vehicle, on_delete=models.SET_NULL, null=True)
-    max_hitch = models.IntegerField(default=1)
+    max_hitch = models.PositiveIntegerField(default=1)
     depart = models.ForeignKey(
         Location,
         on_delete=models.SET_DEFAULT,

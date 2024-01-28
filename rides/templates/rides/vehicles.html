@@ -12,10 +12,12 @@
                 <h1 class="fs-5" id="exampleModalLabel">Add new Vehicle</h1>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
+            
             <!-- Vehicle form for editing and saving new vehicle -->
             <div class="modal-body">
                 <form class="form-horizontal" action="{% url 'vehicles' %}" method="post" autocomplete="off">
                     {% csrf_token %}
+                    
                     <div class="row mb-2">
                         <div class="col-6">{{ form.make|as_crispy_field }}</div>
                         <div class="col-6">{{ form.model|as_crispy_field }}</div>

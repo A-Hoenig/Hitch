@@ -507,6 +507,8 @@ def vehicles(request):
             if form.is_valid():
                 form.save()
                 messages.success(request, 'Vehicle added successfully!')
+            else:
+                messages.error(request, 'Sorry Maximum passengers cannot be less than 1')
         elif 'delete' in request.POST:
             pk = request.POST.get('delete')
             vehicle = Vehicle.objects.get(id=pk)
