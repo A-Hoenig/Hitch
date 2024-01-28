@@ -182,7 +182,6 @@ def rides_view(request):
 
 
 # -------------------------------------------------------
-@login_required
 def hitches(request):
 
     region_filter_form = RegionFilterForm(request.GET or None)

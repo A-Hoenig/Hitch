@@ -11,13 +11,19 @@
         <div class="col-12 bg-light gx-0">
             <div class="px-3 py-0 d-sm-flex justify-content-between align-items-center mt-auto border-bottom shadow">
                 <div>REQUESTED RIDES (HITCHES) IN SELECTED REGION:</div>
-                <div>
+                {% if user.is_authenticated %}
                     <button name="ride_trip_id" value="{{ t.id }}" type="button"
                         class="badge rounded-pill bg-success fs-4 mt-2 mt-md-0 me-2" data-bs-toggle="modal"
                         data-bs-target="#OfferModal" data-bs-whatever="" data-trip-id="{{ t.id }}">
-                        <i class="fa-solid fa-thumbs-up"></i> REQUEST TO HITCH
+                        <i class="fa-solid fa-car"> </i> REQUEST TO HITCH
                     </button>
-                </div>
+                    {% else %}
+                    <div>
+                        <a class="btn btn-success badge rounded-pill fs-4 mt-2 mt-md-0 me-2"
+                            href="{% url 'account_login' %}?next={{ request.path }}">
+                            <i class="fa-solid fa-road-circle-exclamation"></i> START HERE</a>
+                    </div>
+                    {% endif %}
                 <form method="get" action="{% url 'rides_view' %}" class="d-flex mt-3" id="filterForm">
                     {% csrf_token %}
                     <span class="mt-2 me-1">{{ region_filter_form|crispy }}</span>

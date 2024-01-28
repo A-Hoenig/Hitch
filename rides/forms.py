@@ -305,8 +305,9 @@ class TripForm(forms.ModelForm):
             self.fields['depart_date'].initial = default_depart_date
             self.fields['return_time'].initial = default_return_time
             self.fields['depart_window'].initial = 300
-            cars = Vehicle.objects.filter(owner=user).order_by('make')
+            cars = Vehicle.objects.filter(owner=user).filter(status=True).order_by('make')
             if cars.exists():
+                self.fields['vehicle'].queryset = cars
                 self.fields['vehicle'].initial = cars.first()
 
     # ensure return time is added when trip is not a one-way

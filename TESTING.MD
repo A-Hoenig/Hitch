@@ -195,6 +195,8 @@ For testing purposes 4 drivers and 3 Hitcher accounts have been created that can
 |Vehicle list filter|change status of vehicle to Not Active and selecte inactive filter|Only Inactive vehicles shown|
 |Vehicle list filter|select Active button filter|only Active vehicles shown|
 
+<p align="right">(<a href="#contents">back to top</a>)</p>
+
 
 ### 3. USERPROFILE / LOCATION TESTS
 | Feature/Story| Action | Result |
@@ -212,6 +214,8 @@ For testing purposes 4 drivers and 3 Hitcher accounts have been created that can
 |Data Verification in Location Form|enter maxpax < 0|rejected with must be equal or greater 0|
 |Location Icon changes based on stop_type|Change location to different stop_types|Symbol changes as expected|
 
+<p align="right">(<a href="#contents">back to top</a>)</p>
+
 ### 4. ABOUT PAGE
 | Feature/Story| Action | Result |
 | :--- |:--- | :--- |
@@ -221,11 +225,13 @@ For testing purposes 4 drivers and 3 Hitcher accounts have been created that can
 |About page content carousell nav arrows work|click on left-right arrows to switch image|verified|
 |Text Displayed correctly|---|verified|
 
+<p align="right">(<a href="#contents">back to top</a>)</p>
+
 ### 5. RIDES PAGE & UI/UX
 | Feature/Story| Action | Result |
 | :---|:--- | :--- |
 |Rides page is shown|Click on Rides link in Nav Bar|Rides Page loads as expected|
-|User feedback bar is shwon|----|verified|
+|User feedback bar is shown|----|verified|
 |Call to action button changes based on login status|signin signout|changes from START HERE to OFFER A RIDE as expected|
 |Region Filter form is displayed with first db entry as default|---|verified|
 |Available rides shown in chronological order|--- |verified|
@@ -243,6 +249,25 @@ For testing purposes 4 drivers and 3 Hitcher accounts have been created that can
 |If ride has a driver message, msg symbol shows|check message symbol on rides with a note|correctly shows and mouse over shows message|
 |Mouse over tool tips show correct message|Hover over all symbols|appropriate message is correctly shown|
 |UX: Accordion list works as expected|click on different rides|Detail pane opens and closes as expected for only one ride at a time|
+|Clicking Request a ride button opens a message form modal with destination title|click REQUEST RIDE|verified|
+|Clicking request ride creates ride request and message|click REQUEST RIDE|verified in DB hitchrequest and message correctly generated|
+|Clicking OFFER A RIDE shows Offer Ride Form Modal|click OFFER A RIDE|verified|
+|Offer ride form Depart Date default is Today|click button|verified|
+|Offer ride form Depart Time default is 30 minutes from NOW|click button|verified|
+|Offer ride form Depart window default is 5min|click button|verified|
+|Offer ride form Depart Direction default is One way|click button|verified|
+|Offer ride form Recurring default is No|click button|verified|
+|Offer ride form Vehicle default is First car in users list|click button|verified|
+|Offer ride form Vehicle drop down only shows users cars|click button|verified|
+|Offer ride form Depart Date default is Today|click button|verified|
+
+||||
+||||
+||||
+
+
+
+<p align="right">(<a href="#contents">back to top</a>)</p>
 
 #### RIDE DETAIL VIEW
 | Feature/Story| Action | Result |
@@ -266,6 +291,8 @@ For testing purposes 4 drivers and 3 Hitcher accounts have been created that can
 |You already requested a ride button shown|logged in and hitch request sent|shows correctly|
 |Sign Up to request a ride|Sign out and select a ride|shows correctly|
 
+<p align="right">(<a href="#contents">back to top</a>)</p>
+
 #### UI/UX
 | Feature/Story| Action | Result |
 | :--- |:--- |:--- |
@@ -273,11 +300,55 @@ For testing purposes 4 drivers and 3 Hitcher accounts have been created that can
 |site is responsive|change screen size in browser window|nav bar reshapes as expected on smaller screens|
 |site is responsive|change screen size in browser window|detail view reshapes as expected on smaller screens|
 |site is responsive|nav bar scrolls but user bar with region and button sticky on top|verified as expected on scroll|
-||||
-||||
-
 
 <p align="right">(<a href="#contents">back to top</a>)</p>
+
+### 6. HITCHES DETAIL VIEW
+| Feature/Story| Action | Result |
+| :--- |:--- |:--- |
+|Hitches page loads correctly|click on Hitches link in nav bar|page loads correctly|
+|User feedback bar is shown|----|verified|
+|Call to action button changes based on login status|signin / signout|changes from START HERE to REQUEST TO HITCH as expected|
+|Region Filter form is displayed with first db entry as default|---|verified|
+|System message Hitch Rides comming soon is displayed|Click on Hithches link|verified|
+
+**Rest of Hitches page is part of next iteration**
+
+### 7. YOUR TRIPS VIEW
+| Feature/Story| Action | Result |
+| :--- |:--- |:--- |
+|Your trips page loads correctly|click on Hitches link in nav bar when logged in|page loads correctly|
+|User feedback bar is shown|bar shows 'your list of trips'|verified|
+|Region Filter form is displayed with first db entry as default|---|verified|||||
+|User Rides or Hitches displayed in a list|created Rides and Hitch requests|verified|
+|Rides corrctly lists all ride and hitchers the user has add or requested|create muktiple rides and request hitches|as expectd|
+|Rides are correctly labelled|compare rides vs hitches|both correctly labelled|
+|A trip (ride or hitch) shows type icon date and time in top row|----|verified|
+|A trip shows departure and destination cities with label|----|verified|
+|A ride with no hitch requests shows 'No requests yet'|----|verified|
+|The Driver of the trip is shown with first or username|compare various trips|names displayed as expected|
+|The Driver of the trip displays accurate rating|compare displayed against DB values|verified|
+|Hitches show a pending message if it is not yet approved|compare approved vs non approved hitches|displayed with req date es expected|
+|Approved hitches show a message|compare approved vs non approved hitches|Your Hitch was approved displays as expected|
+|Rides with a pending hitch request show a list of hitchers|compare rides with hitch requests|verified|
+|Hitcher names in request list show first name or username|----|verified|
+|Hitcher names in request show star rating based on average hitcher rating|----|verified|
+|Hitcher Names in request show a message button after star rating|----|verified|
+|Unapproved Hitchers have a CONFIRM button next to their name|check ride with unapproved hitch requests|verified|
+|Clicking CONFIRM button reveals an are you sure confirmation|click confirm button|verified|
+|Clicking are you sure button creates Hitch request for that ride|click sure button and check DB|as expected|
+|Confirming a hitcher gives user feedback|click sure button|displays as expected|
+|Confirming a hitcher creates message to the correcet hitcher|click sure button and check DB|message from to and content created as expected|
+|Confirming a hitcher removes buttons and displays a thumbs up|click sure button|as expected|
+|Clicking message button next to a hitcher opens message form and displays recipient|click message button|verified|
+|Typing a message to a hitcher and clicking send|click button and type message|works as expected|
+|Sending a message successfully is confirmed to the user|create a message|displayed as expected|
+|Sent message is created and saved in DB|crest a message and check DB|verified|
+|Clicking the trashcan icon on a trip reveals a confirm button|click trashcan|button shows as expected|
+
+
+
+
 
 ### Browser Compatibility
 
