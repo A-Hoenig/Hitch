@@ -277,7 +277,7 @@ def user_trips(request):
                 # true = ride
                 trip = Trip.objects.get(id=pk)
                 # trip.delete()
-                messages.success(
+                messages.error(
                     request,
                     'Sorry not implemented yet for trips')
 
@@ -415,7 +415,7 @@ def profile(request):
 
         if form.is_valid():
             form.save()
-            messages.success(request, 'Data updated sucessfully!')
+            messages.success(request, 'Data updated successfully!')
             return redirect('user_profile')
     else:
         form = UserForm(instance=request.user)
@@ -453,7 +453,7 @@ def locations(request):
             pk = request.POST.get('delete')
             location = Location.objects.get(id=pk)
             location.delete()
-            # messages.success(request, 'Location deleted successfully!')
+            messages.error(request, 'Location deleted successfully!')
         elif 'update' in request.POST:
             pk = request.POST.get('update')
 
@@ -514,7 +514,7 @@ def vehicles(request):
             pk = request.POST.get('delete')
             vehicle = Vehicle.objects.get(id=pk)
             vehicle.delete()
-            messages.success(request, 'Vehicle deleted sucessfully!')
+            messages.error(request, 'Vehicle deleted sucessfully!')
         elif 'update' in request.POST:
             pk = request.POST.get('update')
 

@@ -164,7 +164,7 @@ AUTH_USER_MODEL = 'rides.CustomUser'
 
 LANGUAGE_CODE = 'en-in'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Europe/Berlin'
 
 USE_I18N = True
 

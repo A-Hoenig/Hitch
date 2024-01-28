@@ -267,8 +267,7 @@ For testing purposes 4 drivers and 3 Hitcher accounts have been created that can
 |**Offer ride form** - Checkboxes for Mon-Sun can be selected|----|verified|
 |**Offer ride form** - Form cannot be submitted without depart or destination|select none from the list|verified|
 |**Offer ride form** - data validation does not accept wrong date|enter wrong date|**this could not be verified ... see known bugs**|
-||||
-||||
+
 
 
 
@@ -367,20 +366,19 @@ For testing purposes 4 drivers and 3 Hitcher accounts have been created that can
 |Message display correct date of sending/creation|----|verified|
 |Message tabs are responsive and readable on small and large screen|adjust size and test on ipad / iphone|verified|
 
-
-
-
 ### Browser Compatibility
 
 The deployed app on heroku was tested on most popular browsers for functionality:
 * Chrome
-* Safari
+* Safari (macOS, ipadOS and iOS)
 * Edge
 * Opera
 
+No obvious issues were detected. The prformance of the page on macOS seems maringally slower than on Chrome.
+
 ## Known Bugs
 
-The OFFER RIDE User form is not displaying proper validation errors. The rides.view is correctly passing the form including its errors to the template. Inspection of the form HTML shows it is passed with the correct error attached when a wrong date is entered. However the form utilising crispy fields will not render the errors and allows the form to close without feedback. The invalid form is correctly not processed and passed to the back end, however no feedback is given to the user. After extensive research and attempts to refactor the form, view and template, a solution could not be found at this stage of the project close to submission. The date field is generated with the correct date format and todays date which will encourage the user to enter the correct format, however a wrong input will lead to undesirable behavior of the app.
+The OFFER RIDE User form is not displaying proper validation errors. The rides.view is correctly passing the form including its errors to the template. Inspection of the form HTML shows it is passed with the correct error attached when a wrong date is entered. However the form utilising crispy fields will not render the errors and allows the form to close without feedback. The invalid form is correctly NOT processed and NOT passed to the back end, however no feedback is given to the user. After extensive research and attempts to refactor the form, view and template, a solution could not be found at this stage of the project close to submission. The date field is generated with the correct date format and todays date which will encourage the user to enter the correct format, however a wrong input will lead to undesirable behavior of the app.
 
 <!-- CONTACT -->
 ## Contact
