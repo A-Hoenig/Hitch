@@ -260,8 +260,13 @@ For testing purposes 4 drivers and 3 Hitcher accounts have been created that can
 |**Offer ride form** - Vehicle default is First car in users list|----|verified|
 |**Offer ride form** - Vehicle drop down only shows users active cars|----|**this did not work in test**. form was modifed and now verified|
 |**Offer ride form** - Depart Dropdown only shows user locations|----|verified|
-|**Offer ride form** -Destination Dropdown only shows user locations|----|verified|
-||||
+|**Offer ride form** - Destination Dropdown only shows user locations|----|verified|
+|**Offer ride form** - Form cannot be submitted without depart or destination|select none from the list|verified|
+|**Offer ride form** - Selecting Direction = Return Trip show return tiem field|select Return Trip|verified|
+|**Offer ride form** - Selecting Recurring = Yes shows weekdday checkboxes|select Yes from the Recurring|verified|
+|**Offer ride form** - Checkboxes for Mon-Sun can be selected|----|verified|
+|**Offer ride form** - Form cannot be submitted without depart or destination|select none from the list|verified|
+|**Offer ride form** - data validation does not accept wrong date|enter wrong date|**this could not be verified ... see known bugs**|
 ||||
 ||||
 
@@ -346,6 +351,21 @@ For testing purposes 4 drivers and 3 Hitcher accounts have been created that can
 |Sent message is created and saved in DB|crest a message and check DB|verified|
 |Clicking the trashcan icon on a trip reveals a confirm button|click trashcan|button shows as expected|
 
+### 7. MESSAGE CENTER VIEW
+| Feature/Story| Action | Result |
+| :--- |:--- |:--- |
+|Message center displays correctly when clicking on the message icon|Click on nav bar|verified|
+|Messages displays by trip in chronological order|check with DB and compare expected messages|verified|
+|Message page only accessable when logged in|past URL when not logged in|verified|
+|Message block displays correct trip type symoble on top row|----|verified|
+|Message block displays date and time of trip|----|verified|
+|Message block displays depart and destination city|----|verified|
+|Inside each trip card, all message related to the trip are displayed|create multiple trips with muktiple messages|verified|
+|Messages show sender name if not the looged in user|----|verified|
+|Messages from other users displayed on left|----|verified|
+|Message from logged in user displayes as from 'You'|----|verified|
+|Message display correct date of sending/creation|----|verified|
+|Message tabs are responsive and readable on small and large screen|adjust size and test on ipad / iphone|verified|
 
 
 
@@ -360,8 +380,7 @@ The deployed app on heroku was tested on most popular browsers for functionality
 
 ## Known Bugs
 
-
-
+The OFFER RIDE User form is not displaying proper validation errors. The rides.view is correctly passing the form including its errors to the template. Inspection of the form HTML shows it is passed with the correct error attached when a wrong date is entered. However the form utilising crispy fields will not render the errors and allows the form to close without feedback. The invalid form is correctly not processed and passed to the back end, however no feedback is given to the user. After extensive research and attempts to refactor the form, view and template, a solution could not be found at this stage of the project close to submission. The date field is generated with the correct date format and todays date which will encourage the user to enter the correct format, however a wrong input will lead to undesirable behavior of the app.
 
 <!-- CONTACT -->
 ## Contact

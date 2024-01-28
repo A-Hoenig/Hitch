@@ -8,6 +8,7 @@ from django.utils import timezone
 from datetime import date, timedelta, datetime
 import re
 
+
 # REGEX VALIDATORS FOR VALIDATING USER ENTRIES
 AlphanumericValidator = RegexValidator(
     r'^[0-9a-zA-Z ]*$',
@@ -26,12 +27,16 @@ PhoneNumberValidator = RegexValidator(
     'Not a valid phone number.'
     )
 EmailValidator = RegexValidator(
-    r'[^@ \t\r\n]+@[^@ \t\r\n]+\.[^@ \t\r\n]+',
+    r'^@ \t\r\n]+@[^@ \t\r\n]+\.[^@ \t\r\n]+',
     'Not a valid email address.'
     )
 TimeValidator = RegexValidator(
     r'[^(?:[01]?\d|2[0-3])(?::[0-5]\d){1,2}$]+',
     'Not a valid time.'
+    )
+DateValidator = RegexValidator(
+    r'^[0-3]?[0-9][/.][0-1]?[0-9][/.](?:[0-9]{2})?[0-9]{2}$',
+    'Not a valid date.'
     )
 
 
@@ -244,9 +249,7 @@ class TripForm(forms.ModelForm):
         choices=PICKUP_RADIUS_CHOICES,
         required=False)
     depart_date = forms.DateField(
-        input_formats=['%d.%m.%Y', '%d-%m-%Y'],
-        widget=forms.DateInput(format='%d.%m.%Y')
-        )
+        input_formats=['%d.%m.%Y', '%d-%m-%Y'])
     depart_time = forms.TimeField(
         widget=forms.TimeInput(attrs={'type': 'time'})
         )

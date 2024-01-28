@@ -46,7 +46,7 @@ def rides_view(request):
     #  ********************************************************************
     #  ************************ GENERAL SETUP  ****************************
     #  ********************************************************************
-
+    print(f'request: {request.method}')
     # INITIALIZE MESSAGE FORM FOR HITCH REQUEST MODAL
     message_form = MessageForm()
 
@@ -147,6 +147,7 @@ def rides_view(request):
             form = TripForm(request.POST, user=request.user)
 
             if form.is_valid():
+                print("Form is valid")
                 new_trip = form.save(commit=False)
                 new_trip.driver = request.user
                 new_trip.save()
@@ -156,12 +157,13 @@ def rides_view(request):
                     f'Thanks for sharing!')
                 return HttpResponseRedirect(request.path_info)
             else:
-                form = TripForm(initial=initial_data, user=request.user)
+                # form = TripForm(initial=initial_data, user=request.user)
                 # add POST specific context
                 context['form'] = form
-                return render(request, 'rides.html', context)
+                print(f'FORM IS NOT VALID{form.errors}')
+                return render(request, 'rides/rides.html', context)
 
-        return HttpResponseRedirect(request.path_info, context)
+        return render(request, 'rides/rides.html', context)
 
     else:
         #  ********************************************************************
