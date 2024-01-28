@@ -45,7 +45,6 @@ VEHICLE_STATUS = (
     (False, "Not Active"),
     )
 
-
 # Create your models here.
 class CustomUser(AbstractUser):
 

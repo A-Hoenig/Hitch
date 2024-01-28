@@ -158,7 +158,7 @@ For testing purposes 4 drivers and 3 Hitcher accounts have been created that can
 
 ## Admin Epic
 
-### 1. GENERAL TESTS
+### 1. USERPROFILE TESTS
 | Feature/Story       | Action | Result |
 | :-------------- |:------ | :------ |
 |Visitor can see site but not logged in only pages|Enter Your_Trip, Message, User_profile URLs in browser directly|user is directed to sign in/up page|
@@ -170,15 +170,18 @@ For testing purposes 4 drivers and 3 Hitcher accounts have been created that can
 |Data Verification in Account Details form|enter wrong date|Field is highlighted, entry not accepted|
 |Data Verification in Account Details form|enter 2 letter surname|Field is highlighted, entry not accepted (min 3 letters)|
 |Data Verification in Account Details form|enter #$%#^Eewe surname|Field is highlighted, entry not accepted (alphanumerics only)|
+|Data Verification in Account Details form|enter wrong phone number std|Field is highlighted, entry not accepted (phone format only per regex)|
 |Required fields are marked as mantatory|Omit data entry on *Fields|User feedback given before submitting form|
-|User can change password|Click change Password Link|User redirected to Django password reset standard template|
+|User can change password|Click change Password Link|User redirected to Django password reset standard template| 
+|User can click button to add vehicle|Click ADD VEHICLE button|Add Vehicle Userform is shwon in modal|
+|User can add vehicel information|Fill out form for car data||
 
 
-
-### 2. MENU TESTS
+### 2. USERPROFILE / VEHICLE TESTS
 | Feature/Story       | Action | Result |
 | :-------------- |:------ | :------ |
-|Main Menu displays correct in CLI|start app|Verified OK|
+|User can switch to Vehicle tab in user profile|Click on Vehicle Tab|Vehicle List Displayed|
+|If user has not cars, a reminder is visible|Check page with new profile|No vehicles message is displayed|
 
 
 ### 3. LOGIN / USER ACCOUNT TESTS

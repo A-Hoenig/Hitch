@@ -84,6 +84,7 @@
                         </button>
                     </div>
                 </Div>
+
                 <!-- main content -->
                 <div class="card-body mx-0 px-0">
                     <div class="accordion" id="VehicleAccordionList">
@@ -145,6 +146,8 @@
                                     </div>
                                 </div>
                             </div>
+                            {% empty %}
+                            <button type="button" class="btn btn-warning mx-5 my-3">You have not added any Vehicles yet.</button>
                             {% endfor %}
                         </form>
                     </div>

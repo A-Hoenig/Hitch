@@ -22,7 +22,7 @@ NumberValidator = RegexValidator(
     'Only numbers are allowed.'
     )
 PhoneNumberValidator = RegexValidator(
-    r'(\(?([\d \-\)\–\+\/\(]+)\)?([ .\-–\/]?)([\d]+))',
+    r'^(\(?([\d \-\)\–\+\/\(]+)\)?([ .\-–\/]?)([\d]+))',
     'Not a valid phone number.'
     )
 EmailValidator = RegexValidator(
