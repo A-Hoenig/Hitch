@@ -104,6 +104,16 @@ class UserForm(forms.ModelForm):
         required=True
         )
 
+    def clean(self):
+        cleaned_data = super().clean()
+        birthday = cleaned_data.get('DOB')
+        drivers_license_date = cleaned_data.get('DL_date')
+        min_driving_age = 18
+        if drivers_license_date:
+            min_allowed = birthday + timedelta(days=(min_driving_age*365))
+            if drivers_license_date < min_allowed:
+                raise forms.ValidationError(f'Must be {min_driving_age} years old for license')
+
     class Meta:
         """
         Specify the model and fields to include

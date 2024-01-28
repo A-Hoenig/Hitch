@@ -9,7 +9,7 @@
   <div class="row">
     <div class="col-12 bg-light">
       <div class="p-3">
-        USER PROFILE <span class="text-primary">{{ username }} ({{ age }})</span>
+        USER PROFILE <span class="text-primary">{{ username }} {% if age is not none %} ({{ age }}) {% endif %}</span>
       </div>
     </div>
   </div>

@@ -204,6 +204,7 @@ def about(request):
 
 
 # -------------------------------------------------------
+@login_required
 def message_center(request):
     # Fetch messages either trip driver or a hitch hitcher
     user_messages = Message.objects.filter(
