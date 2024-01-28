@@ -100,7 +100,12 @@
                 <li class="nav-item nolink ">
                     <a class="nav-link d-none d-sm-block text-right" aria-current="welcome back message"
                         href="{% url 'user_profile' %}">
-                        {{ user.username }}</a>
+                        {% if not user.first_name %}
+                              {{ user.username }} 
+                          {% else %}
+                              {{ user.first_name }}
+                          {% endif %}
+                    </a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link {% if request.path == hitches_url %} active" aria-current="page{% endif %}"
