@@ -279,7 +279,7 @@ def user_trips(request):
                 # trip.delete()
                 messages.error(
                     request,
-                    'Sorry not implemented yet for trips')
+                    'Deleting trips not yet implemented')
 
                 return redirect('user_trips')
 
@@ -287,7 +287,10 @@ def user_trips(request):
                 # hitch
                 hitch = Hitch_Request.objects.get(id=pk)
                 linked_trip = hitch.trip
-                driver = linked_trip.driver
+                if linked_trip is not None:
+                    driver = linked_trip.driver
+                else:
+                    driver = None
                 messages.success(
                     request,
                     'Your Hitch request was deleted successfully!')
@@ -298,7 +301,7 @@ def user_trips(request):
                 # CHECK THISSSSSSSSSSSSSSSSSSSSSS
                 message = Message(
                     trip = None,
-                    hitch = hitch,
+                    hitch_request = hitch,
                     sender = hitch.hitcher,
                     receiver = driver,
                     content = message_text)
@@ -376,8 +379,9 @@ def user_trips(request):
                         (hitcher, round(hitcher.average_hitcher_rating)))
 
             elif isinstance(s, Hitch_Request):
-                driver = s.trip.driver
-                rating = calculate_rating(s.trip.driver.average_driver_rating)
+                if s.trip is not None:
+                    driver = s.trip.driver
+                    rating = calculate_rating(s.trip.driver.average_driver_rating)
                 hitchers_ratings_list = []
 
             detailed_sorted_list.append((
