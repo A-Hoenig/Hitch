@@ -43,6 +43,21 @@ from operator import attrgetter
 
 
 def rides_view(request):
+    """
+    Returns all rides in :model:`rides.Trip`
+    and lists them by date and region. 
+    **Context**
+
+    ``queryset``
+        any instances of :model:`rides.Trip` in selected
+        region after todays date
+    ``paginate_by``
+        Not yet implemented but suggested for performance.
+        
+    **Template:**
+
+    :template:`rides/rides.html`
+    """
     #  ********************************************************************
     #  ************************ GENERAL SETUP  ****************************
     #  ********************************************************************
@@ -185,7 +200,21 @@ def rides_view(request):
 
 # -------------------------------------------------------
 def hitches(request):
+    """
+    Returns all hitcht requestss in :model:`rides.Hitch_request`
+    and lists them by date and region. 
+    **Context**
 
+    ``queryset``
+        All instances of :model:`rides.Hitch_Request`
+        in selected region after todays date
+    ``paginate_by``
+        Not yet implemented.
+        
+    **Template:**
+
+    :template:`rides/rides.html`
+    """
     region_filter_form = RegionFilterForm(request.GET or None)
 
     context = {
@@ -198,6 +227,10 @@ def hitches(request):
 
 # -------------------------------------------------------
 def about(request):
+    """
+    Renders about page
+    :template:`rides/about.html`
+    """
     context = {
         "username": request.user,
     }
@@ -207,6 +240,18 @@ def about(request):
 # -------------------------------------------------------
 @login_required
 def message_center(request):
+    """
+    Returns all messages in :model:`rides.Message`
+    **Context**
+
+    ``queryset``
+        All instances of :model:`rides.Message`
+        filtered by trip and driver/hitcher
+        
+    **Template:**
+
+    :template:`rides/message_center.html`
+    """
     # Fetch messages either trip driver or a hitch hitcher
     user_messages = Message.objects.filter(
         Q(trip__driver=request.user) |
@@ -229,6 +274,17 @@ def message_center(request):
 # -------------------------------------------------------
 @login_required
 def user_trips(request):
+    """
+    Returns a comined list of all records in :model:`rides.Trip`
+    and :model:`rides.Hitch_Request`
+    **Context**
+    ``queryset``
+        A sorted list of combined trips filterd by region
+        and logged in user
+        
+    **Template:**
+    :template:`rides/user_trips.html`
+    """
     paginate_by = 3
     # no user authentication check as page only when logged in
     user_id = request.user.id
@@ -298,7 +354,6 @@ def user_trips(request):
                 message_text = (
                     f"Hitcher {hitch.hitcher.first_name} cancelled "
                     f"the hitch request")
-                # CHECK THISSSSSSSSSSSSSSSSSSSSSS
                 message = Message(
                     trip = None,
                     hitch_request = hitch,
@@ -404,7 +459,16 @@ def user_trips(request):
 # -------------------------------------------------------
 @login_required
 def profile(request):
+    """
+    Returns the content of additional info in :model:`rides.Custom`
 
+    **Context**
+    ``queryset``
+        :model:`rides.CustomUser`
+
+    **Template:**
+    :template:`rides/user_profile.html`
+    """
     # Check if the user has a Date of Birth set
     if request.user.DOB:
         today = date.today()
@@ -435,6 +499,17 @@ def profile(request):
 # -------------------------------------------------------
 @login_required
 def locations(request):
+    """
+    Returns all locations in :model:`rides.Location`
+    and lists them by name. 
+    **Context**
+
+    ``queryset``
+        an instances of :model:`rides.Location`
+ 
+    **Template:**
+    :template:`rides/locations.html`
+    """
     form = LocationForm()
 
     # Check if the user has a Date of Birth set
@@ -493,6 +568,17 @@ def locations(request):
 # -------------------------------------------------------
 @login_required
 def vehicles(request):
+    """
+    Returns all locations in :model:`rides.Vehicle`
+    and lists them by make. 
+    **Context**
+
+    ``queryset``
+        an instances of :model:`rides.Vehicle`
+
+    **Template:**
+    :template:`rides/vehicles.html`
+    """
     form = VehicleForm()
     filter_value = request.GET.get('status')
     # Check if the user has a Date of Birth set

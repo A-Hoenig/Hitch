@@ -47,7 +47,10 @@ VEHICLE_STATUS = (
 
 # Create your models here.
 class CustomUser(AbstractUser):
-
+    """
+    Stores additional info about user related to
+    :model:`auth.User`.
+    """
     gender = models.IntegerField(choices=GENDER, default=3)
     DOB = models.DateField(
         verbose_name="Birthday",
@@ -89,7 +92,7 @@ class CustomUser(AbstractUser):
 class Region(models.Model):
     """
     Stores a specific region to limit trips locally
-    related to  :model: ``
+    related to  :model: `Trip`, `Hitch_request`
     """
     date_created = models.DateTimeField(auto_now_add=True, db_index=True)
     region = models.CharField(max_length=100, unique=True)
@@ -100,7 +103,8 @@ class Region(models.Model):
 
 class Stop_Type(models.Model):
     """
-    Stores the type of drop off point and a symbol to represent it`
+    Stores the type of drop off point and a symbol to represent it
+    related to :model: `Location`
     """
 
     stop = models.CharField(max_length=50, unique=True)
@@ -112,7 +116,8 @@ class Stop_Type(models.Model):
 
 class Location(models.Model):
     """
-    Stores previous locations related to :model:`rides.Region`,`auth.User`
+    Stores previous locations related to 
+    :model:`rides.Region`,`auth.User`
     """
     date_created = models.DateTimeField(auto_now_add=True)
     region = models.ForeignKey(Region, on_delete=models.CASCADE)
@@ -148,7 +153,8 @@ class Location(models.Model):
 class Purpose(models.Model):
     """
     Stores trip purposes and corresponding
-    font-awesome icon tag related to  :model: `trip`, `hitch_request`
+    font-awesome icon tag related to
+    :model: `trip`, `hitch_request`
     """
 
     purpose = models.CharField(max_length=50, unique=True)
@@ -160,7 +166,8 @@ class Purpose(models.Model):
 
 class Vehicle(models.Model):
     """
-    Stores vehicle related to :model:`rides.Trip` and :model:`auth.User`
+    Stores vehicle information
+    related to :model:`rides.Trip` and :model:`auth.User`
     """
     date_created = models.DateTimeField(auto_now_add=True)
     make = models.CharField(max_length=50, null=True, blank=True)
@@ -186,7 +193,7 @@ class Vehicle(models.Model):
 class User_rating(models.Model):
     """
     Stores driver ratings related to
-    :model:`rides.Trip` and :model:`auth.User`
+    :model:`auth.User`
     """
     RATING_TYPE_CHOICES = (
         ('driver', 'Driver'),
@@ -340,7 +347,8 @@ class Hitch_Request(models.Model):
 class Message(models.Model):
     """
     Stores in app messages between users
-    related to  :model:`rides.Trip`, auth.User
+    related to  :model:`rides.Trip`, `auth.User`
+    and :model:`hitch_request`
     """
     date_created = models.DateTimeField(
         auto_now_add=True,
